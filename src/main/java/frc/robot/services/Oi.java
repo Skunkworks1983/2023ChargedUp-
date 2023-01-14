@@ -10,30 +10,12 @@ public class Oi
     {
         Joystick leftStick;
         Joystick rightStick;
-        Joystick buttonStick;
-        JoystickButton leftStickTrigger;
-        JoystickButton collectorUpwardButton;
-        JoystickButton collectorDownwardButton;
-        JoystickButton loadBallsButton;
-        JoystickButton manualMoveCollectorUp;
-        JoystickButton manualMoveCollectorDown;
-        JoystickButton indexerOutputButton;
-        JoystickButton spinUpFlyWheelLowButton;
-        JoystickButton spinUpFlyWheelHighButton;
-        JoystickButton indexerManualShootButton;
-        JoystickButton collectorIn;
-        JoystickButton collectorOut;
-        JoystickButton indexerShootWhenReady;
-        JoystickButton enableManualControls;
-        JoystickButton collectorEncoderReset;
-        JoystickButton toggleClimber;
 
         public Oi(Drivebase drivebase)
         {
 
             leftStick = new Joystick(Constants.JoystickPorts.LEFT_JOY_STICK_PORT);
             rightStick = new Joystick(Constants.JoystickPorts.RIGHT_JOY_STICK_PORT);
-            buttonStick = new Joystick(Constants.JoystickPorts.BUTTON_STICK_PORT);
 
             //button sticks
 
