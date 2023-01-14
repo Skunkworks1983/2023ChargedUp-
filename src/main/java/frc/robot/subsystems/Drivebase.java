@@ -3,10 +3,10 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 
-public class DrivebaseCommand extends CommandBase
+public class Drivebase extends CommandBase
 {
 
-    public DrivebaseCommand()
+    public Drivebase()
     {
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
