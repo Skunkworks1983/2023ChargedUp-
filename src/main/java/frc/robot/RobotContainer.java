@@ -9,8 +9,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 //import frc.robot.constants.OperatorConstants;
-import frc.robot.commands.Autos;
-import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.drivebase.TankDrive;
+import frc.robot.services.Oi;
+import frc.robot.subsystems.Drivebase;
 import frc.robot.subsystems.ExampleSubsystem;
 
 
@@ -24,11 +25,11 @@ import frc.robot.subsystems.ExampleSubsystem;
 public class RobotContainer
 {
     // The robot's subsystems and commands are defined here...
-    private final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
-    
-    // Replace with CommandPS4Controller or CommandJoystick if needed
-   // private final CommandXboxController driverController =
-          //  new CommandXboxController(OperatorConstants.DRIVER_CONTROLLER_PORT);
+
+    private final Drivebase drivebase = new Drivebase();
+    private final Oi oi = new Oi(drivebase);
+
+    private final TankDrive autoCommand = new TankDrive(drivebase, oi);
     
     
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -51,8 +52,6 @@ public class RobotContainer
     private void configureBindings()
     {
         // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-        new Trigger(exampleSubsystem::exampleCondition)
-                .onTrue(new ExampleCommand(exampleSubsystem));
         
         // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
         // cancelling on release.
@@ -68,6 +67,6 @@ public class RobotContainer
     public Command getAutonomousCommand()
     {
         // An example command will be run in autonomous
-        return Autos.exampleAuto(exampleSubsystem);
+        return autoCommand;
     }
 }
