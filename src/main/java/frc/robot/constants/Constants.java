@@ -23,6 +23,7 @@ public class Constants extends CommandBase
         public static final double ANGLE_KP = 0.018;
         public static final double DRIVEBASE_KF = 0.08;
         public static final int THRESHOLD_ROTATE = 3;
+        public static final int DRIVE_OUT_OF_COMMUINITY = -9;
     }
 
     public class Falcon500
