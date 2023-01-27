@@ -17,6 +17,7 @@ public class Oi
             leftStick = new Joystick(Constants.JoystickPorts.LEFT_JOY_STICK_PORT);
             rightStick = new Joystick(Constants.JoystickPorts.RIGHT_JOY_STICK_PORT);
 
+
             //button sticks
 
             //when held
