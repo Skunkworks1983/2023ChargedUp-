@@ -46,5 +46,3 @@ public class Constants extends CommandBase
         public static final int RIGHT_MOTOR_2_DEVICE_NUMBER = 3;
     }
 }
-
-
