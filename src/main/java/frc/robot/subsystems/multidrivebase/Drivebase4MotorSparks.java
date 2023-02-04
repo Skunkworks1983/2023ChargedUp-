@@ -9,7 +9,8 @@ public class Drivebase4MotorSparks extends Drivebase {
 
 
 private static Drivebase OGDrivebase;
-    public Drivebase4MotorSparks () {
+    public Drivebase4MotorSparks ()
+    {
 
         leftMotor1.getEncoder().setPositionConversionFactor(1/Constants.MultiDrivebase.Robot2020.TICKS_PER_FOOT);
         rightMotor1.getEncoder().setPositionConversionFactor(1/Constants.MultiDrivebase.Robot2020.TICKS_PER_FOOT);
