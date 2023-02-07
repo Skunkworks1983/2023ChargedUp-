@@ -19,8 +19,8 @@ public class Drivebase4MotorTalonFX extends Drivebase {
 
         leftMotor1 = new TalonFX(Constants.MultiDrivebase.Robot2022.LEFT_MOTOR_1);
         rightMotor1 = new TalonFX(Constants.MultiDrivebase.Robot2022.RIGHT_MOTOR_1);
-        leftMotor2 = new TalonFX(Constants.MultiDrivebase.Robot2022.LEFT_MOTOR_2);
-        rightMotor2 = new TalonFX(Constants.MultiDrivebase.Robot2022.RIGHT_MOTOR_2);
+        leftMotor2.follow(leftMotor1);
+        rightMotor2.follow(rightMotor1);
 
     }
 
@@ -28,8 +28,6 @@ public class Drivebase4MotorTalonFX extends Drivebase {
 
         leftMotor1.set(TalonFXControlMode.PercentOutput, leftSpeed);
         rightMotor1.set(TalonFXControlMode.PercentOutput, -rightSpeed);
-        leftMotor2.set(TalonFXControlMode.PercentOutput, leftSpeed);
-        rightMotor2.set(TalonFXControlMode.PercentOutput, -rightSpeed);
     }
 
     public double GetLeftDistance() {
