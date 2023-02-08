@@ -19,7 +19,7 @@ public class Drivebase extends SubsystemBase
 
     private final double TicksPerFoot = Constants.Falcon500.TICKS_PER_REV * Constants.Drivebase.GEAR_RATIO / (Constants.Drivebase.WHEEL_DIAMETER * Math.PI);
 
-    AHRS gyro = new AHRS(I2C.Port.kOnboard);
+    //AHRS gyro = new AHRS(I2C.Port.kOnboard);
 
     public Drivebase()
     {
@@ -46,12 +46,14 @@ public class Drivebase extends SubsystemBase
 
     public double getHeading()
     {
-        return gyro.getAngle();
+        //return gyro.getAngle();
+        return  0;
     }
 
     public boolean isCalibrating()
     {
-        return gyro.isCalibrating();
+        //return gyro.isCalibrating();
+        return true;
     }
 
     public double getTicksLeft(){return leftMotor1.getSelectedSensorPosition();}
