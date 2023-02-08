@@ -14,8 +14,8 @@ private static Drivebase OGDrivebase;
 
         leftMotor1.getEncoder().setPositionConversionFactor(1/Constants.MultiDrivebase.Robot2020.TICKS_PER_FOOT);
         rightMotor1.getEncoder().setPositionConversionFactor(1/Constants.MultiDrivebase.Robot2020.TICKS_PER_FOOT);
-        leftMotor2.getEncoder().setPositionConversionFactor(1/Constants.MultiDrivebase.Robot2020.TICKS_PER_FOOT);
-        rightMotor2.getEncoder().setPositionConversionFactor(1/Constants.MultiDrivebase.Robot2020.TICKS_PER_FOOT);
+        leftMotor2.follow(leftMotor1);
+        rightMotor2.follow(rightMotor1);
 
     }
 
@@ -30,8 +30,6 @@ private static Drivebase OGDrivebase;
 
         leftMotor1.set(leftSpeed);
         rightMotor1.set(rightSpeed);
-        leftMotor2.set(leftSpeed);
-        rightMotor2.set(rightSpeed);
     }
 
     public double GetLeftDistance() {
