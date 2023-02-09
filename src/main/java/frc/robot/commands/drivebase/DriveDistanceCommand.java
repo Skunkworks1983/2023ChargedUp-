@@ -19,7 +19,8 @@ public class DriveDistanceCommand extends CommandBase
      * @param drivebase what drivebase to use
      * @param distanceFT The direction and distance in which to go
      */
-    public DriveDistanceCommand(Drivebase drivebase, double distanceFT)
+    public
+    DriveDistanceCommand(Drivebase drivebase, double distanceFT)
     {
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
