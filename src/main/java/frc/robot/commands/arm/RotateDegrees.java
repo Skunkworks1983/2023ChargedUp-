@@ -25,10 +25,10 @@ public class RotateDegrees extends CommandBase {
         System.out.println("Starting at " + startAngle);
 
         if (!ignore) {
-            arm.setCollectorAnglePosition(rotateTo);
+            arm.setShoulderAnglePosition(rotateTo);
         } else {
             rotateTo = startAngle + rotateTo;
-            arm.setCollectorAnglePosition(rotateTo);
+            arm.setShoulderAnglePosition(rotateTo);
         }
 
         System.out.println("Going to " + rotateTo);

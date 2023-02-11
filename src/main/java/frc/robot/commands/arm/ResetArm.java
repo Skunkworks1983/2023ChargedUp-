@@ -22,7 +22,7 @@ public class ResetArm extends CommandBase {
 
         System.out.println("Starting at " + startAngle);
 
-        arm.setCollectorAnglePosition(rotateTo);
+        arm.setShoulderAnglePosition(rotateTo);
 
         System.out.println("Going to " + rotateTo);
     }
