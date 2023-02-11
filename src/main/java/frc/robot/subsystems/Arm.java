@@ -11,6 +11,8 @@ import frc.robot.constants.Constants;
 public class Arm extends SubsystemBase
 {
     TalonFX Motor = new TalonFX(5);
+
+
     public double encoderToAngleFactor = ((1.0/ Constants.Falcon500.TICKS_PER_REV)/Constants.Arm.GEAR_RATIO)*360;
 
     private final static Arm INSTANCE = new Arm();
@@ -31,6 +33,8 @@ public class Arm extends SubsystemBase
         Motor.configNeutralDeadband(0.0);
         Motor.setInverted(InvertType.None);
     }
+
+
 
     public void setCollectorAnglePosition(double encoderPosition)
     {
