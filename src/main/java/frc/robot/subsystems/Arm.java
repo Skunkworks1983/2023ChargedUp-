@@ -27,12 +27,13 @@ public class Arm extends SubsystemBase
         Motor.selectProfileSlot(0, 0);
         Motor.setNeutralMode(NeutralMode.Brake);
         Motor.configClosedloopRamp(0.1);
-        Motor.configClosedLoopPeakOutput(0, 0.3);
+        Motor.configClosedLoopPeakOutput(0, 0.55);
         Motor.configNeutralDeadband(0.0);
         Motor.setInverted(InvertType.None);
+        Motor.setSelectedSensorPosition(0);
     }
 
-    public void setCollectorAnglePosition(double encoderPosition)
+    public void setShoulderAnglePosition(double encoderPosition)
     {
         System.out.println("setting target: " + encoderPosition / encoderToAngleFactor);
         Motor.set(TalonFXControlMode.Position, encoderPosition / encoderToAngleFactor);

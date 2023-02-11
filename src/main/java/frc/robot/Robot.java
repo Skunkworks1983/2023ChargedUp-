@@ -8,7 +8,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.arm.Rotate90Degrees;
+import frc.robot.commands.arm.Rotate180Degrees;
 import frc.robot.subsystems.Arm;
 
 
@@ -73,7 +73,7 @@ public class Robot extends TimedRobot
     {
         arm = Arm.getInstance();
 
-        Command moveArmCommand = new Rotate90Degrees(arm);
+        Command moveArmCommand = new Rotate180Degrees(arm);
 
         moveArmCommand.schedule();
         /*autonomousCommand = robotContainer.getAutonomousCommand();

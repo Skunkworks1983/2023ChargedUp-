@@ -1,16 +1,13 @@
 package frc.robot.commands.arm;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.Drivebase;
-import frc.robot.subsystems.multidrivebase.AbstractDrivebase;
 
-public class Rotate90Degrees extends CommandBase
+public class Rotate180Degrees extends CommandBase
 {
     private final Arm arm;
 
-    public Rotate90Degrees(Arm arm)
+    public Rotate180Degrees(Arm arm)
     {
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
@@ -20,7 +17,15 @@ public class Rotate90Degrees extends CommandBase
     @Override
     public void initialize()
     {
-        arm.setCollectorAnglePosition(90);
+        if((Math.abs(arm.getShoulderAngle()-180)) < 5)
+        {
+            arm.setShoulderAnglePosition(0);
+        }
+        else
+        {
+            arm.setShoulderAnglePosition(180);
+        }
+
     }
 
     @Override
@@ -33,7 +38,7 @@ public class Rotate90Degrees extends CommandBase
     public boolean isFinished()
     {
         System.out.println("current pos: " + Math.abs(arm.getShoulderAngle()));
-        if (Math.abs(arm.getShoulderAngle() - 90) < 3)
+        if (Math.abs(arm.getShoulderAngle() - 180) < 3)
         {
             System.out.println("Ended");
             return true;
