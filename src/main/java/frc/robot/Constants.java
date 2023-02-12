@@ -8,6 +8,7 @@ package frc.robot;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.math.trajectory.constraint.MaxVelocityConstraint;
 import edu.wpi.first.math.trajectory.constraint.TrajectoryConstraint;
 import frc.robot.subsystems.DriveBase;
 
@@ -20,16 +21,19 @@ import frc.robot.subsystems.DriveBase;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    private final static Constants INSTANCE = new Constants();
+    private static Constants INSTANCE;// = new Constants();
 
     //set these next 4 variables for smart driving
-    public double kMaxSpeedMetersPerSecond;
-    public double kMaxAccelerationMetersPerSecondSquared;
-    public DifferentialDriveKinematics kDriveKinematics;
-    public TrajectoryConstraint autoVoltageConstraint;
+    public double kMaxSpeedMetersPerSecond=.347472;//was 3.47472
+    public double kMaxAccelerationMetersPerSecondSquared=2.40792;//was 24.0792
+    public double kTrackwidthMeters=0.381;
+    public DifferentialDriveKinematics kDriveKinematics=
+            new DifferentialDriveKinematics(kTrackwidthMeters);
+    public TrajectoryConstraint autoVoltageConstraint= new MaxVelocityConstraint(kMaxSpeedMetersPerSecond);
 
 
     public static Constants getInstance() {
+        if(INSTANCE==null)INSTANCE = new Constants();
         return INSTANCE;
     }
 

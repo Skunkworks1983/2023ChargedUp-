@@ -8,7 +8,11 @@ import com.revrobotics.CANSparkMaxLowLevel;
 import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.I2C;
@@ -26,7 +30,7 @@ import java.util.function.Supplier;
 public class DriveBase extends SubsystemBase {
 
 public Pose3d position;
-private DifferentialDriveOdometry m_odometry;
+private DifferentialDriveOdometry odometry;
     private final static DriveBase INSTANCE = new DriveBase();
 
     @SuppressWarnings("WeakerAccess")
@@ -34,7 +38,8 @@ private DifferentialDriveOdometry m_odometry;
         return INSTANCE;
     }
 
-public Supplier<Pose2d> currentPose;
+    //public Pose2d currentPose;
+public Pose2d GetCurrentPose(){return odometry.getPoseMeters();}
     public RamseteController ramseteController;
     public double trackWidthMeters;
 
@@ -56,6 +61,7 @@ public Supplier<Pose2d> currentPose;
     private TalonFX rightBackMotorController;
     private AHRS navX;
 
+    DifferentialDriveKinematics kinematics;
 public double startingPitch =0;
 
     private double p;
@@ -74,15 +80,35 @@ public double startingPitch =0;
     public DriveBase()
     {
 
-        m_odometry =
-                new DifferentialDriveOdometry(
-                        navX.getRotation2d(), leftFrontMotorController.getSelectedSensorPosition(), rightFrontMotorController.getSelectedSensorPosition());
+        kinematics = new DifferentialDriveKinematics(Constants.getInstance().kTrackwidthMeters);
 
+
+
+        ramseteController = new RamseteController();
 
         leftFrontMotorController=new TalonFX(Constants.getInstance().leftFrontMotorController);
         rightFrontMotorController=new TalonFX(Constants.getInstance().rightFrontMotorController);
         leftBackMotorController=new TalonFX(Constants.getInstance().leftBackMotorController);
+        leftBackMotorController.follow(leftFrontMotorController);
         rightBackMotorController=new TalonFX(Constants.getInstance().rightBackMotorController);
+        rightBackMotorController.follow(rightFrontMotorController);
+double kP = .1;
+        leftFrontMotorController.config_kP(0,kP);
+        rightFrontMotorController.config_kP(0,kP);
+        leftBackMotorController.config_kP(0,kP);
+        rightBackMotorController.config_kP(0,kP);
+        rightBackMotorController.setInverted(true);
+        rightFrontMotorController.setInverted(true);
+
+        leftFrontMotorController.setSelectedSensorPosition(0);
+
+        rightFrontMotorController.setSelectedSensorPosition(0);
+
+        leftBackMotorController.setSelectedSensorPosition(0);
+
+        rightBackMotorController.setSelectedSensorPosition(0);
+
+
         navX = new AHRS(I2C.Port.kMXP);
         navX.calibrate();
         while(navX.isCalibrating());//you problbobly should not do this but it works I guess.
@@ -97,17 +123,26 @@ public double startingPitch =0;
                 //leftMotorController.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.QuadEncoder,0,100);
                 //leftMotorController.configSelectedFeedbackCoefficient(ticksToMeters(1));
 
+        odometry =
+                new DifferentialDriveOdometry(
+                        navX.getRotation2d(), leftFrontMotorController.getSelectedSensorPosition(), rightFrontMotorController.getSelectedSensorPosition());
+
+
 
     }
 
     @Override
     public void periodic() {
         // Update the odometry in the periodic block
-        m_odometry.update(
+updateOdometry();
+    }
+    public void updateOdometry() {
+        odometry.update(
                 navX.getRotation2d(), leftFrontMotorController.getSelectedSensorPosition(), rightFrontMotorController.getSelectedSensorPosition());
     }
+
     public Pose2d getPose() {
-        return m_odometry.getPoseMeters();
+        return odometry.getPoseMeters();
     }
 
     public int metersToticks(float meters){return (int)(meters*ticksPerRevolution*revolutionsPerMeter);}
@@ -136,7 +171,26 @@ public double startingPitch =0;
     }
 
 
+    public void setRightMeters(double speed){
+        var s=speed*ticksPerRevolution*revolutionsPerMeter;
+        //rightFrontMotorController.set(ControlMode.Velocity,s);
+        //rightBackMotorController.set(ControlMode.Velocity,s);
+    }
+    public void setLeftMeters(double speed){
+        var s=speed*ticksPerRevolution*revolutionsPerMeter;
+        //leftFrontMotorController.set(ControlMode.Velocity,s);
+        //leftBackMotorController.set(ControlMode.Velocity,s);
+    }
 
+
+    public void setSpeedChassis(ChassisSpeeds chassisSpeeds){
+
+        DifferentialDriveWheelSpeeds wheelSpeeds = kinematics.toWheelSpeeds(chassisSpeeds);
+        System.out.println(wheelSpeeds.leftMetersPerSecond+" , "+wheelSpeeds.rightMetersPerSecond);
+        setLeftMeters(wheelSpeeds.leftMetersPerSecond);
+        setRightMeters(wheelSpeeds.rightMetersPerSecond);
+
+    }
 
 
     public int getLeftTicks(){return (int)leftFrontMotorController.getSelectedSensorPosition();}//always front

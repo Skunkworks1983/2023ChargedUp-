@@ -6,7 +6,9 @@ import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
@@ -17,6 +19,7 @@ import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import frc.robot.Constants;
 import frc.robot.subsystems.DriveBase;
 import org.opencv.video.TrackerDaSiamRPN;
+import edu.wpi.first.wpilibj.Timer;
 
 import java.util.List;
 import java.util.function.BiConsumer;
@@ -26,8 +29,21 @@ public class SmartDriveCommand extends CommandBase {
     BiConsumer<Double, Double> metersPerSecond;
     Trajectory trajectory;
     RamseteCommand ramseteCommand;
-    public SmartDriveCommand(BiConsumer<Double, Double> metersPerSecond,Trajectory trajectory) {
-        this.metersPerSecond=metersPerSecond;
+    double prevTime;
+    Timer timer;
+    public SmartDriveCommand(Trajectory trajectory) {
+
+        timer = new Timer();
+        timer.start();
+
+        this.metersPerSecond=(leftSpeedSetpoint, rightSpeedSetpoint) -> {
+
+            var desiredPose = trajectory.sample(timer.get());
+
+
+            ChassisSpeeds refChassisSpeeds = DriveBase.getInstance().ramseteController.calculate(DriveBase.getInstance().getPose(), desiredPose);
+            DriveBase.getInstance().setSpeedChassis(refChassisSpeeds);//(refChassisSpeeds.vxMetersPerSecond, refChassisSpeeds.omegaRadiansPerSecond);
+        };
         this.trajectory=trajectory;
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
@@ -52,7 +68,7 @@ public class SmartDriveCommand extends CommandBase {
 
         ramseteCommand =
                 new RamseteCommand(trajectory,
-                        DriveBase.getInstance().currentPose,
+                        DriveBase.getInstance()::GetCurrentPose,
                         DriveBase.getInstance().ramseteController,
                         new DifferentialDriveKinematics(DriveBase.getInstance().trackWidthMeters),
                         metersPerSecond);
@@ -64,9 +80,7 @@ public class SmartDriveCommand extends CommandBase {
     @Override
     public void execute() {
 
-
-
-    }
+   }
 
     @Override
     public boolean isFinished() {
