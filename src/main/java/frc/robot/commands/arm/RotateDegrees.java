@@ -1,6 +1,7 @@
 package frc.robot.commands.arm;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
 
 public class RotateDegrees extends CommandBase {
@@ -9,6 +10,8 @@ public class RotateDegrees extends CommandBase {
     private double rotateTo;
     private final boolean ignore;
     private double startAngle;
+
+    private boolean lastAngle;
 
     public RotateDegrees(Arm arm, double rotateTo, boolean ignore) {
         // each subsystem used by the command must be passed into the
@@ -35,8 +38,19 @@ public class RotateDegrees extends CommandBase {
     }
 
     @Override
-    public void execute()
-    {
+    public void execute() {
+        double angle = arm.getShoulderAngle();
+
+        if (angle >= Constants.Arm.SWAP_ANGLE + Constants.Arm.SWAP_ANGLE_ADDITION) {
+            if (!lastAngle) {
+                lastAngle = true;
+                /*
+                todo
+
+                add arm code
+                */
+            }
+        }
     }
 
     @Override
@@ -52,8 +66,7 @@ public class RotateDegrees extends CommandBase {
     }
 
     @Override
-    public void end(boolean interrupted)
-    {
+    public void end(boolean interrupted) {
 
     }
 }
