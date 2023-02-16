@@ -6,6 +6,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.arm.RotateDegrees;
@@ -38,6 +39,7 @@ public class Robot extends TimedRobot
     {
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         // autonomous chooser on the dashboard.
+        arm = Arm.getInstance();
         robotContainer = new RobotContainer();
     }
     
@@ -66,7 +68,13 @@ public class Robot extends TimedRobot
     
     
     @Override
-    public void disabledPeriodic() {}
+    public void disabledPeriodic()
+    {
+//        System.out.println("motor output: " + arm.getCurrentOutput());
+//        System.out.println("current pos: " + arm.getShoulderAngle());
+        SmartDashboard.putNumber("motor output: " , arm.getCurrentOutput());
+        SmartDashboard.putNumber("current pos: " , arm.getShoulderAngle());
+    }
 
 
     /**
@@ -76,7 +84,7 @@ public class Robot extends TimedRobot
     public void autonomousInit() {
         arm = Arm.getInstance();
 
-        double rotateTo = 30;
+        double rotateTo = -15;
         boolean ignore = true;
 
         Command moveArmCommand = new RotateDegrees(arm, rotateTo, ignore);
@@ -94,14 +102,20 @@ public class Robot extends TimedRobot
     
     /** This method is called periodically during autonomous. */
     @Override
-    public void autonomousPeriodic() {}
+    public void autonomousPeriodic()
+    {
+//        System.out.println("motor output: " + arm.getCurrentOutput());
+//        System.out.println("current pos: " + arm.getShoulderAngle());
+        SmartDashboard.putNumber("motor output: " , arm.getCurrentOutput());
+        SmartDashboard.putNumber("current pos: " , arm.getShoulderAngle());
+    }
 
 
     @Override
     public void teleopInit() {
         arm = Arm.getInstance();
 
-        double rotateTo = 30;
+        double rotateTo = 15;
 
         Command moveArmCommand = new ResetArm(arm, rotateTo);
 

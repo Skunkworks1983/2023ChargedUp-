@@ -24,7 +24,8 @@ public class Constants extends CommandBase {
     }
 
     public class Arm {
-        public static final double COLLECTOR_MOTOR_1_KP = 0.5;
+        public static final double COLLECTOR_MOTOR_1_KP = 0.0;
+        public static final double KF = -0.035;
         public static final int GEAR_RATIO = 128;
         public static final int SWAP_ANGLE = 90;
         public static final int SWAP_ANGLE_ADDITION = 0;

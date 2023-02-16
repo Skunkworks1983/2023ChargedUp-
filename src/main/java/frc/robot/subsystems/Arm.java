@@ -23,8 +23,9 @@ public class Arm extends SubsystemBase
 
     private Arm()
     {
-        Motor.config_kP(0, Constants.Arm.COLLECTOR_MOTOR_1_KP);
         Motor.selectProfileSlot(0, 0);
+        Motor.config_kP(0, Constants.Arm.COLLECTOR_MOTOR_1_KP);
+        Motor.config_kF(0, Constants.Arm.KF);
         Motor.setNeutralMode(NeutralMode.Brake);
         Motor.configClosedloopRamp(0.1);
         Motor.configClosedLoopPeakOutput(0, 0.3);
@@ -42,5 +43,14 @@ public class Arm extends SubsystemBase
     public double getShoulderAngle()
     {
         return Motor.getSelectedSensorPosition() * encoderToAngleFactor;
+    }
+
+    public double getCurrentOutput()
+    {
+        return Motor.getMotorOutputPercent();
+    }
+
+    public void configArmKF(double kf) {
+        Motor.config_kF(0, kf);
     }
 }
