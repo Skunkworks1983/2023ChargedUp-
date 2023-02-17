@@ -7,11 +7,13 @@ package frc.robot;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -70,7 +72,11 @@ public class Robot extends TimedRobot
     
     /** This method is called once each time the robot enters Disabled mode. */
     @Override
-    public void disabledInit() {}
+    public void disabledInit() {
+
+
+        DriveBase.getInstance().setBrakeMode(false);
+    }
     
     
     @Override
@@ -81,6 +87,10 @@ public class Robot extends TimedRobot
     @Override
     public void autonomousInit()
     {
+
+        DriveBase.getInstance().setBrakeMode(true);
+        DriveBase.getInstance().resetOdometry();
+
         DriveBase.getInstance().startingPitch=DriveBase.getInstance().getPitch();
         /*
         autonomousCommand = robotContainer.getAutonomousCommand();
@@ -93,24 +103,58 @@ public class Robot extends TimedRobot
         //TurnDistancePidCommand CommandTwo = new TurnDistancePidCommand(360, .02085,10.5,1);
         //TurnDistancePidCommand CommandTwo = new TurnDistancePidCommand(360, .01085,2.5,1);//more wobble
         DriveOntoChargeStationCommand driveOntoChargeStationCommand = new DriveOntoChargeStationCommand((float).3);
-        BalanceOnChargeStationCommand balanceOnChargeStationCommand = new BalanceOnChargeStationCommand(-.023,0,0,.092);//works very well
+        BalanceOnChargeStationCommand balanceOnChargeStationCommand = new BalanceOnChargeStationCommand(.023,0,0,.1);//works very well
         //int ticksToMove =DriveBase.getInstance().metersToticks(1f);
         //MoveDistanceCommandWithProportionalControlCommand moveDistance = new MoveDistanceCommandWithProportionalControlCommand(2048*24,-.028,.25);
 
         //SequentialCommandGroup group = new SequentialCommandGroup(driveOntoChargeStationCommand,moveDistance,balanceOnChargeStationCommand);
         //CommandScheduler.getInstance().schedule(balanceOnChargeStationCommand);
         //CommandScheduler.getInstance().schedule(group);
-        Trajectory exampleTrajectory =
+        /*Trajectory exampleTrajectoryInFeet =
                 TrajectoryGenerator.generateTrajectory(
                         // Start at the origin facing the +X direction
                         new Pose2d(0, 0, new Rotation2d(0)),
                         // Pass through these two interior waypoints, making an 's' curve path
-                        List.of(new Translation2d(1, 1), new Translation2d(2, -1)),
+                        List.of(new Translation2d(4.25, 0)),
                         // End 3 meters straight ahead of where we started, facing forward
-                        new Pose2d(3, 0, new Rotation2d(0)),
+                        new Pose2d(4.25, 11+.25, new Rotation2d(Math.PI/2)),
+                        // Pass config
+                        DriveBase.getInstance().config);//*/
+
+        Trajectory exampleTrajectoryInFeet =
+                TrajectoryGenerator.generateTrajectory(
+                        // Start at the origin facing the +X direction
+                        new Pose2d(0, 0, new Rotation2d(0)),
+                        // Pass through these two interior waypoints, making an 's' curve path
+                        List.of(new Translation2d(14+(18/12), 0)),
+                        // End 3 meters straight ahead of where we started, facing forward
+                        new Pose2d(17, 10.5, new Rotation2d(Math.PI/2)),
                         // Pass config
                         DriveBase.getInstance().config);
-        SmartDriveCommand drive = new SmartDriveCommand(exampleTrajectory);
+
+
+        Trajectory exampleTrajectoryInFeetTwo =
+                TrajectoryGenerator.generateTrajectory(
+                        // Start at the origin facing the +X direction
+                        new Pose2d(17, 10.5, new Rotation2d(Math.PI/2)),
+                        // Pass through these two interior waypoints, making an 's' curve path
+                        List.of(new Translation2d(14+(18/12), 0)),
+                        // End 3 meters straight ahead of where we started, facing forward
+                        new Pose2d(0, 0, new Rotation2d(0)),
+                        // Pass config
+                        DriveBase.getInstance().config.setReversed(true));
+
+//exampleTrajectory
+
+        exampleTrajectoryInFeet=exampleTrajectoryInFeet.concatenate(exampleTrajectoryInFeetTwo);
+        TrajectoryConfig t = new TrajectoryConfig(Constants.getInstance().trajectoryMaxVelocity,Constants.getInstance().trajectoryMaxAcceleration);
+
+
+        SmartDriveCommand drive = new SmartDriveCommand(exampleTrajectoryInFeet);
+
+
+        //SequentialCommandGroup group = new SequentialCommandGroup(drive,balanceOnChargeStationCommand);
+
         CommandScheduler.getInstance().schedule(drive);
     }
     

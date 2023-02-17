@@ -13,6 +13,7 @@ import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
@@ -43,6 +44,12 @@ public class SmartDriveCommand extends CommandBase {
 
             ChassisSpeeds refChassisSpeeds = DriveBase.getInstance().ramseteController.calculate(DriveBase.getInstance().getPose(), desiredPose);
             DriveBase.getInstance().setSpeedChassis(refChassisSpeeds);//(refChassisSpeeds.vxMetersPerSecond, refChassisSpeeds.omegaRadiansPerSecond);
+        System.out.println((desiredPose.poseMeters.getX()-DriveBase.getInstance().getPose().getX())+","+(desiredPose.poseMeters.getY()-DriveBase.getInstance().getPose().getY()));
+            SmartDashboard.putNumber("x error", desiredPose.poseMeters.getX()-DriveBase.getInstance().getPose().getX());
+            SmartDashboard.putNumber("y error", desiredPose.poseMeters.getY()-DriveBase.getInstance().getPose().getY());
+            SmartDashboard.putNumber("θ error", desiredPose.poseMeters.getRotation().getDegrees()-DriveBase.getInstance().getPose().getRotation().getDegrees());
+
+
         };
         this.trajectory=trajectory;
         // each subsystem used by the command must be passed into the
@@ -85,11 +92,13 @@ public class SmartDriveCommand extends CommandBase {
     @Override
     public boolean isFinished() {
         // TODO: Make this return true when this Command no longer needs to run execute()
+        if(ramseteCommand.isFinished())System.out.println("is fineshed");
         return ramseteCommand.isFinished();
+
     }
 
     @Override
     public void end(boolean interrupted) {
-
+        System.out.println("is fineshed");
     }
 }

@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
@@ -92,7 +93,10 @@ public double startingPitch =0;
         leftBackMotorController.follow(leftFrontMotorController);
         rightBackMotorController=new TalonFX(Constants.getInstance().rightBackMotorController);
         rightBackMotorController.follow(rightFrontMotorController);
-double kP = .1;
+
+
+
+double kP = .001;//.015//.001
         leftFrontMotorController.config_kP(0,kP);
         rightFrontMotorController.config_kP(0,kP);
         leftBackMotorController.config_kP(0,kP);
@@ -111,7 +115,10 @@ double kP = .1;
 
         navX = new AHRS(I2C.Port.kMXP);
         navX.calibrate();
-        while(navX.isCalibrating());//you problbobly should not do this but it works I guess.
+        System.out.println("about to calibrate!");
+        int i =0;
+        while(navX.isCalibrating()&&i<10000)i++;//you problbobly should not do this but it works I guess.
+        if(i==100000)System.out.println("could not calibrate!!!");
         navX.getAngle();
         startingPitch=getPitch();
         System.out.println(navX.getPitch() +" Pitch at start(startingPitch)*****************************");
@@ -122,6 +129,8 @@ double kP = .1;
 
                 //leftMotorController.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.QuadEncoder,0,100);
                 //leftMotorController.configSelectedFeedbackCoefficient(ticksToMeters(1));
+
+
 
         odometry =
                 new DifferentialDriveOdometry(
@@ -138,7 +147,21 @@ updateOdometry();
     }
     public void updateOdometry() {
         odometry.update(
-                navX.getRotation2d(), leftFrontMotorController.getSelectedSensorPosition(), rightFrontMotorController.getSelectedSensorPosition());
+                navX.getRotation2d(), ticksToMeters((int)leftFrontMotorController.getSelectedSensorPosition()), ticksToMeters((int)rightFrontMotorController.getSelectedSensorPosition()));
+    }
+
+    public void resetOdometry(){
+        leftFrontMotorController.setSelectedSensorPosition(0);
+
+        rightFrontMotorController.setSelectedSensorPosition(0);
+
+        leftBackMotorController.setSelectedSensorPosition(0);
+
+        navX.reset();
+
+        rightBackMotorController.setSelectedSensorPosition(0);
+        odometry.resetPosition(new Rotation2d(0),0,0,new Pose2d(0,0,new Rotation2d(0)));
+
     }
 
     public Pose2d getPose() {
@@ -162,8 +185,8 @@ updateOdometry();
     public float ticksToMeters(int ticks){return (float)(ticks/ticksPerRevolution/revolutionsPerMeter);}
 
     public void setLeft(double speed){
-        leftFrontMotorController.set(ControlMode.PercentOutput,-speed);
-        leftBackMotorController.set(ControlMode.PercentOutput,-speed);
+        leftFrontMotorController.set(ControlMode.PercentOutput,speed);
+        leftBackMotorController.set(ControlMode.PercentOutput,speed);
     }
     public void setRight(double speed){
         rightFrontMotorController.set(ControlMode.PercentOutput,speed);
@@ -173,13 +196,13 @@ updateOdometry();
 
     public void setRightMeters(double speed){
         var s=speed*ticksPerRevolution*revolutionsPerMeter;
-        //rightFrontMotorController.set(ControlMode.Velocity,s);
-        //rightBackMotorController.set(ControlMode.Velocity,s);
+        rightFrontMotorController.set(ControlMode.Velocity,s);
+        rightBackMotorController.set(ControlMode.Velocity,s);
     }
     public void setLeftMeters(double speed){
         var s=speed*ticksPerRevolution*revolutionsPerMeter;
-        //leftFrontMotorController.set(ControlMode.Velocity,s);
-        //leftBackMotorController.set(ControlMode.Velocity,s);
+        leftFrontMotorController.set(ControlMode.Velocity,s);
+        leftBackMotorController.set(ControlMode.Velocity,s);
     }
 
 
@@ -199,6 +222,15 @@ updateOdometry();
     public double getLeftMeters(){return ticksToMeters(getLeftTicks());}
     public double getRightMeters(){return ticksToMeters(getRightTicks());}
 
+    public void setBrakeMode(boolean a){
+        NeutralMode b = NeutralMode.Coast;
+        if(a) {b=NeutralMode.Brake;}
+            rightBackMotorController.setNeutralMode(b);
+            leftBackMotorController.setNeutralMode(b);
+            rightFrontMotorController.setNeutralMode(b);
+            leftFrontMotorController.setNeutralMode(b);
+
+    }
 
     /*public void SetPidDistance(float meters){
         leftMotorController.set(TalonSRXControlMode.Position, metersToticks(meters));
