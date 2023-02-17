@@ -71,7 +71,7 @@ public class Robot extends TimedRobot
     public void disabledPeriodic()
     {
 //        System.out.println("motor output: " + arm.getCurrentOutput());
-//        System.out.println("current pos: " + arm.getShoulderAngle());
+        System.out.println("current pos: " + arm.getShoulderAngle());
         SmartDashboard.putNumber("motor output: " , arm.getCurrentOutput());
         SmartDashboard.putNumber("current pos: " , arm.getShoulderAngle());
     }
