@@ -4,6 +4,12 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 
 public class Constants extends CommandBase {
+    public static class Collector {
+        public static final int MOTOR_ID = 7;
+        public static final double  GEAR_RATIO = 2;
+        public static final double WHEEL_CIRCUMFERENCE = Math.PI * 2;
+
+    }
     public class JoystickPorts {
 
         public static final int LEFT_JOY_STICK_PORT = 0;
@@ -29,7 +35,7 @@ public class Constants extends CommandBase {
         public static final int GEAR_RATIO = 200;
     }
     public class Falcon500 {
-        public static final int TICKS_PER_REV = 2046;
+        public static final int TICKS_PER_REV = 2048;
     }
 
     public class FourMotorFalcon500 {
