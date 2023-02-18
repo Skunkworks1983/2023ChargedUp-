@@ -1,5 +1,8 @@
 package frc.robot.constants;
 
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.math.trajectory.constraint.MaxVelocityConstraint;
+import edu.wpi.first.math.trajectory.constraint.TrajectoryConstraint;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 
@@ -11,17 +14,6 @@ public class Constants extends CommandBase {
         public static final int BUTTON_STICK_PORT = 2;
     }
 
-    public class Drivebase {
-        public static final double GEAR_RATIO = 10.71;
-        public static final double WHEEL_DIAMETER = 0.5;
-        public static final double DISTANCE_KP = 0.05;
-        public static final double ROTATE_KP = 0.001;
-        public static final double ROTATE_KF = 0.04;
-        public static final double ANGLE_KP = 0.018;
-        public static final double DRIVEBASE_KF = 0.08;
-        public static final int THRESHOLD_ROTATE = 3;
-        public static final int DRIVE_OUT_OF_COMMUINITY = -9;
-    }
 
     public class Arm
     {
@@ -88,4 +80,6 @@ public class Constants extends CommandBase {
                     (TICKS_PER_MOTOR_REV * GEAR_RATIO) / (WHEEL_DIAMETER * Math.PI);
         }
     }
+
 }
+
