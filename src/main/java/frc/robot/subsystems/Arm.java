@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.Constants;
 
 public class Arm extends SubsystemBase {
-    public TalonFX Motor = new TalonFX(5);
+    public TalonFX Motor = new TalonFX(Constants.Arm.MOTOR_ID);
     public double encoderToAngleFactor = ((1.0 / Constants.Falcon500.TICKS_PER_REV) / Constants.Arm.GEAR_RATIO) * 360;
     public double lastAngle;
     public double setpoint;
