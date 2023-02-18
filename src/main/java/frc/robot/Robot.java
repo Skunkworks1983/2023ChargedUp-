@@ -5,6 +5,8 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -52,26 +54,31 @@ public class Robot extends TimedRobot
      * SmartDashboard integrated updating.
      */
     @Override
-    public void robotPeriodic()
-    {
+    public void robotPeriodic() {
         // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
         // commands, running already-scheduled commands, removing finished or interrupted commands,
         // and running subsystem periodic() methods.  This must be called from the robot's periodic
         // block in order for anything in the Command-based framework to work.
         CommandScheduler.getInstance().run();
+
+        SmartDashboard.putNumber("motor output: ", arm.getCurrentOutput());
+        SmartDashboard.putNumber("current pos: ", arm.getShoulderAngle());
+    }
+
+
+    /**
+     * This method is called once each time the robot enters Disabled mode.
+     */
+    @Override
+    public void disabledInit() {
+        arm.Motor.setNeutralMode(NeutralMode.Brake);
     }
     
     
-    /** This method is called once each time the robot enters Disabled mode. */
     @Override
-    public void disabledInit() {}
-    
-    
-    @Override
-    public void disabledPeriodic()
-    {
+    public void disabledPeriodic() {
 //        System.out.println("motor output: " + arm.getCurrentOutput());
-        System.out.println("current pos: " + arm.getShoulderAngle());
+        //System.out.println("current pos: " + arm.getShoulderAngle());
         SmartDashboard.putNumber("motor output: " , arm.getCurrentOutput());
         SmartDashboard.putNumber("current pos: " , arm.getShoulderAngle());
     }
@@ -84,7 +91,7 @@ public class Robot extends TimedRobot
     public void autonomousInit() {
         arm = Arm.getInstance();
 
-        double rotateTo = -15;
+        double rotateTo = 15;
         boolean ignore = true;
 
         Command moveArmCommand = new RotateDegrees(arm, rotateTo, ignore);
@@ -106,8 +113,7 @@ public class Robot extends TimedRobot
     {
 //        System.out.println("motor output: " + arm.getCurrentOutput());
 //        System.out.println("current pos: " + arm.getShoulderAngle());
-        SmartDashboard.putNumber("motor output: " , arm.getCurrentOutput());
-        SmartDashboard.putNumber("current pos: " , arm.getShoulderAngle());
+
     }
 
 
@@ -115,11 +121,14 @@ public class Robot extends TimedRobot
     public void teleopInit() {
         arm = Arm.getInstance();
 
-        double rotateTo = 15;
+        arm.Motor.set(TalonFXControlMode.PercentOutput, 0);
+        arm.Motor.setNeutralMode(NeutralMode.Coast);
 
-        Command moveArmCommand = new ResetArm(arm, rotateTo);
-
-        moveArmCommand.schedule();
+//        double rotateTo = 15;
+//
+//        Command moveArmCommand = new ResetArm(arm, rotateTo);
+//
+//        moveArmCommand.schedule();
 
         // This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to

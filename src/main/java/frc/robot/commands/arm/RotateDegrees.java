@@ -24,8 +24,6 @@ public class RotateDegrees extends CommandBase {
 
     @Override
     public void initialize() {
-
-
         startAngle = arm.getShoulderAngle();
 
         System.out.println("Starting at " + startAngle);
@@ -38,7 +36,7 @@ public class RotateDegrees extends CommandBase {
 
         System.out.println("kF: " + kF);
 
-        arm.configArmKF(kF);
+        //arm.configArmKF(kF, rotateTo);
 
         arm.setShoulderAnglePosition(rotateTo);
 
@@ -47,7 +45,7 @@ public class RotateDegrees extends CommandBase {
 
     @Override
     public void execute() {
-        System.out.println("motor output: " + arm.getCurrentOutput());
+        //System.out.println("motor output: " + arm.getCurrentOutput());
 
         double angle = arm.getShoulderAngle();
 
