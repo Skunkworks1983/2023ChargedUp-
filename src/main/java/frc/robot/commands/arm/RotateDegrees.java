@@ -32,12 +32,6 @@ public class RotateDegrees extends CommandBase {
             rotateTo = startAngle + rotateTo;
         }
 
-        double kF = (Constants.Arm.KF / (rotateTo / arm.encoderToAngleFactor)) * 1024;
-
-        System.out.println("kF: " + kF);
-
-        //arm.configArmKF(kF, rotateTo);
-
         arm.setShoulderAnglePosition(rotateTo);
 
         System.out.println("Going to " + rotateTo);
