@@ -89,14 +89,14 @@ public class Robot extends TimedRobot
      */
     @Override
     public void autonomousInit() {
-        arm = Arm.getInstance();
-
-        double rotateTo = 15;
-        boolean ignore = true;
-
-        Command moveArmCommand = new RotateDegrees(arm, rotateTo, ignore);
-
-        moveArmCommand.schedule();
+//        arm = Arm.getInstance();
+//
+//        double rotateTo = 15;
+//        boolean ignore = true;
+//
+//        Command moveArmCommand = new RotateDegrees(arm, rotateTo, ignore);
+//
+//        moveArmCommand.schedule();
         /*autonomousCommand = robotContainer.getAutonomousCommand();
         
         // schedule the autonomous command (example)
