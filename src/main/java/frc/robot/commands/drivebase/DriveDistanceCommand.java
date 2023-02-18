@@ -1,7 +1,7 @@
 package frc.robot.commands.drivebase;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.constants.Constants;
+import frc.robot.constants.DrivebaseConstants;
 import frc.robot.subsystems.Drivebase;
 
 
@@ -58,7 +58,7 @@ public class DriveDistanceCommand extends CommandBase
         {
             direction = 1;
         }
-        double speed = Constants.Drivebase.DISTANCE_KP * error + Constants.Drivebase.DRIVEBASE_KF * direction;
+        double speed = DrivebaseConstants.DISTANCE_KP * error + DrivebaseConstants.DRIVEBASE_KF * direction;
         if (speed > 0.3)
         {
             speed = 0.3;
@@ -67,8 +67,8 @@ public class DriveDistanceCommand extends CommandBase
         {
             speed = -0.3;
         }
-        double speedLeft = speed + Math.max(Math.min(Constants.Drivebase.ANGLE_KP*(startDegree - drivebase.getHeading()), 0.25), -0.25);
-        double speedRight = speed - Math.max(Math.min(Constants.Drivebase.ANGLE_KP*(startDegree - drivebase.getHeading()), 0.25), -0.25);
+        double speedLeft = speed + Math.max(Math.min(DrivebaseConstants.ANGLE_KP*(startDegree - drivebase.getHeading()), 0.25), -0.25);
+        double speedRight = speed - Math.max(Math.min(DrivebaseConstants.ANGLE_KP*(startDegree - drivebase.getHeading()), 0.25), -0.25);
         drivebase.runMotor(speedLeft, speedRight);
         //SmartDashboard.putNumber("FT moved", drivebase.getPosLeft()-startDistanceFT);
     }

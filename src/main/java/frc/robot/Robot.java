@@ -5,12 +5,21 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.*;
 import frc.robot.subsystems.Drivebase;
+import frc.robot.constants.DrivebaseConstants;
+
+import java.util.List;
 //import edu.wpi.first.wpilibj;
 
 
@@ -70,25 +79,23 @@ public class Robot extends TimedRobot
     @Override
     public void autonomousInit()
     {
-        Drivebase.getInstance().startingPitch= Drivebase.getInstance().getPitch();
-        /*
-        autonomousCommand = robotContainer.getAutonomousCommand();
-        
-        // schedule the autonomous command (example)
-        if (autonomousCommand != null)
-        {
-            autonomousCommand.schedule();
-        }*/
-        //TurnDistancePidCommand CommandTwo = new TurnDistancePidCommand(360, .02085,10.5,1);
-        //TurnDistancePidCommand CommandTwo = new TurnDistancePidCommand(360, .01085,2.5,1);//more wobble
-        DriveOntoChargeStationCommand driveOntoChargeStationCommand = new DriveOntoChargeStationCommand((float).3);
-        BalanceOnChargeStationCommand balanceOnChargeStationCommand = new BalanceOnChargeStationCommand(-.023,0,0,.092);//works very well
-        int ticksToMove = Drivebase.getInstance().metersToticks(1f);
-        MoveDistanceCommandWithProportionalControlCommand moveDistance = new MoveDistanceCommandWithProportionalControlCommand(2048*24,-.028,.25);
+        Trajectory exampleTrajectoryInFeet =
+                TrajectoryGenerator.generateTrajectory(
+                        // Start at the origin facing the +X direction
+                        new Pose2d(0, 0, new Rotation2d(0)),
+                        // Pass through these two interior waypoints, making an 's' curve path
+                        List.of(new Translation2d(14+(18/12), 0)),
+                        // End 3 meters straight ahead of where we started, facing forward
+                        new Pose2d(17, 10.5, new Rotation2d(Math.PI/2)),
+                        // Pass config
+                        Drivebase.getInstance().config);
 
-        SequentialCommandGroup group = new SequentialCommandGroup(driveOntoChargeStationCommand,moveDistance,balanceOnChargeStationCommand);
-        //CommandScheduler.getInstance().schedule(balanceOnChargeStationCommand);
-        CommandScheduler.getInstance().schedule(group);
+        TrajectoryConfig t = new TrajectoryConfig(DrivebaseConstants.TRAJECTORY_MAX_VELOCITY,DrivebaseConstants.TRAJECTORY_MAX_ACCELERATION);
+
+
+        SmartDriveCommand drive = new SmartDriveCommand(exampleTrajectoryInFeet);
+
+        CommandScheduler.getInstance().schedule(drive);
     }
     
     /** This method is called periodically during autonomous. */

@@ -1,26 +1,18 @@
-package frc.robot.commands;
+package frc.robot.commands.drivebase;
 
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.RamseteController;
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
-import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
-import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
-import frc.robot.Constants;
 import frc.robot.subsystems.Drivebase;
-import org.opencv.video.TrackerDaSiamRPN;
-import edu.wpi.first.wpilibj.Timer;
 
 import java.util.List;
 import java.util.function.BiConsumer;
@@ -44,7 +36,7 @@ public class SmartDriveCommand extends CommandBase {
 
             ChassisSpeeds refChassisSpeeds = Drivebase.getInstance().ramseteController.calculate(Drivebase.getInstance().getPose(), desiredPose);
             Drivebase.getInstance().setSpeedChassis(refChassisSpeeds);//(refChassisSpeeds.vxMetersPerSecond, refChassisSpeeds.omegaRadiansPerSecond);
-            System.out.println((desiredPose.poseMeters.getX()-Drivebase.getInstance().getPose().getX())+","+(desiredPose.poseMeters.getY()-Drivebase.getInstance().getPose().getY()));
+        System.out.println((desiredPose.poseMeters.getX()-Drivebase.getInstance().getPose().getX())+","+(desiredPose.poseMeters.getY()-Drivebase.getInstance().getPose().getY()));
             SmartDashboard.putNumber("x error", desiredPose.poseMeters.getX()-Drivebase.getInstance().getPose().getX());
             SmartDashboard.putNumber("y error", desiredPose.poseMeters.getY()-Drivebase.getInstance().getPose().getY());
             SmartDashboard.putNumber("θ error", desiredPose.poseMeters.getRotation().getDegrees()-Drivebase.getInstance().getPose().getRotation().getDegrees());
@@ -87,7 +79,7 @@ public class SmartDriveCommand extends CommandBase {
     @Override
     public void execute() {
 
-    }
+   }
 
     @Override
     public boolean isFinished() {
