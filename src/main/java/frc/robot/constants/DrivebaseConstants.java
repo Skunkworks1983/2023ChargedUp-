@@ -11,6 +11,10 @@ public class DrivebaseConstants {
     public static final double ROTATE_KP = 0.001;
     public static final double ROTATE_KF = 0.04;
 
+    public static final double KS=.093822;
+    public static final double KV=.57874;
+    public static final double KA=.082382;
+
     public static final double TRACK_WIDTH_METERS=0.381;
 
     public static final double MAX_SPEED_METERS_PER_SECOND=1;                          //was 3.47472

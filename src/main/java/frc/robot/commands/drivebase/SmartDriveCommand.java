@@ -5,6 +5,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.Timer;
@@ -23,24 +24,35 @@ public class SmartDriveCommand extends CommandBase {
     Trajectory trajectory;
     RamseteCommand ramseteCommand;
     double prevTime;
-    Timer timer;
+
+    private DifferentialDriveWheelSpeeds prevSpeeds;
+    private final Timer timer = new Timer();
     public SmartDriveCommand(Trajectory trajectory) {
 
-        timer = new Timer();
         timer.start();
 
         this.metersPerSecond=(leftSpeedSetpoint, rightSpeedSetpoint) -> {
+
+            double curTime = timer.get();
+            double dt = curTime - prevTime;
 
             var desiredPose = trajectory.sample(timer.get());
 
 
             ChassisSpeeds refChassisSpeeds = Drivebase.getInstance().ramseteController.calculate(Drivebase.getInstance().getPose(), desiredPose);
-            Drivebase.getInstance().setSpeedChassis(refChassisSpeeds);//(refChassisSpeeds.vxMetersPerSecond, refChassisSpeeds.omegaRadiansPerSecond);
-        System.out.println((desiredPose.poseMeters.getX()-Drivebase.getInstance().getPose().getX())+","+(desiredPose.poseMeters.getY()-Drivebase.getInstance().getPose().getY()));
+
+            var rightAcc=(rightSpeedSetpoint - prevSpeeds.rightMetersPerSecond) / dt);
+            Drivebase.getInstance().setSpeedChassis(refChassisSpeeds,leftAcc,rightAcc);
+            //(refChassisSpeeds.vxMetersPerSecond, refChassisSpeeds.omegaRadiansPerSecond);
+
+            System.out.println((desiredPose.poseMeters.getX()-Drivebase.getInstance().getPose().getX())+","+(desiredPose.poseMeters.getY()-Drivebase.getInstance().getPose().getY()));
             SmartDashboard.putNumber("x error", desiredPose.poseMeters.getX()-Drivebase.getInstance().getPose().getX());
             SmartDashboard.putNumber("y error", desiredPose.poseMeters.getY()-Drivebase.getInstance().getPose().getY());
             SmartDashboard.putNumber("θ error", desiredPose.poseMeters.getRotation().getDegrees()-Drivebase.getInstance().getPose().getRotation().getDegrees());
 
+
+            prevTime = curTime;
+            prevSpeeds = Drivebase.getInstance().ramseteController.calculate(Drivebase.getInstance().getPose(), desiredPose);
 
         };
         this.trajectory=trajectory;
