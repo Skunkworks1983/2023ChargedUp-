@@ -8,12 +8,13 @@ import frc.robot.subsystems.Drivebase;
 
 public class Oi
     {
+        public static Oi Instance;
         Joystick leftStick;
         Joystick rightStick;
 
         public Oi(Drivebase drivebase)
         {
-
+            Instance = this;
             leftStick = new Joystick(Constants.JoystickPorts.LEFT_JOY_STICK_PORT);
             rightStick = new Joystick(Constants.JoystickPorts.RIGHT_JOY_STICK_PORT);
 

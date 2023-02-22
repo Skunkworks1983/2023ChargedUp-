@@ -9,7 +9,9 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.arm.Rotate90Degrees;
+import frc.robot.commands.autos.CollectorTestingCommand;
 import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Collector;
 
 
 /**
@@ -71,11 +73,15 @@ public class Robot extends TimedRobot
     @Override
     public void autonomousInit()
     {
-        arm = Arm.getInstance();
+        Command runCollector = new CollectorTestingCommand();
+        runCollector.schedule();
 
-        Command moveArmCommand = new Rotate90Degrees(arm);
 
-        moveArmCommand.schedule();
+        //arm = Arm.getInstance();
+
+        //Command moveArmCommand = new Rotate90Degrees(arm);
+
+        //moveArmCommand.schedule();
         /*autonomousCommand = robotContainer.getAutonomousCommand();
         
         // schedule the autonomous command (example)
@@ -102,6 +108,8 @@ public class Robot extends TimedRobot
         {
             autonomousCommand.cancel();
         }
+        Command collectorRun = new CollectorTestingCommand();
+        collectorRun.schedule();
     }
     
     

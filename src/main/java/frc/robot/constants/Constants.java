@@ -5,12 +5,14 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class Constants extends CommandBase {
     public static class Collector {
-        public static final int MOTOR_ID = 7;
+        public static final int MOTOR_ID = 5;
+
+
         public static final double  GEAR_RATIO = 2;
         public static final double WHEEL_CIRCUMFERENCE = Math.PI * 2;
-        public static final int CUBE_BREAK_1_PORT = 0;
-        public static final int CUBE_BREAK_2_PORT = 0;
-        public static final double INTAKE_SPEED = 4 / .5; //inches per second
+        public static final int CUBE_BREAK_1_PORT = 2;
+        public static final int CUBE_BREAK_2_PORT = 3;
+        public static final double INTAKE_SPEED = .12; //inches per second
 
         public static final double EXPEL_DISTANCE = 10; // in inches
         public static final double EXPEL_DISTANCE_TICKS =
