@@ -10,9 +10,11 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 //import frc.robot.constants.OperatorConstants;
 import frc.robot.commands.drivebase.DriveDistanceCommand;
+import frc.robot.commands.drivebase.TankDrive;
 import frc.robot.services.Oi;
 import frc.robot.subsystems.multidrivebase.Drivebase;
 import frc.robot.subsystems.multidrivebase.Drivebase4MotorSparks;
+import frc.robot.subsystems.multidrivebase.Drivebase4MotorTalonFX;
 
 
 /**
@@ -25,10 +27,10 @@ public class RobotContainer
 {
     // The robot's subsystems and commands are defined here...
 
-    private final Drivebase drivebase = Drivebase4MotorSparks.GetDrivebase();
+    private final Drivebase drivebase = Drivebase4MotorTalonFX.GetDrivebase();
     private final Oi oi = new Oi(drivebase);
 
-    private final DriveDistanceCommand autoCommand = new DriveDistanceCommand(drivebase, 180);
+    private final TankDrive teleopCommand = new TankDrive(drivebase, oi);
     
     
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -66,6 +68,6 @@ public class RobotContainer
     public Command getAutonomousCommand()
     {
         // An example command will be run in autonomous
-        return autoCommand;
+        return teleopCommand;
     }
 }
