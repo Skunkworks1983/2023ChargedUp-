@@ -90,22 +90,9 @@ public class Robot extends TimedRobot
      */
     @Override
     public void autonomousInit() {
-        /*autonomousCommand = robotContainer.getAutonomousCommand();
-    public void autonomousInit()
-
-    {
-
-        //autonomousCommand = new DriveDistanceCommand(drivebase, 5);
-
-
-        // schedule the autonomous command (example)
-        if (autonomousCommand != null)
-        {
-            autonomousCommand.schedule();
-        }
+        autonomousCommand = robotContainer.getAutonomousCommand();
     }
     
-
     public void autonomousPeriodic()
     {
     }

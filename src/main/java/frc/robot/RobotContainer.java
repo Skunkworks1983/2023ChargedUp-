@@ -16,7 +16,6 @@ import frc.robot.subsystems.multidrivebase.Drivebase;
 import frc.robot.subsystems.multidrivebase.Drivebase4MotorSparks;
 import frc.robot.subsystems.multidrivebase.Drivebase4MotorTalonFX;
 import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.Drivebase;
 import frc.robot.subsystems.ExampleSubsystem;
 
 
@@ -31,7 +30,7 @@ public class RobotContainer
 {
     // The robot's subsystems and commands are defined here...
 
-    private final Drivebase drivebase = new Drivebase();
+    private final Drivebase drivebase = Drivebase4MotorTalonFX.GetDrivebase();
     private final Oi oi = new Oi(drivebase);
 
     private final TankDrive autoCommand = new TankDrive(drivebase, oi);
