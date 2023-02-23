@@ -2,47 +2,52 @@ package frc.robot.services;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.arm.RotateDegrees;
 import frc.robot.constants.Constants;
+import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drivebase;
 
 
-public class Oi
-    {
-        Joystick leftStick;
-        Joystick rightStick;
+public class Oi {
+    Joystick leftStick;
+    Joystick rightStick;
 
-        public Oi(Drivebase drivebase)
-        {
+    JoystickButton armUpButton;
+    JoystickButton armDownButton;
 
-            leftStick = new Joystick(Constants.JoystickPorts.LEFT_JOY_STICK_PORT);
-            rightStick = new Joystick(Constants.JoystickPorts.RIGHT_JOY_STICK_PORT);
+    Arm arm = Arm.getInstance();
 
-            //button sticks
+    public Oi(Drivebase drivebase) {
+        System.out.println("oi init");
 
-            //when held
+        leftStick = new Joystick(Constants.JoystickPorts.LEFT_JOY_STICK_PORT);
+        rightStick = new Joystick(Constants.JoystickPorts.RIGHT_JOY_STICK_PORT);
 
-            // when pressed
-        }
+        armUpButton = new JoystickButton(leftStick, Constants.OIButtons.ARM_UP_BUTTON);
+        armDownButton = new JoystickButton(leftStick, Constants.OIButtons.ARM_DOWN_BUTTON);
 
-        public double getLeftY()
-        {
-            return leftStick.getY();
-        }
+        //button sticks
 
-        public double getRightY()
-        {
-            return rightStick.getY();
-        }
+        //when held
 
-        public double getLeftX()
-        {
-            return leftStick.getX();
-        }
-
-        public double getRightX()
-        {
-            return rightStick.getX();
-        }
-
-
+        // when pressed
+        armUpButton.onTrue(new RotateDegrees(arm, 135, true));
+        armDownButton.onTrue(new RotateDegrees(arm, -135, true));
     }
+
+    public double getLeftY() {
+        return leftStick.getY();
+    }
+
+    public double getRightY() {
+        return rightStick.getY();
+    }
+
+    public double getLeftX() {
+        return leftStick.getX();
+    }
+
+    public double getRightX() {
+        return rightStick.getX();
+    }
+}

@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.arm.RotateDegrees;
 import frc.robot.subsystems.Arm;
 
 
@@ -59,7 +60,8 @@ public class Robot extends TimedRobot
         CommandScheduler.getInstance().run();
 
         SmartDashboard.putNumber("motor output: ", arm.getCurrentOutput());
-        SmartDashboard.putNumber("current pos: ", arm.getShoulderAngle());
+//        SmartDashboard.putNumber("current pos: ", arm.getShoulderAngle());
+//        SmartDashboard.putNumber("error", arm.Motor.getClosedLoopError());
     }
 
 
@@ -76,8 +78,8 @@ public class Robot extends TimedRobot
     public void disabledPeriodic() {
 //        System.out.println("motor output: " + arm.getCurrentOutput());
         //System.out.println("current pos: " + arm.getShoulderAngle());
-        SmartDashboard.putNumber("motor output: " , arm.getCurrentOutput());
-        SmartDashboard.putNumber("current pos: " , arm.getShoulderAngle());
+//        SmartDashboard.putNumber("motor output: " , arm.getCurrentOutput());
+//        SmartDashboard.putNumber("current pos: " , arm.getShoulderAngle());
     }
 
 
@@ -86,14 +88,14 @@ public class Robot extends TimedRobot
      */
     @Override
     public void autonomousInit() {
-//        arm = Arm.getInstance();
-//
-//        double rotateTo = 15;
-//        boolean ignore = true;
-//
-//        Command moveArmCommand = new RotateDegrees(arm, rotateTo, ignore);
-//
-//        moveArmCommand.schedule();
+        arm = Arm.getInstance();
+
+        double rotateTo = 45;
+        boolean ignore = true;
+
+        Command moveArmCommand = new RotateDegrees(arm, rotateTo, ignore);
+
+        moveArmCommand.schedule();
         /*autonomousCommand = robotContainer.getAutonomousCommand();
         
         // schedule the autonomous command (example)
@@ -116,8 +118,8 @@ public class Robot extends TimedRobot
 
     @Override
     public void teleopInit() {
-        arm = Arm.getInstance();
-
+//        arm = Arm.getInstance();
+//
         arm.Motor.set(TalonFXControlMode.PercentOutput, 0);
         arm.Motor.setNeutralMode(NeutralMode.Coast);
 
