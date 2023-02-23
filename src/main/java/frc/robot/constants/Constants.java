@@ -11,6 +11,11 @@ public class Constants extends CommandBase {
         public static final int BUTTON_STICK_PORT = 2;
     }
 
+    public class OIButtons {
+        public static final int ARM_UP_BUTTON = 12;
+        public static final int ARM_DOWN_BUTTON = 11;
+    }
+
     public class Drivebase {
         public static final double GEAR_RATIO = 10.71;
         public static final double WHEEL_DIAMETER = 0.5;
@@ -24,12 +29,16 @@ public class Constants extends CommandBase {
     }
 
     public class Arm {
-        public static final double KP = 0;
+        public static final double TICKS_TO_DEGREES = ((1.0 / Constants.Falcon500.TICKS_PER_REV) / Constants.Arm.GEAR_RATIO) * 360;
+        public static final double KP = 0.064;
+        public static final double KI = 0;
         public static final double KF = -0.0385;
+        public static final double PEAK_OUTPUT = 0.3;
+        public static final double SHOULDER_TOLERANCE = 2;
         public static final int GEAR_RATIO = 128;
         public static final int SWAP_ANGLE = 0;
         public static final int SWAP_ANGLE_ADDITION = 0;
-        public static final double RESTING_ANGLE = -105.2;
+        public static final double RESTING_ANGLE = -96.6;
         public static final double ANGLE_UPDATE = 0.5;
         public static final int MOTOR_ID = 5;
     }

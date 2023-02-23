@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.drivebase.TankDrive;
+import frc.robot.commands.arm.RotateDegrees;
 import frc.robot.subsystems.Arm;
 import frc.robot.commands.drivebase.DriveDistanceCommand;
 import frc.robot.services.Oi;
@@ -67,9 +68,6 @@ public class Robot extends TimedRobot
         // and running subsystem periodic() methods.  This must be called from the robot's periodic
         // block in order for anything in the Command-based framework to work.
         CommandScheduler.getInstance().run();
-
-        SmartDashboard.putNumber("motor output: ", arm.getCurrentOutput());
-        SmartDashboard.putNumber("current pos: ", arm.getShoulderAngle());
     }
 
 
@@ -84,10 +82,6 @@ public class Robot extends TimedRobot
     
     @Override
     public void disabledPeriodic() {
-//        System.out.println("motor output: " + arm.getCurrentOutput());
-        //System.out.println("current pos: " + arm.getShoulderAngle());
-        SmartDashboard.putNumber("motor output: " , arm.getCurrentOutput());
-        SmartDashboard.putNumber("current pos: " , arm.getShoulderAngle());
     }
 
 
@@ -95,13 +89,15 @@ public class Robot extends TimedRobot
      * This autonomous runs the autonomous command selected by your {@link RobotContainer} class.
      */
     @Override
+    public void autonomousInit() {
+        /*autonomousCommand = robotContainer.getAutonomousCommand();
     public void autonomousInit()
 
     {
 
         //autonomousCommand = new DriveDistanceCommand(drivebase, 5);
 
-        
+
         // schedule the autonomous command (example)
         if (autonomousCommand != null)
         {
@@ -109,12 +105,12 @@ public class Robot extends TimedRobot
         }
     }
     
-    
-    /** This method is called periodically during autonomous. */
-    @Override
-    public void autonomousPeriodic() {}
-    
-    
+
+    public void autonomousPeriodic()
+    {
+    }
+
+
     @Override
     public void teleopInit() {
         //arm = Arm.getInstance();
@@ -128,6 +124,8 @@ public class Robot extends TimedRobot
         Command TankDrive = new TankDrive(drivebase, oi);
 //
         TankDrive.schedule();
+//        arm.Motor.set(TalonFXControlMode.PercentOutput, 0);
+//        arm.Motor.setNeutralMode(NeutralMode.Coast);
 
         // This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to
