@@ -2,7 +2,7 @@ package frc.robot.commands.drivebase;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.constants.Constants;
-import frc.robot.subsystems.Drivebase;
+import frc.robot.subsystems.multidrivebase.Drivebase;
 
 public class RotateCommand extends CommandBase
 {
@@ -32,6 +32,8 @@ public class RotateCommand extends CommandBase
     public void execute()
     {
         double error = finishDegree - drivebase.getHeading();
+
+        System.out.println("error: "+error+" heading "+drivebase.getHeading());
         double speed = (Constants.Drivebase.ANGLE_KP * error) + Math.copySign(Constants.Drivebase.ROTATE_KF, error);
         if (speed > 0.5)
         {

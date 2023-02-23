@@ -34,8 +34,7 @@ public class Constants extends CommandBase {
         public static final int RIGHT_MOTOR_2_DEVICE_NUMBER = 3;
     }
 
-
-    public class MultiDrivebase {
+// MULTI-DRIVEBASE
         public class Robot2022 {
 
             //Motor Ports
@@ -43,6 +42,8 @@ public class Constants extends CommandBase {
             public static final int RIGHT_MOTOR_1 = 1;
             public static final int LEFT_MOTOR_2 = 3;
             public static final int RIGHT_MOTOR_2 = 2;
+            public static final int LEFT_DIRECTION = 1; //Wheels turn in correct direction
+            public static final int RIGHT_DIRECTION = -1;
 
             //Encoders
             public static final double GEAR_RATIO = 10.71;
@@ -58,6 +59,9 @@ public class Constants extends CommandBase {
             public static final int RIGHT_MOTOR_1 = 13;
             public static final int LEFT_MOTOR_2 = 2;
             public static final int RIGHT_MOTOR_2 = 12;
+
+            public static final int LEFT_DIRECTION = 1;  //Wheels turn in correct direction
+            public static final int RIGHT_DIRECTION = 1;
 
             //Encoders
             public static final double GEAR_RATIO = 55;
@@ -75,6 +79,9 @@ public class Constants extends CommandBase {
             public static final int LEFT_MOTOR_2 = 4;
             public static final int RIGHT_MOTOR_2 = 2;
 
+            public static final int LEFT_DIRECTION = 1; //Wheels turn in correct direction
+            public static final int RIGHT_DIRECTION = -1;
+
             //Encoders
             public static final double GEAR_RATIO = 10.71;
             public static final double WHEEL_DIAMETER = .5; //feet
@@ -83,4 +90,3 @@ public class Constants extends CommandBase {
                     (TICKS_PER_MOTOR_REV * GEAR_RATIO) / (WHEEL_DIAMETER * Math.PI);
         }
     }
-}
