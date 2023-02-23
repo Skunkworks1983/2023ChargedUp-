@@ -58,10 +58,6 @@ public class Robot extends TimedRobot
         // and running subsystem periodic() methods.  This must be called from the robot's periodic
         // block in order for anything in the Command-based framework to work.
         CommandScheduler.getInstance().run();
-
-        SmartDashboard.putNumber("motor output: ", arm.getCurrentOutput());
-//        SmartDashboard.putNumber("current pos: ", arm.getShoulderAngle());
-//        SmartDashboard.putNumber("error", arm.Motor.getClosedLoopError());
     }
 
 
@@ -76,10 +72,6 @@ public class Robot extends TimedRobot
     
     @Override
     public void disabledPeriodic() {
-//        System.out.println("motor output: " + arm.getCurrentOutput());
-        //System.out.println("current pos: " + arm.getShoulderAngle());
-//        SmartDashboard.putNumber("motor output: " , arm.getCurrentOutput());
-//        SmartDashboard.putNumber("current pos: " , arm.getShoulderAngle());
     }
 
 
@@ -88,14 +80,6 @@ public class Robot extends TimedRobot
      */
     @Override
     public void autonomousInit() {
-        arm = Arm.getInstance();
-
-        double rotateTo = 45;
-        boolean ignore = true;
-
-        Command moveArmCommand = new RotateDegrees(arm, rotateTo, ignore);
-
-        moveArmCommand.schedule();
         /*autonomousCommand = robotContainer.getAutonomousCommand();
         
         // schedule the autonomous command (example)
@@ -110,24 +94,13 @@ public class Robot extends TimedRobot
     @Override
     public void autonomousPeriodic()
     {
-//        System.out.println("motor output: " + arm.getCurrentOutput());
-//        System.out.println("current pos: " + arm.getShoulderAngle());
-
     }
 
 
     @Override
     public void teleopInit() {
-//        arm = Arm.getInstance();
-//
-        arm.Motor.set(TalonFXControlMode.PercentOutput, 0);
-        arm.Motor.setNeutralMode(NeutralMode.Coast);
-
-//        double rotateTo = 15;
-//
-//        Command moveArmCommand = new ResetArm(arm, rotateTo);
-//
-//        moveArmCommand.schedule();
+//        arm.Motor.set(TalonFXControlMode.PercentOutput, 0);
+//        arm.Motor.setNeutralMode(NeutralMode.Coast);
 
         // This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to

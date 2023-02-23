@@ -31,8 +31,8 @@ public class Oi {
         //when held
 
         // when pressed
-        armUpButton.onTrue(new RotateDegrees(arm, 135, true));
-        armDownButton.onTrue(new RotateDegrees(arm, -135, true));
+        armUpButton.onTrue(new RotateDegrees(arm, 45, true));
+        armDownButton.onTrue(new RotateDegrees(arm, -45, true));
     }
 
     public double getLeftY() {
