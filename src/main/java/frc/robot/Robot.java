@@ -5,12 +5,21 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.arm.Rotate90Degrees;
 import frc.robot.commands.autos.CollectorTestingCommand;
+import frc.robot.commands.drivebase.TankDrive;
+import frc.robot.commands.arm.RotateDegrees;
 import frc.robot.subsystems.Arm;
+import frc.robot.commands.drivebase.DriveDistanceCommand;
+import frc.robot.services.Oi;
+import frc.robot.subsystems.multidrivebase.Drivebase;
+import frc.robot.subsystems.multidrivebase.Drivebase4MotorSparks;
+import frc.robot.subsystems.multidrivebase.Drivebase4MotorTalonFX;
 import frc.robot.subsystems.Collector;
 
 
@@ -22,12 +31,15 @@ import frc.robot.subsystems.Collector;
  */
 public class Robot extends TimedRobot
 {
+    private Drivebase drivebase = Drivebase4MotorTalonFX.GetDrivebase();
+    private Oi oi = new Oi(drivebase);
+
+
     private Command autonomousCommand;
     
     private RobotContainer robotContainer;
 
     private Arm arm;
-
     
     
     /**
@@ -39,6 +51,7 @@ public class Robot extends TimedRobot
     {
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         // autonomous chooser on the dashboard.
+        arm = Arm.getInstance();
         robotContainer = new RobotContainer();
     }
     
@@ -51,64 +64,63 @@ public class Robot extends TimedRobot
      * SmartDashboard integrated updating.
      */
     @Override
-    public void robotPeriodic()
-    {
+    public void robotPeriodic() {
         // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
         // commands, running already-scheduled commands, removing finished or interrupted commands,
         // and running subsystem periodic() methods.  This must be called from the robot's periodic
         // block in order for anything in the Command-based framework to work.
         CommandScheduler.getInstance().run();
     }
-    
-    
-    /** This method is called once each time the robot enters Disabled mode. */
+
+
+    /**
+     * This method is called once each time the robot enters Disabled mode.
+     */
     @Override
-    public void disabledInit() {}
-    
-    
-    @Override
-    public void disabledPeriodic() {}
-    
-    
-    /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
-    @Override
-    public void autonomousInit()
-    {
-        Command runCollector = new CollectorTestingCommand();
-        runCollector.schedule();
-
-
-        //arm = Arm.getInstance();
-
-        //Command moveArmCommand = new Rotate90Degrees(arm);
-
-        //moveArmCommand.schedule();
-        /*autonomousCommand = robotContainer.getAutonomousCommand();
-        
-        // schedule the autonomous command (example)
-        if (autonomousCommand != null)
-        {
-            autonomousCommand.schedule();
-        } */
+    public void disabledInit() {
+        arm.Motor.setNeutralMode(NeutralMode.Brake);
     }
     
     
-    /** This method is called periodically during autonomous. */
     @Override
-    public void autonomousPeriodic() {}
-    
-    
+    public void disabledPeriodic() {
+    }
+
+
+    /**
+     * This autonomous runs the autonomous command selected by your {@link RobotContainer} class.
+     */
     @Override
-    public void teleopInit()
+    public void autonomousInit()
     {
+
+    }
+
+
+    @Override
+    public void teleopInit() {
+        //arm = Arm.getInstance();
+
+        arm.Motor.set(TalonFXControlMode.PercentOutput, 0);
+        arm.Motor.setNeutralMode(NeutralMode.Coast);
+
+
+//        double rotateTo = 15;
+//
+        Command TankDrive = new TankDrive(drivebase, oi);
+//
+        TankDrive.schedule();
+//        arm.Motor.set(TalonFXControlMode.PercentOutput, 0);
+//        arm.Motor.setNeutralMode(NeutralMode.Coast);
+
         // This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove
         // this line or comment it out.
-        if (autonomousCommand != null)
-        {
-            autonomousCommand.cancel();
-        }
+//        if (autonomousCommand != null)
+//        {
+//            autonomousCommand.cancel();
+//        }
         Command collectorRun = new CollectorTestingCommand();
         collectorRun.schedule();
     }

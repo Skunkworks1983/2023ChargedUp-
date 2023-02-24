@@ -32,6 +32,11 @@ public class Constants extends CommandBase {
         public static final int BUTTON_STICK_PORT = 2;
     }
 
+    public class OIButtons {
+        public static final int ARM_UP_BUTTON = 12;
+        public static final int ARM_DOWN_BUTTON = 11;
+    }
+
     public class Drivebase {
         public static final double GEAR_RATIO = 10.71;
         public static final double WHEEL_DIAMETER = 0.5;
@@ -44,11 +49,21 @@ public class Constants extends CommandBase {
         public static final int DRIVE_OUT_OF_COMMUINITY = -9;
     }
 
-    public class Arm
-    {
-        public static final double COLLECTOR_MOTOR_1_KP = 0.5;
-        public static final int GEAR_RATIO = 200;
+    public class Arm {
+        public static final double TICKS_TO_DEGREES = ((1.0 / Constants.Falcon500.TICKS_PER_REV) / Constants.Arm.GEAR_RATIO) * 360;
+        public static final double KP = 0.064;
+        public static final double KI = 0;
+        public static final double KF = -0.0385;
+        public static final double PEAK_OUTPUT = 0.3;
+        public static final double SHOULDER_TOLERANCE = 2;
+        public static final int GEAR_RATIO = 128;
+        public static final int SWAP_ANGLE = 0;
+        public static final int SWAP_ANGLE_ADDITION = 0;
+        public static final double RESTING_ANGLE = -96.6;
+        public static final double ANGLE_UPDATE = 0.5;
+        public static final int MOTOR_ID = 5;
     }
+
     public class Falcon500 {
         public static final int TICKS_PER_REV = 2048;
     }
@@ -60,8 +75,7 @@ public class Constants extends CommandBase {
         public static final int RIGHT_MOTOR_2_DEVICE_NUMBER = 3;
     }
 
-
-    public class MultiDrivebase {
+// MULTI-DRIVEBASE
         public class Robot2022 {
 
             //Motor Ports
@@ -69,6 +83,8 @@ public class Constants extends CommandBase {
             public static final int RIGHT_MOTOR_1 = 1;
             public static final int LEFT_MOTOR_2 = 3;
             public static final int RIGHT_MOTOR_2 = 2;
+            public static final int LEFT_DIRECTION = 1; //Wheels turn in correct direction
+            public static final int RIGHT_DIRECTION = -1;
 
             //Encoders
             public static final double GEAR_RATIO = 10.71;
@@ -84,6 +100,9 @@ public class Constants extends CommandBase {
             public static final int RIGHT_MOTOR_1 = 13;
             public static final int LEFT_MOTOR_2 = 2;
             public static final int RIGHT_MOTOR_2 = 12;
+
+            public static final int LEFT_DIRECTION = 1;  //Wheels turn in correct direction
+            public static final int RIGHT_DIRECTION = 1;
 
             //Encoders
             public static final double GEAR_RATIO = 55;
@@ -101,6 +120,9 @@ public class Constants extends CommandBase {
             public static final int LEFT_MOTOR_2 = 4;
             public static final int RIGHT_MOTOR_2 = 2;
 
+            public static final int LEFT_DIRECTION = 1; //Wheels turn in correct direction
+            public static final int RIGHT_DIRECTION = -1;
+
             //Encoders
             public static final double GEAR_RATIO = 10.71;
             public static final double WHEEL_DIAMETER = .5; //feet
@@ -109,4 +131,3 @@ public class Constants extends CommandBase {
                     (TICKS_PER_MOTOR_REV * GEAR_RATIO) / (WHEEL_DIAMETER * Math.PI);
         }
     }
-}
