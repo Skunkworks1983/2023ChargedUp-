@@ -39,19 +39,19 @@ public class TankDrive extends CommandBase
         double outputRight = oi.getRightY();
         if(outputLeft > 0)
         {
-            outputLeft = Math.pow(outputLeft, 2);
+            outputLeft = Math.pow(outputLeft, 2)/4;
         }
         else
         {
-            outputLeft = -Math.abs(Math.pow(outputLeft, 2));
+            outputLeft = -Math.abs(Math.pow(outputLeft, 2)/4);
         }
         if(outputRight > 0)
         {
-            outputRight = Math.pow(outputRight, 2);
+            outputRight = Math.pow(outputRight, 2)/4;
         }
         else
         {
-            outputRight = -Math.abs(Math.pow(outputRight, 2));
+            outputRight = -Math.abs(Math.pow(outputRight, 2)/4);
         }
         drivebase.runMotor(-outputLeft, -outputRight);
         System.out.println("left: " + -outputLeft + " right: " + -outputRight);
