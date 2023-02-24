@@ -7,7 +7,7 @@ package frc.robot.commands.drivebase;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.services.Oi;
-import frc.robot.subsystems.Drivebase;
+import frc.robot.subsystems.multidrivebase.Drivebase;
 
 
 public class TankDrive extends CommandBase
@@ -39,22 +39,23 @@ public class TankDrive extends CommandBase
         double outputRight = oi.getRightY();
         if(outputLeft > 0)
         {
-            outputLeft = Math.pow(outputLeft, 2);
+            outputLeft = Math.pow(outputLeft, 2)/4;
         }
         else
         {
-            outputLeft = -Math.abs(Math.pow(outputLeft, 2));
+            outputLeft = -Math.abs(Math.pow(outputLeft, 2)/4);
         }
         if(outputRight > 0)
         {
-            outputRight = Math.pow(outputRight, 2);
+            outputRight = Math.pow(outputRight, 2)/4;
         }
         else
         {
-            outputRight = -Math.abs(Math.pow(outputRight, 2));
+            outputRight = -Math.abs(Math.pow(outputRight, 2)/4);
         }
         drivebase.runMotor(-outputLeft, -outputRight);
-        System.out.println("ticks: " + drivebase.getTicksLeft());
+        System.out.println("left: " + -outputLeft + " right: " + -outputRight);
+        //System.out.println("ticks: " + drivebase.getTicksLeft());
     }
     // Called once the command ends or is interrupted.
     @Override

@@ -4,7 +4,7 @@ package frc.robot.commands.autos;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.drivebase.DriveDistanceCommand;
 import frc.robot.constants.Constants;
-import frc.robot.subsystems.Drivebase;
+import frc.robot.subsystems.multidrivebase.Drivebase;
 
 public class DriveOutOfCommunityAutoCommandGroup extends SequentialCommandGroup
 {
