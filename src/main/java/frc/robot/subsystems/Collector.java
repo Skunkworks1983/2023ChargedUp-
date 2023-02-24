@@ -27,19 +27,7 @@ public class Collector extends SubsystemBase {
     }
     public void intake(){
 
-        isIntaking = true;
 
-        System.out.println("Intake is running");
-          double objectDistancePerSec = Constants.Collector.INTAKE_SPEED;
-          double objectDistancePerMs = objectDistancePerSec / 1000;
-          double wheelRevsPerMs = objectDistancePerMs / Constants.Collector.WHEEL_CIRCUMFERENCE;
-          double motorRevsPerMs = wheelRevsPerMs * Constants.Collector.GEAR_RATIO;
-          double ticksPerMs = motorRevsPerMs * Constants.Falcon500.TICKS_PER_REV;
-          System.out.println("the speed is" + ticksPerMs);
-
-        // takes ticks per 100ms
-        this.Motor.set(TalonFXControlMode.Velocity, ticksPerMs);
-        System.out.println("Velocity set");
         //Motor.set(TalonFXControlMode.PercentOutput, Oi.Instance.getLeftY());
     }
     public void expel(){

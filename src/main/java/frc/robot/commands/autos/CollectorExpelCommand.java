@@ -1,6 +1,7 @@
 package frc.robot.commands.autos;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.constants.Constants;
 import frc.robot.subsystems.Collector;
 
 
@@ -15,7 +16,7 @@ public class CollectorExpelCommand extends CommandBase {
 
     @Override
     public void initialize() {
-        collectorInstance.Setspeed(-3411);
+        collectorInstance.Setspeed(Constants.Collector.EXPEL_MOTOR_SPEED);
 
     }
 
