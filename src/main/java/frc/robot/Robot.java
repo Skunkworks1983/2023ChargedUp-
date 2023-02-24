@@ -5,11 +5,26 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.Commands;
+import frc.robot.commands.SmartDriveCommand;
 import frc.robot.commands.arm.Rotate90Degrees;
+import frc.robot.commands.drivebase.TankDrive;
+import frc.robot.constants.Constants;
+import frc.robot.services.Oi;
 import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.multidrivebase.Drivebase4MotorSparks;
+import frc.robot.subsystems.multidrivebase.Drivebase4MotorTalonFX;
+
+import java.util.List;
 
 
 /**
@@ -25,7 +40,8 @@ public class Robot extends TimedRobot
     private RobotContainer robotContainer;
 
     private Arm arm;
-    
+
+    private Oi oi=new Oi();
     
     /**
      * This method is run when the robot is first started up and should be used for any
@@ -71,18 +87,25 @@ public class Robot extends TimedRobot
     @Override
     public void autonomousInit()
     {
-        arm = Arm.getInstance();
 
-        Command moveArmCommand = new Rotate90Degrees(arm);
+//        arm = Arm.getInstance();
+//        Command moveArmCommand = new Rotate90Degrees(arm);
+//        moveArmCommand.schedule();
 
-        moveArmCommand.schedule();
-        /*autonomousCommand = robotContainer.getAutonomousCommand();
-        
-        // schedule the autonomous command (example)
-        if (autonomousCommand != null)
-        {
-            autonomousCommand.schedule();
-        } */
+        Trajectory exampleTrajectoryInFeet =
+                TrajectoryGenerator.generateTrajectory(
+                        // Start at the origin facing the +X direction
+                        new Pose2d(0, 0, new Rotation2d(0)),
+                        // Pass through these two interior waypoints, making an 's' curve path
+                        List.of(new Translation2d(15.6, 0)),
+                        // End 3 meters straight ahead of where we started, facing forward
+                        new Pose2d(17, 10.5, new Rotation2d(Math.PI/2)),
+                        // Pass config
+                        ((Drivebase4MotorTalonFX) Drivebase4MotorTalonFX.GetDrivebase()).config);
+
+
+        SmartDriveCommand drive = new SmartDriveCommand(exampleTrajectoryInFeet);
+        CommandScheduler.getInstance().schedule(drive);
     }
     
     
@@ -94,6 +117,8 @@ public class Robot extends TimedRobot
     @Override
     public void teleopInit()
     {
+
+        //CommandScheduler.getInstance().cancelAll(); //DEBUG
         // This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove
@@ -102,6 +127,10 @@ public class Robot extends TimedRobot
         {
             autonomousCommand.cancel();
         }
+
+        TankDrive tank = new TankDrive(Drivebase4MotorTalonFX.GetDrivebase(),oi);
+        CommandScheduler.getInstance().schedule(tank);
+
     }
     
     
@@ -126,7 +155,7 @@ public class Robot extends TimedRobot
     /** This method is called once when the robot is first started up. */
     @Override
     public void simulationInit() {}
-    
+
     
     /** This method is called periodically whilst in simulation. */
     @Override

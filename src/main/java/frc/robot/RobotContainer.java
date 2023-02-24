@@ -26,10 +26,10 @@ public class RobotContainer
 {
     // The robot's subsystems and commands are defined here...
 
-    private final Drivebase drivebase = new Drivebase();
-    private final Oi oi = new Oi(drivebase);
-
-    private final TankDrive autoCommand = new TankDrive(drivebase, oi);
+//    private final Drivebase drivebase = new Drivebase();
+//    private final Oi oi = new Oi(drivebase);
+//
+//    private final TankDrive autoCommand = new TankDrive(drivebase, oi);
     
     
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -67,6 +67,6 @@ public class RobotContainer
     public Command getAutonomousCommand()
     {
         // An example command will be run in autonomous
-        return autoCommand;
+        return null;//return autoCommand;
     }
 }

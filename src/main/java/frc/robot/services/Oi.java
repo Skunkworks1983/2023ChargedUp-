@@ -11,7 +11,7 @@ public class Oi
         Joystick leftStick;
         Joystick rightStick;
 
-        public Oi(Drivebase drivebase)
+        public Oi()
         {
 
             leftStick = new Joystick(Constants.JoystickPorts.LEFT_JOY_STICK_PORT);
