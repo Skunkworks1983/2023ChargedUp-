@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.autos.CollectorTestingCommand;
 import frc.robot.commands.drivebase.TankDrive;
 import frc.robot.commands.arm.RotateDegrees;
+import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
 import frc.robot.commands.drivebase.DriveDistanceCommand;
 import frc.robot.services.Oi;
@@ -78,12 +79,14 @@ public class Robot extends TimedRobot
      */
     @Override
     public void disabledInit() {
-       // arm.Motor.setNeutralMode(NeutralMode.Brake);
+
     }
     
     
     @Override
-    public void disabledPeriodic() {
+    public void disabledPeriodic()
+    {
+
     }
 
 
@@ -137,7 +140,11 @@ public class Robot extends TimedRobot
     
     /** This method is called periodically during test mode. */
     @Override
-    public void testPeriodic() {}
+    public void testPeriodic()
+    {
+        System.out.println("Limit switch front: " + arm.limitSwitchOutput(Constants.Arm.LIMIT_SWITCH_FRONT));
+        System.out.println("Limit switch back: " + arm.limitSwitchOutput(Constants.Arm.LIMIT_SWITCH_BACK));
+    }
     
     
     /** This method is called once when the robot is first started up. */

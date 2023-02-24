@@ -120,10 +120,24 @@ public class Arm extends SubsystemBase {
         configArmKF(newKF);
     }
 
-    /*
-    If the arm has moved more than 0.5 degrees since the kf was last
-    updated then update it again.
-    */
+    public boolean limitSwitchOutput(int limitSwitchPort)
+    {
+        if(limitSwitchPort == Constants.Arm.LIMIT_SWITCH_FRONT)
+        {
+            return !frontLimit.get();
+        }
+        else if(limitSwitchPort == Constants.Arm.LIMIT_SWITCH_BACK)
+        {
+            return !backLimit.get();
+        }
+        else
+        {
+            System.out.println("Incorrect limit switch constant");
+            return false;
+        }
+    }
+
+
     @Override
     public void periodic() {
         double pos = getShoulderAngle();
@@ -138,7 +152,6 @@ public class Arm extends SubsystemBase {
             //System.out.println("updating kf");
             updateKf(Constants.Arm.KF, pos);
         }
-        System.out.println("limit switch front: " + frontLimit.get());
-        System.out.println("limit switch back: " + backLimit.get());
+
     }
 }
