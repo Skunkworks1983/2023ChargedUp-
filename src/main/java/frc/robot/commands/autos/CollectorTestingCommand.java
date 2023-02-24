@@ -17,12 +17,16 @@ public class CollectorTestingCommand extends CommandBase {
 
     @Override
     public void initialize() {
-        //Collector.getInstance().intake();
+       // Collector.getInstance().intake();
+          Collector.getInstance().Setspeed(-3411);
     }
 
     @Override
     public void execute() {
-        Collector.getInstance().Motor.set(TalonFXControlMode.PercentOutput, Oi.Instance.getLeftY());
+
+        //Collector.getInstance().intake();
+
+                  //    Collector.getInstance().Motor.set(TalonFXControlMode.PercentOutput, Oi.Instance.getLeftY());
     }
 
     @Override

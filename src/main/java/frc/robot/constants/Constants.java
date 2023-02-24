@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class Constants extends CommandBase {
     public static class Collector {
-        public static final int MOTOR_ID = 5;
+        public static final int MOTOR_ID = 7;
 
 
         public static final double  GEAR_RATIO = 2;
