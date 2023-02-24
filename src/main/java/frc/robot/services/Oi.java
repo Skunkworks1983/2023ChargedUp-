@@ -8,9 +8,11 @@ import frc.robot.subsystems.multidrivebase.Drivebase;
 import frc.robot.subsystems.Arm;
 
 
-public class Oi {
-    Joystick leftStick;
-    Joystick rightStick;
+public class Oi
+    {
+        public static Oi Instance;
+        Joystick leftStick;
+        Joystick rightStick;
 
     JoystickButton armUpButton;
     JoystickButton armDownButton;
@@ -19,7 +21,7 @@ public class Oi {
 
     public Oi(Drivebase drivebase) {
         System.out.println("oi init");
-
+        Instance = this;
         leftStick = new Joystick(Constants.JoystickPorts.LEFT_JOY_STICK_PORT);
         rightStick = new Joystick(Constants.JoystickPorts.RIGHT_JOY_STICK_PORT);
 
