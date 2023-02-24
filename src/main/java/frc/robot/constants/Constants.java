@@ -4,6 +4,27 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 
 public class Constants extends CommandBase {
+    public static class Collector {
+        public static final int MOTOR_ID = 5;
+
+
+        public static final double  GEAR_RATIO = 2;
+        public static final double WHEEL_CIRCUMFERENCE = Math.PI * 2;
+        public static final int CUBE_BREAK_1_PORT = 2;
+        public static final int CUBE_BREAK_2_PORT = 3;
+        public static final double INTAKE_SPEED = .12; //inches per second
+
+        public static final double EXPEL_DISTANCE = 10; // in inches
+        public static final double EXPEL_DISTANCE_TICKS =
+                Constants.Collector.EXPEL_DISTANCE /
+                        Constants.Collector.WHEEL_CIRCUMFERENCE
+                        / Constants.Collector.GEAR_RATIO
+                        * Constants.Falcon500.TICKS_PER_REV;
+        public static final double EXPEL_SPEED = 4/.5; // inches per second
+
+
+
+    }
     public class JoystickPorts {
 
         public static final int LEFT_JOY_STICK_PORT = 0;
@@ -23,16 +44,13 @@ public class Constants extends CommandBase {
         public static final int DRIVE_OUT_OF_COMMUINITY = -9;
     }
 
-    public class Arm {
-        public static final double COLLECTOR_MOTOR_1_KP = 0.0;
-        public static final double KF = -0.035;
-        public static final int GEAR_RATIO = 128;
-        public static final int SWAP_ANGLE = 90;
-        public static final int SWAP_ANGLE_ADDITION = 0;
+    public class Arm
+    {
+        public static final double COLLECTOR_MOTOR_1_KP = 0.5;
+        public static final int GEAR_RATIO = 200;
     }
-
     public class Falcon500 {
-        public static final int TICKS_PER_REV = 2046;
+        public static final int TICKS_PER_REV = 2048;
     }
 
     public class FourMotorFalcon500 {

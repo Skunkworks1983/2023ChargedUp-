@@ -25,7 +25,6 @@ public class Arm extends SubsystemBase
     {
         Motor.selectProfileSlot(0, 0);
         Motor.config_kP(0, Constants.Arm.COLLECTOR_MOTOR_1_KP);
-        Motor.config_kF(0, Constants.Arm.KF);
         Motor.setNeutralMode(NeutralMode.Brake);
         Motor.configClosedloopRamp(0.1);
         Motor.configClosedLoopPeakOutput(0, 0.3);
