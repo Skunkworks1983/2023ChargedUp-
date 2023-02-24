@@ -27,6 +27,10 @@ public class Constants extends CommandBase {
     {
         public static final double COLLECTOR_MOTOR_1_KP = 0.5;
         public static final int GEAR_RATIO = 200;
+
+        public static final int WRIST_MOTOR_DEVICE_NUMBER =6;
+
+        public static final int WRIST_GEAR_RATIO=96;
     }
     public class Falcon500 {
         public static final int TICKS_PER_REV = 2046;

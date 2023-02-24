@@ -11,6 +11,7 @@ import frc.robot.constants.Constants;
 public class Arm extends SubsystemBase
 {
     TalonFX Motor = new TalonFX(5);
+    TalonFX wristMotor = new TalonFX(Constants.Arm.WRIST_MOTOR_DEVICE_NUMBER);
     public double encoderToAngleFactor = ((1.0/ Constants.Falcon500.TICKS_PER_REV)/Constants.Arm.GEAR_RATIO)*360;
 
     private final static Arm INSTANCE = new Arm();
@@ -30,6 +31,7 @@ public class Arm extends SubsystemBase
         Motor.configClosedLoopPeakOutput(0, 0.3);
         Motor.configNeutralDeadband(0.0);
         Motor.setInverted(InvertType.None);
+        wristMotor.setNeutralMode(NeutralMode.Brake);
     }
 
     public void setCollectorAnglePosition(double encoderPosition)
@@ -41,6 +43,11 @@ public class Arm extends SubsystemBase
     public double getShoulderAngle()
     {
         return Motor.getSelectedSensorPosition() * encoderToAngleFactor;
+    }
+
+    public void SetWristSpeed(double speed){
+
+        wristMotor.set(TalonFXControlMode.PercentOutput,speed);
     }
 }
 

@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.arm.Rotate90Degrees;
+import frc.robot.commands.autos.WaveCollectorCommandGroup;
 import frc.robot.subsystems.Arm;
 
 
@@ -71,11 +72,15 @@ public class Robot extends TimedRobot
     @Override
     public void autonomousInit()
     {
-        arm = Arm.getInstance();
 
-        Command moveArmCommand = new Rotate90Degrees(arm);
+        CommandScheduler.getInstance().schedule(new WaveCollectorCommandGroup());
 
-        moveArmCommand.schedule();
+        //arm = Arm.getInstance();
+
+        //Command moveArmCommand = new Rotate90Degrees(arm);
+
+        //moveArmCommand.schedule();
+
         /*autonomousCommand = robotContainer.getAutonomousCommand();
         
         // schedule the autonomous command (example)
