@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.SlotConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.Constants;
@@ -15,6 +16,8 @@ public class Arm extends SubsystemBase {
     public double lastAngle;
     public double setpoint;
     private final static Arm INSTANCE = new Arm();
+    private DigitalInput frontLimit = new DigitalInput(Constants.Arm.LIMIT_SWITCH_FRONT);
+    private DigitalInput backLimit = new DigitalInput(Constants.Arm.LIMIT_SWITCH_BACK);
 
     public static Arm getInstance() {
         return INSTANCE;
@@ -41,7 +44,7 @@ public class Arm extends SubsystemBase {
         updateKf(Constants.Arm.KF, degrees);
 
         System.out.println("setting target: " + pos);
-        Motor.set(TalonFXControlMode.Position, pos);
+        //Motor.set(TalonFXControlMode.Position, pos); /todo
     }
 
     public double getShoulderAngle() {
@@ -70,7 +73,9 @@ public class Arm extends SubsystemBase {
         config.kI = kI;
         config.kD = kD;
         config.kF = kF;
-        config.closedLoopPeakOutput = peakOutput;
+
+        // TODO: change back
+        config.closedLoopPeakOutput = 0;
 
         Motor.configureSlot(config);
     }
@@ -133,5 +138,7 @@ public class Arm extends SubsystemBase {
             //System.out.println("updating kf");
             updateKf(Constants.Arm.KF, pos);
         }
+        System.out.println("limit switch front: " + frontLimit.get());
+        System.out.println("limit switch back: " + backLimit.get());
     }
 }

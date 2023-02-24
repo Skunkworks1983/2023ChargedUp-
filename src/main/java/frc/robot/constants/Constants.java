@@ -41,6 +41,8 @@ public class Constants extends CommandBase {
         public static final double RESTING_ANGLE = -96.6;
         public static final double ANGLE_UPDATE = 0.5;
         public static final int MOTOR_ID = 5;
+        public static final int LIMIT_SWITCH_FRONT = 1;
+        public static final int LIMIT_SWITCH_BACK = 0;
     }
 
     public class Falcon500 {
