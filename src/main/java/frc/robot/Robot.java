@@ -39,7 +39,7 @@ public class Robot extends TimedRobot
     
     private RobotContainer robotContainer;
 
-    //private Arm arm;
+    private Arm arm;
 
     
     /**
@@ -99,10 +99,10 @@ public class Robot extends TimedRobot
 
     @Override
     public void teleopInit() {
-        //arm = Arm.getInstance();
+        arm = Arm.getInstance();
 
-       // arm.Motor.set(TalonFXControlMode.PercentOutput, 0);
-        //arm.Motor.setNeutralMode(NeutralMode.Coast);
+        arm.Motor.set(TalonFXControlMode.PercentOutput, 0);
+        arm.Motor.setNeutralMode(NeutralMode.Coast);
 
 
 //        double rotateTo = 15;
@@ -110,8 +110,6 @@ public class Robot extends TimedRobot
         Command TankDrive = new TankDrive(drivebase, oi);
 //
         TankDrive.schedule();
-//        arm.Motor.set(TalonFXControlMode.PercentOutput, 0);
-//        arm.Motor.setNeutralMode(NeutralMode.Coast);
 
         // This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to
