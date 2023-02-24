@@ -142,6 +142,8 @@ public class Robot extends TimedRobot
     @Override
     public void testPeriodic()
     {
+        arm = Arm.getInstance();
+        
         System.out.println("Limit switch front: " + arm.limitSwitchOutput(Constants.Arm.LIMIT_SWITCH_FRONT));
         System.out.println("Limit switch back: " + arm.limitSwitchOutput(Constants.Arm.LIMIT_SWITCH_BACK));
     }

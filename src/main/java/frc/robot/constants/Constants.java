@@ -34,7 +34,7 @@ public class Constants extends CommandBase {
 
     public class OIButtons {
         public static final int ARM_UP_BUTTON = 12;
-        public static final int ARM_DOWN_BUTTON = 11;
+        public static final int ARM_DOWN_BUTTON = 15;
     }
 
     public class Drivebase {
@@ -114,7 +114,7 @@ public class Constants extends CommandBase {
                     (TICKS_PER_MOTOR_REV * GEAR_RATIO) / (WHEEL_DIAMETER * Math.PI);
         }
 
-        public class Wobbles {
+        public class Wobbles /* Same motor ports as 2023 */ {
 
             //Motor Ports
             public static final int LEFT_MOTOR_1 = 3;

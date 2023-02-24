@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
@@ -137,6 +138,22 @@ public class Arm extends SubsystemBase {
         }
     }
 
+    public void SetPercentOutput(double percent) {
+
+        Motor.set(ControlMode.PercentOutput, percent);
+
+    }
+    public void SetBrakeMode(boolean enable)
+    {
+        if (enable) {
+
+            Motor.setNeutralMode(NeutralMode.Brake);
+
+        } else {
+
+            Motor.setNeutralMode(NeutralMode.Coast);
+        }
+    }
 
     @Override
     public void periodic() {
