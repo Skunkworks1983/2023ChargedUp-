@@ -38,16 +38,12 @@ public class Oi
         rightStick = new Joystick(Constants.JoystickPorts.RIGHT_JOY_STICK_PORT);
         buttonStick = new Joystick(Constants.JoystickPorts.BUTTON_STICK_PORT);
 
-        armUpButton = new JoystickButton(buttonStick, Constants.OIButtons.ARM_UP_BUTTON);
-        armDownButton = new JoystickButton(buttonStick, Constants.OIButtons.ARM_DOWN_BUTTON);
-        expelButton = new JoystickButton(buttonStick, Constants.OIButtons.EXPEL_BUTTON);
-        intakeButton = new JoystickButton(buttonStick, Constants.OIButtons.INTAKE_BUTTON);
-
         //button sticks
         armUpButton = new JoystickButton(buttonStick, Constants.OIButtons.ARM_UP_BUTTON);
         armDownButton = new JoystickButton(buttonStick, Constants.OIButtons.ARM_DOWN_BUTTON);
         expelButton = new JoystickButton(buttonStick, Constants.OIButtons.EXPEL_BUTTON);
         intakeButton = new JoystickButton(buttonStick, Constants.OIButtons.INTAKE_BUTTON);
+
         wristUp = new JoystickButton(buttonStick,Constants.OIButtons.WRIST_UP_BUTTON);//4
         wristDown = new JoystickButton(buttonStick,Constants.OIButtons.WRIST_DOWN_BUTTON);//2
 
