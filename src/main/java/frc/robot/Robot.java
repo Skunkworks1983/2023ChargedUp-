@@ -37,7 +37,7 @@ public class Robot extends TimedRobot
 {
     private Drivebase drivebase = Drivebase4MotorTalonFX.GetDrivebase();
     private Oi oi = new Oi(drivebase);
-
+    Command SimpleAuto = new SimpleAutoCommandGroup();
     
     private RobotContainer robotContainer;
 
@@ -95,7 +95,6 @@ public class Robot extends TimedRobot
     @Override
     public void autonomousInit()
     {
-        Command SimpleAuto = new SimpleAutoCommandGroup();
         SimpleAuto.schedule();
     }
 
