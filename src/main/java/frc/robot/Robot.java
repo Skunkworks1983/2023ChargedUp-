@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.autos.CollectorIntakeAutoCommand;
 import frc.robot.commands.autos.CollectorTestingCommand;
 import frc.robot.commands.drivebase.TankDrive;
 import frc.robot.commands.arm.RotateDegrees;
@@ -34,9 +35,6 @@ public class Robot extends TimedRobot
     private Drivebase drivebase = Drivebase4MotorTalonFX.GetDrivebase();
     private Oi oi = new Oi(drivebase);
 
-
-
-    private Command autonomousCommand;
     
     private RobotContainer robotContainer;
 
@@ -94,7 +92,8 @@ public class Robot extends TimedRobot
     @Override
     public void autonomousInit()
     {
-
+        CollectorIntakeAutoCommand collectorIntake = new CollectorIntakeAutoCommand();
+        //collectorIntake.schedule();
     }
 
 
@@ -102,6 +101,7 @@ public class Robot extends TimedRobot
     public void teleopInit() {
 
         //arm = Arm.getInstance();
+
 
        // arm.Motor.set(TalonFXControlMode.PercentOutput, 0);
         //arm.Motor.setNeutralMode(NeutralMode.Coast);
@@ -115,15 +115,6 @@ public class Robot extends TimedRobot
         TankDrive.schedule();
 //        arm.Motor.set(TalonFXControlMode.PercentOutput, 0);
 //        arm.Motor.setNeutralMode(NeutralMode.Coast);
-
-        // This makes sure that the autonomous stops running when
-        // teleop starts running. If you want the autonomous to
-        // continue until interrupted by another command, remove
-        // this line or comment it out.
-//        if (autonomousCommand != null)
-//        {
-//            autonomousCommand.cancel();
-//        }
     }
     
     
