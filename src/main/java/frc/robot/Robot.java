@@ -97,6 +97,7 @@ public class Robot extends TimedRobot
     public void autonomousInit()
     {
 
+
     }
 
 
@@ -105,14 +106,14 @@ public class Robot extends TimedRobot
         arm = Arm.getInstance();
 
         arm.Motor.set(TalonFXControlMode.PercentOutput, 0);
-        arm.Motor.setNeutralMode(NeutralMode.Coast);
+        arm.Motor.setNeutralMode(NeutralMode.Brake);
 
 
 //        double rotateTo = 15;
 //
-        Command TankDrive = new TankDrive(drivebase, oi);
+     //   Command TankDrive = new TankDrive(drivebase, oi);
 //
-        TankDrive.schedule();
+       // TankDrive.schedule();
 
         // This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to
@@ -143,7 +144,7 @@ public class Robot extends TimedRobot
     public void testPeriodic()
     {
         arm = Arm.getInstance();
-        
+
         System.out.println("Limit switch front: " + arm.limitSwitchOutput(Constants.Arm.LIMIT_SWITCH_FRONT));
         System.out.println("Limit switch back: " + arm.limitSwitchOutput(Constants.Arm.LIMIT_SWITCH_BACK));
     }

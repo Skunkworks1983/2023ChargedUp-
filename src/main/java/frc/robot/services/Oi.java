@@ -35,8 +35,8 @@ public class Oi
         //when held
 
         // when pressed
-        armUpButton.whileTrue(new SetShoulderSpeed(arm, Constants.Arm.LIMIT_SWITCH_FRONT, 0));
-        armDownButton.whileTrue(new SetShoulderSpeed(arm, Constants.Arm.LIMIT_SWITCH_BACK, -0));
+        armUpButton.whileTrue(new SetShoulderSpeed(arm, Constants.Arm.LIMIT_SWITCH_FRONT, 0.05));
+        armDownButton.whileTrue(new SetShoulderSpeed(arm, Constants.Arm.LIMIT_SWITCH_BACK, -0.03));
     }
 
     public double getLeftY() {
