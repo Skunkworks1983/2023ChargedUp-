@@ -9,9 +9,9 @@ public class WaveCollectorCommandGroup extends SequentialCommandGroup {
         //           super(new OpenClawCommand(), new MoveArmCommand());
 
         super(new TimeWristMoveCommandGroup(2, 0.15),
-                new TimeWristMoveCommandGroup(1.5, -.09),
-                new TimeWristMoveCommandGroup(1.5, .09),
-                new TimeWristMoveCommandGroup(1.5, -.09),
-                new TimeWristMoveCommandGroup(1.5, .09));
+                new TimeWristMoveCommandGroup(.9,-.14),
+                new TimeWristMoveCommandGroup(.9,.14),
+                new TimeWristMoveCommandGroup(.9,-.14),
+                new TimeWristMoveCommandGroup(.9,.14));
     }
 }
