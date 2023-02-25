@@ -55,7 +55,7 @@ public class Robot extends TimedRobot
     {
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         // autonomous chooser on the dashboard.
-      //  arm = Arm.getInstance();
+        arm = Arm.getInstance();
         robotContainer = new RobotContainer();
     }
     
@@ -111,9 +111,9 @@ public class Robot extends TimedRobot
         arm.Motor.setNeutralMode(NeutralMode.Brake);
 
         //double rotateTo = 15;
-        //Command TankDrive = new TankDrive(drivebase, oi);
+        Command TankDrive = new TankDrive(drivebase, oi);
 
-        //TankDrive.schedule();
+        TankDrive.schedule();
 
         /* if (autonomousCommand != null)
         {
