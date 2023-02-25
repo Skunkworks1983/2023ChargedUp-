@@ -35,9 +35,6 @@ public class Robot extends TimedRobot
     private Drivebase drivebase = Drivebase4MotorTalonFX.GetDrivebase();
     private Oi oi = new Oi(drivebase);
 
-
-
-    private Command autonomousCommand;
     
     private RobotContainer robotContainer;
 
@@ -96,8 +93,7 @@ public class Robot extends TimedRobot
     public void autonomousInit()
     {
         CollectorIntakeAutoCommand collectorIntake = new CollectorIntakeAutoCommand();
-
-
+        //collectorIntake.schedule();
     }
 
 
@@ -116,18 +112,9 @@ public class Robot extends TimedRobot
 //
         Command TankDrive = new TankDrive(drivebase, oi);
 //
-        //TankDrive.schedule();
+        TankDrive.schedule();
 //        arm.Motor.set(TalonFXControlMode.PercentOutput, 0);
 //        arm.Motor.setNeutralMode(NeutralMode.Coast);
-
-        // This makes sure that the autonomous stops running when
-        // teleop starts running. If you want the autonomous to
-        // continue until interrupted by another command, remove
-        // this line or comment it out.
-//        if (autonomousCommand != null)
-//        {
-//            autonomousCommand.cancel();
-//        }
     }
     
     
