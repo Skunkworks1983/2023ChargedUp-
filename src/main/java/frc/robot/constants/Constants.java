@@ -65,7 +65,7 @@ public class Constants extends CommandBase {
         public static final int SWAP_ANGLE_ADDITION = 0;
         public static final double RESTING_ANGLE = -96.6;
         public static final double ANGLE_UPDATE = 0.5;
-        public static final int MOTOR_ID = 5;
+        public static final int SHOULDER_MOTOR_ID = 5;
 
         public static final int WRIST_MOTOR_DEVICE_NUMBER =6;
 
