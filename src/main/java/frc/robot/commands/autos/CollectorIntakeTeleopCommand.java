@@ -5,10 +5,10 @@ import frc.robot.constants.Constants;
 import frc.robot.subsystems.Collector;
 
 
-public class CollectorIntakeCommand extends CommandBase {
+public class CollectorIntakeTeleopCommand extends CommandBase {
     public Collector collectorInstance;
 
-    public CollectorIntakeCommand() {
+    public CollectorIntakeTeleopCommand() {
         collectorInstance = Collector.getInstance();
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
@@ -17,8 +17,7 @@ public class CollectorIntakeCommand extends CommandBase {
 
     @Override
     public void initialize() {
-        collectorInstance.Setspeed(3411);
-
+        collectorInstance.Setspeed(Constants.Collector.INTAKE_MOTOR_SPEED);
     }
 
     @Override
@@ -35,6 +34,5 @@ public class CollectorIntakeCommand extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         collectorInstance.Setspeed(0);
-
     }
 }
