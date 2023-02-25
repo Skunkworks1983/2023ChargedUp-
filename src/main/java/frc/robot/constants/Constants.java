@@ -7,7 +7,6 @@ public class Constants extends CommandBase {
     public static class Collector {
         public static final int MOTOR_ID = 7;
 
-
         public static final double  GEAR_RATIO = 2;
         public static final double WHEEL_CIRCUMFERENCE = Math.PI * 2;
         public static final double WHEEL_REVS_PER_SEC_TO_VELOCITY = 8050;
@@ -19,9 +18,7 @@ public class Constants extends CommandBase {
         public static final double EXPEL_SPEED = 8; // inches per second
         public static final double EXPEL_MOTOR_SPEED =
                 EXPEL_SPEED / WHEEL_CIRCUMFERENCE * WHEEL_REVS_PER_SEC_TO_VELOCITY;
-
-
-
+        public static final double K_P = 0.03;
     }
     public class JoystickPorts {
 

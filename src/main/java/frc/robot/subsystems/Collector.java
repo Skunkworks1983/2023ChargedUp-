@@ -14,43 +14,15 @@ public class Collector extends SubsystemBase {
 
     private DigitalInput cubeBreak1;
     private DigitalInput cubeBreak2;
-    private boolean isIntaking = false;
     private Collector(){
 
         cubeBreak1 = new DigitalInput(Constants.Collector.CUBE_BREAK_1_PORT);
         cubeBreak2 = new DigitalInput(Constants.Collector.CUBE_BREAK_2_PORT);
 
-        double KP = 0.03;
         this.Motor = new TalonFX(Constants.Collector.MOTOR_ID);
-        Motor.config_kP(0, KP);
+        Motor.config_kP(0, Constants.Collector.K_P);
         Motor.setNeutralMode(NeutralMode.Brake);
     }
-    public void intake(){
-
-
-        //Motor.set(TalonFXControlMode.PercentOutput, Oi.Instance.getLeftY());
-    }
-    public void expel(){
-        double objectDistancePerSec = Constants.Collector.EXPEL_SPEED;
-        double objectDistancePerMs = objectDistancePerSec / 1000;
-        double wheelRevsPerMs = objectDistancePerMs / Constants.Collector.WHEEL_CIRCUMFERENCE;
-        double motorRevsPerMs = wheelRevsPerMs / Constants.Collector.GEAR_RATIO;
-        double ticksPerMs = motorRevsPerMs * Constants.Falcon500.TICKS_PER_REV;
-        // takes ticks per 100ms
-
-        this.Motor.set(TalonFXControlMode.Velocity, ticksPerMs * -100);
-    }
-
-    //@Override
-    //public void periodic() {
-
-        //if(isIntaking && cubeCollected()) {
-            //Motor.set(TalonFXControlMode.Velocity, 0);
-            //isIntaking = false;
-        //}
-
-
-    //}
     public boolean cubeCollected() {
         System.out.println(cubeBreak1.get());
         System.out.println(cubeBreak2.get());
