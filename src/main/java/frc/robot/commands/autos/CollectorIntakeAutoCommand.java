@@ -17,17 +17,19 @@ public class CollectorIntakeAutoCommand extends CommandBase {
 
     @Override
     public void initialize() {
-        collectorInstance.Setspeed(Constants.Collector.INTAKE_MOTOR_SPEED);
+        collectorInstance.Setspeed(Constants.Collector.INTAKE_MOTOR_SPEED_2022);
 
     }
 
     @Override
     public void execute() {
+    collectorInstance.CubebreakPrint();
 
     }
 
     @Override
     public boolean isFinished() {
+        //return collectorInstance.cubeCollected();
         return collectorInstance.cubeCollected();
     }
 

@@ -24,12 +24,13 @@ public class Collector extends SubsystemBase {
         Motor.setNeutralMode(NeutralMode.Brake);
     }
     public boolean cubeCollected() {
-        System.out.println(cubeBreak1.get());
-        System.out.println(cubeBreak2.get());
-        if(cubeBreak1.get() == true || cubeBreak2.get() == true) {
-            return false;
+
+        if(cubeBreak1.get() == false || cubeBreak2.get() == false) {
+            return true;
+
         }
         else {
+            System.out.println("returns false");
             return false;
         }
     }
@@ -44,4 +45,9 @@ public class Collector extends SubsystemBase {
         this.Motor.set(TalonFXControlMode.Velocity, speed);
     }
 
+    public void CubebreakPrint() {
+        System.out.println("Cube break 2" + cubeBreak2.get());
+        System.out.println("Cube break 1" + cubeBreak1.get());
+    }
 }
+

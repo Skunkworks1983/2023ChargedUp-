@@ -13,13 +13,22 @@ public class Constants extends CommandBase {
         public static final int CUBE_BREAK_1_PORT = 0;
         public static final int CUBE_BREAK_2_PORT = 1;
         public static final double INTAKE_SPEED = -8; //inches per second
+        public static final double INTAKE_SPEED_2022 = 8;
         public static final double INTAKE_MOTOR_SPEED =
                 INTAKE_SPEED / WHEEL_CIRCUMFERENCE * WHEEL_REVS_PER_SEC_TO_VELOCITY;
         public static final double EXPEL_SPEED = 8; // inches per second
+        public static final double EXPEL_SPEED_2022 = -8; //different for 2022 robot
         public static final double EXPEL_MOTOR_SPEED =
                 EXPEL_SPEED / WHEEL_CIRCUMFERENCE * WHEEL_REVS_PER_SEC_TO_VELOCITY;
         public static final double K_P = 0.03;
+
+        public static final double EXPEL_MOTOR_SPEED_2022 =
+                EXPEL_SPEED_2022 / WHEEL_CIRCUMFERENCE * WHEEL_REVS_PER_SEC_TO_VELOCITY;
+        public static final double INTAKE_MOTOR_SPEED_2022 =
+                INTAKE_SPEED_2022 / WHEEL_CIRCUMFERENCE * WHEEL_REVS_PER_SEC_TO_VELOCITY;
+
     }
+
     public class JoystickPorts {
 
         public static final int LEFT_JOY_STICK_PORT = 0;

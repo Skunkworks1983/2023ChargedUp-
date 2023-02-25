@@ -34,6 +34,7 @@ public class Robot extends TimedRobot
 {
     private Drivebase drivebase = Drivebase4MotorTalonFX.GetDrivebase();
     private Oi oi = new Oi(drivebase);
+    private Command collectorIntakeAuto;
 
     
     private RobotContainer robotContainer;
@@ -51,7 +52,9 @@ public class Robot extends TimedRobot
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         // autonomous chooser on the dashboard.
       //  arm = Arm.getInstance();
+
         robotContainer = new RobotContainer();
+
     }
     
     
@@ -92,6 +95,10 @@ public class Robot extends TimedRobot
     @Override
     public void autonomousInit()
     {
+        collectorIntakeAuto = new CollectorIntakeAutoCommand();
+        collectorIntakeAuto.schedule();
+
+
 
     }
 
