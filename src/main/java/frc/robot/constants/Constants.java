@@ -7,6 +7,7 @@ public class Constants extends CommandBase {
     public static class Collector {
         public static final int MOTOR_ID = 7;
 
+
         public static final double  GEAR_RATIO = 2;
         public static final double WHEEL_CIRCUMFERENCE = Math.PI * 2;
         public static final double WHEEL_REVS_PER_SEC_TO_VELOCITY = 8050;
@@ -29,7 +30,7 @@ public class Constants extends CommandBase {
 
     public class OIButtons {
         public static final int ARM_UP_BUTTON = 12;
-        public static final int ARM_DOWN_BUTTON = 11;
+        public static final int ARM_DOWN_BUTTON = 15;
         public static final int WRIST_UP_BUTTON=4;
         public static final int WRIST_DOWN_BUTTON=2;
         public static final int INTAKE_BUTTON = 13; // 13 on comp robot
@@ -61,11 +62,11 @@ public class Constants extends CommandBase {
         public static final int SWAP_ANGLE_ADDITION = 0;
         public static final double RESTING_ANGLE = -96.6;
         public static final double ANGLE_UPDATE = 0.5;
-        public static final int SHOULDER_MOTOR_ID = 5;
-
-        public static final int WRIST_MOTOR_DEVICE_NUMBER =6;
-
-        public static final int WRIST_GEAR_RATIO=96;
+        public static final int MOTOR_ID = 5;
+        public static final int LIMIT_SWITCH_FRONT = 0;
+        public static final int LIMIT_SWITCH_BACK = 1;
+        public static final int WRIST_MOTOR_DEVICE_NUMBER = 6;
+        public static final int WRIST_GEAR_RATIO = 96;
     }
 
     public class Falcon500 {
@@ -116,7 +117,7 @@ public class Constants extends CommandBase {
                     (TICKS_PER_MOTOR_REV * GEAR_RATIO) / (WHEEL_DIAMETER * Math.PI);
         }
 
-        public class Wobbles {
+        public class Wobbles /* Same motor ports as 2023 */ {
 
             //Motor Ports
             public static final int LEFT_MOTOR_1 = 3;

@@ -16,8 +16,11 @@ public class CollectorExpelTeleopCommand extends CommandBase {
 
     @Override
     public void initialize() {
+
+       // System.out.println("ENABLING COLLECTOR!!! ");
         collectorInstance.Setspeed(Constants.Collector.EXPEL_MOTOR_SPEED);
     }
+
 
     @Override
     public void execute() {
@@ -32,6 +35,9 @@ public class CollectorExpelTeleopCommand extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
+
+       // System.out.println("DISABLING COLLECTOR!!!!!");
         collectorInstance.Setspeed(0);
     }
+
 }
