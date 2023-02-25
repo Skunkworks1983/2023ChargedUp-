@@ -1,17 +1,19 @@
 package frc.robot.subsystems;
 
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.SlotConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.Constants;
 
 public class Arm extends SubsystemBase {
-    public TalonFX Motor = new TalonFX(Constants.Arm.SHOULDER_MOTOR_ID);
+    public TalonFX Motor = new TalonFX(Constants.Arm.MOTOR_ID);
     TalonFX wristMotor = new TalonFX(Constants.Arm.WRIST_MOTOR_DEVICE_NUMBER);
     public double encoderToAngleFactor = ((1.0 / Constants.Falcon500.TICKS_PER_REV) / Constants.Arm.GEAR_RATIO) * 360;
 
@@ -19,6 +21,8 @@ public class Arm extends SubsystemBase {
     public double lastAngle;
     public double setpoint;
     private final static Arm INSTANCE = new Arm();
+    private DigitalInput frontLimit = new DigitalInput(Constants.Arm.LIMIT_SWITCH_FRONT);
+    private DigitalInput backLimit = new DigitalInput(Constants.Arm.LIMIT_SWITCH_BACK);
 
     public static Arm getInstance() {
         return INSTANCE;
@@ -47,7 +51,7 @@ public class Arm extends SubsystemBase {
         updateKf(Constants.Arm.KF, degrees);
 
         System.out.println("setting target: " + pos);
-        Motor.set(TalonFXControlMode.Position, pos);
+        //Motor.set(TalonFXControlMode.Position, pos); /todo
     }
 
     public double getShoulderAngle() {
@@ -76,7 +80,9 @@ public class Arm extends SubsystemBase {
         config.kI = kI;
         config.kD = kD;
         config.kF = kF;
-        config.closedLoopPeakOutput = peakOutput;
+
+        // TODO: change back
+        config.closedLoopPeakOutput = 0;
 
         Motor.configureSlot(config);
     }
@@ -127,10 +133,40 @@ public class Arm extends SubsystemBase {
         configArmKF(newKF);
     }
 
-    /*
-    If the arm has moved more than 0.5 degrees since the kf was last
-    updated then update it again.
-    */
+    public boolean limitSwitchOutput(int limitSwitchPort)
+    {
+        if(limitSwitchPort == Constants.Arm.LIMIT_SWITCH_FRONT)
+        {
+            return !frontLimit.get();
+        }
+        else if(limitSwitchPort == Constants.Arm.LIMIT_SWITCH_BACK)
+        {
+            return !backLimit.get();
+        }
+        else
+        {
+            System.out.println("Incorrect limit switch constant");
+            return false;
+        }
+    }
+
+    public void SetPercentOutput(double percent) {
+
+        Motor.set(ControlMode.PercentOutput, percent);
+
+    }
+    public void SetBrakeMode(boolean enable)
+    {
+        if (enable) {
+
+            Motor.setNeutralMode(NeutralMode.Brake);
+
+        } else {
+
+            Motor.setNeutralMode(NeutralMode.Coast);
+        }
+    }
+
     @Override
     public void periodic() {
         double pos = getShoulderAngle();
@@ -145,5 +181,6 @@ public class Arm extends SubsystemBase {
             //System.out.println("updating kf");
             updateKf(Constants.Arm.KF, pos);
         }
+
     }
 }

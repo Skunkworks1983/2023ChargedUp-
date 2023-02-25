@@ -18,6 +18,8 @@ import frc.robot.commands.autos.CollectorIntakeAutoCommand;
 import frc.robot.commands.autos.CollectorTestingCommand;
 import frc.robot.commands.autos.SimpleAutoCommandGroup;
 import frc.robot.commands.drivebase.TankDrive;
+import frc.robot.commands.arm.RotateDegrees;
+import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
 import frc.robot.commands.drivebase.DriveDistanceCommand;
 import frc.robot.services.Oi;
@@ -41,7 +43,7 @@ public class Robot extends TimedRobot
     
     private RobotContainer robotContainer;
 
-    //private Arm arm;
+    private Arm arm;
 
     
     /**
@@ -53,7 +55,7 @@ public class Robot extends TimedRobot
     {
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         // autonomous chooser on the dashboard.
-      //  arm = Arm.getInstance();
+        arm = Arm.getInstance();
         robotContainer = new RobotContainer();
     }
     
@@ -100,13 +102,11 @@ public class Robot extends TimedRobot
 
 
     @Override
-    public void teleopInit() {
-
-        //arm = Arm.getInstance();
-
-       // arm.Motor.set(TalonFXControlMode.PercentOutput, 0);
-        //arm.Motor.setNeutralMode(NeutralMode.Coast);
-
+    public void teleopInit()
+    {
+        arm = Arm.getInstance();
+        arm.Motor.set(TalonFXControlMode.PercentOutput, 0);
+        arm.Motor.setNeutralMode(NeutralMode.Brake);
 
 //        double rotateTo = 15;
 
@@ -134,7 +134,11 @@ public class Robot extends TimedRobot
     
     /** This method is called periodically during test mode. */
     @Override
-    public void testPeriodic() {}
+    public void testPeriodic()
+    {
+        System.out.println("Limit switch front: " + arm.limitSwitchOutput(Constants.Arm.LIMIT_SWITCH_FRONT));
+        System.out.println("Limit switch back: " + arm.limitSwitchOutput(Constants.Arm.LIMIT_SWITCH_BACK));
+    }
     
     
     /** This method is called once when the robot is first started up. */
