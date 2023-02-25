@@ -42,8 +42,8 @@ public class Oi
             armDownButton = new JoystickButton(leftStick, Constants.OIButtons.ARM_DOWN_BUTTON);
             expelButton = new JoystickButton(leftStick, Constants.OIButtons.EXPEL_BUTTON);
             intakeButton = new JoystickButton(leftStick, Constants.OIButtons.INTAKE_BUTTON);
-            wristUp = new JoystickButton(buttonStick,4);
-            wristDown = new JoystickButton(buttonStick,2);
+            wristUp = new JoystickButton(buttonStick,Constants.OIButtons.WRIST_UP_BUTTON);//4
+            wristDown = new JoystickButton(buttonStick,Constants.OIButtons.WRIST_DOWN_BUTTON);//2
 
             //when held
             wristUp.whileTrue(new RotateWristByPowerCommand(-.09));

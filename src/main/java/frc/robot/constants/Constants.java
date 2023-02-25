@@ -35,7 +35,8 @@ public class Constants extends CommandBase {
     public class OIButtons {
         public static final int ARM_UP_BUTTON = 12;
         public static final int ARM_DOWN_BUTTON = 11;
-
+        public static final int WRIST_UP_BUTTON=4;
+        public static final int WRIST_DOWN_BUTTON=2;
         public static final int INTAKE_BUTTON = 5;
         public static final int EXPEL_BUTTON = 6;
 
