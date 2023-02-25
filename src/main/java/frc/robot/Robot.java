@@ -36,6 +36,7 @@ public class Robot extends TimedRobot
     private Oi oi = new Oi(drivebase);
 
 
+
     private Command autonomousCommand;
     
     private RobotContainer robotContainer;
@@ -101,6 +102,7 @@ public class Robot extends TimedRobot
 
     @Override
     public void teleopInit() {
+
         //arm = Arm.getInstance();
 
        // arm.Motor.set(TalonFXControlMode.PercentOutput, 0);
@@ -108,6 +110,7 @@ public class Robot extends TimedRobot
 
 
 //        double rotateTo = 15;
+
 //
         Command TankDrive = new TankDrive(drivebase, oi);
 //
