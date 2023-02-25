@@ -7,8 +7,9 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class TimerCommand extends CommandBase {
     double seconds;
     Timer timer = new Timer();
+
     public TimerCommand(double seconds) {
-        this.seconds=seconds;
+        this.seconds = seconds;
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
         addRequirements();
@@ -27,8 +28,7 @@ public class TimerCommand extends CommandBase {
     public boolean isFinished() {
         // TODO: Make this return true when this Command no longer needs to run execute()
 
-        if(timer.get()>=seconds)return true;
-        return false;
+        return timer.get() >= seconds;
     }
 
     @Override

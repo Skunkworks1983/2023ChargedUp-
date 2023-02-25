@@ -29,11 +29,6 @@ import frc.robot.subsystems.ExampleSubsystem;
 public class RobotContainer
 {
     // The robot's subsystems and commands are defined here...
-
-    private final Drivebase drivebase = Drivebase4MotorTalonFX.GetDrivebase();
-    private final Oi oi = new Oi(drivebase);
-
-    private final TankDrive autoCommand = new TankDrive(drivebase, oi);
     
     
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -60,17 +55,5 @@ public class RobotContainer
         // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
         // cancelling on release.
        // driverController.b().whileTrue(exampleSubsystem.exampleMethodCommand());
-    }
-    
-    
-    /**
-     * Use this to pass the autonomous command to the main {@link Robot} class.
-     *
-     * @return the command to run in autonomous
-     */
-    public Command getAutonomousCommand()
-    {
-        // An example command will be run in autonomous
-        return autoCommand;
     }
 }
