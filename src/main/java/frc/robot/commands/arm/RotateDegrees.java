@@ -7,7 +7,6 @@ import frc.robot.subsystems.Arm;
 
 public class RotateDegrees extends CommandBase {
     private final Arm arm;
-
     private final double offsetDegrees;
     private double rotateTo;
     private final boolean ignore;
