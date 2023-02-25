@@ -9,6 +9,7 @@ public class TimerCommand extends CommandBase {
     Timer timer = new Timer();
     public TimerCommand(double seconds) {
         this.seconds=seconds;
+        System.out.println("created timer command for " +seconds +" seconds.");
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
         addRequirements();
@@ -17,6 +18,7 @@ public class TimerCommand extends CommandBase {
     @Override
     public void initialize() {
         timer.start();
+        System.out.println("timer inistialized");
     }
 
     @Override
