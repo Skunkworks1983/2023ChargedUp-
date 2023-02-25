@@ -3,8 +3,8 @@ package frc.robot.services;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.arm.RotateDegrees;
-import frc.robot.commands.autos.CollectorExpelCommand;
-import frc.robot.commands.autos.CollectorIntakeCommand;
+import frc.robot.commands.autos.CollectorExpelTeleopCommand;
+import frc.robot.commands.autos.CollectorIntakeTeleopCommand;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.multidrivebase.Drivebase;
 import frc.robot.subsystems.Arm;
@@ -40,8 +40,8 @@ public class Oi
         //button sticks
 
         //when held
-        expelButton.whileTrue(new CollectorExpelCommand());
-        intakeButton.whileTrue(new CollectorIntakeCommand());
+        expelButton.whileTrue(new CollectorExpelTeleopCommand());
+        intakeButton.whileTrue(new CollectorIntakeTeleopCommand());
 
         // when pressed
         armUpButton.onTrue(new RotateDegrees(arm, 45, true));

@@ -5,9 +5,9 @@ import frc.robot.constants.Constants;
 import frc.robot.subsystems.Collector;
 
 
-public class CollectorExpelCommand extends CommandBase {
+public class CollectorExpelTeleopCommand extends CommandBase {
     public Collector collectorInstance;
-    public CollectorExpelCommand() {
+    public CollectorExpelTeleopCommand() {
         collectorInstance = Collector.getInstance();
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)

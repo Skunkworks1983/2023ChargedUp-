@@ -51,9 +51,11 @@ public class Collector extends SubsystemBase {
 
 
     //}
-    private boolean cubeCollected() {
+    public boolean cubeCollected() {
+        System.out.println(cubeBreak1.get());
+        System.out.println(cubeBreak2.get());
         if(cubeBreak1.get() == true || cubeBreak2.get() == true) {
-            return true;
+            return false;
         }
         else {
             return false;
