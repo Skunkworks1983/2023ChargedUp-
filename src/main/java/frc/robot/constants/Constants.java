@@ -13,10 +13,10 @@ public class Constants extends CommandBase {
         public static final double WHEEL_REVS_PER_SEC_TO_VELOCITY = 8050;
         public static final int CUBE_BREAK_1_PORT = 0;
         public static final int CUBE_BREAK_2_PORT = 1;
-        public static final double INTAKE_SPEED = 8; //inches per second
+        public static final double INTAKE_SPEED = -8; //inches per second
         public static final double INTAKE_MOTOR_SPEED =
                 INTAKE_SPEED / WHEEL_CIRCUMFERENCE * WHEEL_REVS_PER_SEC_TO_VELOCITY;
-        public static final double EXPEL_SPEED = -8; // inches per second
+        public static final double EXPEL_SPEED = 8; // inches per second
         public static final double EXPEL_MOTOR_SPEED =
                 EXPEL_SPEED / WHEEL_CIRCUMFERENCE * WHEEL_REVS_PER_SEC_TO_VELOCITY;
 

@@ -15,7 +15,7 @@ public class Oi
         public static Oi Instance;
         Joystick leftStick;
         Joystick rightStick;
-
+        Joystick buttonStick;
     JoystickButton armUpButton;
     JoystickButton armDownButton;
 
@@ -31,11 +31,12 @@ public class Oi
         Instance = this;
         leftStick = new Joystick(Constants.JoystickPorts.LEFT_JOY_STICK_PORT);
         rightStick = new Joystick(Constants.JoystickPorts.RIGHT_JOY_STICK_PORT);
+        buttonStick= new Joystick(Constants.JoystickPorts.BUTTON_STICK_PORT);
 
         armUpButton = new JoystickButton(leftStick, Constants.OIButtons.ARM_UP_BUTTON);
         armDownButton = new JoystickButton(leftStick, Constants.OIButtons.ARM_DOWN_BUTTON);
-        expelButton = new JoystickButton(leftStick, Constants.OIButtons.EXPEL_BUTTON);
-        intakeButton = new JoystickButton(leftStick, Constants.OIButtons.INTAKE_BUTTON);
+        expelButton = new JoystickButton(buttonStick, Constants.OIButtons.EXPEL_BUTTON);
+        intakeButton = new JoystickButton(buttonStick, Constants.OIButtons.INTAKE_BUTTON);
 
         //button sticks
 

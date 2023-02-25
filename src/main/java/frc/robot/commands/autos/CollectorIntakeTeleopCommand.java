@@ -19,7 +19,7 @@ public class CollectorIntakeTeleopCommand extends CommandBase {
     public void initialize() {
 
         collectorInstance.Setspeed(Constants.Collector.INTAKE_MOTOR_SPEED);
-
+        System.out.println("the intake command is running");
     }
 
     @Override
@@ -35,6 +35,7 @@ public class CollectorIntakeTeleopCommand extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
+        System.out.println("expel command end");
         collectorInstance.Setspeed(0);
 
     }
