@@ -104,27 +104,21 @@ public class Robot extends TimedRobot
 
 
     @Override
-    public void teleopInit() {
+    public void teleopInit()
+    {
         arm = Arm.getInstance();
-
         arm.Motor.set(TalonFXControlMode.PercentOutput, 0);
         arm.Motor.setNeutralMode(NeutralMode.Brake);
 
+        //double rotateTo = 15;
+        //Command TankDrive = new TankDrive(drivebase, oi);
 
-//        double rotateTo = 15;
-//
-     //   Command TankDrive = new TankDrive(drivebase, oi);
-//
-       // TankDrive.schedule();
+        //TankDrive.schedule();
 
-        // This makes sure that the autonomous stops running when
-        // teleop starts running. If you want the autonomous to
-        // continue until interrupted by another command, remove
-        // this line or comment it out.
-//        if (autonomousCommand != null)
-//        {
-//            autonomousCommand.cancel();
-//        }
+        /* if (autonomousCommand != null)
+        {
+            autonomousCommand.cancel();
+        } */
     }
     
     
