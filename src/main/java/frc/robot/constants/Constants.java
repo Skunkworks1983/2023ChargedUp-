@@ -30,7 +30,8 @@ public class Constants extends CommandBase {
     public class OIButtons {
         public static final int ARM_UP_BUTTON = 12;
         public static final int ARM_DOWN_BUTTON = 11;
-
+        public static final int WRIST_UP_BUTTON=4;
+        public static final int WRIST_DOWN_BUTTON=2;
         public static final int INTAKE_BUTTON = 13; // 13 on comp robot
         public static final int EXPEL_BUTTON = 9; // 9 on comp robot
 
@@ -60,7 +61,11 @@ public class Constants extends CommandBase {
         public static final int SWAP_ANGLE_ADDITION = 0;
         public static final double RESTING_ANGLE = -96.6;
         public static final double ANGLE_UPDATE = 0.5;
-        public static final int MOTOR_ID = 5;
+        public static final int SHOULDER_MOTOR_ID = 5;
+
+        public static final int WRIST_MOTOR_DEVICE_NUMBER =6;
+
+        public static final int WRIST_GEAR_RATIO=96;
     }
 
     public class Falcon500 {

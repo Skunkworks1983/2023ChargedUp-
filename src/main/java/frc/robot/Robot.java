@@ -11,10 +11,11 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.arm.RotateDegrees;
+import frc.robot.commands.autos.WaveCollectorCommandGroup;
 import frc.robot.commands.autos.CollectorIntakeAutoCommand;
 import frc.robot.commands.autos.CollectorTestingCommand;
 import frc.robot.commands.drivebase.TankDrive;
-import frc.robot.commands.arm.RotateDegrees;
 import frc.robot.subsystems.Arm;
 import frc.robot.commands.drivebase.DriveDistanceCommand;
 import frc.robot.services.Oi;
@@ -100,7 +101,6 @@ public class Robot extends TimedRobot
     public void teleopInit() {
 
         //arm = Arm.getInstance();
-
 
        // arm.Motor.set(TalonFXControlMode.PercentOutput, 0);
         //arm.Motor.setNeutralMode(NeutralMode.Coast);
