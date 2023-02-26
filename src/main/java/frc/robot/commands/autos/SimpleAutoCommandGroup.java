@@ -9,8 +9,8 @@ import frc.robot.subsystems.multidrivebase.Drivebase4MotorTalonFX;
 
 public class SimpleAutoCommandGroup extends SequentialCommandGroup
 {
-    private static final Command DriveDistanceCommandForward = new DriveDistanceCommand(Drivebase4MotorTalonFX.GetDrivebase(), 2 );
-    private static final Command DriveDistanceCommandBackward = new DriveDistanceCommand(Drivebase4MotorTalonFX.GetDrivebase(),-2);
+    private static final Command DriveDistanceCommandForward = new DriveDistanceCommand(Drivebase4MotorTalonFX.GetDrivebase(), 1 );
+    private static final Command DriveDistanceCommandBackward = new DriveDistanceCommand(Drivebase4MotorTalonFX.GetDrivebase(),-1);
     private static final Command LiftArmAndWaveAutoCommandGroup = new LiftArmAndWaveAutoCommandGroup();
     // private static final Command RotateCommand = new RotateCommand(Drivebase4MotorTalonFX.GetDrivebase(),180);
 

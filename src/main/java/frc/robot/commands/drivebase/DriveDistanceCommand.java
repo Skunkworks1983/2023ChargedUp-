@@ -42,6 +42,7 @@ public class DriveDistanceCommand extends CommandBase
         {
             direction = -1;
         }
+        drivebase.SetBrakeMode(true);
         System.out.println("moving from " +startDistanceFT + " to " + finishDistanceFT);
     }
 
