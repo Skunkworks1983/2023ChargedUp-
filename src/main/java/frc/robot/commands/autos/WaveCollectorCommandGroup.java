@@ -8,7 +8,8 @@ public class WaveCollectorCommandGroup extends SequentialCommandGroup {
         // TODO: Add your sequential commands in the super() call, e.g.
         //           super(new OpenClawCommand(), new MoveArmCommand());
 
-        super(new TimeWristMoveCommandGroup(.9,-.14),
+        super(new TimeWristMoveCommandGroup(2, 0.15),
+                new TimeWristMoveCommandGroup(.9,-.14),
                 new TimeWristMoveCommandGroup(.9,.14),
                 new TimeWristMoveCommandGroup(.9,-.14),
                 new TimeWristMoveCommandGroup(.9,.14));
