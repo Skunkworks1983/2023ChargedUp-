@@ -10,11 +10,13 @@ import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.autos.CollectorIntakeTeleopCommand;
 import frc.robot.commands.autos.WaveCollectorCommandGroup;
 import frc.robot.commands.drivebase.TankDrive;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
 import frc.robot.services.Oi;
+import frc.robot.subsystems.Collector;
 import frc.robot.subsystems.multidrivebase.Drivebase;
 import frc.robot.subsystems.multidrivebase.Drivebase4MotorTalonFX;
 
@@ -47,6 +49,7 @@ public class Robot extends TimedRobot
     {
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         // autonomous chooser on the dashboard.
+        Collector.getInstance();
         arm = Arm.getInstance();
         robotContainer = new RobotContainer();
     }
@@ -90,10 +93,9 @@ public class Robot extends TimedRobot
      */
     @Override
     public void autonomousInit() {
-        Command WaveCollector = new WaveCollectorCommandGroup();
-
-        WaveCollector.schedule();
-        //CommandScheduler.getInstance().schedule(new WaveCollectorCommandGroup());
+        Command CollectorIntakeTeleop = new CollectorIntakeTeleopCommand();
+        Collector collector = Collector.getInstance();
+        System.out.println("power drawn: " + collector.GetCollectorCurrent());
     }
 
 

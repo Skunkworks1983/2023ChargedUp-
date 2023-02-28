@@ -47,7 +47,7 @@ public class Constants extends CommandBase {
         public static final double ANGLE_KP = 0.018;
         public static final double DRIVEBASE_KF = 0.08;
         public static final int THRESHOLD_ROTATE = 3;
-        public static final int DRIVE_OUT_OF_COMMUINITY = -9;
+        public static final int DRIVE_OUT_OF_COMMUNITY = -9;
     }
 
     public class Arm {
@@ -57,7 +57,7 @@ public class Constants extends CommandBase {
         public static final double SHOULDER_KF = -0.0385;
         public static final double SHOULDER_PEAK_OUTPUT = 0.3;
         public static final double SHOULDER_TOLERANCE = 2;
-        public static final int SHOULDER_GEAR_RATIO = 128;
+        public static final double SHOULDER_GEAR_RATIO = 137.4;
         public static final int SHOULDER_SWAP_ANGLE = 0;
         public static final int SHOULDER_SWAP_ANGLE_ADDITION = 0;
         public static final double SHOULDER_RESTING_ANGLE = -96.6;
@@ -66,7 +66,7 @@ public class Constants extends CommandBase {
         public static final int SHOULDER_LIMIT_SWITCH_FRONT = 0;
         public static final int SHOULDER_LIMIT_SWITCH_BACK = 1;
         public static final int WRIST_MOTOR_DEVICE_NUMBER = 6;
-        public static final int WRIST_GEAR_RATIO = 96;
+        public static final double WRIST_GEAR_RATIO = 115.2;
     }
 
     public class Falcon500 {
