@@ -3,7 +3,7 @@ package frc.robot.subsystems.multidrivebase;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import com.kauailabs.navx.frc.AHRS;
+//import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.I2C;
 import frc.robot.constants.Constants;
 
@@ -19,7 +19,7 @@ public class Drivebase4MotorTalonFX extends Drivebase {
             Constants.Wobbles.TICKS_PER_MOTOR_REV*Constants.Drivebase.GEAR_RATIO /
                     (Constants.Drivebase.WHEEL_DIAMETER * Math.PI);
 
-    AHRS gyro = new AHRS(I2C.Port.kMXP);
+    //AHRS gyro = new AHRS(I2C.Port.kMXP);
 
     private Drivebase4MotorTalonFX ()
     {
@@ -48,13 +48,15 @@ public class Drivebase4MotorTalonFX extends Drivebase {
     @Override
         public double getHeading()
     {
-        return gyro.getAngle();
+        //return gyro.getAngle();
+        return 0;
     }
 
     @Override
         public boolean isCalibrating()
     {
-        return gyro.isCalibrating();
+       //return gyro.isCalibrating();
+        return false;
     }
 
     @Override
