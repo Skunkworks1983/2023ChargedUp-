@@ -2,7 +2,7 @@ package frc.robot.services;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.arm.RotateWristByPowerCommand;
+import frc.robot.commands.autos.RotateWristByPowerCommand;
 import frc.robot.commands.arm.SetShoulderSpeed;
 import frc.robot.commands.autos.CollectorExpelTeleopCommand;
 import frc.robot.commands.autos.CollectorIntakeTeleopCommand;

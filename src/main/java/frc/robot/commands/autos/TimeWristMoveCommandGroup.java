@@ -2,7 +2,6 @@ package frc.robot.commands.autos;
 
 
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
-import frc.robot.commands.arm.RotateWristByPowerCommand;
 import frc.robot.subsystems.TimerCommand;
 
 public class TimeWristMoveCommandGroup extends ParallelRaceGroup {
