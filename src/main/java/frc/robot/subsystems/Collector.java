@@ -33,6 +33,12 @@ public class Collector extends SubsystemBase {
             return false;
         }
     }
+
+    public double GetCollectorCurrent()
+    {
+        return Motor.getSupplyCurrent();
+    }
+
     public static Collector getInstance(){
         if ( instance == null){
             instance = new Collector();
