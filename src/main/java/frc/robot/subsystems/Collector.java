@@ -4,8 +4,10 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.Constants;
+import frc.robot.services.Oi;
 
 public class Collector extends SubsystemBase {
     public TalonFX Motor;
@@ -28,10 +30,15 @@ public class Collector extends SubsystemBase {
 
         }
         else {
-            System.out.println("returns false");
             return false;
         }
     }
+
+    public double GetCollectorCurrent()
+    {
+        return Motor.getSupplyCurrent();
+    }
+
     public boolean cubeCollectedExpel() {
 
         if(cubeBreak1.get() == true || cubeBreak2.get() == true) {
@@ -59,4 +66,3 @@ public class Collector extends SubsystemBase {
         System.out.println("Cube break 1" + cubeBreak1.get());
     }
 }
-

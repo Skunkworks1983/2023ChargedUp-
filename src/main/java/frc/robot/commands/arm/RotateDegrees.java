@@ -7,7 +7,6 @@ import frc.robot.subsystems.Arm;
 
 public class RotateDegrees extends CommandBase {
     private final Arm arm;
-
     private final double offsetDegrees;
     private double rotateTo;
     private final boolean ignore;
@@ -50,7 +49,7 @@ public class RotateDegrees extends CommandBase {
 
         double angle = arm.getShoulderAngle();
 
-        if (angle >= Constants.Arm.SWAP_ANGLE + Constants.Arm.SWAP_ANGLE_ADDITION) {
+        if (angle >= Constants.Arm.SHOULDER_SWAP_ANGLE + Constants.Arm.SHOULDER_SWAP_ANGLE_ADDITION) {
             if (!lastAngle) {
                 lastAngle = true;
                 /*
@@ -61,18 +60,18 @@ public class RotateDegrees extends CommandBase {
             }
         }
 
-        SmartDashboard.putNumber("rotateDegrees kp", Constants.Arm.KP);
-        SmartDashboard.putNumber("rotateDegrees error", arm.Motor.getClosedLoopError() * Constants.Arm.TICKS_TO_DEGREES);
-        SmartDashboard.putNumber("rotateDegrees setpoint", arm.setpoint * Constants.Arm.TICKS_TO_DEGREES);
+        SmartDashboard.putNumber("rotateDegrees kp", Constants.Arm.SHOULDER_KP);
+        SmartDashboard.putNumber("rotateDegrees error", arm.ShoulderMotor.getClosedLoopError() * Constants.Arm.SHOULDER_TICKS_TO_DEGREES);
+        SmartDashboard.putNumber("rotateDegrees setpoint", arm.setpoint * Constants.Arm.SHOULDER_TICKS_TO_DEGREES);
         SmartDashboard.putNumber("rotateDegrees current", arm.getShoulderAngle());
         SmartDashboard.putNumber("rotateDegrees motor output", arm.getCurrentOutput());
     }
 
     @Override
     public boolean isFinished() {
-        if (Math.abs(arm.Motor.getClosedLoopError() * Constants.Arm.TICKS_TO_DEGREES) < Constants.Arm.SHOULDER_TOLERANCE) {
+        if (Math.abs(arm.ShoulderMotor.getClosedLoopError() * Constants.Arm.SHOULDER_TICKS_TO_DEGREES) < Constants.Arm.SHOULDER_TOLERANCE) {
             System.out.println("Ended");
-            System.out.println("end error: " + arm.Motor.getClosedLoopError() * Constants.Arm.TICKS_TO_DEGREES);
+            System.out.println("end error: " + arm.ShoulderMotor.getClosedLoopError() * Constants.Arm.SHOULDER_TICKS_TO_DEGREES);
             return true;
         } else {
             return false;

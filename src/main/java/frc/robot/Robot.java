@@ -8,7 +8,10 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.autos.WaveCollectorCommandGroup;
 import frc.robot.commands.drivebase.TankDrive;
+import frc.robot.constants.Constants;
+import frc.robot.subsystems.Arm;
 import frc.robot.services.Oi;
 import frc.robot.subsystems.multidrivebase.Drivebase;
 import frc.robot.subsystems.multidrivebase.Drivebase4MotorTalonFX;
@@ -24,14 +27,14 @@ public class Robot extends TimedRobot
 {
     private Drivebase drivebase = Drivebase4MotorTalonFX.GetDrivebase();
     private Oi oi = new Oi(drivebase);
-    private Command collectorIntakeAuto;
-    private Command collectorExpelAuto;
 
-    
+
+    private Command autonomousCommand;
+
     private RobotContainer robotContainer;
 
 
-    //private Arm arm;
+    private Arm arm;
 
     
     /**
@@ -43,10 +46,8 @@ public class Robot extends TimedRobot
     {
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         // autonomous chooser on the dashboard.
-      //  arm = Arm.getInstance();
-
+        arm = Arm.getInstance();
         robotContainer = new RobotContainer();
-
     }
     
     
@@ -72,12 +73,14 @@ public class Robot extends TimedRobot
      */
     @Override
     public void disabledInit() {
-       // arm.Motor.setNeutralMode(NeutralMode.Brake);
+
     }
     
     
     @Override
-    public void disabledPeriodic() {
+    public void disabledPeriodic()
+    {
+
     }
 
 
@@ -85,35 +88,30 @@ public class Robot extends TimedRobot
      * This autonomous runs the autonomous command selected by your {@link RobotContainer} class.
      */
     @Override
-    public void autonomousInit()
-    {
-        collectorIntakeAuto = new CollectorIntakeAutoCommand();
-        collectorExpelAuto = new CollectorExpelAutoCommand();
-        collectorExpelAuto.schedule();
+    public void autonomousInit() {
+        Command WaveCollector = new WaveCollectorCommandGroup();
 
-
-
+        WaveCollector.schedule();
+        //CommandScheduler.getInstance().schedule(new WaveCollectorCommandGroup());
     }
 
 
     @Override
-    public void teleopInit() {
+    public void teleopInit()
+    {
+        arm = Arm.getInstance();
+        arm.ShoulderMotor.set(TalonFXControlMode.PercentOutput, 0);
+        arm.ShoulderMotor.setNeutralMode(NeutralMode.Brake);
 
-        //arm = Arm.getInstance();
-
-
-       // arm.Motor.set(TalonFXControlMode.PercentOutput, 0);
-        //arm.Motor.setNeutralMode(NeutralMode.Coast);
-
-
-//        double rotateTo = 15;
-
-//
+        //double rotateTo = 15;
         Command TankDrive = new TankDrive(drivebase, oi);
-//
+
         //TankDrive.schedule();
-//        arm.Motor.set(TalonFXControlMode.PercentOutput, 0);
-//        arm.Motor.setNeutralMode(NeutralMode.Coast);
+
+        /* if (autonomousCommand != null)
+        {
+            autonomousCommand.cancel();
+        } */
     }
     
     
@@ -132,7 +130,13 @@ public class Robot extends TimedRobot
     
     /** This method is called periodically during test mode. */
     @Override
-    public void testPeriodic() {}
+    public void testPeriodic()
+    {
+        arm = Arm.getInstance();
+
+        System.out.println("Limit switch front: " + arm.limitSwitchOutput(Constants.Arm.SHOULDER_LIMIT_SWITCH_FRONT));
+        System.out.println("Limit switch back: " + arm.limitSwitchOutput(Constants.Arm.SHOULDER_LIMIT_SWITCH_BACK));
+    }
     
     
     /** This method is called once when the robot is first started up. */
