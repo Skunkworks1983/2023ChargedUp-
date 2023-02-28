@@ -2,7 +2,11 @@ package frc.robot.services;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.arm.RotateWristByPowerCommand;
 import frc.robot.commands.arm.RotateDegrees;
+import frc.robot.commands.arm.SetShoulderSpeed;
+import frc.robot.commands.autos.CollectorExpelTeleopCommand;
+import frc.robot.commands.autos.CollectorIntakeTeleopCommand;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.multidrivebase.Drivebase;
 import frc.robot.subsystems.Arm;
@@ -13,28 +17,43 @@ public class Oi
         public static Oi Instance;
         Joystick leftStick;
         Joystick rightStick;
+        Joystick buttonStick;
 
-    JoystickButton armUpButton;
-    JoystickButton armDownButton;
+        JoystickButton wristUp;
+        JoystickButton wristDown;
 
-    Arm arm = Arm.getInstance();
+        JoystickButton armUpButton;
+        JoystickButton armDownButton;
 
-    public Oi(Drivebase drivebase) {
+        JoystickButton intakeButton;
+        JoystickButton expelButton;
+
+        Arm arm = Arm.getInstance();
+
+    public Oi(Drivebase drivebase)
+    {
         System.out.println("oi init");
         Instance = this;
         leftStick = new Joystick(Constants.JoystickPorts.LEFT_JOY_STICK_PORT);
         rightStick = new Joystick(Constants.JoystickPorts.RIGHT_JOY_STICK_PORT);
-
-        armUpButton = new JoystickButton(leftStick, Constants.OIButtons.ARM_UP_BUTTON);
-        armDownButton = new JoystickButton(leftStick, Constants.OIButtons.ARM_DOWN_BUTTON);
+        buttonStick = new Joystick(Constants.JoystickPorts.BUTTON_STICK_PORT);
 
         //button sticks
+        armUpButton = new JoystickButton(buttonStick, Constants.OIButtons.ARM_UP_BUTTON);
+        armDownButton = new JoystickButton(buttonStick, Constants.OIButtons.ARM_DOWN_BUTTON);
+        expelButton = new JoystickButton(buttonStick, Constants.OIButtons.EXPEL_BUTTON);
+        intakeButton = new JoystickButton(buttonStick, Constants.OIButtons.INTAKE_BUTTON);
+
+        wristUp = new JoystickButton(buttonStick,Constants.OIButtons.WRIST_UP_BUTTON);//4
+        wristDown = new JoystickButton(buttonStick,Constants.OIButtons.WRIST_DOWN_BUTTON);//2
 
         //when held
-
-        // when pressed
-        armUpButton.onTrue(new RotateDegrees(arm, 45, true));
-        armDownButton.onTrue(new RotateDegrees(arm, -45, true));
+        expelButton.whileTrue(new CollectorExpelTeleopCommand());
+        intakeButton.whileTrue(new CollectorIntakeTeleopCommand());
+        wristUp.whileTrue(new RotateWristByPowerCommand(-.11));
+        wristDown.whileTrue(new RotateWristByPowerCommand(.11));
+        armUpButton.whileTrue(new SetShoulderSpeed(arm, Constants.Arm.LIMIT_SWITCH_FRONT, 0.08));
+        armDownButton.whileTrue(new SetShoulderSpeed(arm, Constants.Arm.LIMIT_SWITCH_BACK, -0.04));
     }
 
     public double getLeftY() {

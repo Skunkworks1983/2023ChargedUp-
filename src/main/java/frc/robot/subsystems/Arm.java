@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
@@ -13,6 +14,10 @@ import frc.robot.constants.Constants;
 
 public class Arm extends SubsystemBase {
     public TalonFX Motor = new TalonFX(Constants.Arm.MOTOR_ID);
+    TalonFX wristMotor = new TalonFX(Constants.Arm.WRIST_MOTOR_DEVICE_NUMBER);
+    public double encoderToAngleFactor = ((1.0 / Constants.Falcon500.TICKS_PER_REV) / Constants.Arm.GEAR_RATIO) * 360;
+
+
     public double lastAngle;
     public double setpoint;
     private final static Arm INSTANCE = new Arm();
@@ -35,6 +40,8 @@ public class Arm extends SubsystemBase {
         SmartDashboard.putNumber("constructor current", Motor.getSelectedSensorPosition());
 
         updateKf(Constants.Arm.KF, Constants.Arm.RESTING_ANGLE);
+        wristMotor.setNeutralMode(NeutralMode.Brake);
+
     }
 
     public void setShoulderAnglePosition(double degrees) {
@@ -96,6 +103,12 @@ public class Arm extends SubsystemBase {
         configArmSlot(Constants.Arm.KP, Constants.Arm.KI, 0, kF, Constants.Arm.PEAK_OUTPUT);
     }
 
+    public void SetWristSpeed(double speed) {
+
+        wristMotor.set(TalonFXControlMode.PercentOutput, speed);
+    }
+
+
     /*
     Calculates a kf based on an input kf and an input position.
     newKF is the input kf multiplied by the sin of the input position.
@@ -137,6 +150,22 @@ public class Arm extends SubsystemBase {
         }
     }
 
+    public void SetPercentOutput(double percent) {
+
+        Motor.set(ControlMode.PercentOutput, percent);
+
+    }
+    public void SetBrakeMode(boolean enable)
+    {
+        if (enable) {
+
+            Motor.setNeutralMode(NeutralMode.Brake);
+
+        } else {
+
+            Motor.setNeutralMode(NeutralMode.Coast);
+        }
+    }
 
     @Override
     public void periodic() {

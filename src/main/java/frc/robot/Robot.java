@@ -11,6 +11,9 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.arm.RotateDegrees;
+import frc.robot.commands.autos.WaveCollectorCommandGroup;
+import frc.robot.commands.autos.CollectorIntakeAutoCommand;
 import frc.robot.commands.autos.CollectorTestingCommand;
 import frc.robot.commands.drivebase.TankDrive;
 import frc.robot.commands.arm.RotateDegrees;
@@ -52,7 +55,7 @@ public class Robot extends TimedRobot
     {
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         // autonomous chooser on the dashboard.
-      //  arm = Arm.getInstance();
+        arm = Arm.getInstance();
         robotContainer = new RobotContainer();
     }
     
@@ -101,27 +104,21 @@ public class Robot extends TimedRobot
 
 
     @Override
-    public void teleopInit() {
+    public void teleopInit()
+    {
         arm = Arm.getInstance();
-
         arm.Motor.set(TalonFXControlMode.PercentOutput, 0);
-        arm.Motor.setNeutralMode(NeutralMode.Coast);
+        arm.Motor.setNeutralMode(NeutralMode.Brake);
 
-
-//        double rotateTo = 15;
-//
+        //double rotateTo = 15;
         Command TankDrive = new TankDrive(drivebase, oi);
-//
+
         TankDrive.schedule();
 
-        // This makes sure that the autonomous stops running when
-        // teleop starts running. If you want the autonomous to
-        // continue until interrupted by another command, remove
-        // this line or comment it out.
-//        if (autonomousCommand != null)
-//        {
-//            autonomousCommand.cancel();
-//        }
+        /* if (autonomousCommand != null)
+        {
+            autonomousCommand.cancel();
+        } */
     }
     
     
