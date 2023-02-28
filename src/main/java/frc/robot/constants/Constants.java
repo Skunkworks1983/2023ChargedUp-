@@ -40,8 +40,8 @@ public class Constants extends CommandBase {
         public static final int ARM_UP_BUTTON = 12;
         public static final int ARM_DOWN_BUTTON = 11;
 
-        public static final int INTAKE_BUTTON = 13; // 13 on comp robot
-        public static final int EXPEL_BUTTON = 9; // 9 on comp robot
+        public static final int INTAKE_BUTTON = 5; // 13 on comp robot
+        public static final int EXPEL_BUTTON = 6; // 9 on comp robot
 
     }
 

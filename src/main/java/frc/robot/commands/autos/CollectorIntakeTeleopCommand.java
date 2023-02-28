@@ -17,7 +17,7 @@ public class CollectorIntakeTeleopCommand extends CommandBase {
 
     @Override
     public void initialize() {
-        collectorInstance.Setspeed(Constants.Collector.INTAKE_MOTOR_SPEED);
+        collectorInstance.Setspeed(Constants.Collector.INTAKE_MOTOR_SPEED_2022);
     }
 
     @Override
@@ -27,8 +27,9 @@ public class CollectorIntakeTeleopCommand extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        // TODO: Make this return true when this Command no longer needs to run execute()
-        return false;
+
+        return collectorInstance.cubeCollectedIntake();
+
     }
 
     @Override

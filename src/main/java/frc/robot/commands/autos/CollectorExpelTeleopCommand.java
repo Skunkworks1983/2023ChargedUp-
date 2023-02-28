@@ -16,7 +16,7 @@ public class CollectorExpelTeleopCommand extends CommandBase {
 
     @Override
     public void initialize() {
-        collectorInstance.Setspeed(Constants.Collector.EXPEL_MOTOR_SPEED);
+        collectorInstance.Setspeed(Constants.Collector.EXPEL_MOTOR_SPEED_2022);
     }
 
     @Override

@@ -5,23 +5,13 @@
 
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.autos.CollectorIntakeAutoCommand;
-import frc.robot.commands.autos.CollectorTestingCommand;
 import frc.robot.commands.drivebase.TankDrive;
-import frc.robot.commands.arm.RotateDegrees;
-import frc.robot.subsystems.Arm;
-import frc.robot.commands.drivebase.DriveDistanceCommand;
 import frc.robot.services.Oi;
 import frc.robot.subsystems.multidrivebase.Drivebase;
-import frc.robot.subsystems.multidrivebase.Drivebase4MotorSparks;
 import frc.robot.subsystems.multidrivebase.Drivebase4MotorTalonFX;
-import frc.robot.subsystems.Collector;
 
 
 /**
@@ -35,9 +25,11 @@ public class Robot extends TimedRobot
     private Drivebase drivebase = Drivebase4MotorTalonFX.GetDrivebase();
     private Oi oi = new Oi(drivebase);
     private Command collectorIntakeAuto;
+    private Command collectorExpelAuto;
 
     
     private RobotContainer robotContainer;
+
 
     //private Arm arm;
 
@@ -96,7 +88,8 @@ public class Robot extends TimedRobot
     public void autonomousInit()
     {
         collectorIntakeAuto = new CollectorIntakeAutoCommand();
-        collectorIntakeAuto.schedule();
+        collectorExpelAuto = new CollectorExpelAutoCommand();
+        collectorExpelAuto.schedule();
 
 
 
@@ -118,7 +111,7 @@ public class Robot extends TimedRobot
 //
         Command TankDrive = new TankDrive(drivebase, oi);
 //
-        TankDrive.schedule();
+        //TankDrive.schedule();
 //        arm.Motor.set(TalonFXControlMode.PercentOutput, 0);
 //        arm.Motor.setNeutralMode(NeutralMode.Coast);
     }
