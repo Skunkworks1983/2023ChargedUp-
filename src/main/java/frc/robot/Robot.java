@@ -5,10 +5,12 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.autos.WaveCollectorCommandGroup;
+import frc.robot.commands.arm.WaveCollectorCommandGroup;
 import frc.robot.commands.drivebase.TankDrive;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;

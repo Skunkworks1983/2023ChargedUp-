@@ -1,19 +1,14 @@
-package frc.robot.commands.autos;
+package frc.robot.commands.Collector;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.constants.Constants;
-import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.multidrivebase.Drivebase;
-import frc.robot.subsystems.multidrivebase.Drivebase4MotorTalonFX;
+import frc.robot.subsystems.Collector;
 
 
-public class RotateWristByPowerCommand extends CommandBase {
-
-    double speed;
-    Arm arm = Arm.getInstance();
-
-    public RotateWristByPowerCommand(double speed) {
-        this.speed = speed;
+public class CollectorExpelTeleopCommand extends CommandBase {
+    public Collector collectorInstance;
+    public CollectorExpelTeleopCommand() {
+        collectorInstance = Collector.getInstance();
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
         addRequirements();
@@ -21,12 +16,12 @@ public class RotateWristByPowerCommand extends CommandBase {
 
     @Override
     public void initialize() {
-        System.out.println("command initialized at speed:" + speed);
+        collectorInstance.Setspeed(Constants.Collector.EXPEL_MOTOR_SPEED_2022);
     }
 
     @Override
     public void execute() {
-        arm.SetWristSpeed(speed);
+
     }
 
     @Override
@@ -37,7 +32,6 @@ public class RotateWristByPowerCommand extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        System.out.println("ended");
-        arm.SetWristSpeed(0);
+        collectorInstance.Setspeed(0);
     }
 }
