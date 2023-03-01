@@ -42,11 +42,10 @@ public class Collector extends SubsystemBase {
     public boolean cubeCollectedExpel() {
 
         if(cubeBreak1.get() == true || cubeBreak2.get() == true) {
-            return true;
+            return false;
 
         }
         else {
-            System.out.println("returns false");
             return true;
         }
     }
@@ -61,8 +60,5 @@ public class Collector extends SubsystemBase {
         this.Motor.set(TalonFXControlMode.Velocity, speed);
     }
 
-    public void CubebreakPrint() {
-        System.out.println("Cube break 2" + cubeBreak2.get());
-        System.out.println("Cube break 1" + cubeBreak1.get());
-    }
+
 }
