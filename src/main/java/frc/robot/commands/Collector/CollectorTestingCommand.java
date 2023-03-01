@@ -1,15 +1,15 @@
-package frc.robot.commands.autos;
+package frc.robot.commands.Collector;
 
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.constants.Constants;
+import frc.robot.services.Oi;
 import frc.robot.subsystems.Collector;
 
 
-public class CollectorIntakeTeleopCommand extends CommandBase {
-    public Collector collectorInstance;
+public class CollectorTestingCommand extends CommandBase {
 
-    public CollectorIntakeTeleopCommand() {
-        collectorInstance = Collector.getInstance();
+    public CollectorTestingCommand() {
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
         addRequirements();
@@ -17,12 +17,16 @@ public class CollectorIntakeTeleopCommand extends CommandBase {
 
     @Override
     public void initialize() {
-        collectorInstance.Setspeed(Constants.Collector.INTAKE_MOTOR_SPEED);
+       // Collector.getInstance().intake();
+          Collector.getInstance().Setspeed(-3411);
     }
 
     @Override
     public void execute() {
 
+        //Collector.getInstance().intake();
+
+                  //    Collector.getInstance().Motor.set(TalonFXControlMode.PercentOutput, Oi.Instance.getLeftY());
     }
 
     @Override
@@ -33,6 +37,6 @@ public class CollectorIntakeTeleopCommand extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        collectorInstance.Setspeed(0);
+
     }
 }
