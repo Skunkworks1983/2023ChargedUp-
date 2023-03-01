@@ -16,55 +16,58 @@ public class Drivebase4MotorTalonFX extends Drivebase {
     TalonFX rightMotor2 = new TalonFX(Constants.Wobbles.RIGHT_MOTOR_2);
 
     private final double TicksPerFoot =
-            Constants.Wobbles.TICKS_PER_MOTOR_REV*Constants.Drivebase.GEAR_RATIO /
+            Constants.Wobbles.TICKS_PER_MOTOR_REV * Constants.Drivebase.GEAR_RATIO /
                     (Constants.Drivebase.WHEEL_DIAMETER * Math.PI);
 
     AHRS gyro = new AHRS(I2C.Port.kMXP);
 
-    private Drivebase4MotorTalonFX ()
-    {
+    private Drivebase4MotorTalonFX() {
     }
+
     @Override
-        public void runMotor(double turnSpeedLeft, double turnSpeedRight)
-    {
+    public void runMotor(double turnSpeedLeft, double turnSpeedRight) {
         leftMotor1.set(TalonFXControlMode.PercentOutput, turnSpeedLeft);
         leftMotor2.set(TalonFXControlMode.PercentOutput, turnSpeedLeft);
         rightMotor1.set(TalonFXControlMode.PercentOutput, -turnSpeedRight);
         rightMotor2.set(TalonFXControlMode.PercentOutput, -turnSpeedRight);
     }
 
-    @Override
-        public double getPosLeft()
-    {
-        return leftMotor1.getSelectedSensorPosition()/TicksPerFoot;
+    public void resetGyro() {
+        gyro.reset();
+    }
+
+    public void calibrateGyro() {
+        gyro.calibrate();
     }
 
     @Override
-        public double getPosRight()
-    {
-        return -(rightMotor1.getSelectedSensorPosition()/TicksPerFoot);
+    public double getPosLeft() {
+        return leftMotor1.getSelectedSensorPosition() / TicksPerFoot;
     }
 
     @Override
-        public double getHeading()
-    {
+    public double getPosRight() {
+        return -(rightMotor1.getSelectedSensorPosition() / TicksPerFoot);
+    }
+
+    @Override
+    public double getHeading() {
         return gyro.getAngle();
     }
 
     @Override
-        public boolean isCalibrating()
-    {
+    public boolean isCalibrating() {
         return gyro.isCalibrating();
     }
 
     @Override
-        public double getTicksLeft() {
+    public double getTicksLeft() {
 
         return leftMotor1.getSelectedSensorPosition();
     }
+
     @Override
-        public void SetBrakeMode(boolean enable)
-    {
+    public void SetBrakeMode(boolean enable) {
         if (enable) {
 
             leftMotor1.setNeutralMode(NeutralMode.Brake);
@@ -82,13 +85,12 @@ public class Drivebase4MotorTalonFX extends Drivebase {
     }
 
     @Override
-        public double getSpeedLeft()
-    {
+    public double getSpeedLeft() {
         return leftMotor1.getSelectedSensorVelocity();
     }
+
     @Override
-        public double getSpeedRight()
-    {
+    public double getSpeedRight() {
         return (-rightMotor1.getSelectedSensorVelocity());
     }
 

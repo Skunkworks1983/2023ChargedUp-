@@ -110,4 +110,10 @@ private static Drivebase OGDrivebase;
 
         return OGDrivebase;
     }
+
+    public void resetGyro() {
+    }
+
+    public void calibrateGyro() {
+    }
 }

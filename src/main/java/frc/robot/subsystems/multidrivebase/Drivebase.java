@@ -71,5 +71,9 @@ public abstract class Drivebase extends SubsystemBase
 //    {
 //        return (-rightMotor1.getSelectedSensorVelocity());
 //    }
+
+    public abstract void resetGyro();
+
+    public abstract void calibrateGyro();
 }
 
