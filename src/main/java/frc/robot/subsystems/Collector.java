@@ -4,10 +4,8 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.Constants;
-import frc.robot.services.Oi;
 
 public class Collector extends SubsystemBase {
     public TalonFX Motor;
@@ -23,15 +21,25 @@ public class Collector extends SubsystemBase {
         Motor.config_kP(0, Constants.Collector.K_P);
         Motor.setNeutralMode(NeutralMode.Brake);
     }
-    public boolean cubeCollectedIntake() {
+    public boolean isHoldingCube() {
 
-        if(cubeBreak1.get() == false || cubeBreak2.get() == false) {
+        if(cubeBreak1.get() == false && cubeBreak2.get() == false) {
             return true;
 
         }
         else {
             return false;
         }
+
+    }
+    public boolean isHoldingCone() {
+        if(GetCollectorCurrent() >= Constants.Collector.CONE_COLLECT_AMP_THRESHOLD) {
+            return true;
+        }
+        else{
+            return false;
+        }
+
     }
 
     public double GetCollectorCurrent()

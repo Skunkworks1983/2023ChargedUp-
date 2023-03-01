@@ -4,8 +4,8 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.arm.RotateWristByPowerCommand;
 import frc.robot.commands.arm.SetShoulderSpeed;
-import frc.robot.commands.Collector.CollectorExpelTeleopCommand;
-import frc.robot.commands.Collector.CollectorIntakeTeleopCommand;
+import frc.robot.commands.Collector.ExpelCubeCommand;
+import frc.robot.commands.Collector.IntakeConeManualCommand;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.multidrivebase.Drivebase;
 import frc.robot.subsystems.Arm;
@@ -47,8 +47,8 @@ public class Oi
         wristDown = new JoystickButton(buttonStick,Constants.OIButtons.WRIST_DOWN_BUTTON);//2
 
         //when held
-        expelButton.whileTrue(new CollectorExpelTeleopCommand());
-        intakeButton.whileTrue(new CollectorIntakeTeleopCommand());
+        expelButton.whileTrue(new ExpelCubeCommand());
+        intakeButton.whileTrue(new IntakeConeManualCommand());
         wristUp.whileTrue(new RotateWristByPowerCommand(-.11));
         wristDown.whileTrue(new RotateWristByPowerCommand(.11));
         armUpButton.whileTrue(new SetShoulderSpeed(arm, Constants.Arm.SHOULDER_LIMIT_SWITCH_FRONT, 0.08));
