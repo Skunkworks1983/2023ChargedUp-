@@ -1,7 +1,8 @@
-package frc.robot.commands.autos;
+package frc.robot.commands.arm;
 
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.arm.TimeWristMoveCommandGroup;
 
 public class WaveCollectorCommandGroup extends SequentialCommandGroup {
     public WaveCollectorCommandGroup() {
