@@ -43,6 +43,7 @@ public class Arm extends SubsystemBase {
         updateKf(Constants.Arm.SHOULDER_KF, Constants.Arm.SHOULDER_RESTING_ANGLE);
         wristMotor.setNeutralMode(NeutralMode.Brake);
 
+        wristMotor.setNeutralMode(NeutralMode.Coast); //DEBUG testing
     }
 
     public void setShoulderAnglePosition(double degrees) {
@@ -57,6 +58,10 @@ public class Arm extends SubsystemBase {
 
     public double getShoulderAngle() {
         return ShoulderMotor.getSelectedSensorPosition() * Constants.Arm.SHOULDER_TICKS_TO_DEGREES;
+    }
+
+    public double geWristAngle() {
+        return wristMotor.getSelectedSensorPosition() * Constants.Arm.WRIST_TICKS_TO_DEGREES;
     }
 
     public double getCurrentOutput() {

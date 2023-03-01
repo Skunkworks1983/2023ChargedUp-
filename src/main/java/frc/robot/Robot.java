@@ -10,9 +10,7 @@ import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.autos.CollectorExpelTeleopCommand;
-import frc.robot.commands.autos.CollectorIntakeTeleopCommand;
-import frc.robot.commands.arm.WaveCollectorCommandGroup;
+import frc.robot.commands.Collector.IntakeConeCollectorCommand;
 import frc.robot.commands.drivebase.TankDrive;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
@@ -94,7 +92,7 @@ public class Robot extends TimedRobot
      */
     @Override
     public void autonomousInit() {
-        Command CollectorIntakeTeleop = new CollectorExpelTeleopCommand();
+        Command CollectorIntakeTeleop = new IntakeConeCollectorCommand();
         Collector collector = Collector.getInstance();
         CollectorIntakeTeleop.schedule();
     }
@@ -137,9 +135,9 @@ public class Robot extends TimedRobot
     public void testPeriodic()
     {
         arm = Arm.getInstance();
-
-        System.out.println("Limit switch front: " + arm.limitSwitchOutput(Constants.Arm.SHOULDER_LIMIT_SWITCH_FRONT));
-        System.out.println("Limit switch back: " + arm.limitSwitchOutput(Constants.Arm.SHOULDER_LIMIT_SWITCH_BACK));
+        arm.SetBrakeMode(false);
+        System.out.println("Limit switch front: " + arm.limitSwitchOutput(Constants.Arm.SHOULDER_LIMIT_SWITCH_FRONT) + ", Limit switch back: " + arm.limitSwitchOutput(Constants.Arm.SHOULDER_LIMIT_SWITCH_BACK)
+                                   + " shoulder angle: " + arm.getShoulderAngle() + " Wrist angle: " + arm.geWristAngle());
     }
     
     
