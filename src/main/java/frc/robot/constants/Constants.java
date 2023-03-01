@@ -38,6 +38,8 @@ public class Constants extends CommandBase {
         public static final int WRIST_DOWN_BUTTON=2;
         public static final int INTAKE_BUTTON = 13; // 13 on comp robot, 5 on  single stick
         public static final int EXPEL_BUTTON = 9; // 9 on comp robot, 6 on single stick
+        public static final int CONE_TOGGLE = 0;
+        public static final int MANUAL_TOGGLE = 0;
 
     }
 
