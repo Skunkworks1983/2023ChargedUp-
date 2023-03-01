@@ -10,6 +10,7 @@ import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.autos.CollectorExpelTeleopCommand;
 import frc.robot.commands.autos.CollectorIntakeTeleopCommand;
 import frc.robot.commands.autos.WaveCollectorCommandGroup;
 import frc.robot.commands.drivebase.TankDrive;
@@ -93,9 +94,9 @@ public class Robot extends TimedRobot
      */
     @Override
     public void autonomousInit() {
-        Command CollectorIntakeTeleop = new CollectorIntakeTeleopCommand();
+        Command CollectorIntakeTeleop = new CollectorExpelTeleopCommand();
         Collector collector = Collector.getInstance();
-        System.out.println("power drawn: " + collector.GetCollectorCurrent());
+        CollectorIntakeTeleop.schedule();
     }
 
 

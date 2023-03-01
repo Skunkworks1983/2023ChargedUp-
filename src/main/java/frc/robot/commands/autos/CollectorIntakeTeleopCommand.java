@@ -1,5 +1,6 @@
 package frc.robot.commands.autos;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Collector;
@@ -21,8 +22,9 @@ public class CollectorIntakeTeleopCommand extends CommandBase {
     }
 
     @Override
-    public void execute() {
-
+    public void execute()
+    {
+        SmartDashboard.putNumber("power drawn: " , collectorInstance.GetCollectorCurrent());
     }
 
     @Override

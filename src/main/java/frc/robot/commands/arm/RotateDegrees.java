@@ -59,12 +59,6 @@ public class RotateDegrees extends CommandBase {
                 */
             }
         }
-
-        SmartDashboard.putNumber("rotateDegrees kp", Constants.Arm.SHOULDER_KP);
-        SmartDashboard.putNumber("rotateDegrees error", arm.ShoulderMotor.getClosedLoopError() * Constants.Arm.SHOULDER_TICKS_TO_DEGREES);
-        SmartDashboard.putNumber("rotateDegrees setpoint", arm.setpoint * Constants.Arm.SHOULDER_TICKS_TO_DEGREES);
-        SmartDashboard.putNumber("rotateDegrees current", arm.getShoulderAngle());
-        SmartDashboard.putNumber("rotateDegrees motor output", arm.getCurrentOutput());
     }
 
     @Override
