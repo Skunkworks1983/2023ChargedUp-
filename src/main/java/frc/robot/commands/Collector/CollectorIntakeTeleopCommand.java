@@ -17,7 +17,7 @@ public class CollectorIntakeTeleopCommand extends CommandBase {
 
     @Override
     public void initialize() {
-        collectorInstance.Setspeed(Constants.Collector.INTAKE_MOTOR_SPEED_2022);
+        collectorInstance.Setspeed(Constants.Collector.INTAKE_MOTOR_SPEED);
     }
 
     @Override
