@@ -1,19 +1,15 @@
-package frc.robot.commands.autos;
+package frc.robot.commands.Collector;
 
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.constants.Constants;
-import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.multidrivebase.Drivebase;
-import frc.robot.subsystems.multidrivebase.Drivebase4MotorTalonFX;
+import frc.robot.services.Oi;
+import frc.robot.subsystems.Collector;
 
 
-public class RotateWristByPowerCommand extends CommandBase {
+public class CollectorTestingCommand extends CommandBase {
 
-    double speed;
-    Arm arm = Arm.getInstance();
-
-    public RotateWristByPowerCommand(double speed) {
-        this.speed = speed;
+    public CollectorTestingCommand() {
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
         addRequirements();
@@ -21,12 +17,16 @@ public class RotateWristByPowerCommand extends CommandBase {
 
     @Override
     public void initialize() {
-        System.out.println("command initialized at speed:" + speed);
+       // Collector.getInstance().intake();
+          Collector.getInstance().Setspeed(-3411);
     }
 
     @Override
     public void execute() {
-        arm.SetWristSpeed(speed);
+
+        //Collector.getInstance().intake();
+
+                  //    Collector.getInstance().Motor.set(TalonFXControlMode.PercentOutput, Oi.Instance.getLeftY());
     }
 
     @Override
@@ -37,7 +37,6 @@ public class RotateWristByPowerCommand extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        System.out.println("ended");
-        arm.SetWristSpeed(0);
+
     }
 }
