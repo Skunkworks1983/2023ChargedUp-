@@ -54,12 +54,12 @@ public class Oi
         wristDown = new JoystickButton(buttonStick,Constants.OIButtons.WRIST_DOWN_BUTTON);//2
 
         //when held
-        expelButton.and(coneToggle).onTrue(new ExpelConeCommand());
-        expelButton.and(coneToggle.negate()).onTrue(new ExpelCubeCommand());
-        intakeButton.and(coneToggle).and(manualToggle).onTrue(new IntakeConeManualCommand());
-        intakeButton.and(coneToggle.negate()).and(manualToggle).onTrue(new IntakeCubeManualCommand());
-        intakeButton.and(coneToggle).and(manualToggle.negate()).onTrue(new IntakeConeSmartCommand());
-        intakeButton.and(coneToggle.negate()).and(manualToggle.negate()).onTrue(new IntakeCubeSmartCommand());
+        expelButton.and(coneToggle).whileTrue(new ExpelConeCommand());
+        expelButton.and(coneToggle.negate()).whileTrue(new ExpelCubeCommand());
+        intakeButton.and(coneToggle).and(manualToggle).whileTrue(new IntakeConeManualCommand());
+        intakeButton.and(coneToggle.negate()).and(manualToggle).whileTrue(new IntakeCubeManualCommand());
+        intakeButton.and(coneToggle).and(manualToggle.negate()).whileTrue(new IntakeConeSmartCommand());
+        intakeButton.and(coneToggle.negate()).and(manualToggle.negate()).whileTrue(new IntakeCubeSmartCommand());
 
         wristUp.whileTrue(new RotateWristByPowerCommand(-.11));
         wristDown.whileTrue(new RotateWristByPowerCommand(.11));

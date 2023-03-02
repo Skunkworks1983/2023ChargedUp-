@@ -24,10 +24,12 @@ public class Collector extends SubsystemBase {
     public boolean isHoldingCube() {
 
         if(cubeBreak1.get() == false && cubeBreak2.get() == false) {
+            System.out.println("returns true");
             return true;
 
         }
         else {
+            System.out.println("returns false");
             return false;
         }
 
