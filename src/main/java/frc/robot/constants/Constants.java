@@ -48,6 +48,17 @@ public class Constants extends CommandBase {
         public static final double DRIVEBASE_KF = 0.08;
         public static final int THRESHOLD_ROTATE = 3;
         public static final int DRIVE_OUT_OF_COMMUINITY = -9;
+
+        public static final float MAXIMUM_BALANCE_DISTANCE_FROM_GROUND;
+
+        //set these
+        public static final int FRONT_RANGE_SENSOR_OUTPUT_CHANNEL=4;
+
+        public static final int BACK_RANGE_SENSOR_OUTPUT_CHANNEL=5;
+
+        public static final int FRONT_RANGE_SENSOR_INPUT_CHANNEL=0;
+
+        public static final int BACK_RANGE_SENSOR_INPUT_CHANNEL=1;
     }
 
     public class Arm {
