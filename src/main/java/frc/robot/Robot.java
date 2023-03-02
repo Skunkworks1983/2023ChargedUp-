@@ -8,9 +8,11 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.Collector.IntakeConeCollectorCommand;
+import frc.robot.commands.arm.RotateDegrees;
 import frc.robot.commands.drivebase.TankDrive;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
@@ -102,14 +104,14 @@ public class Robot extends TimedRobot
     public void teleopInit()
     {
         arm = Arm.getInstance();
-        arm.ShoulderMotor.set(TalonFXControlMode.PercentOutput, 0);
-        arm.ShoulderMotor.setNeutralMode(NeutralMode.Brake);
+        // arm.ShoulderMotor.set(TalonFXControlMode.PercentOutput, 0);
+        arm.ShoulderMotor.setNeutralMode(NeutralMode.Coast);
 
-        //double rotateTo = 15;
-        Command TankDrive = new TankDrive(drivebase, oi);
-
-        TankDrive.schedule();
-
+        double rotateTo = 140;
+        //Command TankDrive = new TankDrive(drivebase, oi);
+        Command rotateDegrees = new RotateDegrees(arm, rotateTo, true);
+        //TankDrive.schedule();
+        rotateDegrees.schedule();
         /* if (autonomousCommand != null)
         {
             autonomousCommand.cancel();
@@ -138,6 +140,7 @@ public class Robot extends TimedRobot
         arm.SetBrakeMode(false);
         System.out.println("Limit switch front: " + arm.limitSwitchOutput(Constants.Arm.SHOULDER_LIMIT_SWITCH_FRONT) + ", Limit switch back: " + arm.limitSwitchOutput(Constants.Arm.SHOULDER_LIMIT_SWITCH_BACK)
                                    + " shoulder angle: " + arm.getShoulderAngle() + " Wrist angle: " + arm.geWristAngle());
+        SmartDashboard.putNumber(" shoulder angle: " , arm.getShoulderAngle());
     }
     
     

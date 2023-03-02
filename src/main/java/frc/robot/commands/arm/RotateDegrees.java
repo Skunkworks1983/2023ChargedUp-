@@ -66,7 +66,7 @@ public class RotateDegrees extends CommandBase {
         if (Math.abs(arm.ShoulderMotor.getClosedLoopError() * Constants.Arm.SHOULDER_TICKS_TO_DEGREES) < Constants.Arm.SHOULDER_TOLERANCE) {
             System.out.println("Ended");
             System.out.println("end error: " + arm.ShoulderMotor.getClosedLoopError() * Constants.Arm.SHOULDER_TICKS_TO_DEGREES);
-            return true;
+            return false; //todo
         } else {
             return false;
         }
