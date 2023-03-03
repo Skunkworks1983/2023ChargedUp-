@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.SerialPort;
 import frc.robot.constants.Constants;
 
 public class Drivebase4MotorTalonFX {
@@ -19,7 +20,7 @@ public class Drivebase4MotorTalonFX {
             Constants.Wobbles.TICKS_PER_MOTOR_REV*Constants.Drivebase.GEAR_RATIO /
                     (Constants.Drivebase.WHEEL_DIAMETER * Math.PI);
 
-    AHRS gyro = new AHRS(I2C.Port.kMXP);
+    AHRS gyro = new AHRS(SerialPort.Port.kMXP);
 
     private Drivebase4MotorTalonFX ()
     {
