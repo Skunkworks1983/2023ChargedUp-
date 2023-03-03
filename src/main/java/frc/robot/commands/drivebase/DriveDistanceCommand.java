@@ -1,13 +1,14 @@
 package frc.robot.commands.drivebase;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.constants.Constants;
-import frc.robot.subsystems.multidrivebase.Drivebase;
+import frc.robot.subsystems.drivebase.Drivebase4MotorTalonFX;
 
 
 public class DriveDistanceCommand extends CommandBase
 {
-    private final Drivebase drivebase;
+    private final Drivebase4MotorTalonFX drivebase;
     private final double distanceFT;
     private double startDistanceFT;
     private double finishDistanceFT;
@@ -19,13 +20,13 @@ public class DriveDistanceCommand extends CommandBase
      * @param drivebase what drivebase to use
      * @param distanceFT The direction and distance in which to go
      */
-    public DriveDistanceCommand(Drivebase drivebase, double distanceFT)
+    public DriveDistanceCommand(Drivebase4MotorTalonFX drivebase, double distanceFT)
     {
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
         this.drivebase = drivebase;
         this.distanceFT = distanceFT;
-        addRequirements(drivebase);
+        addRequirements((Subsystem)drivebase);
     }
 
     @Override

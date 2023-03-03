@@ -1,4 +1,4 @@
-package frc.robot.subsystems.multidrivebase;
+package frc.robot.subsystems.drivebase;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
@@ -7,9 +7,9 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.I2C;
 import frc.robot.constants.Constants;
 
-public class Drivebase4MotorTalonFX extends Drivebase {
+public class Drivebase4MotorTalonFX {
 
-    private static Drivebase OGDrivebase;
+    private static Drivebase4MotorTalonFX OGDrivebase;
     TalonFX leftMotor1 = new TalonFX(Constants.Wobbles.LEFT_MOTOR_1);
     TalonFX leftMotor2 = new TalonFX(Constants.Wobbles.LEFT_MOTOR_2);
     TalonFX rightMotor1 = new TalonFX(Constants.Wobbles.RIGHT_MOTOR_1);
@@ -25,7 +25,7 @@ public class Drivebase4MotorTalonFX extends Drivebase {
     {
         gyro.calibrate();
     }
-    @Override
+
         public void runMotor(double turnSpeedLeft, double turnSpeedRight)
     {
         leftMotor1.set(TalonFXControlMode.PercentOutput, turnSpeedLeft);
@@ -34,36 +34,36 @@ public class Drivebase4MotorTalonFX extends Drivebase {
         rightMotor2.set(TalonFXControlMode.PercentOutput, -turnSpeedRight);
     }
 
-    @Override
+
         public double getPosLeft()
     {
         return leftMotor1.getSelectedSensorPosition()/TicksPerFoot;
     }
 
-    @Override
+
         public double getPosRight()
     {
         return -(rightMotor1.getSelectedSensorPosition()/TicksPerFoot);
     }
 
-    @Override
+
         public double getHeading()
     {
         return gyro.getAngle();
     }
 
-    @Override
+
         public boolean isCalibrating()
     {
         return gyro.isCalibrating();
     }
 
-    @Override
+
         public double getTicksLeft() {
 
         return leftMotor1.getSelectedSensorPosition();
     }
-    @Override
+
         public void SetBrakeMode(boolean enable)
     {
         if (enable) {
@@ -82,18 +82,18 @@ public class Drivebase4MotorTalonFX extends Drivebase {
         }
     }
 
-    @Override
+
         public double getSpeedLeft()
     {
         return leftMotor1.getSelectedSensorVelocity();
     }
-    @Override
+
         public double getSpeedRight()
     {
         return (-rightMotor1.getSelectedSensorVelocity());
     }
 
-    public static Drivebase GetDrivebase() {
+    public static Drivebase4MotorTalonFX GetDrivebase() {
 
         if (OGDrivebase == null) {
             OGDrivebase = new Drivebase4MotorTalonFX();

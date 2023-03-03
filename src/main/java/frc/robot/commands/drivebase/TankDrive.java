@@ -6,20 +6,21 @@
 package frc.robot.commands.drivebase;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.services.Oi;
-import frc.robot.subsystems.multidrivebase.Drivebase;
+import frc.robot.subsystems.drivebase.Drivebase4MotorTalonFX;
 
 
 public class TankDrive extends CommandBase
 {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-    private final Drivebase drivebase;
+    private final Drivebase4MotorTalonFX drivebase;
     private final Oi oi;
 
-    public TankDrive(Drivebase drivebase, Oi oi)
+    public TankDrive(Drivebase4MotorTalonFX drivebase, Oi oi)
     {
         this.drivebase = drivebase;
-        addRequirements(drivebase);
+        addRequirements((Subsystem) drivebase);
         this.oi = oi;
     }
 

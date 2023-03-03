@@ -2,17 +2,17 @@ package frc.robot.commands.drivebase;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.constants.Constants;
-import frc.robot.subsystems.multidrivebase.Drivebase;
+import frc.robot.subsystems.drivebase.Drivebase4MotorTalonFX;
 
 public class RotateCommand extends CommandBase
 {
-    private final Drivebase drivebase;
+    private final Drivebase4MotorTalonFX drivebase;
     private double degree;
     private double startDegree;
     private double finishDegree;
     private int onTargetCount;
 
-    public RotateCommand(Drivebase drivebase, double degree)
+    public RotateCommand(Drivebase4MotorTalonFX drivebase, double degree)
     {
         addRequirements();
         this.drivebase = drivebase;

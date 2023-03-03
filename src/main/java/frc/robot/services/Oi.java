@@ -7,8 +7,8 @@ import frc.robot.commands.arm.SetShoulderSpeed;
 import frc.robot.commands.Collector.CollectorExpelTeleopCommand;
 import frc.robot.commands.Collector.CollectorIntakeTeleopCommand;
 import frc.robot.constants.Constants;
-import frc.robot.subsystems.multidrivebase.Drivebase;
 import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.drivebase.Drivebase4MotorTalonFX;
 
 
 public class Oi
@@ -29,7 +29,7 @@ public class Oi
 
         Arm arm = Arm.getInstance();
 
-    public Oi(Drivebase drivebase)
+    public Oi(Drivebase4MotorTalonFX drivebase)
     {
         System.out.println("oi init");
         Instance = this;
