@@ -6,9 +6,10 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.constants.Constants;
 
-public class Drivebase4MotorTalonFX {
+public class Drivebase4MotorTalonFX implements Subsystem {
 
     private static Drivebase4MotorTalonFX OGDrivebase;
     TalonFX leftMotor1 = new TalonFX(Constants.Wobbles.LEFT_MOTOR_1);

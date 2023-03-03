@@ -20,7 +20,7 @@ public class TankDrive extends CommandBase
     public TankDrive(Drivebase4MotorTalonFX drivebase, Oi oi)
     {
         this.drivebase = drivebase;
-        addRequirements((Subsystem) drivebase);
+        addRequirements(drivebase);
         this.oi = oi;
     }
 
