@@ -18,7 +18,7 @@ public class ArcadeDrive extends CommandBase
     {
         this.drivebase = drivebase;
         this.oi = oi;
-        addRequirements((Subsystem) drivebase);
+        addRequirements(drivebase);
     }
 
     @Override

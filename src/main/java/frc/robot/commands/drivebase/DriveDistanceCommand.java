@@ -26,7 +26,7 @@ public class DriveDistanceCommand extends CommandBase
         // addRequirements() method (which takes a vararg of Subsystem)
         this.drivebase = drivebase;
         this.distanceFT = distanceFT;
-        addRequirements((Subsystem)drivebase);
+        addRequirements(drivebase);
     }
 
     @Override
