@@ -8,7 +8,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.drivebase.ArcadeDrive;
+import frc.robot.commands.drivebase.TankDrive;
 import frc.robot.services.Oi;
 import frc.robot.subsystems.multidrivebase.Drivebase;
 import frc.robot.subsystems.multidrivebase.Drivebase4MotorTalonFX;
@@ -101,9 +101,9 @@ public class Robot extends TimedRobot
 //        double rotateTo = 15;
 
 //
-        Command ArcadeDrive = new ArcadeDrive(drivebase, oi);
+        Command TankDrive = new TankDrive(drivebase, oi);
 
-        ArcadeDrive.schedule();
+        TankDrive.schedule();
 
 //        arm.Motor.set(TalonFXControlMode.PercentOutput, 0);
 //        arm.Motor.setNeutralMode(NeutralMode.Coast);

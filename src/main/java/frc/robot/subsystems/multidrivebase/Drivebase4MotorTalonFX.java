@@ -10,13 +10,13 @@ import frc.robot.constants.Constants;
 public class Drivebase4MotorTalonFX extends Drivebase {
 
     private static Drivebase OGDrivebase;
-    TalonFX leftMotor1 = new TalonFX(Constants.Robot2022.LEFT_MOTOR_1);
-    TalonFX leftMotor2 = new TalonFX(Constants.Robot2022.LEFT_MOTOR_2);
-    TalonFX rightMotor1 = new TalonFX(Constants.Robot2022.RIGHT_MOTOR_1);
-    TalonFX rightMotor2 = new TalonFX(Constants.Robot2022.RIGHT_MOTOR_2);
+    TalonFX leftMotor1 = new TalonFX(Constants.Wobbles.LEFT_MOTOR_1);
+    TalonFX leftMotor2 = new TalonFX(Constants.Wobbles.LEFT_MOTOR_2);
+    TalonFX rightMotor1 = new TalonFX(Constants.Wobbles.RIGHT_MOTOR_1);
+    TalonFX rightMotor2 = new TalonFX(Constants.Wobbles.RIGHT_MOTOR_2);
 
     private final double TicksPerFoot =
-            Constants.Robot2022.TICKS_PER_MOTOR_REV*Constants.Drivebase.GEAR_RATIO /
+            Constants.Wobbles.TICKS_PER_MOTOR_REV*Constants.Drivebase.GEAR_RATIO /
                     (Constants.Drivebase.WHEEL_DIAMETER * Math.PI);
 
     AHRS gyro = new AHRS(I2C.Port.kMXP);
