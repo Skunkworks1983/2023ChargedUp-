@@ -108,7 +108,7 @@ public class Robot extends TimedRobot
         //double rotateTo = 15;
         Command TankDrive = new TankDrive(drivebase, oi);
 
-        //TankDrive.schedule();
+        TankDrive.schedule();
 
         /* if (autonomousCommand != null)
         {

@@ -22,10 +22,10 @@ public class IntakeConeSmartCommand extends CommandBase {
     public void initialize() {
 
         if(armInstance.getShoulderAngle() < 0) {
-            collectorInstance.Setspeed(-Constants.Collector.INTAKE_MOTOR_SPEED * Constants.Collector.MANUAL_INTAKE_MULTIPLIER);
+            collectorInstance.Setspeed(-Constants.Collector.INTAKE_MOTOR_SPEED);
         }
         else {
-            collectorInstance.Setspeed(Constants.Collector.INTAKE_MOTOR_SPEED * Constants.Collector.MANUAL_INTAKE_MULTIPLIER);
+            collectorInstance.Setspeed(Constants.Collector.INTAKE_MOTOR_SPEED);
         }
 
 

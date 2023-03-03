@@ -22,10 +22,10 @@ public class IntakeCubeSmartCommand extends CommandBase {
     public void initialize() {
 
         if(armInstance.getShoulderAngle() < 0) {
-            collectorInstance.Setspeed(Constants.Collector.EXPEL_MOTOR_SPEED);
+            collectorInstance.Setspeed(Constants.Collector.INTAKE_MOTOR_SPEED);
         }
         else {
-            collectorInstance.Setspeed(-Constants.Collector.EXPEL_MOTOR_SPEED);
+            collectorInstance.Setspeed(-Constants.Collector.INTAKE_MOTOR_SPEED);
         }
 
 
