@@ -58,8 +58,8 @@ public class Oi
         expelButton.and(coneToggle.negate()).whileTrue(new ExpelCubeCommand());
         intakeButton.and(coneToggle).and(manualToggle).whileTrue(new IntakeConeManualCommand());
         intakeButton.and(coneToggle.negate()).and(manualToggle).whileTrue(new IntakeCubeManualCommand());
-        intakeButton.and(coneToggle).and(manualToggle.negate()).whileTrue(new IntakeConeSmartCommand());
-        intakeButton.and(coneToggle.negate()).and(manualToggle.negate()).whileTrue(new IntakeCubeSmartCommand());
+        intakeButton.and(coneToggle).and(manualToggle.negate()).onTrue(new IntakeConeSmartCommand());
+        intakeButton.and(coneToggle.negate()).and(manualToggle.negate()).onTrue(new IntakeCubeSmartCommand());
 
         wristUp.whileTrue(new RotateWristByPowerCommand(-.11));
         wristDown.whileTrue(new RotateWristByPowerCommand(.11));

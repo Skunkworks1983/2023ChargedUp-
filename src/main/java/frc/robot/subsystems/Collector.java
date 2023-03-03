@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.Constants;
 
@@ -20,6 +21,7 @@ public class Collector extends SubsystemBase {
         this.Motor = new TalonFX(Constants.Collector.MOTOR_ID);
         Motor.config_kP(0, Constants.Collector.K_P);
         Motor.setNeutralMode(NeutralMode.Brake);
+        Motor.setInverted(true);
     }
     public boolean isHoldingCube() {
 
@@ -35,6 +37,7 @@ public class Collector extends SubsystemBase {
 
     }
     public boolean isHoldingCone() {
+        SmartDashboard.putNumber("Colletor current", GetCollectorCurrent());
         if(GetCollectorCurrent() >= Constants.Collector.CONE_COLLECT_AMP_THRESHOLD) {
             return true;
         }
