@@ -23,7 +23,6 @@ public class ArcadeDrive extends CommandBase
     @Override
     public void initialize()
     {
-
     }
 
     @Override
@@ -45,6 +44,7 @@ public class ArcadeDrive extends CommandBase
         outputRight = KP * errorRight + KF * targetRight;
 
         drivebase.runMotor(outputLeft, outputRight);
+
     }
 
     @Override

@@ -33,7 +33,7 @@ public class Arm extends SubsystemBase {
         Motor.setSelectedSensorPosition(Constants.Arm.RESTING_ANGLE / Constants.Arm.TICKS_TO_DEGREES);
 
         SmartDashboard.putNumber("should be", Constants.Arm.RESTING_ANGLE / Constants.Arm.TICKS_TO_DEGREES);
-        SmartDashboard.putNumber("constructor current", Motor.getSelectedSensorPosition());
+        //SmartDashboard.putNumber("constructor current", Motor.getSelectedSensorPosition());
 
         updateKf(Constants.Arm.KF, Constants.Arm.RESTING_ANGLE);
         wristMotor.setNeutralMode(NeutralMode.Brake);
@@ -51,7 +51,7 @@ public class Arm extends SubsystemBase {
     }
 
     public double getShoulderAngle() {
-        return Motor.getSelectedSensorPosition() * Constants.Arm.TICKS_TO_DEGREES;
+        return 0;//Motor.getSelectedSensorPosition() * Constants.Arm.TICKS_TO_DEGREES;
     }
 
     public double getCurrentOutput() {

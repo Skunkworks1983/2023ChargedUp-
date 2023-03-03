@@ -27,7 +27,6 @@ public class Oi
         JoystickButton intakeButton;
         JoystickButton expelButton;
 
-        Arm arm = Arm.getInstance();
 
         public Oi(Drivebase drivebase)
         {
@@ -57,6 +56,7 @@ public class Oi
             wristDown.whileTrue(new RotateWristByPowerCommand(.09));
 
             // when pressed
+            Arm arm = Arm.getInstance();
             armUpButton.onTrue(new RotateDegrees(arm, 45, true));
             armDownButton.onTrue(new RotateDegrees(arm, -45, true));
 
