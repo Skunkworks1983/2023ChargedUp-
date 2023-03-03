@@ -1,14 +1,14 @@
-package frc.robot.commands.autos;
+package frc.robot.commands.Collector;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Collector;
 
 
-public class CollectorIntakeAutoCommand extends CommandBase {
+public class CollectorIntakeTeleopCommand extends CommandBase {
     public Collector collectorInstance;
 
-    public CollectorIntakeAutoCommand() {
+    public CollectorIntakeTeleopCommand() {
         collectorInstance = Collector.getInstance();
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
@@ -18,7 +18,6 @@ public class CollectorIntakeAutoCommand extends CommandBase {
     @Override
     public void initialize() {
         collectorInstance.Setspeed(Constants.Collector.INTAKE_MOTOR_SPEED);
-
     }
 
     @Override
@@ -28,7 +27,9 @@ public class CollectorIntakeAutoCommand extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return collectorInstance.cubeCollected();
+
+        return collectorInstance.cubeCollectedIntake();
+
     }
 
     @Override

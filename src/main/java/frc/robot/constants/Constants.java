@@ -19,6 +19,7 @@ public class Constants extends CommandBase {
         public static final double EXPEL_MOTOR_SPEED =
                 EXPEL_SPEED / WHEEL_CIRCUMFERENCE * WHEEL_REVS_PER_SEC_TO_VELOCITY;
         public static final double K_P = 0.03;
+
     }
     public class JoystickPorts {
 
@@ -29,11 +30,11 @@ public class Constants extends CommandBase {
 
     public class OIButtons {
         public static final int ARM_UP_BUTTON = 12;
-        public static final int ARM_DOWN_BUTTON = 11;
+        public static final int ARM_DOWN_BUTTON = 15;
         public static final int WRIST_UP_BUTTON=4;
         public static final int WRIST_DOWN_BUTTON=2;
-        public static final int INTAKE_BUTTON = 13; // 13 on comp robot
-        public static final int EXPEL_BUTTON = 9; // 9 on comp robot
+        public static final int INTAKE_BUTTON = 13; // 13 on comp robot, 5 on  single stick
+        public static final int EXPEL_BUTTON = 9; // 9 on comp robot, 6 on single stick
 
     }
 
@@ -50,22 +51,22 @@ public class Constants extends CommandBase {
     }
 
     public class Arm {
-        public static final double TICKS_TO_DEGREES = ((1.0 / Constants.Falcon500.TICKS_PER_REV) / Constants.Arm.GEAR_RATIO) * 360;
-        public static final double KP = 0.064;
-        public static final double KI = 0;
-        public static final double KF = -0.0385;
-        public static final double PEAK_OUTPUT = 0.3;
+        public static final double SHOULDER_TICKS_TO_DEGREES = ((1.0 / Constants.Falcon500.TICKS_PER_REV) / Constants.Arm.SHOULDER_GEAR_RATIO) * 360;
+        public static final double SHOULDER_KP = 0.064;
+        public static final double SHOULDER_KI = 0;
+        public static final double SHOULDER_KF = -0.0385;
+        public static final double SHOULDER_PEAK_OUTPUT = 0.3;
         public static final double SHOULDER_TOLERANCE = 2;
-        public static final int GEAR_RATIO = 128;
-        public static final int SWAP_ANGLE = 0;
-        public static final int SWAP_ANGLE_ADDITION = 0;
-        public static final double RESTING_ANGLE = -96.6;
-        public static final double ANGLE_UPDATE = 0.5;
+        public static final int SHOULDER_GEAR_RATIO = 128;
+        public static final int SHOULDER_SWAP_ANGLE = 0;
+        public static final int SHOULDER_SWAP_ANGLE_ADDITION = 0;
+        public static final double SHOULDER_RESTING_ANGLE = -96.6;
+        public static final double SHOULDER_ANGLE_UPDATE = 0.5;
         public static final int SHOULDER_MOTOR_ID = 5;
-
-        public static final int WRIST_MOTOR_DEVICE_NUMBER =6;
-
-        public static final int WRIST_GEAR_RATIO=96;
+        public static final int SHOULDER_LIMIT_SWITCH_FRONT = 0;
+        public static final int SHOULDER_LIMIT_SWITCH_BACK = 1;
+        public static final int WRIST_MOTOR_DEVICE_NUMBER = 6;
+        public static final int WRIST_GEAR_RATIO = 96;
     }
 
     public class Falcon500 {
@@ -116,7 +117,7 @@ public class Constants extends CommandBase {
                     (TICKS_PER_MOTOR_REV * GEAR_RATIO) / (WHEEL_DIAMETER * Math.PI);
         }
 
-        public class Wobbles {
+        public class Wobbles /* Same motor ports as 2023 */ {
 
             //Motor Ports
             public static final int LEFT_MOTOR_1 = 3;

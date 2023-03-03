@@ -1,61 +1,66 @@
 package frc.robot.subsystems;
 
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.SlotConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.Constants;
 
 public class Arm extends SubsystemBase {
-    public TalonFX Motor = new TalonFX(Constants.Arm.SHOULDER_MOTOR_ID);
+
+    public TalonFX ShoulderMotor = new TalonFX(Constants.Arm.SHOULDER_MOTOR_ID);
     TalonFX wristMotor = new TalonFX(Constants.Arm.WRIST_MOTOR_DEVICE_NUMBER);
-    public double encoderToAngleFactor = ((1.0 / Constants.Falcon500.TICKS_PER_REV) / Constants.Arm.GEAR_RATIO) * 360;
+    public double encoderToAngleFactor = ((1.0 / Constants.Falcon500.TICKS_PER_REV) / Constants.Arm.SHOULDER_GEAR_RATIO) * 360;
 
 
     public double lastAngle;
     public double setpoint;
     private final static Arm INSTANCE = new Arm();
+    private DigitalInput frontLimit = new DigitalInput(Constants.Arm.SHOULDER_LIMIT_SWITCH_FRONT);
+    private DigitalInput backLimit = new DigitalInput(Constants.Arm.SHOULDER_LIMIT_SWITCH_BACK);
 
     public static Arm getInstance() {
         return INSTANCE;
     }
 
     private Arm() {
-        Motor.selectProfileSlot(0, 0);
-        Motor.setNeutralMode(NeutralMode.Coast);
-        Motor.configClosedloopRamp(0.1);
-        Motor.configNeutralDeadband(0.0);
-        Motor.setInverted(InvertType.None);
-        Motor.setSelectedSensorPosition(Constants.Arm.RESTING_ANGLE / Constants.Arm.TICKS_TO_DEGREES);
+        ShoulderMotor.selectProfileSlot(0, 0);
+        ShoulderMotor.setNeutralMode(NeutralMode.Coast);
+        ShoulderMotor.configClosedloopRamp(0.1);
+        ShoulderMotor.configNeutralDeadband(0.0);
+        ShoulderMotor.setInverted(InvertType.None);
+        ShoulderMotor.setSelectedSensorPosition(Constants.Arm.SHOULDER_RESTING_ANGLE / Constants.Arm.SHOULDER_TICKS_TO_DEGREES);
 
-        SmartDashboard.putNumber("should be", Constants.Arm.RESTING_ANGLE / Constants.Arm.TICKS_TO_DEGREES);
-        //SmartDashboard.putNumber("constructor current", Motor.getSelectedSensorPosition());
+        SmartDashboard.putNumber("should be", Constants.Arm.SHOULDER_RESTING_ANGLE / Constants.Arm.SHOULDER_TICKS_TO_DEGREES);
+        //SmartDashboard.putNumber("constructor current", ShoulderMotor.getSelectedSensorPosition());
 
-        updateKf(Constants.Arm.KF, Constants.Arm.RESTING_ANGLE);
+        updateKf(Constants.Arm.SHOULDER_KF, Constants.Arm.SHOULDER_RESTING_ANGLE);
         wristMotor.setNeutralMode(NeutralMode.Brake);
 
     }
 
     public void setShoulderAnglePosition(double degrees) {
-        double pos = degrees / Constants.Arm.TICKS_TO_DEGREES;
+        double pos = degrees / Constants.Arm.SHOULDER_TICKS_TO_DEGREES;
 
         setpoint = pos;
-        updateKf(Constants.Arm.KF, degrees);
+        updateKf(Constants.Arm.SHOULDER_KF, degrees);
 
         System.out.println("setting target: " + pos);
-        Motor.set(TalonFXControlMode.Position, pos);
+        //Motor.set(TalonFXControlMode.Position, pos); /todo
     }
 
     public double getShoulderAngle() {
-        return 0;//Motor.getSelectedSensorPosition() * Constants.Arm.TICKS_TO_DEGREES;
+        return ShoulderMotor.getSelectedSensorPosition() * Constants.Arm.SHOULDER_TICKS_TO_DEGREES;
     }
 
     public double getCurrentOutput() {
-        return Motor.getMotorOutputPercent();
+        return ShoulderMotor.getMotorOutputPercent();
     }
 
     /*
@@ -76,9 +81,11 @@ public class Arm extends SubsystemBase {
         config.kI = kI;
         config.kD = kD;
         config.kF = kF;
-        config.closedLoopPeakOutput = peakOutput;
 
-        Motor.configureSlot(config);
+        // TODO: change back
+        config.closedLoopPeakOutput = 0;
+
+        ShoulderMotor.configureSlot(config);
     }
 
     /*
@@ -94,7 +101,7 @@ public class Arm extends SubsystemBase {
         double kF = (kf / pos) * 1023;
         //lastAngle = pos;
 
-        configArmSlot(Constants.Arm.KP, Constants.Arm.KI, 0, kF, Constants.Arm.PEAK_OUTPUT);
+        configArmSlot(Constants.Arm.SHOULDER_KP, Constants.Arm.SHOULDER_KI, 0, kF, Constants.Arm.SHOULDER_PEAK_OUTPUT);
     }
 
     public void SetWristSpeed(double speed) {
@@ -127,10 +134,40 @@ public class Arm extends SubsystemBase {
         configArmKF(newKF);
     }
 
-    /*
-    If the arm has moved more than 0.5 degrees since the kf was last
-    updated then update it again.
-    */
+    public boolean limitSwitchOutput(int limitSwitchPort)
+    {
+        if(limitSwitchPort == Constants.Arm.SHOULDER_LIMIT_SWITCH_FRONT)
+        {
+            return !frontLimit.get();
+        }
+        else if(limitSwitchPort == Constants.Arm.SHOULDER_LIMIT_SWITCH_BACK)
+        {
+            return !backLimit.get();
+        }
+        else
+        {
+            System.out.println("Incorrect limit switch constant");
+            return false;
+        }
+    }
+
+    public void SetPercentOutput(double percent) {
+
+        ShoulderMotor.set(ControlMode.PercentOutput, percent);
+
+    }
+    public void SetBrakeMode(boolean enable)
+    {
+        if (enable) {
+
+            ShoulderMotor.setNeutralMode(NeutralMode.Brake);
+
+        } else {
+
+            ShoulderMotor.setNeutralMode(NeutralMode.Coast);
+        }
+    }
+
     @Override
     public void periodic() {
         double pos = getShoulderAngle();
@@ -140,10 +177,10 @@ public class Arm extends SubsystemBase {
         SmartDashboard.putNumber("setpoint", setpoint);
         SmartDashboard.putNumber("position", pos);
 
-        if (Math.abs(pos - lastAngle) > Constants.Arm.ANGLE_UPDATE) {
+        if (Math.abs(pos - lastAngle) > Constants.Arm.SHOULDER_ANGLE_UPDATE) {
             lastAngle = pos;
             //System.out.println("updating kf");
-            updateKf(Constants.Arm.KF, pos);
+            updateKf(Constants.Arm.SHOULDER_KF, pos);
         }
     }
 }
