@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.arm.WaveCollectorCommandGroup;
+import frc.robot.commands.autos.ScoreAndExitCommunityP2CommandGroup;
 import frc.robot.commands.autos.SimpleAutoCommandGroup;
 import frc.robot.commands.drivebase.TankDrive;
 import frc.robot.constants.Constants;
@@ -31,6 +32,7 @@ public class Robot extends TimedRobot
     private Drivebase drivebase = Drivebase4MotorTalonFX.GetDrivebase();
     private Oi oi = new Oi(drivebase);
     Command SimpleAuto = new SimpleAutoCommandGroup();
+    Command ScoreAndExitCommunityP2 = new ScoreAndExitCommunityP2CommandGroup();
     
     private RobotContainer robotContainer;
 
@@ -91,6 +93,7 @@ public class Robot extends TimedRobot
     public void autonomousInit()
     {
         SimpleAuto.schedule();
+        ScoreAndExitCommunityP2.schedule();
     }
 
 
