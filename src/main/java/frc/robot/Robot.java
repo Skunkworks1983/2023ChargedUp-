@@ -15,7 +15,7 @@ import frc.robot.commands.drivebase.TankDrive;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
 import frc.robot.services.Oi;
-import frc.robot.subsystems.drivebase.Drivebase4MotorTalonFX;
+import frc.robot.subsystems.Drivebase;
 
 
 /**
@@ -26,7 +26,7 @@ import frc.robot.subsystems.drivebase.Drivebase4MotorTalonFX;
  */
 public class Robot extends TimedRobot
 {
-    private Drivebase4MotorTalonFX drivebase = Drivebase4MotorTalonFX.GetDrivebase();
+    private Drivebase drivebase = Drivebase.GetDrivebase();
     private Oi oi = new Oi(drivebase);
 
 

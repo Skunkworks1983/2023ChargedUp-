@@ -1,17 +1,16 @@
-package frc.robot.subsystems.drivebase;
+package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.kauailabs.navx.frc.AHRS;
-import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.constants.Constants;
 
-public class Drivebase4MotorTalonFX implements Subsystem {
+public class Drivebase implements Subsystem {
 
-    private static Drivebase4MotorTalonFX OGDrivebase;
+    private static Drivebase OGDrivebase;
     TalonFX leftMotor1 = new TalonFX(Constants.Wobbles.LEFT_MOTOR_1);
     TalonFX leftMotor2 = new TalonFX(Constants.Wobbles.LEFT_MOTOR_2);
     TalonFX rightMotor1 = new TalonFX(Constants.Wobbles.RIGHT_MOTOR_1);
@@ -23,7 +22,7 @@ public class Drivebase4MotorTalonFX implements Subsystem {
 
     AHRS gyro = new AHRS(SerialPort.Port.kMXP);
 
-    private Drivebase4MotorTalonFX ()
+    private Drivebase()
     {
         gyro.calibrate();
     }
@@ -95,10 +94,10 @@ public class Drivebase4MotorTalonFX implements Subsystem {
         return (-rightMotor1.getSelectedSensorVelocity());
     }
 
-    public static Drivebase4MotorTalonFX GetDrivebase() {
+    public static Drivebase GetDrivebase() {
 
         if (OGDrivebase == null) {
-            OGDrivebase = new Drivebase4MotorTalonFX();
+            OGDrivebase = new Drivebase();
         }
 
         return OGDrivebase;

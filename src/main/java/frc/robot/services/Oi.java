@@ -7,7 +7,7 @@ import frc.robot.commands.arm.RotateWristByPowerCommand;
 import frc.robot.commands.arm.SetShoulderSpeed;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.drivebase.Drivebase4MotorTalonFX;
+import frc.robot.subsystems.Drivebase;
 
 
 public class Oi
@@ -31,7 +31,7 @@ public class Oi
 
         Arm arm = Arm.getInstance();
 
-    public Oi(Drivebase4MotorTalonFX drivebase)
+    public Oi(Drivebase drivebase)
     {
         System.out.println("oi init");
         Instance = this;
