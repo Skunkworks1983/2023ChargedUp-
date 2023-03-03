@@ -66,8 +66,15 @@ public class Constants extends CommandBase {
         public static final int SHOULDER_MOTOR_ID = 5;
         public static final int SHOULDER_LIMIT_SWITCH_FRONT = 0;
         public static final int SHOULDER_LIMIT_SWITCH_BACK = 1;
+        public static final double WRIST_TOLERANCE = 2;
         public static final int WRIST_MOTOR_DEVICE_NUMBER = 6;
         public static final double WRIST_GEAR_RATIO = 144;
+        public static final double WRIST_RESTING_ANGLE = 0;
+        public static final double WRIST_PEAK_OUTPUT = 0.1;
+        public static final double WRIST_KP = 0.05;
+        public static final double WRIST_KI = 0;
+        public static final double WRIST_KD = 0;
+        public static final double WRIST_KF = 0;
     }
 
     public class Falcon500 {

@@ -20,7 +20,7 @@ public class SetShoulderSpeed extends CommandBase {
     @Override
     public void initialize() {
 
-        arm.SetBrakeMode(true);
+        arm.SetBrakeMode(true, arm.ShoulderMotor);
 
         arm.SetPercentOutput(percentOutput);
 

@@ -5,15 +5,13 @@
 
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.Collector.IntakeConeCollectorCommand;
-import frc.robot.commands.arm.RotateDegrees;
-import frc.robot.commands.drivebase.TankDrive;
+import frc.robot.commands.arm.WristRotateDegrees;
+import frc.robot.commands.autos.PositionShoulderAndWrist;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
 import frc.robot.services.Oi;
@@ -104,12 +102,10 @@ public class Robot extends TimedRobot
     public void teleopInit()
     {
         arm = Arm.getInstance();
-        // arm.ShoulderMotor.set(TalonFXControlMode.PercentOutput, 0);
-        arm.ShoulderMotor.setNeutralMode(NeutralMode.Coast);
-
-        double rotateTo = 140;
+        double wristRotateTo = 15;
+        double shoulderRotateTo = 38.59537049672488;
         //Command TankDrive = new TankDrive(drivebase, oi);
-        Command rotateDegrees = new RotateDegrees(arm, rotateTo, true);
+        Command rotateDegrees = new PositionShoulderAndWrist(arm, wristRotateTo, shoulderRotateTo);
         //TankDrive.schedule();
         rotateDegrees.schedule();
         /* if (autonomousCommand != null)
@@ -137,9 +133,9 @@ public class Robot extends TimedRobot
     public void testPeriodic()
     {
         arm = Arm.getInstance();
-        arm.SetBrakeMode(false);
+        arm.SetBrakeMode(false, arm.ShoulderMotor);
         System.out.println("Limit switch front: " + arm.limitSwitchOutput(Constants.Arm.SHOULDER_LIMIT_SWITCH_FRONT) + ", Limit switch back: " + arm.limitSwitchOutput(Constants.Arm.SHOULDER_LIMIT_SWITCH_BACK)
-                                   + " shoulder angle: " + arm.getShoulderAngle() + " Wrist angle: " + arm.geWristAngle());
+                                   + " shoulder angle: " + arm.getShoulderAngle() + " Wrist angle: " + arm.getWristAngle());
         SmartDashboard.putNumber(" shoulder angle: " , arm.getShoulderAngle());
     }
     

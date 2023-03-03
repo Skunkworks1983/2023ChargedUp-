@@ -15,8 +15,9 @@ import frc.robot.constants.Constants;
 public class Arm extends SubsystemBase {
 
     public TalonFX ShoulderMotor = new TalonFX(Constants.Arm.SHOULDER_MOTOR_ID);
-    TalonFX wristMotor = new TalonFX(Constants.Arm.WRIST_MOTOR_DEVICE_NUMBER);
-    public double encoderToAngleFactor = ((1.0 / Constants.Falcon500.TICKS_PER_REV) / Constants.Arm.SHOULDER_GEAR_RATIO) * 360;
+    public TalonFX WristMotor = new TalonFX(Constants.Arm.WRIST_MOTOR_DEVICE_NUMBER);
+    public double shoulderEncoderToAngleFactor = ((1.0 / Constants.Falcon500.TICKS_PER_REV) / Constants.Arm.SHOULDER_GEAR_RATIO) * 360;
+    public double wristEncoderToAngleFactor = ((1.0 / Constants.Falcon500.TICKS_PER_REV) / Constants.Arm.WRIST_GEAR_RATIO) * 360;
 
 
     public double lastAngle;
@@ -30,18 +31,31 @@ public class Arm extends SubsystemBase {
     }
 
     private Arm() {
+        //Shoulder config
         ShoulderMotor.selectProfileSlot(0, 0);
-        ShoulderMotor.setNeutralMode(NeutralMode.Coast);
+        ShoulderMotor.setNeutralMode(NeutralMode.Brake);
         ShoulderMotor.configClosedloopRamp(0.1);
         ShoulderMotor.configNeutralDeadband(0.0);
         ShoulderMotor.setInverted(InvertType.None);
         ShoulderMotor.setSelectedSensorPosition(Constants.Arm.SHOULDER_RESTING_ANGLE / Constants.Arm.SHOULDER_TICKS_TO_DEGREES);
 
+        //Wrist config
+        WristMotor.selectProfileSlot(0, 0);
+        WristMotor.setNeutralMode(NeutralMode.Brake);
+        WristMotor.configClosedloopRamp(0.1);
+        WristMotor.configNeutralDeadband(0.0);
+        WristMotor.setInverted(InvertType.None);
+        WristMotor.setSelectedSensorPosition(Constants.Arm.WRIST_RESTING_ANGLE / Constants.Arm.WRIST_TICKS_TO_DEGREES);
+        WristMotor.configClosedLoopPeakOutput(0 , Constants.Arm.WRIST_PEAK_OUTPUT);
+        WristMotor.config_kP(0 , Constants.Arm.WRIST_KP);
+        WristMotor.config_kI(0 , Constants.Arm.WRIST_KI);
+        WristMotor.config_kD(0 , Constants.Arm.WRIST_KD);
+        WristMotor.config_kF(0 , Constants.Arm.WRIST_KF);
+
         SmartDashboard.putNumber("should be", Constants.Arm.SHOULDER_RESTING_ANGLE / Constants.Arm.SHOULDER_TICKS_TO_DEGREES);
         SmartDashboard.putNumber("constructor current", ShoulderMotor.getSelectedSensorPosition());
 
         updateKf(Constants.Arm.SHOULDER_KF, Constants.Arm.SHOULDER_RESTING_ANGLE);
-        wristMotor.setNeutralMode(NeutralMode.Brake);
     }
 
     public void setShoulderAnglePosition(double degrees) {
@@ -54,16 +68,27 @@ public class Arm extends SubsystemBase {
         ShoulderMotor.set(TalonFXControlMode.Position, pos);
     }
 
+    public void setWristAnglePosition(double degrees) {
+        double pos = degrees / Constants.Arm.WRIST_TICKS_TO_DEGREES;
+
+        setpoint = pos;
+        System.out.println("setting target wrist: " + pos);
+        WristMotor.set(TalonFXControlMode.Position, pos);
+    }
+
     public double getShoulderAngle() {
         return ShoulderMotor.getSelectedSensorPosition() * Constants.Arm.SHOULDER_TICKS_TO_DEGREES;
     }
 
-    public double geWristAngle() {
-        return wristMotor.getSelectedSensorPosition() * Constants.Arm.WRIST_TICKS_TO_DEGREES;
+    public double getWristAngle() {
+        return WristMotor.getSelectedSensorPosition() * Constants.Arm.WRIST_TICKS_TO_DEGREES;
     }
 
-    public double getCurrentOutput() {
+    public double getShoulderCurrentOutput() {
         return ShoulderMotor.getMotorOutputPercent();
+    }
+    public double getWristCurrentOutput() {
+        return WristMotor.getMotorOutputPercent();
     }
 
     /*
@@ -109,7 +134,7 @@ public class Arm extends SubsystemBase {
 
     public void SetWristSpeed(double speed) {
 
-        wristMotor.set(TalonFXControlMode.PercentOutput, speed);
+        WristMotor.set(TalonFXControlMode.PercentOutput, speed);
     }
 
 
@@ -127,11 +152,6 @@ public class Arm extends SubsystemBase {
     */
     public void updateKf(double kf, double pos) {
         double newKF = kf * Math.sin(pos * Math.PI / 180f);
-
-//        System.out.println("Updating kf to " + newKF);
-//        System.out.println("pos: " + pos);
-
-        //System.out.println("New kf: " + newKF);
         SmartDashboard.putNumber("kf", newKF * 1023);
 
         configArmKF(newKF);
@@ -159,31 +179,34 @@ public class Arm extends SubsystemBase {
         ShoulderMotor.set(ControlMode.PercentOutput, percent);
 
     }
-    public void SetBrakeMode(boolean enable)
+
+    public void SetBrakeMode(boolean enable, TalonFX Motor)
     {
         if (enable) {
 
-            ShoulderMotor.setNeutralMode(NeutralMode.Brake);
+            Motor.setNeutralMode(NeutralMode.Brake);
 
         } else {
 
-            ShoulderMotor.setNeutralMode(NeutralMode.Coast);
+            Motor.setNeutralMode(NeutralMode.Coast);
         }
     }
 
     @Override
     public void periodic() {
-        double pos = getShoulderAngle();
-        //System.out.println("Angle: " + pos);
-        SmartDashboard.putNumber("Error:", ShoulderMotor.getClosedLoopError());
+        double wristPos = getWristAngle();
+        double shoulderPos = getShoulderAngle();
+        //System.out.println("Angle: " + wristPos);
+        SmartDashboard.putNumber("Error:", WristMotor.getClosedLoopError());
 
         SmartDashboard.putNumber("setpoint", setpoint);
-        SmartDashboard.putNumber("position", pos);
+        SmartDashboard.putNumber("wrist position", wristPos);
+        SmartDashboard.putNumber("shoulder position", shoulderPos);
         SmartDashboard.putNumber("Motor output: " , ShoulderMotor.getMotorOutputPercent());
-        if (Math.abs(pos - lastAngle) > Constants.Arm.SHOULDER_ANGLE_UPDATE) {
-            lastAngle = pos;
+        if (Math.abs(wristPos - lastAngle) > Constants.Arm.SHOULDER_ANGLE_UPDATE) {
+            lastAngle = wristPos;
             //System.out.println("updating kf");
-            updateKf(Constants.Arm.SHOULDER_KF, pos);
+            updateKf(Constants.Arm.SHOULDER_KF, wristPos);
         }
 
     }
