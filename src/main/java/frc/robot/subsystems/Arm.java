@@ -22,6 +22,7 @@ public class Arm extends SubsystemBase {
     public double lastAngle;
     public double setpoint;
     private final static Arm INSTANCE = new Arm();
+
     private DigitalInput frontLimit = new DigitalInput(Constants.Arm.SHOULDER_LIMIT_SWITCH_FRONT);
     private DigitalInput backLimit = new DigitalInput(Constants.Arm.SHOULDER_LIMIT_SWITCH_BACK);
 

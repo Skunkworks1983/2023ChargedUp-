@@ -93,7 +93,7 @@ public class Robot extends TimedRobot
     public void autonomousInit() {
         Command WaveCollector = new WaveCollectorCommandGroup();
 
-        WaveCollector.schedule();
+        //WaveCollector.schedule();
         //CommandScheduler.getInstance().schedule(new WaveCollectorCommandGroup());
     }
 
