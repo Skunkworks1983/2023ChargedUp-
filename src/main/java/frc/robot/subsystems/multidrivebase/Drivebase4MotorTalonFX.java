@@ -24,6 +24,7 @@ public class Drivebase4MotorTalonFX extends Drivebase {
 
     private Drivebase4MotorTalonFX ()
     {
+        gyro.calibrate();
     }
     @Override
         public void runMotor(double turnSpeedLeft, double turnSpeedRight)

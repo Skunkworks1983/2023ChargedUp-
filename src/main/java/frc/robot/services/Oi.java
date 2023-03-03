@@ -63,7 +63,8 @@ public class Oi
 
         wristUp.whileTrue(new RotateWristByPowerCommand(-.11));
         wristDown.whileTrue(new RotateWristByPowerCommand(.11));
-        armUpButton.whileTrue(new SetShoulderSpeed(arm, Constants.Arm.SHOULDER_LIMIT_SWITCH_FRONT, 0.08));
+        Arm arm = Arm.getInstance();
+            armUpButton.whileTrue(new SetShoulderSpeed(arm, Constants.Arm.SHOULDER_LIMIT_SWITCH_FRONT, 0.08));
         armDownButton.whileTrue(new SetShoulderSpeed(arm, Constants.Arm.SHOULDER_LIMIT_SWITCH_BACK, -0.04));
     }
 
