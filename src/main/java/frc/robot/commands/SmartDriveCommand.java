@@ -49,7 +49,6 @@ public class SmartDriveCommand extends CommandBase {
             SmartDashboard.putNumber("y error", desiredPose.poseMeters.getY()-DriveBase.getInstance().getPose().getY());
             SmartDashboard.putNumber("θ error", desiredPose.poseMeters.getRotation().getDegrees()-DriveBase.getInstance().getPose().getRotation().getDegrees());
 
-
         };
         this.trajectory=trajectory;
         // each subsystem used by the command must be passed into the

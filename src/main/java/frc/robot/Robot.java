@@ -136,26 +136,37 @@ public class Robot extends TimedRobot
         Trajectory exampleTrajectoryInFeetTwo =
                 TrajectoryGenerator.generateTrajectory(
                         // Start at the origin facing the +X direction
-                        new Pose2d(17, 10.5, new Rotation2d(Math.PI/2)),
+                        new Pose2d(5.71, 25.89, new Rotation2d(Math.PI)),
                         // Pass through these two interior waypoints, making an 's' curve path
-                        List.of(new Translation2d(14+(18/12), 0)),
+                        List.of(new Translation2d(18, 25)),
                         // End 3 meters straight ahead of where we started, facing forward
-                        new Pose2d(0, 0, new Rotation2d(0)),
+                        new Pose2d(20.83, 21.86, new Rotation2d(-31/180*Math.PI)),
                         // Pass config
-                        DriveBase.getInstance().config.setReversed(true));
+                        DriveBase.getInstance().config);
 
 //exampleTrajectory
 
-        exampleTrajectoryInFeet=exampleTrajectoryInFeet.concatenate(exampleTrajectoryInFeetTwo);
+
         TrajectoryConfig t = new TrajectoryConfig(Constants.getInstance().trajectoryMaxVelocity,Constants.getInstance().trajectoryMaxAcceleration);
 
 
         SmartDriveCommand drive = new SmartDriveCommand(exampleTrajectoryInFeet);
 
+Pose2d[] pa={new Pose2d(2,2,new Rotation2d(Math.PI))
+
+
+};
+    var r =new RamseteButBetterCommand(
+            pa
+            ,.08,
+            .00);
+
 
         //SequentialCommandGroup group = new SequentialCommandGroup(drive,balanceOnChargeStationCommand);
 
-        CommandScheduler.getInstance().schedule(drive);
+        CommandScheduler.getInstance().schedule(r);
+
+
     }
     
     /** This method is called periodically during autonomous. */

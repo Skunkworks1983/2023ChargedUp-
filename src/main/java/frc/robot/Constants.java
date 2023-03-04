@@ -24,8 +24,8 @@ public final class Constants {
     private static Constants INSTANCE;// = new Constants();
 
     //set these next 4 variables for smart driving
-    public double kMaxSpeedMetersPerSecond=0.5;//was 3.47472
-    public double kMaxAccelerationMetersPerSecondSquared=1.0792;//was 24.0792
+    public double kMaxSpeedMetersPerSecond=1;//was 3.47472
+    public double kMaxAccelerationMetersPerSecondSquared=2.0792;//was 24.0792
 
     public double trajectoryMaxVelocity=1;
 
