@@ -5,12 +5,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.drivebase.DriveDistanceCommand;
 import frc.robot.commands.drivebase.RotateCommand;
-import frc.robot.subsystems.multidrivebase.Drivebase4MotorTalonFX;
+import frc.robot.subsystems.Drivebase;
 
 public class SimpleAutoCommandGroup extends SequentialCommandGroup
 {
-    private static final Command DriveDistanceCommandForward = new DriveDistanceCommand(Drivebase4MotorTalonFX.GetDrivebase(), 1 );
-    private static final Command DriveDistanceCommandBackward = new DriveDistanceCommand(Drivebase4MotorTalonFX.GetDrivebase(),-1);
+    private static final Command DriveDistanceCommandForward = new DriveDistanceCommand(Drivebase.GetDrivebase(), 1 );
+    private static final Command DriveDistanceCommandBackward = new DriveDistanceCommand(Drivebase.GetDrivebase(),-1);
     private static final Command LiftArmAndWaveAutoCommandGroup = new LiftArmAndWaveAutoCommandGroup();
     // private static final Command RotateCommand = new RotateCommand(Drivebase4MotorTalonFX.GetDrivebase(),180);
 
