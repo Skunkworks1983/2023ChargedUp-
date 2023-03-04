@@ -92,7 +92,7 @@ public class Robot extends TimedRobot
     @Override
     public void autonomousInit()
     {
-        SimpleAuto.schedule();
+      //  SimpleAuto.schedule();
         ScoreAndExitCommunityP2.schedule();
     }
 

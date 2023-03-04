@@ -9,11 +9,11 @@ import frc.robot.subsystems.multidrivebase.Drivebase4MotorTalonFX;
 
 public class ScoreAndExitCommunityP2CommandGroup extends SequentialCommandGroup
 {
-    private static final Command DriveDistanceCommand1 = new DriveDistanceCommand(Drivebase4MotorTalonFX.GetDrivebase(), 2);
+    private static final Command DriveDistanceCommand1 = new DriveDistanceCommand(Drivebase4MotorTalonFX.GetDrivebase(), 1.58);
     private static final Command RotateCommand1 = new RotateCommand(Drivebase4MotorTalonFX.GetDrivebase(), 90);
-    private static final Command DriveDistanceCommand2 = new DriveDistanceCommand(Drivebase4MotorTalonFX.GetDrivebase(),5.75);
-    private static final Command RotateCommand2 = new RotateCommand(Drivebase4MotorTalonFX.GetDrivebase(),270);
-    private static final Command DriveDistanceCommand3 = new DriveDistanceCommand(Drivebase4MotorTalonFX.GetDrivebase(),11 );
+    private static final Command DriveDistanceCommand2 = new DriveDistanceCommand(Drivebase4MotorTalonFX.GetDrivebase(),-5.75);
+    private static final Command RotateCommand2 = new RotateCommand(Drivebase4MotorTalonFX.GetDrivebase(),90);
+    private static final Command DriveDistanceCommand3 = new DriveDistanceCommand(Drivebase4MotorTalonFX.GetDrivebase(),-11 );
 
     public ScoreAndExitCommunityP2CommandGroup()
     {
