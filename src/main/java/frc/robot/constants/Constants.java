@@ -49,7 +49,8 @@ public class Constants extends CommandBase {
         public static final int THRESHOLD_ROTATE = 3;
         public static final int DRIVE_OUT_OF_COMMUINITY = -9;
 
-        public static final float MAXIMUM_BALANCE_DISTANCE_FROM_GROUND;
+        public static final double VOLTAGE_TO_DISTANCE_SENSOR=1;
+        public static final double MAXIMUM_BALANCE_DISTANCE_FROM_GROUND=.1;
 
         //set these
         public static final int FRONT_RANGE_SENSOR_OUTPUT_CHANNEL=4;

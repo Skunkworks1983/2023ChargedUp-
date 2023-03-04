@@ -17,6 +17,7 @@ public class BalanceOnChargeStationCommand extends CommandBase {
     double error=0;
     double integral=0;
     double lastError;
+
     double i;
     DetectRangeSensorCommand rangeSensor;
     public BalanceOnChargeStationCommand(double p, double d, double i, double maxSpeed, DetectRangeSensorCommand rangeSensor) {
@@ -25,7 +26,7 @@ public class BalanceOnChargeStationCommand extends CommandBase {
         this.d=d;
         this.maxSpeed = maxSpeed;
         this.i=i;
-        rangeSensor=rangeSensor;
+        this.rangeSensor=rangeSensor;
         //defaults //p=.022//d=0//max=.085
 
         addRequirements();
@@ -34,23 +35,20 @@ public class BalanceOnChargeStationCommand extends CommandBase {
 
     @Override
     public void initialize() {
-
-
-
     }
 
     @Override
     public void execute() {
 
 
-        error=Drivebase4MotorTalonFX.GetDrivebase().getPitch();
+        error=((Drivebase4MotorTalonFX)Drivebase4MotorTalonFX.GetDrivebase()).getPitch();
         double derivative = (error-lastError)*50;
         integral+=(error/50);
         double f =(error*p)+(derivative*d)+ (integral*i);
         if(f>maxSpeed)f=maxSpeed;
         if(f<-maxSpeed)f=-maxSpeed;
-        if(maxSpeed>0&&rangeSensor.getFrontDistance()> Constants.Drivebase.MAXIMUM_BALANCE_DISTANCE_FROM_GROUND)f=0;
-        if(maxSpeed>0&&rangeSensor.getBackDistance()> Constants.Drivebase.MAXIMUM_BALANCE_DISTANCE_FROM_GROUND)f=0;
+        if(maxSpeed>0&&rangeSensor.getFrontVoltage()> Constants.Drivebase.MAXIMUM_BALANCE_DISTANCE_FROM_GROUND)f=0;
+        if(maxSpeed>0&&rangeSensor.getBackVoltage()> Constants.Drivebase.MAXIMUM_BALANCE_DISTANCE_FROM_GROUND)f=0;
         ((Drivebase4MotorTalonFX)Drivebase4MotorTalonFX.GetDrivebase()).runMotor(f,f);
         lastError=error;
         //System.out.println("BALANCING NOW: "+f);

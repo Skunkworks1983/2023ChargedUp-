@@ -26,10 +26,10 @@ public class Drivebase4MotorTalonFX extends Drivebase {
 
     AnalogInput frontRangeSensorValue = new AnalogInput(Constants.Drivebase.FRONT_RANGE_SENSOR_INPUT_CHANNEL);
 
-    AnalogInput backRangeSensorValue = new AnalogInput(Constants.Drivebase.FRONT_RANGE_SENSOR_INPUT_CHANNEL);
+    AnalogInput backRangeSensorValue = new AnalogInput(Constants.Drivebase.BACK_RANGE_SENSOR_INPUT_CHANNEL);
 
     public enum DriveDirection {FORWARD,BACKWARD,MOTIONLESS}
-    DriveDirection driveDirection = DriveDirection.MOTIONLESS;
+    DriveDirection driveDirection = DriveDirection.FORWARD;
 
     private final double TicksPerFoot =
             Constants.Wobbles.TICKS_PER_MOTOR_REV*Constants.Drivebase.GEAR_RATIO /
@@ -49,7 +49,7 @@ public class Drivebase4MotorTalonFX extends Drivebase {
         rightMotor2.set(TalonFXControlMode.PercentOutput, -turnSpeedRight);
     }
 
-
+/*
     @Override
     public void periodic() {
         // Update the odometry in the periodic block
@@ -73,7 +73,7 @@ public class Drivebase4MotorTalonFX extends Drivebase {
         odometry.resetPosition(new Rotation2d(0),0,0,new Pose2d(0,0,new Rotation2d(0)));
 
     }
-
+*/
     @Override
         public double getPosLeft()
     {
@@ -90,6 +90,11 @@ public class Drivebase4MotorTalonFX extends Drivebase {
         public double getHeading()
     {
         return gyro.getAngle();
+    }
+
+    public double getPitch()
+    {
+        return gyro.getPitch();
     }
 
     @Override

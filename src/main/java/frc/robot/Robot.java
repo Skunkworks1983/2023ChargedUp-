@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.autos.WaveCollectorCommandGroup;
+import frc.robot.commands.drivebase.DetectRangeSensorWithoutDrivebaseCommand;
 import frc.robot.commands.drivebase.TankDrive;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
@@ -27,8 +28,8 @@ import frc.robot.subsystems.multidrivebase.Drivebase4MotorTalonFX;
  */
 public class Robot extends TimedRobot
 {
-    private Drivebase drivebase = Drivebase4MotorTalonFX.GetDrivebase();
-    private Oi oi = new Oi(drivebase);
+    //private Drivebase drivebase = Drivebase4MotorTalonFX.GetDrivebase();
+    //private Oi oi = new Oi(drivebase);
 
 
     private Command autonomousCommand;
@@ -47,8 +48,9 @@ public class Robot extends TimedRobot
     {
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         // autonomous chooser on the dashboard.
-        arm = Arm.getInstance();
-        robotContainer = new RobotContainer();
+
+        //arm = Arm.getInstance();
+        //robotContainer = new RobotContainer();
     }
     
     
@@ -90,9 +92,8 @@ public class Robot extends TimedRobot
      */
     @Override
     public void autonomousInit() {
-        Command WaveCollector = new WaveCollectorCommandGroup();
-
-        WaveCollector.schedule();
+        DetectRangeSensorWithoutDrivebaseCommand a = new DetectRangeSensorWithoutDrivebaseCommand();
+        a.schedule();
         //CommandScheduler.getInstance().schedule(new WaveCollectorCommandGroup());
     }
 
@@ -105,9 +106,9 @@ public class Robot extends TimedRobot
         arm.Motor.setNeutralMode(NeutralMode.Brake);
 
         //double rotateTo = 15;
-        Command TankDrive = new TankDrive(drivebase, oi);
+        //Command TankDrive = new TankDrive(drivebase, oi);
 
-        TankDrive.schedule();
+        //TankDrive.schedule();
 
         /* if (autonomousCommand != null)
         {

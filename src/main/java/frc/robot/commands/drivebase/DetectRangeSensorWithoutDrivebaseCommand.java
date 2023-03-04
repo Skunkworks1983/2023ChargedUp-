@@ -1,12 +1,15 @@
 package frc.robot.commands.drivebase;
 
+import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.constants.Constants;
 import frc.robot.subsystems.multidrivebase.Drivebase4MotorTalonFX;
 
 import static frc.robot.constants.Constants.Drivebase.VOLTAGE_TO_DISTANCE_SENSOR;
 
 
-public class DetectRangeSensorCommand extends CommandBase {
+public class DetectRangeSensorWithoutDrivebaseCommand extends CommandBase {
 
     double distanceFront;
 
@@ -20,23 +23,19 @@ public class DetectRangeSensorCommand extends CommandBase {
     double frontVoltage;
     double backVoltage;
 
+    DigitalOutput frontRangeSensorTrigger = new DigitalOutput(Constants.Drivebase.FRONT_RANGE_SENSOR_OUTPUT_CHANNEL);
+
+    AnalogInput frontRangeSensorValue = new AnalogInput(Constants.Drivebase.FRONT_RANGE_SENSOR_INPUT_CHANNEL);
+
+
+
     Drivebase4MotorTalonFX.DriveDirection currentDirection;
-
-    Drivebase4MotorTalonFX.DriveDirection directionToMessure= Drivebase4MotorTalonFX.DriveDirection.FORWARD;
-
-    public void setCurrentDirection(Drivebase4MotorTalonFX.DriveDirection direction){direction=currentDirection;}
     public double getBackDistance(){return backVoltage*VOLTAGE_TO_DISTANCE_SENSOR;}
     public double getFrontDistance(){return frontVoltage*VOLTAGE_TO_DISTANCE_SENSOR;}
 
     public double getFrontVoltage(){return frontVoltage;}
 
     public double getBackVoltage(){return backVoltage;}
-    public DetectRangeSensorCommand() {
-
-        // each subsystem used by the command must be passed into the
-        // addRequirements() method (which takes a vararg of Subsystem)
-        addRequirements();
-    }
 
     @Override
     public void initialize() {
@@ -45,10 +44,6 @@ public class DetectRangeSensorCommand extends CommandBase {
     @Override
     public void execute() {
 
-
-        ((Drivebase4MotorTalonFX)Drivebase4MotorTalonFX.GetDrivebase()).getFrontRangeSensor();
-
-        ((Drivebase4MotorTalonFX)Drivebase4MotorTalonFX.GetDrivebase()).getBackRangeSensor();
         completeState();
         System.out.println("frontDistance: "+ frontVoltage +" backDistance: " + backVoltage);
     }
@@ -58,15 +53,13 @@ public class DetectRangeSensorCommand extends CommandBase {
         switch (sensorMode){
 
             case START:
-                directionToMessure=currentDirection;//((Drivebase4MotorTalonFX)Drivebase4MotorTalonFX.GetDrivebase()).getDriveDirection();
-            sensorMode=SensorDetectionMode.SEND_FREQUENCY;
-            break;
+                sensorMode=SensorDetectionMode.SEND_FREQUENCY;
+                break;
 
             case SEND_FREQUENCY:
-                if (directionToMessure == Drivebase4MotorTalonFX.DriveDirection.FORWARD) {
-                    ((Drivebase4MotorTalonFX)Drivebase4MotorTalonFX.GetDrivebase()).setFrontRangeSensor(true);
-                }
-                else{((Drivebase4MotorTalonFX)Drivebase4MotorTalonFX.GetDrivebase()).setBackRangeSensor(true);}
+
+                    frontRangeSensorTrigger.set(true);
+
                 sensorMode=SensorDetectionMode.WAIT_FOR_FREQUENCY;
                 break;
 
@@ -79,17 +72,14 @@ public class DetectRangeSensorCommand extends CommandBase {
 
                 break;
             case READ_FREQUENCY:
-                if (directionToMessure == Drivebase4MotorTalonFX.DriveDirection.FORWARD) {
-                    frontVoltage =((Drivebase4MotorTalonFX)Drivebase4MotorTalonFX.GetDrivebase()).getFrontRangeSensor();}
 
-                else {
-                    backVoltage = ((Drivebase4MotorTalonFX)Drivebase4MotorTalonFX.GetDrivebase()).getBackRangeSensor();}
-                sensorMode=SensorDetectionMode.WAIT_TO_SEND_FREQUENCY;
+                    frontVoltage =frontRangeSensorValue.getValue();
+                    sensorMode=SensorDetectionMode.WAIT_TO_SEND_FREQUENCY;
                 System.out.println("front distance: "+ frontVoltage);
 
                 break;
             case WAIT_TO_SEND_FREQUENCY:
-
+                frontRangeSensorTrigger.set(false);//double check where this goes
                 sensorMode=SensorDetectionMode.START;
 
                 break;
