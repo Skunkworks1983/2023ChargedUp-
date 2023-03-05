@@ -18,19 +18,19 @@ public class IntakeConeCollectorCommand extends CommandBase {
 
     @Override
     public void initialize() {
-        collectorInstance.Setspeed(Constants.Collector.INTAKE_MOTOR_SPEED);
+        collectorInstance.Setspeed(-Constants.Collector.INTAKE_MOTOR_SPEED);
     }
 
     @Override
     public void execute()
     {
-        SmartDashboard.putNumber("power drawn: " , collectorInstance.GetCollectorCurrent());
+
     }
 
     @Override
     public boolean isFinished() {
 
-        return collectorInstance.GetCollectorCurrent() >= 10;
+        return false;
 
     }
 

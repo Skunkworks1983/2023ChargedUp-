@@ -25,6 +25,8 @@ public class Oi
         JoystickButton armUpButton;
         JoystickButton armDownButton;
 
+        JoystickButton manualIntake;
+
         JoystickButton intakeButton;
         JoystickButton expelButton;
 
@@ -47,6 +49,8 @@ public class Oi
         armUpButton = new JoystickButton(buttonStick, Constants.OIButtons.ARM_UP_BUTTON);
         armDownButton = new JoystickButton(buttonStick, Constants.OIButtons.ARM_DOWN_BUTTON);
 
+        manualIntake = new JoystickButton(buttonStick, 14);
+
         coneToggle = new JoystickButton(buttonStick, Constants.OIButtons.CONE_TOGGLE);
 
         expelButton = new JoystickButton(buttonStick, Constants.OIButtons.EXPEL_BUTTON);
@@ -65,8 +69,9 @@ public class Oi
 
         wristUp.whileTrue(new RotateWristByPowerCommand(-.11));
         wristDown.whileTrue(new RotateWristByPowerCommand(.11));
-        armUpButton.whileTrue(new SetArmPositionCommand(46.68152, 173.73779));
-        armDownButton.whileTrue(new SetShoulderSpeed(arm, Constants.Arm.SHOULDER_LIMIT_SWITCH_BACK, -0.04));
+        armUpButton.whileTrue(new SetArmPositionCommand(Constants.ArmPos.PLAYER_CONE_PICKUP_SHOULDER, Constants.ArmPos.PLAYER_CONE_PICKUP_WRIST));
+        armDownButton.whileTrue(new SetArmPositionCommand(Constants.Arm.SHOULDER_RESTING_ANGLE, 15.531));
+        manualIntake.whileTrue(new SetArmPositionCommand(Constants.ArmPos.SCORE_CONE_MID_SHOULDER, Constants.ArmPos.SCORE_CONE_MID_WRIST));
     }
 
     public double getLeftY() {

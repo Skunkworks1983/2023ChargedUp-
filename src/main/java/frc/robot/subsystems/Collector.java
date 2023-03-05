@@ -25,10 +25,11 @@ public class Collector extends SubsystemBase {
     }
     public boolean isHoldingCube() {
 
-        if(cubeBreak1.get() == false && cubeBreak2.get() == false) {
+        if(cubeBreak1.get() == false && cubeBreak2.get() == false)
+        {
             System.out.println("returns true");
             return true;
-
+        }
         if(cubeBreak1.get() == false && cubeBreak2.get() == false) {
             return true;
         }
@@ -52,6 +53,9 @@ public class Collector extends SubsystemBase {
         else {
             return true;
         }
+    }
+    public boolean isHoldingCone() {
+        return Motor.getSupplyCurrent() >= Constants.Collector.CONE_COLLECT_AMP_THRESHOLD;
     }
     public static Collector getInstance(){
         if ( instance == null){
