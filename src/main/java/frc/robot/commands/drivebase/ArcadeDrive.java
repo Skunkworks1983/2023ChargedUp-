@@ -2,7 +2,7 @@ package frc.robot.commands.drivebase;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.services.Oi;
-import frc.robot.subsystems.multidrivebase.Drivebase;
+import frc.robot.subsystems.Drivebase;
 
 
 public class ArcadeDrive extends CommandBase
@@ -23,7 +23,6 @@ public class ArcadeDrive extends CommandBase
     @Override
     public void initialize()
     {
-
     }
 
     @Override
@@ -45,6 +44,7 @@ public class ArcadeDrive extends CommandBase
         outputRight = KP * errorRight + KF * targetRight;
 
         drivebase.runMotor(outputLeft, outputRight);
+
     }
 
     @Override

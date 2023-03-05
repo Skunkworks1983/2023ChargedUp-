@@ -17,9 +17,8 @@ import frc.robot.commands.drivebase.TankDrive;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
 import frc.robot.services.Oi;
+import frc.robot.subsystems.Drivebase;
 import frc.robot.subsystems.Collector;
-import frc.robot.subsystems.multidrivebase.Drivebase;
-import frc.robot.subsystems.multidrivebase.Drivebase4MotorTalonFX;
 
 
 /**
@@ -30,7 +29,7 @@ import frc.robot.subsystems.multidrivebase.Drivebase4MotorTalonFX;
  */
 public class Robot extends TimedRobot
 {
-    private Drivebase drivebase = Drivebase4MotorTalonFX.GetDrivebase();
+    private Drivebase drivebase = Drivebase.GetDrivebase();
     private Oi oi = new Oi(drivebase);
 
 
@@ -83,9 +82,7 @@ public class Robot extends TimedRobot
     
     
     @Override
-    public void disabledPeriodic()
-    {
-
+    public void disabledPeriodic() {
     }
 
 
@@ -93,8 +90,12 @@ public class Robot extends TimedRobot
      * This autonomous runs the autonomous command selected by your {@link RobotContainer} class.
      */
     @Override
+
     public void autonomousInit() {
-        Collector collector = Collector.getInstance();
+        Command WaveCollector = new WaveCollectorCommandGroup();
+
+        //WaveCollector.schedule();
+        //CommandScheduler.getInstance().schedule(new WaveCollectorCommandGroup());
     }
 
 

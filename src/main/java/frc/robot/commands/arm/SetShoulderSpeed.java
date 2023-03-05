@@ -37,7 +37,6 @@ public class SetShoulderSpeed extends CommandBase {
     public boolean isFinished() {
 
     return arm.limitSwitchOutput(limitSwitchPort);
-
     }
 
     @Override
