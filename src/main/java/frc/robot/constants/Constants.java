@@ -10,8 +10,8 @@ public class Constants extends CommandBase {
         public static final double  GEAR_RATIO = 2;
         public static final double WHEEL_CIRCUMFERENCE = Math.PI * 2;
         public static final double WHEEL_REVS_PER_SEC_TO_VELOCITY = 8050;
-        public static final int CUBE_BREAK_1_PORT = 0;
-        public static final int CUBE_BREAK_2_PORT = 1;
+        public static final int CUBE_BREAK_1_PORT = 2;
+        public static final int CUBE_BREAK_2_PORT = 3;
         public static final double INTAKE_SPEED = -8; //inches per second
         public static final double INTAKE_MOTOR_SPEED =
                 INTAKE_SPEED / WHEEL_CIRCUMFERENCE * WHEEL_REVS_PER_SEC_TO_VELOCITY;
@@ -56,7 +56,7 @@ public class Constants extends CommandBase {
         public static final double SHOULDER_KP = 0.06; //0.064
         public static final double SHOULDER_KI = 0;
         public static final double SHOULDER_KF = -0.041;
-        public static final double SHOULDER_PEAK_OUTPUT = 0.8;
+        public static final double SHOULDER_PEAK_OUTPUT = 0.3;
         public static final double SHOULDER_TOLERANCE = 2;
         public static final double SHOULDER_GEAR_RATIO = 137.4;
         public static final int SHOULDER_SWAP_ANGLE = 0;
@@ -66,16 +66,28 @@ public class Constants extends CommandBase {
         public static final int SHOULDER_MOTOR_ID = 5;
         public static final int SHOULDER_LIMIT_SWITCH_FRONT = 0;
         public static final int SHOULDER_LIMIT_SWITCH_BACK = 1;
+        //once shoulder is passed this angle, wrist can go anywhere.
+        public static final double SHOULDER_SAFE_WRIST_ANGLE = -93;
+        public static final int MAX_WRIST_ROTATION = 116;
         public static final double WRIST_TOLERANCE = 2;
         public static final int WRIST_MOTOR_DEVICE_NUMBER = 6;
         public static final double WRIST_GEAR_RATIO = 144;
         public static final double WRIST_RESTING_ANGLE = 0;
-        public static final double WRIST_PEAK_OUTPUT = 0.1;
+        public static final double WRIST_PEAK_OUTPUT = 0.25;
         public static final double WRIST_KP = 0.05;
         public static final double WRIST_KI = 0;
         public static final double WRIST_KD = 0;
         public static final double WRIST_KF = 0;
     }
+
+    public class ArmPos
+    {
+        public static final double SCORE_CONE_MID_SHOULDER = 51.23676;
+        public static final double SCORE_CONE_MID_WRIST = 160.13574;
+        public static final double PLAYER_CONE_PICKUP_SHOULDER = 39.56579;
+        public static final double PLAYER_CONE_PICKUP_WRIST = 156.46118;
+    }
+
 
     public class Falcon500 {
         public static final int TICKS_PER_REV = 2048;

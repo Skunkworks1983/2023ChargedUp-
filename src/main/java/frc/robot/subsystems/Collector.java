@@ -16,8 +16,8 @@ public class Collector extends SubsystemBase {
     private DigitalInput cubeBreak2;
     private Collector(){
 
-        //cubeBreak1 = new DigitalInput(Constants.Collector.CUBE_BREAK_1_PORT);
-        //cubeBreak2 = new DigitalInput(Constants.Collector.CUBE_BREAK_2_PORT);
+        cubeBreak1 = new DigitalInput(Constants.Collector.CUBE_BREAK_1_PORT);
+        cubeBreak2 = new DigitalInput(Constants.Collector.CUBE_BREAK_2_PORT);
 
         this.Motor = new TalonFX(Constants.Collector.MOTOR_ID);
         Motor.config_kP(0, Constants.Collector.K_P);
@@ -25,7 +25,7 @@ public class Collector extends SubsystemBase {
     }
     public boolean cubeCollectedIntake() {
 
-        if(cubeBreak1.get() == false || cubeBreak2.get() == false) {
+        if(cubeBreak1.get() == false && cubeBreak2.get() == false) {
             return true;
 
         }
