@@ -10,6 +10,8 @@ import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.arm.WaveCollectorCommandGroup;
+import frc.robot.commands.drivebase.ArcadeDrive;
 import frc.robot.commands.arm.RotateDegrees;
 import frc.robot.commands.autos.*;
 import frc.robot.commands.autos.SimpleAutoCommandGroup;
@@ -98,17 +100,18 @@ public class Robot extends TimedRobot
 
 
     @Override
-    public void teleopInit()
-    {
-        arm = Arm.getInstance();
-        arm.ShoulderMotor.set(TalonFXControlMode.PercentOutput, 0);
-        arm.wristMotor.setNeutralMode(NeutralMode.Coast);
-        arm.ShoulderMotor.setNeutralMode(NeutralMode.Brake);
+    public void teleopInit() {
+//        arm = Arm.getInstance();
+//        arm.ShoulderMotor.set(TalonFXControlMode.PercentOutput, 0);
+//        arm.ShoulderMotor.setNeutralMode(NeutralMode.Brake);
+//
+//        //double rotateTo = 15;
+//        Command TankDrive = new TankDrive(drivebase, oi);
+//
+//        TankDrive.schedule();
 
-        //double rotateTo = 15;
-        Command TankDrive = new TankDrive(drivebase, oi);
-
-        TankDrive.schedule();
+        Command arcadeDrive = new ArcadeDrive(drivebase, oi);
+        arcadeDrive.schedule();
 
         /* if (autonomousCommand != null)
         {
