@@ -17,18 +17,16 @@ public class Drivebase implements Subsystem {
     TalonFX rightMotor2 = new TalonFX(Constants.Wobbles.RIGHT_MOTOR_2);
 
     private final double TicksPerFoot =
-            Constants.Wobbles.TICKS_PER_MOTOR_REV*Constants.Drivebase.GEAR_RATIO /
+            Constants.Wobbles.TICKS_PER_MOTOR_REV * Constants.Drivebase.GEAR_RATIO /
                     (Constants.Drivebase.WHEEL_DIAMETER * Math.PI);
 
     AHRS gyro = new AHRS(SerialPort.Port.kMXP);
 
-    private Drivebase()
-    {
+    private Drivebase() {
         gyro.calibrate();
     }
 
-        public void runMotor(double turnSpeedLeft, double turnSpeedRight)
-    {
+    public void runMotor(double turnSpeedLeft, double turnSpeedRight) {
         leftMotor1.set(TalonFXControlMode.PercentOutput, turnSpeedLeft);
         leftMotor2.set(TalonFXControlMode.PercentOutput, turnSpeedLeft);
         rightMotor1.set(TalonFXControlMode.PercentOutput, -turnSpeedRight);
@@ -36,37 +34,31 @@ public class Drivebase implements Subsystem {
     }
 
 
-        public double getPosLeft()
-    {
-        return leftMotor1.getSelectedSensorPosition()/TicksPerFoot;
+    public double getPosLeft() {
+        return leftMotor1.getSelectedSensorPosition() / TicksPerFoot;
     }
 
 
-        public double getPosRight()
-    {
-        return -(rightMotor1.getSelectedSensorPosition()/TicksPerFoot);
+    public double getPosRight() {
+        return -(rightMotor1.getSelectedSensorPosition() / TicksPerFoot);
     }
 
 
-        public double getHeading()
-    {
+    public double getHeading() {
         return gyro.getAngle();
     }
 
 
-        public boolean isCalibrating()
-    {
+    public boolean isCalibrating() {
         return gyro.isCalibrating();
     }
 
 
-        public double getTicksLeft() {
-
+    public double getTicksLeft() {
         return leftMotor1.getSelectedSensorPosition();
     }
 
-        public void SetBrakeMode(boolean enable)
-    {
+    public void SetBrakeMode(boolean enable) {
         if (enable) {
 
             leftMotor1.setNeutralMode(NeutralMode.Brake);
@@ -84,13 +76,11 @@ public class Drivebase implements Subsystem {
     }
 
 
-        public double getSpeedLeft()
-    {
+    public double getSpeedLeft() {
         return leftMotor1.getSelectedSensorVelocity();
     }
 
-        public double getSpeedRight()
-    {
+    public double getSpeedRight() {
         return (-rightMotor1.getSelectedSensorVelocity());
     }
 

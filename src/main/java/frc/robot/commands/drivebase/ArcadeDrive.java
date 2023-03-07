@@ -5,7 +5,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.constants.Constants;
 import frc.robot.services.Oi;
-import frc.robot.subsystems.multidrivebase.Drivebase;
+import frc.robot.subsystems.Drivebase;
 
 
 public class ArcadeDrive extends CommandBase {
@@ -14,19 +14,15 @@ public class ArcadeDrive extends CommandBase {
 
     private double targetHeading;
 
-    private PIDController pidController = new PIDController(Constants.Drivebase.ARCADE_DRIVE_KP, 0, 0);
+    private PIDController pidController = new PIDController(Constants.Drivebase.ARCADE_DRIVE_KP, 0, Constants.Drivebase.ARCADE_DRIVE_KD);
 
     public ArcadeDrive(Drivebase drivebase, Oi oi) {
         this.drivebase = drivebase;
         this.oi = oi;
-        addRequirements(drivebase);
     }
 
     @Override
     public void initialize() {
-        drivebase.resetGyro();
-        drivebase.calibrateGyro();
-
         targetHeading = drivebase.getHeading();
     }
 
@@ -35,9 +31,17 @@ public class ArcadeDrive extends CommandBase {
         double leftX = oi.getLeftX();
         double rightY = oi.getRightY();
 
+        double oldX = leftX;
+        double oldY = rightY;
+
+        leftX = Math.pow(leftX, 2) * (oldX < 0 ? -1 : 1);
+        rightY = Math.pow(rightY, 2) * (oldY < 0 ? -1 : 1);
+
         double heading = drivebase.getHeading();
 
         double turnThrottle = pidController.calculate(heading, targetHeading);
+
+        System.out.println("error: " + turnThrottle);
 
         if (Math.abs(leftX) > 0.05) {
             turnThrottle = leftX;
@@ -52,9 +56,9 @@ public class ArcadeDrive extends CommandBase {
         leftSpeed = MathUtil.clamp(leftSpeed, -0.7, 0.7);
         rightSpeed = MathUtil.clamp(rightSpeed, -0.7, 0.7);
 
-        System.out.printf("Left: %f | Right: %f%n", leftSpeed, rightSpeed);
-
-        System.out.printf("Target Heading: %f | Current Heading: %f%n", targetHeading, heading);
+//        System.out.printf("Left: %f | Right: %f%n", leftSpeed, rightSpeed);
+//
+//        System.out.printf("Target Heading: %f | Current Heading: %f%n", targetHeading, heading);
 
         drivebase.runMotor(leftSpeed, rightSpeed);
     }
