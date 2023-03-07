@@ -12,11 +12,15 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.arm.WaveCollectorCommandGroup;
 import frc.robot.commands.drivebase.ArcadeDrive;
+import frc.robot.commands.arm.RotateDegrees;
+import frc.robot.commands.autos.*;
+import frc.robot.commands.autos.SimpleAutoCommandGroup;
 import frc.robot.commands.drivebase.TankDrive;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
-import frc.robot.services.Oi;
+import frc.robot.subsystems.Collector;
 import frc.robot.subsystems.Drivebase;
+import frc.robot.services.Oi;
 
 
 /**
@@ -28,15 +32,15 @@ import frc.robot.subsystems.Drivebase;
 public class Robot extends TimedRobot
 {
     private Drivebase drivebase = Drivebase.GetDrivebase();
-    private Oi oi = new Oi(drivebase);
-
-
-    private Command autonomousCommand;
+    private Collector collector = Collector.getInstance();
+    private Oi oi = new Oi(drivebase,collector);
+    Command SimpleAuto = new SimpleAutoCommandGroup();
+    Command ScoreAndExitCommunityP2 = new ScoreAndExitCommunityP2CommandGroup();
 
     private RobotContainer robotContainer;
 
-
     private Arm arm;
+    Command scoreAndDriveOutP3 = new ScoreAndDriveOutP3CommandGroup();
 
     
     /**
@@ -88,17 +92,16 @@ public class Robot extends TimedRobot
      * This autonomous runs the autonomous command selected by your {@link RobotContainer} class.
      */
     @Override
-
-    public void autonomousInit() {
-        Command WaveCollector = new WaveCollectorCommandGroup();
-
-        //WaveCollector.schedule();
-        //CommandScheduler.getInstance().schedule(new WaveCollectorCommandGroup());
+    public void autonomousInit()
+    {
+        SimpleAuto.schedule();
+        scoreAndDriveOutP3.schedule();
     }
 
 
     @Override
     public void teleopInit() {
+        arm.wristMotor.setNeutralMode(NeutralMode.Coast);
 //        arm = Arm.getInstance();
 //        arm.ShoulderMotor.set(TalonFXControlMode.PercentOutput, 0);
 //        arm.ShoulderMotor.setNeutralMode(NeutralMode.Brake);
@@ -109,7 +112,7 @@ public class Robot extends TimedRobot
 //        TankDrive.schedule();
 
         Command arcadeDrive = new ArcadeDrive(drivebase, oi);
-        arcadeDrive.schedule();
+        //arcadeDrive.schedule();
 
         /* if (autonomousCommand != null)
         {
