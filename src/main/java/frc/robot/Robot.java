@@ -101,6 +101,7 @@ public class Robot extends TimedRobot
 
     @Override
     public void teleopInit() {
+        arm.wristMotor.setNeutralMode(NeutralMode.Coast);
 //        arm = Arm.getInstance();
 //        arm.ShoulderMotor.set(TalonFXControlMode.PercentOutput, 0);
 //        arm.ShoulderMotor.setNeutralMode(NeutralMode.Brake);
@@ -111,7 +112,7 @@ public class Robot extends TimedRobot
 //        TankDrive.schedule();
 
         Command arcadeDrive = new ArcadeDrive(drivebase, oi);
-        arcadeDrive.schedule();
+        //arcadeDrive.schedule();
 
         /* if (autonomousCommand != null)
         {
