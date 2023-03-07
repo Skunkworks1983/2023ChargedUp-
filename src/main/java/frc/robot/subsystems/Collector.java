@@ -4,10 +4,9 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.Constants;
-import frc.robot.services.Oi;
 
 public class Collector extends SubsystemBase {
     public TalonFX Motor;
@@ -16,22 +15,36 @@ public class Collector extends SubsystemBase {
     private DigitalInput cubeBreak2;
     private Collector(){
 
-        //cubeBreak1 = new DigitalInput(Constants.Collector.CUBE_BREAK_1_PORT);
-        //cubeBreak2 = new DigitalInput(Constants.Collector.CUBE_BREAK_2_PORT);
+        cubeBreak1 = new DigitalInput(Constants.Collector.CUBE_BREAK_1_PORT);
+        cubeBreak2 = new DigitalInput(Constants.Collector.CUBE_BREAK_2_PORT);
 
         this.Motor = new TalonFX(Constants.Collector.MOTOR_ID);
         Motor.config_kP(0, Constants.Collector.K_P);
         Motor.setNeutralMode(NeutralMode.Brake);
+        Motor.setInverted(true);
     }
-    public boolean cubeCollected() {
-        System.out.println(cubeBreak1.get());
-        System.out.println(cubeBreak2.get());
-        if(cubeBreak1.get() == true || cubeBreak2.get() == true) {
-            return false;
+    public boolean isHoldingCube() {
+
+        if(cubeBreak1.get() == false && cubeBreak2.get() == false) {
+            System.out.println("returns true");
+            return true;
+
         }
         else {
+            System.out.println("returns false");
             return false;
         }
+
+    }
+    public boolean isHoldingCone() {
+        SmartDashboard.putNumber("Colletor current", GetCollectorCurrent());
+        if(GetCollectorCurrent() >= Constants.Collector.CONE_COLLECT_AMP_THRESHOLD) {
+            return true;
+        }
+        else{
+            return false;
+        }
+
     }
 
     public double GetCollectorCurrent()
@@ -39,6 +52,16 @@ public class Collector extends SubsystemBase {
         return Motor.getSupplyCurrent();
     }
 
+    public boolean cubeCollectedExpel() {
+
+        if(cubeBreak1.get() == true || cubeBreak2.get() == true) {
+            return false;
+
+        }
+        else {
+            return true;
+        }
+    }
     public static Collector getInstance(){
         if ( instance == null){
             instance = new Collector();
@@ -49,5 +72,6 @@ public class Collector extends SubsystemBase {
     public void Setspeed(double speed) {
         this.Motor.set(TalonFXControlMode.Velocity, speed);
     }
+
 
 }

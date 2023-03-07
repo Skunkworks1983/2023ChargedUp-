@@ -10,14 +10,12 @@ import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.autos.WaveCollectorCommandGroup;
-import frc.robot.commands.drivebase.ArcadeDrive;
+import frc.robot.commands.arm.WaveCollectorCommandGroup;
 import frc.robot.commands.drivebase.TankDrive;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
 import frc.robot.services.Oi;
-import frc.robot.subsystems.multidrivebase.Drivebase;
-import frc.robot.subsystems.multidrivebase.Drivebase4MotorTalonFX;
+import frc.robot.subsystems.Drivebase;
 
 
 /**
@@ -28,13 +26,14 @@ import frc.robot.subsystems.multidrivebase.Drivebase4MotorTalonFX;
  */
 public class Robot extends TimedRobot
 {
-    private Drivebase drivebase = Drivebase4MotorTalonFX.GetDrivebase();
+    private Drivebase drivebase = Drivebase.GetDrivebase();
     private Oi oi = new Oi(drivebase);
 
 
     private Command autonomousCommand;
-    
+
     private RobotContainer robotContainer;
+
 
     private Arm arm;
 
@@ -80,9 +79,7 @@ public class Robot extends TimedRobot
     
     
     @Override
-    public void disabledPeriodic()
-    {
-
+    public void disabledPeriodic() {
     }
 
 
@@ -90,27 +87,26 @@ public class Robot extends TimedRobot
      * This autonomous runs the autonomous command selected by your {@link RobotContainer} class.
      */
     @Override
+
     public void autonomousInit() {
         Command WaveCollector = new WaveCollectorCommandGroup();
 
-        WaveCollector.schedule();
+        //WaveCollector.schedule();
         //CommandScheduler.getInstance().schedule(new WaveCollectorCommandGroup());
     }
 
 
     @Override
-    public void teleopInit() {
-//        arm = Arm.getInstance();
-//        arm.ShoulderMotor.set(TalonFXControlMode.PercentOutput, 0);
-//        arm.ShoulderMotor.setNeutralMode(NeutralMode.Brake);
+    public void teleopInit()
+    {
+        arm = Arm.getInstance();
+        arm.ShoulderMotor.set(TalonFXControlMode.PercentOutput, 0);
+        arm.ShoulderMotor.setNeutralMode(NeutralMode.Brake);
 
         //double rotateTo = 15;
-//        Command TankDrive = new TankDrive(drivebase, oi);
-//
-//        TankDrive.schedule();
-        Command ArcadeDrive = new ArcadeDrive(drivebase, oi);
+        Command TankDrive = new TankDrive(drivebase, oi);
 
-        ArcadeDrive.schedule();
+        TankDrive.schedule();
 
         /* if (autonomousCommand != null)
         {
@@ -137,7 +133,7 @@ public class Robot extends TimedRobot
     public void testPeriodic()
     {
         arm = Arm.getInstance();
-        
+
         System.out.println("Limit switch front: " + arm.limitSwitchOutput(Constants.Arm.SHOULDER_LIMIT_SWITCH_FRONT));
         System.out.println("Limit switch back: " + arm.limitSwitchOutput(Constants.Arm.SHOULDER_LIMIT_SWITCH_BACK));
     }
