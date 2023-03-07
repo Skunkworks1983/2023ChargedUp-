@@ -49,7 +49,6 @@ public class Robot extends TimedRobot
     {
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         // autonomous chooser on the dashboard.
-        Collector.getInstance();
         arm = Arm.getInstance();
         robotContainer = new RobotContainer();
     }
@@ -99,13 +98,8 @@ public class Robot extends TimedRobot
     @Override
     public void teleopInit()
     {
-        arm = Arm.getInstance();
-        double wristRotateTo = 15;
-        double shoulderRotateTo = 38.59537049672488;
         Command TankDrive = new TankDrive(drivebase, oi);
-        //Command rotateDegrees = new PositionShoulderAndWrist(arm, wristRotateTo, shoulderRotateTo);
         TankDrive.schedule();
-
     }
     
     
@@ -129,12 +123,7 @@ public class Robot extends TimedRobot
     @Override
     public void testPeriodic()
     {
-        arm = Arm.getInstance();
-        arm.SetBrakeMode(false, arm.ShoulderMotor);
-        //System.out.println("Limit switch front: " + arm.limitSwitchOutput(Constants.Arm.SHOULDER_LIMIT_SWITCH_FRONT) + ", Limit switch back: " + arm.limitSwitchOutput(Constants.Arm.SHOULDER_LIMIT_SWITCH_BACK)+ " shoulder angle: " + arm.getShoulderAngle() + " Wrist angle: " + arm.getWristAngle());
-        System.out.println("Limit switch front: " + arm.limitSwitchOutput(Constants.Arm.SHOULDER_LIMIT_SWITCH_FRONT));
-        System.out.println("Limit switch back: " + arm.limitSwitchOutput(Constants.Arm.SHOULDER_LIMIT_SWITCH_BACK));
-        System.out.println("Limit switch wrist: " + arm.limitSwitchOutput(Constants.Arm.WRIST_LIMIT_SWITCH));
+
     }
     
     

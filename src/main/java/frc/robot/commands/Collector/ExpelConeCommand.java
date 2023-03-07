@@ -36,7 +36,7 @@ public class ExpelConeCommand extends CommandBase {
     @Override
     public void execute()
     {
-        SmartDashboard.putNumber("power drawn: " , collectorInstance.GetCollectorCurrent());
+
     }
 
     @Override
