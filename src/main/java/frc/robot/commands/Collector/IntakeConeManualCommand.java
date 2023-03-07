@@ -16,7 +16,7 @@ public class IntakeConeManualCommand extends CommandBase {
         collectorInstance = Collector.getInstance();
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
-        addRequirements();
+        addRequirements(collectorInstance);
     }
 
     @Override
@@ -28,9 +28,6 @@ public class IntakeConeManualCommand extends CommandBase {
         else {
             collectorInstance.Setspeed(Constants.Collector.INTAKE_MOTOR_SPEED * Constants.Collector.MANUAL_INTAKE_MULTIPLIER);
         }
-
-
-
     }
 
     @Override

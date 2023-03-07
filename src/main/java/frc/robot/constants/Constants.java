@@ -23,6 +23,7 @@ public class Constants extends CommandBase {
                 EXPEL_SPEED / WHEEL_CIRCUMFERENCE * WHEEL_REVS_PER_SEC_TO_VELOCITY;
         public static final double K_P = 0.03;
         public static final double MANUAL_INTAKE_MULTIPLIER = 0.4;
+        public static final int CONE_COLLECTED_VALUE = 3;
 
     }
     public class JoystickPorts {

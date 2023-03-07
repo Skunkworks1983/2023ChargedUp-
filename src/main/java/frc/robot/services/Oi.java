@@ -7,7 +7,10 @@ import frc.robot.commands.arm.RotateWristByPowerCommand;
 import frc.robot.commands.arm.SetShoulderSpeed;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Collector;
 import frc.robot.subsystems.Drivebase;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+
 
 
 public class Oi
@@ -19,7 +22,6 @@ public class Oi
 
         JoystickButton wristUp;
         JoystickButton wristDown;
-
         JoystickButton armUpButton;
         JoystickButton armDownButton;
 
@@ -31,8 +33,16 @@ public class Oi
 
         Arm arm = Arm.getInstance();
 
-    public Oi(Drivebase drivebase)
+        Collector collector = Collector.getInstance();
+
+
+
+
+    public Oi(Drivebase drivebase, Collector collector)
     {
+
+
+
         System.out.println("oi init");
         Instance = this;
         leftStick = new Joystick(Constants.JoystickPorts.LEFT_JOY_STICK_PORT);
@@ -66,9 +76,12 @@ public class Oi
         Arm arm = Arm.getInstance();
             armUpButton.whileTrue(new SetShoulderSpeed(arm, Constants.Arm.SHOULDER_LIMIT_SWITCH_FRONT, 0.08));
         armDownButton.whileTrue(new SetShoulderSpeed(arm, Constants.Arm.SHOULDER_LIMIT_SWITCH_BACK, -0.04));
+
     }
 
-    public double getLeftY() {
+
+
+        public double getLeftY() {
         return leftStick.getY();
     }
 

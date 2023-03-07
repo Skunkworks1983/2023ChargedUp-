@@ -16,6 +16,7 @@ import frc.robot.commands.autos.SimpleAutoCommandGroup;
 import frc.robot.commands.drivebase.TankDrive;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Collector;
 import frc.robot.subsystems.Drivebase;
 import frc.robot.services.Oi;
 
@@ -29,7 +30,8 @@ import frc.robot.services.Oi;
 public class Robot extends TimedRobot
 {
     private Drivebase drivebase = Drivebase.GetDrivebase();
-    private Oi oi = new Oi(drivebase);
+    private Collector collector = Collector.getInstance();
+    private Oi oi = new Oi(drivebase,collector);
     Command SimpleAuto = new SimpleAutoCommandGroup();
     Command ScoreAndExitCommunityP2 = new ScoreAndExitCommunityP2CommandGroup();
 
@@ -100,6 +102,7 @@ public class Robot extends TimedRobot
     {
         arm = Arm.getInstance();
         arm.ShoulderMotor.set(TalonFXControlMode.PercentOutput, 0);
+        arm.wristMotor.setNeutralMode(NeutralMode.Coast);
         arm.ShoulderMotor.setNeutralMode(NeutralMode.Brake);
 
         //double rotateTo = 15;
