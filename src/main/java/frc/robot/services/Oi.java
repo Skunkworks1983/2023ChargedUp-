@@ -1,12 +1,9 @@
 package frc.robot.services;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Collector.*;
-import frc.robot.commands.arm.RotateWristByPowerCommand;
 import frc.robot.commands.arm.SetArmPositionCommand;
-import frc.robot.commands.arm.SetShoulderSpeed;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drivebase;
@@ -19,19 +16,22 @@ public class Oi
         Joystick rightStick;
         Joystick buttonStick;
 
-        JoystickButton wristUp;
-        JoystickButton wristDown;
+        JoystickButton floorWeirdScore;
+        JoystickButton floorNormalScore;
 
         JoystickButton armUpButton;
         JoystickButton armDownButton;
 
-        JoystickButton manualIntake;
+        JoystickButton scoreMid;
 
         JoystickButton intakeButton;
         JoystickButton expelButton;
 
         JoystickButton coneToggle;
         JoystickButton manualToggle;
+
+        JoystickButton coneFloorPickup;
+        JoystickButton cubeFloorPickup;
 
         Arm arm = Arm.getInstance();
 
@@ -49,15 +49,18 @@ public class Oi
         armUpButton = new JoystickButton(buttonStick, Constants.OIButtons.ARM_UP_BUTTON);
         armDownButton = new JoystickButton(buttonStick, Constants.OIButtons.ARM_DOWN_BUTTON);
 
-        manualIntake = new JoystickButton(buttonStick, 14);
+        scoreMid = new JoystickButton(buttonStick, 14);
 
         coneToggle = new JoystickButton(buttonStick, Constants.OIButtons.CONE_TOGGLE);
 
         expelButton = new JoystickButton(buttonStick, Constants.OIButtons.EXPEL_BUTTON);
         intakeButton = new JoystickButton(buttonStick, Constants.OIButtons.INTAKE_BUTTON);
 
-        wristUp = new JoystickButton(buttonStick,Constants.OIButtons.WRIST_UP_BUTTON);//4
-        wristDown = new JoystickButton(buttonStick,Constants.OIButtons.WRIST_DOWN_BUTTON);//2
+        floorWeirdScore = new JoystickButton(buttonStick, Constants.OIButtons.WRIST_UP_BUTTON);//4
+        floorNormalScore = new JoystickButton(buttonStick, Constants.OIButtons.WRIST_DOWN_BUTTON);//2
+
+        coneFloorPickup = new JoystickButton(buttonStick, 11);
+        cubeFloorPickup = new JoystickButton(buttonStick, 3);
 
         //when held
         expelButton.and(coneToggle).whileTrue(new ExpelConeCommand());
@@ -67,11 +70,13 @@ public class Oi
         intakeButton.and(coneToggle).and(manualToggle.negate()).onTrue(new IntakeConeSmartCommand());
         intakeButton.and(coneToggle.negate()).and(manualToggle.negate()).onTrue(new IntakeCubeSmartCommand());
 
-        wristUp.whileTrue(new RotateWristByPowerCommand(-.11));
-        wristDown.whileTrue(new RotateWristByPowerCommand(.11));
+        floorWeirdScore.whileTrue(new SetArmPositionCommand(Constants.Arm.SHOULDER_RESTING_ANGLE, 0));
+        floorNormalScore.whileTrue(new SetArmPositionCommand(Constants.Arm.SHOULDER_RESTING_ANGLE, 100.70434));
         armUpButton.whileTrue(new SetArmPositionCommand(Constants.ArmPos.PLAYER_CONE_PICKUP_SHOULDER, Constants.ArmPos.PLAYER_CONE_PICKUP_WRIST));
         armDownButton.whileTrue(new SetArmPositionCommand(Constants.Arm.SHOULDER_RESTING_ANGLE, 15.531));
-        manualIntake.whileTrue(new SetArmPositionCommand(Constants.ArmPos.SCORE_CONE_MID_SHOULDER, Constants.ArmPos.SCORE_CONE_MID_WRIST));
+        scoreMid.whileTrue(new SetArmPositionCommand(Constants.ArmPos.SCORE_CONE_MID_SHOULDER, Constants.ArmPos.SCORE_CONE_MID_WRIST));
+        cubeFloorPickup.onTrue(new SetArmPositionCommand(Constants.ArmPos.FLOOR_CUBE_PICKUP_SHOULDER, Constants.ArmPos.FLOOR_CUBE_PICKUP_WRIST));
+        coneFloorPickup.onTrue(new SetArmPositionCommand(Constants.Arm.SHOULDER_RESTING_ANGLE, 108.05419));
     }
 
     public double getLeftY() {

@@ -62,7 +62,7 @@ public class Constants extends CommandBase {
         public static final double SHOULDER_KP = 0.06; //0.064
         public static final double SHOULDER_KI = 0;
         public static final double SHOULDER_KF = -0.041;
-        public static final double SHOULDER_PEAK_OUTPUT = 0.3;
+        public static final double SHOULDER_PEAK_OUTPUT = 0.5;
         public static final double SHOULDER_TOLERANCE = 2;
         public static final double SHOULDER_GEAR_RATIO = 137.4;
         public static final int SHOULDER_SWAP_ANGLE = 0;
@@ -72,14 +72,15 @@ public class Constants extends CommandBase {
         public static final int SHOULDER_MOTOR_ID = 5;
         public static final int SHOULDER_LIMIT_SWITCH_FRONT = 0;
         public static final int SHOULDER_LIMIT_SWITCH_BACK = 1;
+        public static final int WRIST_LIMIT_SWITCH = 2;
         //once shoulder is passed this angle, wrist can go anywhere.
-        public static final double SHOULDER_SAFE_WRIST_ANGLE = -93;
+        public static final double SHOULDER_SAFE_WRIST_ANGLE = SHOULDER_RESTING_ANGLE;
         public static final int MAX_WRIST_ROTATION = 116;
         public static final double WRIST_TOLERANCE = 2;
         public static final int WRIST_MOTOR_DEVICE_NUMBER = 6;
         public static final double WRIST_GEAR_RATIO = 144;
         public static final double WRIST_RESTING_ANGLE = 0;
-        public static final double WRIST_PEAK_OUTPUT = 0.25;
+        public static final double WRIST_PEAK_OUTPUT = 0.4;
         public static final double WRIST_KP = 0.05;
         public static final double WRIST_KI = 0;
         public static final double WRIST_KD = 0;
@@ -95,7 +96,7 @@ public class Constants extends CommandBase {
         public static final double PLAYER_CUBE_PICKUP_SHOULDER = 46.68152;
         public static final double PLAYER_CUBE_PICKUP_WRIST = 171.73779;
         public static final double FLOOR_CUBE_PICKUP_SHOULDER = Arm.SHOULDER_RESTING_ANGLE;
-        public static final double FLOOR_CUBE_PICKUP_WRIST = 114.8059;
+        public static final double FLOOR_CUBE_PICKUP_WRIST = 109.8059;
     }
 
 

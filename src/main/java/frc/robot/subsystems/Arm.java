@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.IFollower;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
@@ -23,9 +24,6 @@ public class Arm extends SubsystemBase {
     public double lastAngle;
     public double setpoint;
     private final static Arm INSTANCE = new Arm();
-
-    private DigitalInput frontLimit = new DigitalInput(Constants.Arm.SHOULDER_LIMIT_SWITCH_FRONT);
-    private DigitalInput backLimit = new DigitalInput(Constants.Arm.SHOULDER_LIMIT_SWITCH_BACK);
 
     public static Arm getInstance() {
         return INSTANCE;
@@ -162,11 +160,15 @@ public class Arm extends SubsystemBase {
     {
         if(limitSwitchPort == Constants.Arm.SHOULDER_LIMIT_SWITCH_FRONT)
         {
-            return !frontLimit.get();
+            return ShoulderMotor.getSensorCollection().isFwdLimitSwitchClosed() == 1;
         }
         else if(limitSwitchPort == Constants.Arm.SHOULDER_LIMIT_SWITCH_BACK)
         {
-            return !backLimit.get();
+            return ShoulderMotor.getSensorCollection().isRevLimitSwitchClosed() == 1;
+        }
+        else if(limitSwitchPort == Constants.Arm.WRIST_LIMIT_SWITCH)
+        {
+            return WristMotor.getSensorCollection().isRevLimitSwitchClosed() == 1;
         }
         else
         {

@@ -18,6 +18,7 @@ public class SetArmPositionCommand extends CommandBase
         this.arm = Arm.getInstance();
         this.shoulderAngleSetpoint = shoulderAngleSetpoint;
         this.wristAngleSetpoint = wristAngleSetpoint;
+        addRequirements(arm);
     }
 
     @Override

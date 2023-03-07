@@ -104,8 +104,6 @@ public class Robot extends TimedRobot
         double shoulderRotateTo = 38.59537049672488;
         Command TankDrive = new TankDrive(drivebase, oi);
         //Command rotateDegrees = new PositionShoulderAndWrist(arm, wristRotateTo, shoulderRotateTo);
-        SmartDashboard.putNumber("shoulder angle: " , arm.getShoulderAngle());
-        SmartDashboard.putNumber("wrist angle: " , arm.getWristAngle());
         TankDrive.schedule();
 
     }
@@ -134,6 +132,9 @@ public class Robot extends TimedRobot
         arm = Arm.getInstance();
         arm.SetBrakeMode(false, arm.ShoulderMotor);
         //System.out.println("Limit switch front: " + arm.limitSwitchOutput(Constants.Arm.SHOULDER_LIMIT_SWITCH_FRONT) + ", Limit switch back: " + arm.limitSwitchOutput(Constants.Arm.SHOULDER_LIMIT_SWITCH_BACK)+ " shoulder angle: " + arm.getShoulderAngle() + " Wrist angle: " + arm.getWristAngle());
+        System.out.println("Limit switch front: " + arm.limitSwitchOutput(Constants.Arm.SHOULDER_LIMIT_SWITCH_FRONT));
+        System.out.println("Limit switch back: " + arm.limitSwitchOutput(Constants.Arm.SHOULDER_LIMIT_SWITCH_BACK));
+        System.out.println("Limit switch wrist: " + arm.limitSwitchOutput(Constants.Arm.WRIST_LIMIT_SWITCH));
     }
     
     
