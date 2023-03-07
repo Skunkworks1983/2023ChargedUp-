@@ -10,7 +10,9 @@ import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.autos.BalanceOnChargeStationCommand;
 import frc.robot.commands.autos.WaveCollectorCommandGroup;
+import frc.robot.commands.drivebase.DetectRangeSensorCommand;
 import frc.robot.commands.drivebase.DetectRangeSensorWithoutDrivebaseCommand;
 import frc.robot.commands.drivebase.TankDrive;
 import frc.robot.constants.Constants;
@@ -92,8 +94,10 @@ public class Robot extends TimedRobot
      */
     @Override
     public void autonomousInit() {
-        DetectRangeSensorWithoutDrivebaseCommand a = new DetectRangeSensorWithoutDrivebaseCommand();
+        DetectRangeSensorCommand a = new DetectRangeSensorCommand();
+        BalanceOnChargeStationCommand b = new BalanceOnChargeStationCommand(.023,0,0,.08,a);
         a.schedule();
+        b.schedule();
         //CommandScheduler.getInstance().schedule(new WaveCollectorCommandGroup());
     }
 

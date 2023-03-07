@@ -20,13 +20,11 @@ public class DetectRangeSensorCommand extends CommandBase {
     double frontVoltage;
     double backVoltage;
 
-    Drivebase4MotorTalonFX.DriveDirection currentDirection;
+    Drivebase4MotorTalonFX.DriveDirection currentDirection=Drivebase4MotorTalonFX.DriveDirection.MOTIONLESS;
 
     Drivebase4MotorTalonFX.DriveDirection directionToMessure= Drivebase4MotorTalonFX.DriveDirection.FORWARD;
 
-    public void setCurrentDirection(Drivebase4MotorTalonFX.DriveDirection direction){direction=currentDirection;}
-    public double getBackDistance(){return backVoltage*VOLTAGE_TO_DISTANCE_SENSOR;}
-    public double getFrontDistance(){return frontVoltage*VOLTAGE_TO_DISTANCE_SENSOR;}
+    public void setCurrentDirection(Drivebase4MotorTalonFX.DriveDirection direction){currentDirection=direction;}
 
     public double getFrontVoltage(){return frontVoltage;}
 
@@ -85,7 +83,6 @@ public class DetectRangeSensorCommand extends CommandBase {
                 else {
                     backVoltage = ((Drivebase4MotorTalonFX)Drivebase4MotorTalonFX.GetDrivebase()).getBackRangeSensor();}
                 sensorMode=SensorDetectionMode.WAIT_TO_SEND_FREQUENCY;
-                System.out.println("front distance: "+ frontVoltage);
 
                 break;
             case WAIT_TO_SEND_FREQUENCY:
