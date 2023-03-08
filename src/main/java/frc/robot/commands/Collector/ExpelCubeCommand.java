@@ -1,5 +1,6 @@
 package frc.robot.commands.Collector;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
@@ -33,7 +34,9 @@ public class ExpelCubeCommand extends CommandBase {
     }
 
     @Override
-    public void execute() {
+    public void execute()
+    {
+        
     }
 
     @Override

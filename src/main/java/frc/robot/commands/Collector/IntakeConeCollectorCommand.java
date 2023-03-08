@@ -3,34 +3,22 @@ package frc.robot.commands.Collector;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.constants.Constants;
-import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Collector;
 
 
-public class ExpelConeCommand extends CommandBase {
-    private Collector collectorInstance;
-    private Arm armInstance;
+public class IntakeConeCollectorCommand extends CommandBase {
+    public Collector collectorInstance;
 
-    public ExpelConeCommand() {
-        armInstance = Arm.getInstance();
+    public IntakeConeCollectorCommand() {
         collectorInstance = Collector.getInstance();
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
-        addRequirements(collectorInstance);
+        addRequirements();
     }
 
     @Override
     public void initialize() {
-
-        if(armInstance.getShoulderAngle() < 0) {
-            collectorInstance.Setspeed(Constants.Collector.EXPEL_MOTOR_SPEED);
-        }
-        else {
-            collectorInstance.Setspeed(-Constants.Collector.EXPEL_MOTOR_SPEED);
-        }
-
-
-
+        collectorInstance.Setspeed(-Constants.Collector.INTAKE_MOTOR_SPEED);
     }
 
     @Override
@@ -41,11 +29,14 @@ public class ExpelConeCommand extends CommandBase {
 
     @Override
     public boolean isFinished() {
+
         return false;
+
     }
 
     @Override
-    public void end(boolean interrupted) {
+    public void end(boolean interrupted)
+    {
         collectorInstance.Setspeed(0);
     }
 }
