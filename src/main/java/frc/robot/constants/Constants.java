@@ -106,6 +106,9 @@ public class Constants extends CommandBase {
         public static final double CARRY_WRIST = 15.531;
         public static final double CONE_FLOOR_PICKUP_SHOULDER = Arm.SHOULDER_RESTING_ANGLE;
         public static final double CONE_FLOOR_PICKUP_WRIST = 108.05419;
+
+        public static final double SCORE_CUBE_MID_SHOULDER = PLAYER_CUBE_PICKUP_SHOULDER;
+        public static final double SCORE_CUBE_MID_WRIST = PLAYER_CUBE_PICKUP_WRIST;
     }
 
 
