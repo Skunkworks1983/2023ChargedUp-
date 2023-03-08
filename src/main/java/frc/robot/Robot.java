@@ -13,7 +13,7 @@ import frc.robot.commands.Collector.IntakeConeCollectorCommand;
 import frc.robot.commands.arm.SetArmPositionCommand;
 import frc.robot.commands.arm.WristRotateDegrees;
 import frc.robot.commands.autos.PositionShoulderAndWrist;
-import frc.robot.commands.drivebase.TankDrive;
+import frc.robot.commands.drivebase.ArcadeDrive;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
 import frc.robot.services.Oi;
@@ -98,8 +98,8 @@ public class Robot extends TimedRobot
     @Override
     public void teleopInit()
     {
-        Command TankDrive = new TankDrive(drivebase, oi);
-        TankDrive.schedule();
+       Command  ArcadeDrive  = new ArcadeDrive(drivebase, oi);
+        ArcadeDrive.schedule();
     }
     
     
