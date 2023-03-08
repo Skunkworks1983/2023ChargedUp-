@@ -5,18 +5,13 @@
 
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.arm.WaveCollectorCommandGroup;
-import frc.robot.commands.drivebase.ArcadeDrive;
-import frc.robot.commands.arm.RotateDegrees;
 import frc.robot.commands.autos.*;
 import frc.robot.commands.autos.SimpleAutoCommandGroup;
+import frc.robot.commands.drivebase.ArcadeDrive;
 import frc.robot.commands.drivebase.TankDrive;
-import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Collector;
 import frc.robot.subsystems.Drivebase;
@@ -92,32 +87,17 @@ public class Robot extends TimedRobot
      * This autonomous runs the autonomous command selected by your {@link RobotContainer} class.
      */
     @Override
-    public void autonomousInit()
-    {
-        SimpleAuto.schedule();
-        scoreAndDriveOutP3.schedule();
+
+    public void autonomousInit() {
+
     }
 
 
     @Override
-    public void teleopInit() {
-        arm.wristMotor.setNeutralMode(NeutralMode.Coast);
-//        arm = Arm.getInstance();
-//        arm.ShoulderMotor.set(TalonFXControlMode.PercentOutput, 0);
-//        arm.ShoulderMotor.setNeutralMode(NeutralMode.Brake);
-//
-//        //double rotateTo = 15;
-//        Command TankDrive = new TankDrive(drivebase, oi);
-//
-//        TankDrive.schedule();
-
+    public void teleopInit()
+    {
         Command arcadeDrive = new ArcadeDrive(drivebase, oi);
-        //arcadeDrive.schedule();
-
-        /* if (autonomousCommand != null)
-        {
-            autonomousCommand.cancel();
-        } */
+        arcadeDrive.schedule();
     }
     
     
@@ -131,6 +111,9 @@ public class Robot extends TimedRobot
     {
         // Cancels all running commands at the start of test mode.
         CommandScheduler.getInstance().cancelAll();
+        arm = Arm.getInstance();
+        arm.SetBrakeMode(false, arm.ShoulderMotor);
+        arm.SetBrakeMode(false, arm.WristMotor);
     }
     
     
@@ -138,10 +121,7 @@ public class Robot extends TimedRobot
     @Override
     public void testPeriodic()
     {
-        arm = Arm.getInstance();
 
-        System.out.println("Limit switch front: " + arm.limitSwitchOutput(Constants.Arm.SHOULDER_LIMIT_SWITCH_FRONT));
-        System.out.println("Limit switch back: " + arm.limitSwitchOutput(Constants.Arm.SHOULDER_LIMIT_SWITCH_BACK));
     }
     
     
