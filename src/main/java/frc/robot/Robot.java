@@ -6,9 +6,12 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.autos.*;
+import frc.robot.commands.autos.SimpleAutoCommandGroup;
+import frc.robot.commands.drivebase.ArcadeDrive;
+import frc.robot.commands.drivebase.TankDrive;
 import frc.robot.commands.Collector.IntakeConeCollectorCommand;
 import frc.robot.commands.arm.SetArmPositionCommand;
 import frc.robot.commands.arm.WristRotateDegrees;
@@ -16,9 +19,9 @@ import frc.robot.commands.autos.PositionShoulderAndWrist;
 import frc.robot.commands.drivebase.ArcadeDrive;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
-import frc.robot.services.Oi;
-import frc.robot.subsystems.Drivebase;
 import frc.robot.subsystems.Collector;
+import frc.robot.subsystems.Drivebase;
+import frc.robot.services.Oi;
 
 
 /**
@@ -30,14 +33,15 @@ import frc.robot.subsystems.Collector;
 public class Robot extends TimedRobot
 {
     private Drivebase drivebase = Drivebase.GetDrivebase();
-    private Oi oi = new Oi(drivebase);
-
-
-    private Command autonomousCommand;
+    private Collector collector = Collector.getInstance();
+    private Oi oi = new Oi(drivebase,collector);
+    Command SimpleAuto = new SimpleAutoCommandGroup();
+    Command ScoreAndExitCommunityP2 = new ScoreAndExitCommunityP2CommandGroup();
 
     private RobotContainer robotContainer;
 
     private Arm arm;
+    Command scoreAndDriveOutP3 = new ScoreAndDriveOutP3CommandGroup();
 
     
     /**
@@ -98,8 +102,8 @@ public class Robot extends TimedRobot
     @Override
     public void teleopInit()
     {
-       Command  ArcadeDrive  = new ArcadeDrive(drivebase, oi);
-        ArcadeDrive.schedule();
+        Command arcadeDrive = new ArcadeDrive(drivebase, oi);
+        arcadeDrive.schedule();
     }
     
     

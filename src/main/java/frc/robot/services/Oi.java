@@ -6,7 +6,10 @@ import frc.robot.commands.Collector.*;
 import frc.robot.commands.arm.SetArmPositionCommand;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Collector;
 import frc.robot.subsystems.Drivebase;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+
 
 
 public class Oi
@@ -35,8 +38,16 @@ public class Oi
 
         Arm arm = Arm.getInstance();
 
-    public Oi(Drivebase drivebase)
+        Collector collector = Collector.getInstance();
+
+
+
+
+    public Oi(Drivebase drivebase, Collector collector)
     {
+
+
+
         System.out.println("oi init");
         Instance = this;
         leftStick = new Joystick(Constants.JoystickPorts.LEFT_JOY_STICK_PORT);
@@ -79,7 +90,9 @@ public class Oi
         coneFloorPickup.onTrue(new SetArmPositionCommand(Constants.ArmPos.CONE_FLOOR_PICKUP_SHOULDER, Constants.ArmPos.CONE_FLOOR_PICKUP_WRIST));
     }
 
-    public double getLeftY() {
+
+
+        public double getLeftY() {
         return leftStick.getY();
     }
 

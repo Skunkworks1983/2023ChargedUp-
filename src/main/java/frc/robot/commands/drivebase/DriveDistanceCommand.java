@@ -42,6 +42,7 @@ public class DriveDistanceCommand extends CommandBase
         {
             direction = -1;
         }
+        drivebase.SetBrakeMode(true);
         System.out.println("moving from " +startDistanceFT + " to " + finishDistanceFT);
     }
 
@@ -66,9 +67,9 @@ public class DriveDistanceCommand extends CommandBase
         {
             speed = -0.3;
         }
-        double speedLeft = speed + Math.max(Math.min(Constants.Drivebase.ANGLE_KP*(startDegree - drivebase.getHeading()), 0.25), -0.25);
-        double speedRight = speed - Math.max(Math.min(Constants.Drivebase.ANGLE_KP*(startDegree - drivebase.getHeading()), 0.25), -0.25);
-        drivebase.runMotor(speedLeft, speedRight);
+       // double speedLeft = speed + Math.max(Math.min(Constants.Drivebase.ANGLE_KP*(startDegree - drivebase.getHeading()), 0.25), -0.25);
+       // double speedRight = speed - Math.max(Math.min(Constants.Drivebase.ANGLE_KP*(startDegree - drivebase.getHeading()), 0.25), -0.25);
+        drivebase.runMotor(speed, speed);
         //SmartDashboard.putNumber("FT moved", drivebase.getPosLeft()-startDistanceFT);
     }
 

@@ -13,6 +13,7 @@ public class Collector extends SubsystemBase {
 
     private DigitalInput cubeBreak1;
     private DigitalInput cubeBreak2;
+
     private Collector(){
 
         cubeBreak1 = new DigitalInput(Constants.Collector.CUBE_BREAK_1_PORT);

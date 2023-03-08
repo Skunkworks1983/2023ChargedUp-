@@ -10,12 +10,13 @@ public class IntakeCubeSmartCommand extends CommandBase {
     private Collector collectorInstance;
     private Arm armInstance;
 
+
     public IntakeCubeSmartCommand() {
         armInstance = Arm.getInstance();
         collectorInstance = Collector.getInstance();
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
-        addRequirements();
+        addRequirements(collectorInstance);
     }
 
     @Override
@@ -38,8 +39,10 @@ public class IntakeCubeSmartCommand extends CommandBase {
 
     @Override
     public boolean isFinished() {
+        System.out.println("the collector is holding cube" + collectorInstance.isHoldingCube());
         return collectorInstance.isHoldingCube();
     }
+
 
     @Override
     public void end(boolean interrupted) {
