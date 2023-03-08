@@ -14,7 +14,7 @@ public class ArcadeDrive extends CommandBase {
 
     private double targetHeading;
 
-    private PIDController pidController = new PIDController(Constants.Drivebase.ARCADE_DRIVE_KP, 0, Constants.Drivebase.ARCADE_DRIVE_KD);
+    private PIDController pidController = new PIDController(Constants.Drivebase.ARCADE_DRIVE_KP, 0, 0);
 
     public ArcadeDrive(Drivebase drivebase, Oi oi) {
         this.drivebase = drivebase;
@@ -36,14 +36,12 @@ public class ArcadeDrive extends CommandBase {
 
         leftX = Math.pow(leftX, 2) * (oldX < 0 ? -1 : 1);
         rightY = Math.pow(rightY, 2) * (oldY < 0 ? -1 : 1);
-
+        
         double heading = drivebase.getHeading();
 
         double turnThrottle = pidController.calculate(heading, targetHeading);
 
-        System.out.println("error: " + turnThrottle);
-
-        if (Math.abs(leftX) > 0.05) {
+        if (Math.abs(leftX) > 0.001) {
             turnThrottle = leftX;
             targetHeading = drivebase.getHeading();
         }
