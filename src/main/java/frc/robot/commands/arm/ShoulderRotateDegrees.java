@@ -1,11 +1,10 @@
 package frc.robot.commands.arm;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
 
-public class RotateDegrees extends CommandBase {
+public class ShoulderRotateDegrees extends CommandBase {
     private final Arm arm;
     private final double offsetDegrees;
     private double rotateTo;
@@ -14,7 +13,7 @@ public class RotateDegrees extends CommandBase {
 
     private boolean lastAngle;
 
-    public RotateDegrees(Arm arm, double offsetDegrees, boolean ignore) {
+    public ShoulderRotateDegrees(Arm arm, double offsetDegrees, boolean ignore) {
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
         this.arm = arm;
@@ -59,12 +58,6 @@ public class RotateDegrees extends CommandBase {
                 */
             }
         }
-
-        SmartDashboard.putNumber("rotateDegrees kp", Constants.Arm.SHOULDER_KP);
-        SmartDashboard.putNumber("rotateDegrees error", arm.ShoulderMotor.getClosedLoopError() * Constants.Arm.SHOULDER_TICKS_TO_DEGREES);
-        SmartDashboard.putNumber("rotateDegrees setpoint", arm.setpoint * Constants.Arm.SHOULDER_TICKS_TO_DEGREES);
-        SmartDashboard.putNumber("rotateDegrees current", arm.getShoulderAngle());
-        SmartDashboard.putNumber("rotateDegrees motor output", arm.getCurrentOutput());
     }
 
     @Override
@@ -72,7 +65,7 @@ public class RotateDegrees extends CommandBase {
         if (Math.abs(arm.ShoulderMotor.getClosedLoopError() * Constants.Arm.SHOULDER_TICKS_TO_DEGREES) < Constants.Arm.SHOULDER_TOLERANCE) {
             System.out.println("Ended");
             System.out.println("end error: " + arm.ShoulderMotor.getClosedLoopError() * Constants.Arm.SHOULDER_TICKS_TO_DEGREES);
-            return true;
+            return false; //todo
         } else {
             return false;
         }
