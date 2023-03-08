@@ -21,19 +21,16 @@ public class IntakeCubeManualCommand extends CommandBase {
     @Override
     public void initialize() {
 
+    }
+
+    @Override
+    public void execute() {
         if(armInstance.getShoulderAngle() < 0) {
             collectorInstance.Setspeed(Constants.Collector.INTAKE_MOTOR_SPEED * Constants.Collector.MANUAL_INTAKE_MULTIPLIER);
         }
         else {
             collectorInstance.Setspeed(-Constants.Collector.INTAKE_MOTOR_SPEED * Constants.Collector.MANUAL_INTAKE_MULTIPLIER);
         }
-
-
-
-    }
-
-    @Override
-    public void execute() {
     }
 
     @Override

@@ -21,23 +21,17 @@ public class IntakeConeSmartCommand extends CommandBase {
     @Override
     public void initialize() {
         countConeHeld = 0;
+    }
 
-
-
+    @Override
+    public void execute()
+    {
         if(armInstance.getShoulderAngle() < 0) {
             collectorInstance.Setspeed(-Constants.Collector.INTAKE_MOTOR_SPEED);
         }
         else {
             collectorInstance.Setspeed(Constants.Collector.INTAKE_MOTOR_SPEED);
         }
-
-
-
-    }
-
-    @Override
-    public void execute()
-    {
 
         if(collectorInstance.isHoldingCone()) {
             countConeHeld++;
