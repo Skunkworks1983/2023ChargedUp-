@@ -15,25 +15,22 @@ public class IntakeCubeManualCommand extends CommandBase {
         collectorInstance = Collector.getInstance();
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
-        addRequirements();
+        addRequirements(collectorInstance);
     }
 
     @Override
     public void initialize() {
 
+    }
+
+    @Override
+    public void execute() {
         if(armInstance.getShoulderAngle() < 0) {
             collectorInstance.Setspeed(Constants.Collector.INTAKE_MOTOR_SPEED * Constants.Collector.MANUAL_INTAKE_MULTIPLIER);
         }
         else {
             collectorInstance.Setspeed(-Constants.Collector.INTAKE_MOTOR_SPEED * Constants.Collector.MANUAL_INTAKE_MULTIPLIER);
         }
-
-
-
-    }
-
-    @Override
-    public void execute() {
     }
 
     @Override

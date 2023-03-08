@@ -13,6 +13,7 @@ public class Collector extends SubsystemBase {
 
     private DigitalInput cubeBreak1;
     private DigitalInput cubeBreak2;
+
     private Collector(){
 
         cubeBreak1 = new DigitalInput(Constants.Collector.CUBE_BREAK_1_PORT);
@@ -25,20 +26,12 @@ public class Collector extends SubsystemBase {
     }
     public boolean isHoldingCube() {
 
-        if(cubeBreak1.get() == false && cubeBreak2.get() == false) {
+        if(cubeBreak1.get() == false && cubeBreak2.get() == false)
+        {
             System.out.println("returns true");
             return true;
-
         }
-        else {
-            System.out.println("returns false");
-            return false;
-        }
-
-    }
-    public boolean isHoldingCone() {
-        SmartDashboard.putNumber("Colletor current", GetCollectorCurrent());
-        if(GetCollectorCurrent() >= Constants.Collector.CONE_COLLECT_AMP_THRESHOLD) {
+        if(cubeBreak1.get() == false && cubeBreak2.get() == false) {
             return true;
         }
         else{
@@ -61,6 +54,9 @@ public class Collector extends SubsystemBase {
         else {
             return true;
         }
+    }
+    public boolean isHoldingCone() {
+        return Motor.getSupplyCurrent() >= Constants.Collector.CONE_COLLECT_AMP_THRESHOLD;
     }
     public static Collector getInstance(){
         if ( instance == null){
