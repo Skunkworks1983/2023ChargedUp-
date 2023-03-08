@@ -10,9 +10,9 @@ import frc.robot.subsystems.Drivebase;
 
 public class ScoreAndExitCommunityP2CommandGroup extends SequentialCommandGroup
 {
-    private static final Command DriveDistanceCommand1 = new DriveDistanceCommand(Drivebase.GetDrivebase(), 1.58);
+    private static final Command DriveDistanceCommand1 = new DriveDistanceCommand(Drivebase.GetDrivebase(), -1.58);
     private static final Command RotateCommand1 = new RotateCommand(Drivebase.GetDrivebase(), 90);
-    private static final Command DriveDistanceCommand2 = new DriveDistanceCommand(Drivebase.GetDrivebase(),-5.75);
+    private static final Command DriveDistanceCommand2 = new DriveDistanceCommand(Drivebase.GetDrivebase(),5.75);
     private static final Command RotateCommand2 = new RotateCommand(Drivebase.GetDrivebase(),90);
     private static final Command DriveDistanceCommand3 = new DriveDistanceCommand(Drivebase.GetDrivebase(),-11 );
 

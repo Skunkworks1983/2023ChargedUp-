@@ -12,6 +12,6 @@ public class DriveOutOfCommunityAutoCommandGroup extends SequentialCommandGroup
     {
         // TODO: Add your sequential commands in the super() call, e.g.
         //           super(new OpenClawCommand(), new MoveArmCommand());
-        super(new DriveDistanceCommand(drivebase, Constants.Drivebase.DRIVE_OUT_OF_COMMUINITY));
+        super(new DriveDistanceCommand(drivebase, Constants.Drivebase.DRIVE_OUT_OF_COMMUNITY));
     }
 }

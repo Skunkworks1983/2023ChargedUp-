@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.arm.WaveCollectorCommandGroup;
+import frc.robot.commands.autos.DriveOnChargeStationAndBalanceP2CommandGroup;
+import frc.robot.commands.autos.ScoreAndExitCommunityP1CommandGroup;
 import frc.robot.commands.autos.ScoreAndExitCommunityP2CommandGroup;
 import frc.robot.commands.autos.SimpleAutoCommandGroup;
 import frc.robot.commands.drivebase.TankDrive;
@@ -30,8 +32,10 @@ public class Robot extends TimedRobot
 {
     private Drivebase drivebase = Drivebase.GetDrivebase();
     private Oi oi = new Oi(drivebase);
+    Command DriveOnChargeStationAndBalanceP2 = new DriveOnChargeStationAndBalanceP2CommandGroup();
     Command SimpleAuto = new SimpleAutoCommandGroup();
     Command ScoreAndExitCommunityP2 = new ScoreAndExitCommunityP2CommandGroup();
+    Command ScoreAndExitCommunityP1 = new ScoreAndExitCommunityP1CommandGroup();
 
     private RobotContainer robotContainer;
 
@@ -73,8 +77,9 @@ public class Robot extends TimedRobot
      * This method is called once each time the robot enters Disabled mode.
      */
     @Override
-    public void disabledInit() {
-
+    public void disabledInit()
+    {
+        Drivebase.GetDrivebase().SetBrakeMode(false);
     }
     
     
@@ -89,8 +94,10 @@ public class Robot extends TimedRobot
     @Override
     public void autonomousInit()
     {
+        DriveOnChargeStationAndBalanceP2.schedule();
       //  SimpleAuto.schedule();
-        ScoreAndExitCommunityP2.schedule();
+      //  ScoreAndExitCommunityP2.schedule()
+        // ScoreAndExitCommunityP1.schedule();
     }
 
 
@@ -121,6 +128,7 @@ public class Robot extends TimedRobot
     @Override
     public void testInit()
     {
+
         // Cancels all running commands at the start of test mode.
         CommandScheduler.getInstance().cancelAll();
     }
