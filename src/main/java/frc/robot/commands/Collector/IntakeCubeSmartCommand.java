@@ -1,0 +1,48 @@
+package frc.robot.commands.Collector;
+
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.constants.Constants;
+import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Collector;
+
+
+public class IntakeCubeSmartCommand extends CommandBase {
+    private Collector collectorInstance;
+    private Arm armInstance;
+
+
+    public IntakeCubeSmartCommand() {
+        armInstance = Arm.getInstance();
+        collectorInstance = Collector.getInstance();
+        // each subsystem used by the command must be passed into the
+        // addRequirements() method (which takes a vararg of Subsystem)
+        addRequirements(collectorInstance);
+    }
+
+    @Override
+    public void initialize() {
+
+    }
+
+    @Override
+    public void execute() {
+        if(armInstance.getShoulderAngle() < 0) {
+            collectorInstance.Setspeed(Constants.Collector.INTAKE_MOTOR_SPEED);
+        }
+        else {
+            collectorInstance.Setspeed(-Constants.Collector.INTAKE_MOTOR_SPEED);
+        }
+    }
+
+    @Override
+    public boolean isFinished() {
+        System.out.println("the collector is holding cube" + collectorInstance.isHoldingCube());
+        return collectorInstance.isHoldingCube();
+    }
+
+
+    @Override
+    public void end(boolean interrupted) {
+        collectorInstance.Setspeed(0);
+    }
+}
