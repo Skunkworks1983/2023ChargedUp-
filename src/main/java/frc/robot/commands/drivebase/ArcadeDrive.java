@@ -42,8 +42,9 @@ public class ArcadeDrive extends CommandBase {
         double turnThrottle = pidController.calculate(heading, targetHeading);
 
         System.out.println("error: " + turnThrottle);
+        System.out.println("heading: " + heading);
 
-        if (Math.abs(leftX) > 0.05) {
+        if (Math.abs(leftX) > 0.01) {
             turnThrottle = leftX;
             targetHeading = drivebase.getHeading();
         }
@@ -52,9 +53,6 @@ public class ArcadeDrive extends CommandBase {
 
         double leftSpeed = rightY + turnThrottle;
         double rightSpeed = rightY - turnThrottle;
-
-        leftSpeed = MathUtil.clamp(leftSpeed, -0.7, 0.7);
-        rightSpeed = MathUtil.clamp(rightSpeed, -0.7, 0.7);
 
 //        System.out.printf("Left: %f | Right: %f%n", leftSpeed, rightSpeed);
 //
