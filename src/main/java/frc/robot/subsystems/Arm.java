@@ -211,6 +211,14 @@ public class Arm extends SubsystemBase {
             //System.out.println("updating kf");
             updateKf(Constants.Arm.SHOULDER_KF, wristPos);
         }
+        if(ShoulderMotor.getSensorCollection().isRevLimitSwitchClosed() == 1)
+        {
+            ShoulderMotor.setSelectedSensorPosition(Constants.Arm.SHOULDER_RESTING_ANGLE / Constants.Arm.SHOULDER_TICKS_TO_DEGREES);
+        }
+        if(WristMotor.getSensorCollection().isRevLimitSwitchClosed() == 1)
+        {
+            WristMotor.setSelectedSensorPosition(Constants.Arm.WRIST_RESTING_ANGLE / Constants.Arm.WRIST_TICKS_TO_DEGREES);
+        }
     }
 
 }
