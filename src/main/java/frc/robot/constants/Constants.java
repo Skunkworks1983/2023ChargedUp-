@@ -55,6 +55,17 @@ public class Constants extends CommandBase {
         public static final double KI = 0;
         public static final double KF = -0.0385;
         public static final double PEAK_OUTPUT = 0.3;
+
+        public static final double SHOULDER_SETPOINT_1 = -45;
+        public static final double SHOULDER_SETPOINT_2 = -20;
+        public static final double SHOULDER_SETPOINT_3 = 0;
+        public static final double SHOULDER_SETPOINT_4 = -45;
+        public static final double SETPOINT_1_PEAK = .7;
+        public static final double SETPOINT_2_PEAK = .65;
+        public static final double SETPOINT_3_PEAK = .6;
+        public static final double SETPOINT_4_PEAK = .35;
+        public static final double SETPOINT_5_PEAK = .2;
+
         public static final double SHOULDER_TOLERANCE = 2;
         public static final int GEAR_RATIO = 128;
         public static final int SWAP_ANGLE = 0;
@@ -65,7 +76,7 @@ public class Constants extends CommandBase {
 
         public static final int WRIST_MOTOR_DEVICE_NUMBER =6;
 
-        public static final int WRIST_GEAR_RATIO=96;
+        public static final int WRIST_GEAR_RATIO = 96;
     }
 
     public class Falcon500 {

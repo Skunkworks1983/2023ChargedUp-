@@ -15,6 +15,7 @@ import frc.robot.commands.arm.RotateDegrees;
 import frc.robot.commands.autos.WaveCollectorCommandGroup;
 import frc.robot.commands.autos.CollectorIntakeAutoCommand;
 import frc.robot.commands.autos.CollectorTestingCommand;
+import frc.robot.commands.drivebase.ArcadeDrive;
 import frc.robot.commands.drivebase.TankDrive;
 import frc.robot.subsystems.Arm;
 import frc.robot.commands.drivebase.DriveDistanceCommand;
@@ -109,9 +110,9 @@ public class Robot extends TimedRobot
 //        double rotateTo = 15;
 
 //
-        Command TankDrive = new TankDrive(drivebase, oi);
+        Command ArcadeDrive = new ArcadeDrive(drivebase, oi);
 //
-        TankDrive.schedule();
+        ArcadeDrive.schedule();
 //        arm.Motor.set(TalonFXControlMode.PercentOutput, 0);
 //        arm.Motor.setNeutralMode(NeutralMode.Coast);
     }

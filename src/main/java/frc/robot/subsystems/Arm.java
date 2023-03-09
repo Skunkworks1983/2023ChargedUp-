@@ -15,7 +15,7 @@ public class Arm extends SubsystemBase {
     TalonFX wristMotor = new TalonFX(Constants.Arm.WRIST_MOTOR_DEVICE_NUMBER);
     public double encoderToAngleFactor = ((1.0 / Constants.Falcon500.TICKS_PER_REV) / Constants.Arm.GEAR_RATIO) * 360;
 
-
+    public double peakOutput;
     public double lastAngle;
     public double setpoint;
     private final static Arm INSTANCE = new Arm();
@@ -35,7 +35,7 @@ public class Arm extends SubsystemBase {
         SmartDashboard.putNumber("should be", Constants.Arm.RESTING_ANGLE / Constants.Arm.TICKS_TO_DEGREES);
         SmartDashboard.putNumber("constructor current", Motor.getSelectedSensorPosition());
 
-        updateKf(Constants.Arm.KF, Constants.Arm.RESTING_ANGLE);
+        updateKf(Constants.Arm.KF, Constants.Arm.RESTING_ANGLE, peakOutput);
         wristMotor.setNeutralMode(NeutralMode.Brake);
 
     }
@@ -44,7 +44,7 @@ public class Arm extends SubsystemBase {
         double pos = degrees / Constants.Arm.TICKS_TO_DEGREES;
 
         setpoint = pos;
-        updateKf(Constants.Arm.KF, degrees);
+        updateKf(Constants.Arm.KF, degrees, peakOutput);
 
         System.out.println("setting target: " + pos);
         Motor.set(TalonFXControlMode.Position, pos);
@@ -89,12 +89,12 @@ public class Arm extends SubsystemBase {
     results: divides the input kf by the setpoint and multiplies
     the result by 1024
     */
-    private void configArmKF(double kf) {
+    private void configArmKF(double kf, double peakOutput) {
         double pos = setpoint;
         double kF = (kf / pos) * 1023;
         //lastAngle = pos;
 
-        configArmSlot(Constants.Arm.KP, Constants.Arm.KI, 0, kF, Constants.Arm.PEAK_OUTPUT);
+        configArmSlot(Constants.Arm.KP, Constants.Arm.KI, 0, kF, peakOutput);
     }
 
     public void SetWristSpeed(double speed) {
@@ -115,7 +115,7 @@ public class Arm extends SubsystemBase {
     results: calculates newKF and sets it using configArmKF
 
     */
-    public void updateKf(double kf, double pos) {
+    public void updateKf(double kf, double pos, double peakOutput) {
         double newKF = kf * Math.sin(pos * Math.PI / 180f);
 
 //        System.out.println("Updating kf to " + newKF);
@@ -124,7 +124,7 @@ public class Arm extends SubsystemBase {
         //System.out.println("New kf: " + newKF);
         SmartDashboard.putNumber("kf", newKF * 1023);
 
-        configArmKF(newKF);
+        configArmKF(newKF, peakOutput);
     }
 
     /*
@@ -142,8 +142,33 @@ public class Arm extends SubsystemBase {
 
         if (Math.abs(pos - lastAngle) > Constants.Arm.ANGLE_UPDATE) {
             lastAngle = pos;
-            //System.out.println("updating kf");
-            updateKf(Constants.Arm.KF, pos);
         }
+        //System.out.println("updating kf");
+
+
+        if (getShoulderAngle() < Constants.Arm.SHOULDER_SETPOINT_1) {
+
+            peakOutput = Constants.Arm.SETPOINT_1_PEAK;
+        } else if (getShoulderAngle() >= Constants.Arm.SHOULDER_SETPOINT_1 &&
+                getShoulderAngle() < Constants.Arm.SHOULDER_SETPOINT_2) {
+
+            peakOutput = Constants.Arm.SETPOINT_2_PEAK;
+        } else if (getShoulderAngle() >= Constants.Arm.SHOULDER_SETPOINT_2 &&
+                getShoulderAngle() < Constants.Arm.SHOULDER_SETPOINT_3) {
+
+            peakOutput = Constants.Arm.SETPOINT_3_PEAK;
+        } else if (getShoulderAngle() >= Constants.Arm.SHOULDER_SETPOINT_3 &&
+                getShoulderAngle() < Constants.Arm.SHOULDER_SETPOINT_4) {
+
+            peakOutput = Constants.Arm.SETPOINT_4_PEAK;
+        } else if (getShoulderAngle() >= Constants.Arm.SHOULDER_SETPOINT_4) {
+
+            peakOutput = Constants.Arm.SETPOINT_5_PEAK;
+        }
+
+
+        updateKf(Constants.Arm.KF, pos, peakOutput);
+
+
     }
 }
