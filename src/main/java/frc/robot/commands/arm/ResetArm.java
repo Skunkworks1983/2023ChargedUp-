@@ -29,12 +29,14 @@ public class ResetArm extends CommandBase {
     public boolean isFinished()
     {
         return arm.ShoulderMotor.getSensorCollection().isRevLimitSwitchClosed() == 1 && arm.WristMotor.getSensorCollection().isRevLimitSwitchClosed() == 1;
+
     }
 
     @Override
     public void end(boolean interrupted)
     {
-        arm.setShoulderAnglePosition(Constants.Arm.SHOULDER_RESTING_ANGLE);
-        arm.setWristAnglePosition(Constants.Arm.WRIST_RESTING_ANGLE);
+        System.out.println("ENDED!!!!!!!");
+        //arm.ShoulderMotor.setSelectedSensorPosition(Constants.Arm.SHOULDER_RESTING_ANGLE / Constants.Arm.SHOULDER_TICKS_TO_DEGREES);
+        //arm.WristMotor.setSelectedSensorPosition(Constants.Arm.WRIST_RESTING_ANGLE / Constants.Arm.WRIST_TICKS_TO_DEGREES);
     }
 }

@@ -2,13 +2,11 @@ package frc.robot.subsystems;
 
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.IFollower;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.SlotConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.Constants;
@@ -156,7 +154,7 @@ public class Arm extends SubsystemBase {
         configArmKF(newKF);
     }
 
-    public boolean limitSwitchOutput(int limitSwitchPort)
+    public boolean getLimitSwitchOutput(int limitSwitchPort)
     {
         if(limitSwitchPort == Constants.Arm.SHOULDER_LIMIT_SWITCH_FRONT)
         {
@@ -206,6 +204,8 @@ public class Arm extends SubsystemBase {
         SmartDashboard.putNumber("wrist position", wristPos);
         SmartDashboard.putNumber("shoulder position", shoulderPos);
         SmartDashboard.putNumber("Motor output: " , ShoulderMotor.getMotorOutputPercent());
+        //System.out.println("Shoulder Limit Switch: " + ShoulderMotor.getSensorCollection().isRevLimitSwitchClosed());
+        //System.out.println("Wrist Limit Switch: " + WristMotor.getSensorCollection().isRevLimitSwitchClosed());
         if (Math.abs(wristPos - lastAngle) > Constants.Arm.SHOULDER_ANGLE_UPDATE) {
             lastAngle = wristPos;
             //System.out.println("updating kf");

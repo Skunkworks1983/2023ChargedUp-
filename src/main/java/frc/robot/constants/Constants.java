@@ -81,7 +81,7 @@ public class Constants extends CommandBase {
         public static final int MAX_WRIST_ROTATION = 116;
         public static final double WRIST_TOLERANCE = 2;
         public static final int WRIST_MOTOR_DEVICE_NUMBER = 6;
-        public static final double WRIST_GEAR_RATIO = 144;
+        public static final double WRIST_GEAR_RATIO = 176;
         public static final double WRIST_RESTING_ANGLE = 0;
         public static final double WRIST_PEAK_OUTPUT = 0.4;
         public static final double WRIST_KP = 0.05;
@@ -99,13 +99,13 @@ public class Constants extends CommandBase {
         public static final double PLAYER_CUBE_PICKUP_SHOULDER = 46.68152;
         public static final double PLAYER_CUBE_PICKUP_WRIST = 171.73779;
         public static final double FLOOR_CUBE_PICKUP_SHOULDER = Arm.SHOULDER_RESTING_ANGLE;
-        public static final double FLOOR_CUBE_PICKUP_WRIST = 111.75;
+        public static final double FLOOR_CUBE_PICKUP_WRIST = 117.75;
         public static final double FLOOR_NORMAL_SCORE_SHOULDER = Arm.SHOULDER_RESTING_ANGLE;
         public static final double FLOOR_NORMAL_SCORE_WRIST = 100.70434;
         public static final double CARRY_SHOULDER = Arm.SHOULDER_RESTING_ANGLE;
         public static final double CARRY_WRIST = 15.531;
         public static final double CONE_FLOOR_PICKUP_SHOULDER = Arm.SHOULDER_RESTING_ANGLE;
-        public static final double CONE_FLOOR_PICKUP_WRIST = 108.05419;
+        public static final double CONE_FLOOR_PICKUP_WRIST = 103.05419;
     }
 
 
