@@ -6,6 +6,8 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.autos.DriveOnChargeStationAndBalanceP2CommandGroup;
@@ -28,6 +30,7 @@ import frc.robot.services.Oi;
  */
 public class Robot extends TimedRobot
 {
+    private SendableChooser autoChooser;
     private Drivebase drivebase = Drivebase.GetDrivebase();
     private Collector collector = Collector.getInstance();
     private Oi oi = new Oi(drivebase,collector);
@@ -39,9 +42,10 @@ public class Robot extends TimedRobot
     private RobotContainer robotContainer;
 
     private Arm arm;
-    Command scoreAndDriveOutP3 = new ScoreAndDriveOutP3CommandGroup();
+    Command scoreAndDriveOutP2 = new DriveOnChargeStationAndBalanceP2CommandGroup();
+    private Command autonomousCommand;
 
-    
+
     /**
      * This method is run when the robot is first started up and should be used for any
      * initialization code.
@@ -50,7 +54,8 @@ public class Robot extends TimedRobot
     public void robotInit()
     {
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
-        // autonomous chooser on the dashboard.
+        // autonomous chooser on the dashboard.\
+        SmartDashboard.putData("autoChooser", autoChooser);
         arm = Arm.getInstance();
         robotContainer = new RobotContainer();
     }
@@ -94,10 +99,20 @@ public class Robot extends TimedRobot
     @Override
     public void autonomousInit()
     {
+        CommandScheduler.getInstance().cancelAll();
+        SendableChooser autoChooser = (SendableChooser) SmartDashboard.getData("autoChooser");
+        autonomousCommand = (Command)autoChooser.getSelected();
+        if (autonomousCommand != null)
+        {
+            autonomousCommand.schedule();
+        }
+       /*
+       SendableChooser autoChooser = (SendableChooser) SmartDashboard.getData("autoChooser");
         DriveOnChargeStationAndBalanceP2.schedule();
-      //  SimpleAuto.schedule();
-      //  ScoreAndExitCommunityP2.schedule()
-        // ScoreAndExitCommunityP1.schedule();
+        SimpleAuto.schedule();
+        ScoreAndExitCommunityP2.schedule();
+        ScoreAndExitCommunityP1.schedule();
+        */
     }
 
 
