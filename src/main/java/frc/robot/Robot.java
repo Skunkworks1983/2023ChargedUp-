@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.autos.DriveOnChargeStationAndBalanceP2CommandGroup;
+import frc.robot.commands.autos.ScoreAndDriveOutP3CommandGroup;
 import frc.robot.commands.autos.ScoreAndExitCommunityP1CommandGroup;
 import frc.robot.commands.autos.ScoreAndExitCommunityP2CommandGroup;
 import frc.robot.commands.autos.SimpleAutoCommandGroup;
@@ -37,6 +38,7 @@ import frc.robot.services.Oi;
 public class Robot extends TimedRobot
 {
 
+    private Command autonomousCommand;
     private SendableChooser autoChooser;
     private Drivebase drivebase = Drivebase.GetDrivebase();
     private Collector collector = Collector.getInstance();
@@ -45,18 +47,10 @@ public class Robot extends TimedRobot
     Command SimpleAuto = new SimpleAutoCommandGroup();
     Command ScoreAndExitCommunityP2 = new ScoreAndExitCommunityP2CommandGroup();
     Command ScoreAndExitCommunityP1 = new ScoreAndExitCommunityP1CommandGroup();
-    Command scoreAndDriveOutP2 = new DriveOnChargeStationAndBalanceP2CommandGroup();
     private RobotContainer robotContainer;
 
     private Arm arm;
 
-   autoChooser.addOption("SimpleAuto", new SimpleAutoCommandGroup());
-        autoChooser.addOption("twoBallHighCenter", new TwoBallAutoCenter(theDrivebase, theCollector, theShooter));
-        autoChooser.addOption("twoBallHighLeft", new TwoBallAutoLeft(theDrivebase, theCollector, theShooter));
-        autoChooser.addOption("ExitTarmac", new ExitTarmac(theDrivebase));
-        autoChooser.addOption("oneBallAutosHigh", new OneBallAutosHighCommandGroup(theShooter, theDrivebase));
-        autoChooser.addOption("oneBallAutosLow", new OneBallAutosLowCommandGroup(theShooter, theDrivebase));
-        SmartDashboard.putData("autoChooser", autoChooser);
 
 
     /**
@@ -66,14 +60,22 @@ public class Robot extends TimedRobot
     @Override
     public void robotInit()
     {
+        autoChooser = new SendableChooser();
+        autoChooser.addOption("SimpleAuto", new SimpleAutoCommandGroup());
+        autoChooser.addOption("DriveOnChargeStationAndBalanceP2", new DriveOnChargeStationAndBalanceP2CommandGroup());
+        autoChooser.addOption("ScoreAndExitCommunityP2", new ScoreAndExitCommunityP2CommandGroup());
+        autoChooser.addOption("ScoreAndExitCommunityP1", new ScoreAndExitCommunityP1CommandGroup());
+        //autoChooser.addOption("oneBallAutosHigh", new OneBallAutosHighCommandGroup());
+       // autoChooser.addOption("oneBallAutosLow", new OneBallAutosLowCommandGroup());
+        SmartDashboard.putData("autoChooser", autoChooser);
+
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         // autonomous chooser on the dashboard.\
-        SmartDashboard.putData("autoChooser", autoChooser);
         arm = Arm.getInstance();
         robotContainer = new RobotContainer();
     }
-    
-    
+
+
     /**
      * This method is called every 20 ms, no matter the mode. Use this for items like diagnostics
      * that you want ran during disabled, autonomous, teleoperated and test.
@@ -99,8 +101,8 @@ public class Robot extends TimedRobot
     {
         Drivebase.GetDrivebase().SetBrakeMode(false);
     }
-    
-    
+
+
     @Override
     public void disabledPeriodic() {
     }
@@ -119,13 +121,13 @@ public class Robot extends TimedRobot
         {
             autonomousCommand.schedule();
         }
-        autoChooser.addOption();
+       // autoChooser.addOption();
 
      //  SendableChooser autoChooser = (SendableChooser) SmartDashboard.getData("autoChooser");
-        DriveOnChargeStationAndBalanceP2.schedule();
-        SimpleAuto.schedule();
-        ScoreAndExitCommunityP2.schedule();
-        ScoreAndExitCommunityP1.schedule();
+     //   DriveOnChargeStationAndBalanceP2.schedule();
+     //   SimpleAuto.schedule();
+     //   ScoreAndExitCommunityP2.schedule();
+     //   ScoreAndExitCommunityP1.schedule();
 
     }
 
@@ -137,13 +139,13 @@ public class Robot extends TimedRobot
         Command arcadeDrive = new ArcadeDrive(drivebase, oi);
         arcadeDrive.schedule();
     }
-    
-    
+
+
     /** This method is called periodically during operator control. */
     @Override
     public void teleopPeriodic() {}
-    
-    
+
+
     @Override
     public void testInit()
     {
@@ -154,21 +156,21 @@ public class Robot extends TimedRobot
         arm.SetBrakeMode(false, arm.ShoulderMotor);
         arm.SetBrakeMode(false, arm.WristMotor);
     }
-    
-    
+
+
     /** This method is called periodically during test mode. */
     @Override
     public void testPeriodic()
     {
 
     }
-    
-    
+
+
     /** This method is called once when the robot is first started up. */
     @Override
     public void simulationInit() {}
-    
-    
+
+
     /** This method is called periodically whilst in simulation. */
     @Override
     public void simulationPeriodic() {}
