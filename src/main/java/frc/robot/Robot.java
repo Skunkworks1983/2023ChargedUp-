@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.autos.DriveOnChargeStationAndBalanceP2CommandGroup;
+import frc.robot.commands.autos.E2ToGamePiece4;
+import frc.robot.commands.autos.LeaveCommunityP2E2;
 import frc.robot.commands.autos.ScoreAndDriveOutP3CommandGroup;
 import frc.robot.commands.autos.ScoreAndExitCommunityP1CommandGroup;
 import frc.robot.commands.autos.ScoreAndExitCommunityP2CommandGroup;
@@ -65,6 +67,10 @@ public class Robot extends TimedRobot
         autoChooser.addOption("DriveOnChargeStationAndBalanceP2", new DriveOnChargeStationAndBalanceP2CommandGroup());
         autoChooser.addOption("ScoreAndExitCommunityP2", new ScoreAndExitCommunityP2CommandGroup());
         autoChooser.addOption("ScoreAndExitCommunityP1", new ScoreAndExitCommunityP1CommandGroup());
+        autoChooser.addOption("E2toGamePiece4",new E2ToGamePiece4());
+        autoChooser.addOption("LeaveCommunityP2E2",new LeaveCommunityP2E2());
+        autoChooser.addOption("ScoreAndDriveOutP3",new ScoreAndDriveOutP3CommandGroup());
+
         //autoChooser.addOption("oneBallAutosHigh", new OneBallAutosHighCommandGroup());
        // autoChooser.addOption("oneBallAutosLow", new OneBallAutosLowCommandGroup());
         SmartDashboard.putData("autoChooser", autoChooser);

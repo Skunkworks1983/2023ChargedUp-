@@ -12,9 +12,6 @@ import frc.robot.commands.arm.WaveCollectorCommandGroup;
 
 public class E2ToGamePiece4 extends ParallelCommandGroup
 {
-
-    private static final Command WaveCollectorCommandGroup = new WaveCollectorCommandGroup();
-
     public E2ToGamePiece4()
     {
         // TODO: Add your sequential commands in the super() call, e.g.
