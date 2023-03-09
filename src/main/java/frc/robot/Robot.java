@@ -30,6 +30,7 @@ import frc.robot.services.Oi;
  */
 public class Robot extends TimedRobot
 {
+
     private SendableChooser autoChooser;
     private Drivebase drivebase = Drivebase.GetDrivebase();
     private Collector collector = Collector.getInstance();
@@ -38,12 +39,18 @@ public class Robot extends TimedRobot
     Command SimpleAuto = new SimpleAutoCommandGroup();
     Command ScoreAndExitCommunityP2 = new ScoreAndExitCommunityP2CommandGroup();
     Command ScoreAndExitCommunityP1 = new ScoreAndExitCommunityP1CommandGroup();
-
+    Command scoreAndDriveOutP2 = new DriveOnChargeStationAndBalanceP2CommandGroup();
     private RobotContainer robotContainer;
 
     private Arm arm;
-    Command scoreAndDriveOutP2 = new DriveOnChargeStationAndBalanceP2CommandGroup();
-    private Command autonomousCommand;
+
+   autoChooser.addOption("SimpleAuto", new SimpleAutoCommandGroup());
+        autoChooser.addOption("twoBallHighCenter", new TwoBallAutoCenter(theDrivebase, theCollector, theShooter));
+        autoChooser.addOption("twoBallHighLeft", new TwoBallAutoLeft(theDrivebase, theCollector, theShooter));
+        autoChooser.addOption("ExitTarmac", new ExitTarmac(theDrivebase));
+        autoChooser.addOption("oneBallAutosHigh", new OneBallAutosHighCommandGroup(theShooter, theDrivebase));
+        autoChooser.addOption("oneBallAutosLow", new OneBallAutosLowCommandGroup(theShooter, theDrivebase));
+        SmartDashboard.putData("autoChooser", autoChooser);
 
 
     /**
@@ -106,13 +113,14 @@ public class Robot extends TimedRobot
         {
             autonomousCommand.schedule();
         }
-       /*
-       SendableChooser autoChooser = (SendableChooser) SmartDashboard.getData("autoChooser");
+        autoChooser.addOption();
+
+     //  SendableChooser autoChooser = (SendableChooser) SmartDashboard.getData("autoChooser");
         DriveOnChargeStationAndBalanceP2.schedule();
         SimpleAuto.schedule();
         ScoreAndExitCommunityP2.schedule();
         ScoreAndExitCommunityP1.schedule();
-        */
+
     }
 
 
