@@ -78,7 +78,7 @@ public class Oi
         expelButton.and(coneToggle.negate()).whileTrue(new ExpelCubeCommand());
         intakeButton.and(coneToggle).and(manualToggle).whileTrue(new IntakeConeManualCommand());
         intakeButton.and(coneToggle.negate()).and(manualToggle).whileTrue(new IntakeCubeManualCommand());
-        intakeButton.and(coneToggle).and(manualToggle.negate()).onTrue(new IntakeConeSmartCommand());
+        intakeButton.and(coneToggle).and(manualToggle.negate()).onTrue(new IntakeConeAndHoldCommandGroup());
         intakeButton.and(coneToggle.negate()).and(manualToggle.negate()).onTrue(new IntakeCubeSmartCommand());
 
         floorWeirdScore.whileTrue(new SetArmPositionCommand(Constants.Arm.SHOULDER_RESTING_ANGLE, Constants.Arm.WRIST_RESTING_ANGLE));

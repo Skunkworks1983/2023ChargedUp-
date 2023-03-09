@@ -14,16 +14,22 @@ public class Constants extends CommandBase {
         public static final int CUBE_BREAK_2_PORT = 3;
 
         public static final double CONE_COLLECT_AMP_THRESHOLD = 22;
+        public static final double CONE_AMPS_HOLDING_THRESHOLD = 10;
         public static final double INTAKE_SPEED = 10; //inches per second
         public static final double INTAKE_MOTOR_SPEED =
                 INTAKE_SPEED / WHEEL_CIRCUMFERENCE * WHEEL_REVS_PER_SEC_TO_VELOCITY;
         public static final double EXPEL_SPEED = 10; // inches per second
         public static final double EXPEL_MOTOR_SPEED =
                 EXPEL_SPEED / WHEEL_CIRCUMFERENCE * WHEEL_REVS_PER_SEC_TO_VELOCITY;
+
+
         public static final double K_P = 0.03;
         public static final double MANUAL_INTAKE_MULTIPLIER = 0.4;
         public static final int CONE_COLLECTED_VALUE = 3;
+        public static final int CONE_HOLDING_AMPS = 12;
 
+        public static final double INTAKE_HOLDING = 1;
+        public static final double INTAKE_HOLDING_SPEED = INTAKE_HOLDING / WHEEL_CIRCUMFERENCE * WHEEL_REVS_PER_SEC_TO_VELOCITY;
     }
     public class JoystickPorts {
 
@@ -81,7 +87,7 @@ public class Constants extends CommandBase {
         public static final int MAX_WRIST_ROTATION = 116;
         public static final double WRIST_TOLERANCE = 2;
         public static final int WRIST_MOTOR_DEVICE_NUMBER = 6;
-        public static final double WRIST_GEAR_RATIO = 144;
+        public static final double WRIST_GEAR_RATIO = 176;
         public static final double WRIST_RESTING_ANGLE = 0;
         public static final double WRIST_PEAK_OUTPUT = 0.4;
         public static final double WRIST_KP = 0.05;
