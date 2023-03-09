@@ -13,7 +13,7 @@ public class RotateWristByPowerCommand extends CommandBase {
         this.speed = speed;
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
-        addRequirements();
+        addRequirements(arm);
     }
 
     @Override
