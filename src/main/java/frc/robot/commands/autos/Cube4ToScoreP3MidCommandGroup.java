@@ -10,12 +10,12 @@ import frc.robot.subsystems.Drivebase;
 
 public class Cube4ToScoreP3MidCommandGroup extends ParallelCommandGroup {
     private static final Command driveDistanceCommand = new DriveDistanceCommand(Drivebase.GetDrivebase(), 15.75);
-    private static final Command armPosition = new SetArmPositionCommand
-            (Constants.ArmPos.SCORE_CUBE_MID_SHOULDER, Constants.ArmPos.SCORE_CUBE_MID_WRIST);
+    //private static final Command armPosition = new SetArmPositionCommand
+            //(Constants.ArmPos.SCORE_CUBE_MID_SHOULDER, Constants.ArmPos.SCORE_CUBE_MID_WRIST);
 
     public Cube4ToScoreP3MidCommandGroup() {
         // TODO: Add your sequential commands in the super() call, e.g.
         //           super(new OpenClawCommand(), new MoveArmCommand());
-        super(driveDistanceCommand, armPosition);
+        super(driveDistanceCommand);
     }
 }
