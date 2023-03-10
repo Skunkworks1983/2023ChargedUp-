@@ -11,18 +11,6 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.autos.*;
 import frc.robot.commands.autos.SimpleAutoCommandGroup;
 import frc.robot.commands.drivebase.ArcadeDrive;
-import frc.robot.commands.arm.RotateDegrees;
-import frc.robot.commands.autos.WaveCollectorCommandGroup;
-import frc.robot.commands.autos.CollectorIntakeAutoCommand;
-import frc.robot.commands.autos.CollectorTestingCommand;
-import frc.robot.commands.drivebase.ArcadeDrive;
-import frc.robot.commands.drivebase.TankDrive;
-import frc.robot.commands.Collector.IntakeConeCollectorCommand;
-import frc.robot.commands.arm.SetArmPositionCommand;
-import frc.robot.commands.arm.WristRotateDegrees;
-import frc.robot.commands.autos.PositionShoulderAndWrist;
-import frc.robot.commands.drivebase.ArcadeDrive;
-import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Collector;
 import frc.robot.subsystems.Drivebase;
@@ -110,22 +98,7 @@ public class Robot extends TimedRobot
         drivebase.SetBrakeMode(true);
         Command arcadeDrive = new ArcadeDrive(drivebase, oi);
         arcadeDrive.schedule();
-    public void teleopInit() {
 
-        //arm = Arm.getInstance();
-
-       // arm.Motor.set(TalonFXControlMode.PercentOutput, 0);
-        //arm.Motor.setNeutralMode(NeutralMode.Coast);
-
-
-//        double rotateTo = 15;
-
-//
-        Command ArcadeDrive = new ArcadeDrive(drivebase, oi);
-//
-        ArcadeDrive.schedule();
-//        arm.Motor.set(TalonFXControlMode.PercentOutput, 0);
-//        arm.Motor.setNeutralMode(NeutralMode.Coast);
     }
     
     

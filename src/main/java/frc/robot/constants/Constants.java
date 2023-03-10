@@ -60,19 +60,16 @@ public class Constants extends CommandBase {
     }
 
     public class Arm {
-        public static final double TICKS_TO_DEGREES = ((1.0 / Constants.Falcon500.TICKS_PER_REV) / Constants.Arm.GEAR_RATIO) * 360;
         public static final double KP = 0.064;
         public static final double KI = 0;
-        public static final double KF = -0.0385;
-        public static final double PEAK_OUTPUT = 0.3;
 
-        public static final double SHOULDER_SETPOINT_1 = -45;
-        public static final double SHOULDER_SETPOINT_2 = -20;
+        public static final double SHOULDER_SETPOINT_1 = -125;
+        public static final double SHOULDER_SETPOINT_2 = -45;
         public static final double SHOULDER_SETPOINT_3 = 0;
-        public static final double SHOULDER_SETPOINT_4 = -45;
-        public static final double SETPOINT_1_PEAK = .7;
+        public static final double SHOULDER_SETPOINT_4 = 25;
+        public static final double SETPOINT_1_PEAK = .3;
         public static final double SETPOINT_2_PEAK = .65;
-        public static final double SETPOINT_3_PEAK = .6;
+        public static final double SETPOINT_3_PEAK = .5;
         public static final double SETPOINT_4_PEAK = .35;
         public static final double SETPOINT_5_PEAK = .2;
 
@@ -97,7 +94,7 @@ public class Constants extends CommandBase {
         public static final int MAX_WRIST_ROTATION = 116;
         public static final double WRIST_TOLERANCE = 2;
         public static final int WRIST_MOTOR_DEVICE_NUMBER = 6;
-        public static final double WRIST_GEAR_RATIO = 144;
+        public static final double WRIST_GEAR_RATIO = 176;
         public static final double WRIST_RESTING_ANGLE = 0;
         public static final double WRIST_PEAK_OUTPUT = 0.4;
         public static final double WRIST_KP = 0.05;
@@ -115,7 +112,7 @@ public class Constants extends CommandBase {
         public static final double PLAYER_CUBE_PICKUP_SHOULDER = 46.68152;
         public static final double PLAYER_CUBE_PICKUP_WRIST = 171.73779;
         public static final double FLOOR_CUBE_PICKUP_SHOULDER = Arm.SHOULDER_RESTING_ANGLE;
-        public static final double FLOOR_CUBE_PICKUP_WRIST = 111.75;
+        public static final double FLOOR_CUBE_PICKUP_WRIST = 113;
         public static final double FLOOR_NORMAL_SCORE_SHOULDER = Arm.SHOULDER_RESTING_ANGLE;
         public static final double FLOOR_NORMAL_SCORE_WRIST = 100.70434;
         public static final double CARRY_SHOULDER = Arm.SHOULDER_RESTING_ANGLE;

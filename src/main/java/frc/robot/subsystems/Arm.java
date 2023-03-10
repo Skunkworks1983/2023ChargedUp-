@@ -2,13 +2,11 @@ package frc.robot.subsystems;
 
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.IFollower;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.SlotConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.Constants;
@@ -45,26 +43,23 @@ public class Arm extends SubsystemBase {
         WristMotor.configNeutralDeadband(0.0);
         WristMotor.setInverted(InvertType.None);
         WristMotor.setSelectedSensorPosition(Constants.Arm.WRIST_RESTING_ANGLE / Constants.Arm.WRIST_TICKS_TO_DEGREES);
-        WristMotor.configClosedLoopPeakOutput(0 , Constants.Arm.WRIST_PEAK_OUTPUT);
-        WristMotor.config_kP(0 , Constants.Arm.WRIST_KP);
-        WristMotor.config_kI(0 , Constants.Arm.WRIST_KI);
-        WristMotor.config_kD(0 , Constants.Arm.WRIST_KD);
-        WristMotor.config_kF(0 , Constants.Arm.WRIST_KF);
+        WristMotor.configClosedLoopPeakOutput(0, Constants.Arm.WRIST_PEAK_OUTPUT);
+        WristMotor.config_kP(0, Constants.Arm.WRIST_KP);
+        WristMotor.config_kI(0, Constants.Arm.WRIST_KI);
+        WristMotor.config_kD(0, Constants.Arm.WRIST_KD);
+        WristMotor.config_kF(0, Constants.Arm.WRIST_KF);
 
         SmartDashboard.putNumber("should be", Constants.Arm.SHOULDER_RESTING_ANGLE / Constants.Arm.SHOULDER_TICKS_TO_DEGREES);
         //SmartDashboard.putNumber("constructor current", ShoulderMotor.getSelectedSensorPosition());
-        updateKf(Constants.Arm.KF, Constants.Arm.RESTING_ANGLE, peakOutput);
-        wristMotor.setNeutralMode(NeutralMode.Brake);
 
-        updateKf(Constants.Arm.SHOULDER_KF, Constants.Arm.SHOULDER_RESTING_ANGLE);
+        updateKf(Constants.Arm.SHOULDER_KF, Constants.Arm.SHOULDER_RESTING_ANGLE, peakOutput);
     }
 
     public void setShoulderAnglePosition(double degrees) {
         double pos = degrees / Constants.Arm.SHOULDER_TICKS_TO_DEGREES;
 
         setpoint = pos;
-        updateKf(Constants.Arm.SHOULDER_KF, degrees);
-        updateKf(Constants.Arm.KF, degrees, peakOutput);
+        updateKf(Constants.Arm.SHOULDER_KF, degrees, peakOutput);
 
         System.out.println("setting target: " + pos);
         ShoulderMotor.set(TalonFXControlMode.Position, pos);
@@ -89,6 +84,7 @@ public class Arm extends SubsystemBase {
     public double getShoulderCurrentOutput() {
         return ShoulderMotor.getMotorOutputPercent();
     }
+
     public double getWristCurrentOutput() {
         return WristMotor.getMotorOutputPercent();
     }
@@ -132,7 +128,6 @@ public class Arm extends SubsystemBase {
         //lastAngle = pos;
 
         configArmSlot(Constants.Arm.KP, Constants.Arm.KI, 0, kF, peakOutput);
-        configArmSlot(Constants.Arm.SHOULDER_KP, Constants.Arm.SHOULDER_KI, 0, kF, Constants.Arm.SHOULDER_PEAK_OUTPUT);
     }
 
     public void SetWristSpeed(double speed) {
@@ -165,22 +160,14 @@ public class Arm extends SubsystemBase {
         configArmKF(newKF, peakOutput);
     }
 
-    public boolean limitSwitchOutput(int limitSwitchPort)
-    {
-        if(limitSwitchPort == Constants.Arm.SHOULDER_LIMIT_SWITCH_FRONT)
-        {
+    public boolean limitSwitchOutput(int limitSwitchPort) {
+        if (limitSwitchPort == Constants.Arm.SHOULDER_LIMIT_SWITCH_FRONT) {
             return ShoulderMotor.getSensorCollection().isFwdLimitSwitchClosed() == 1;
-        }
-        else if(limitSwitchPort == Constants.Arm.SHOULDER_LIMIT_SWITCH_BACK)
-        {
+        } else if (limitSwitchPort == Constants.Arm.SHOULDER_LIMIT_SWITCH_BACK) {
             return ShoulderMotor.getSensorCollection().isRevLimitSwitchClosed() == 1;
-        }
-        else if(limitSwitchPort == Constants.Arm.WRIST_LIMIT_SWITCH)
-        {
+        } else if (limitSwitchPort == Constants.Arm.WRIST_LIMIT_SWITCH) {
             return WristMotor.getSensorCollection().isRevLimitSwitchClosed() == 1;
-        }
-        else
-        {
+        } else {
             System.out.println("Incorrect limit switch constant");
             return false;
         }
@@ -192,8 +179,7 @@ public class Arm extends SubsystemBase {
 
     }
 
-    public void SetBrakeMode(boolean enable, TalonFX Motor)
-    {
+    public void SetBrakeMode(boolean enable, TalonFX Motor) {
         if (enable) {
 
             Motor.setNeutralMode(NeutralMode.Brake);
@@ -212,10 +198,10 @@ public class Arm extends SubsystemBase {
         SmartDashboard.putNumber("Error:", WristMotor.getClosedLoopError());
 
         SmartDashboard.putNumber("setpoint", setpoint);
-        SmartDashboard.putNumber("position", pos);
+        SmartDashboard.putNumber("position", shoulderPos);
 
-        if (Math.abs(pos - lastAngle) > Constants.Arm.ANGLE_UPDATE) {
-            lastAngle = pos;
+        if (Math.abs(shoulderPos - lastAngle) > Constants.Arm.SHOULDER_ANGLE_UPDATE) {
+            lastAngle = shoulderPos;
         }
         //System.out.println("updating kf");
 
@@ -223,34 +209,42 @@ public class Arm extends SubsystemBase {
         if (getShoulderAngle() < Constants.Arm.SHOULDER_SETPOINT_1) {
 
             peakOutput = Constants.Arm.SETPOINT_1_PEAK;
+            System.out.println(peakOutput);
+
         } else if (getShoulderAngle() >= Constants.Arm.SHOULDER_SETPOINT_1 &&
                 getShoulderAngle() < Constants.Arm.SHOULDER_SETPOINT_2) {
 
             peakOutput = Constants.Arm.SETPOINT_2_PEAK;
+            System.out.println(peakOutput);
+
+
         } else if (getShoulderAngle() >= Constants.Arm.SHOULDER_SETPOINT_2 &&
                 getShoulderAngle() < Constants.Arm.SHOULDER_SETPOINT_3) {
 
             peakOutput = Constants.Arm.SETPOINT_3_PEAK;
+            System.out.println(peakOutput);
+
         } else if (getShoulderAngle() >= Constants.Arm.SHOULDER_SETPOINT_3 &&
                 getShoulderAngle() < Constants.Arm.SHOULDER_SETPOINT_4) {
 
             peakOutput = Constants.Arm.SETPOINT_4_PEAK;
+            System.out.println(peakOutput);
+
         } else if (getShoulderAngle() >= Constants.Arm.SHOULDER_SETPOINT_4) {
 
-            peakOutput = Constants.Arm.SETPOINT_5_PEAK;
+            peakOutput = Constants.Arm.SETPOINT_5_PEAK;}
+            System.out.println(peakOutput);
+
         SmartDashboard.putNumber("wrist position", wristPos);
-        SmartDashboard.putNumber("shoulder position", shoulderPos);
-        SmartDashboard.putNumber("Motor output: " , ShoulderMotor.getMotorOutputPercent());
-        if (Math.abs(wristPos - lastAngle) > Constants.Arm.SHOULDER_ANGLE_UPDATE) {
-            lastAngle = wristPos;
-            //System.out.println("updating kf");
-            updateKf(Constants.Arm.SHOULDER_KF, wristPos);
+            SmartDashboard.putNumber("shoulder position", shoulderPos);
+            SmartDashboard.putNumber("Motor output: ", ShoulderMotor.getMotorOutputPercent());
+            if (Math.abs(wristPos - lastAngle) > Constants.Arm.SHOULDER_ANGLE_UPDATE) {
+                lastAngle = wristPos;
+                //System.out.println("updating kf");
+                updateKf(Constants.Arm.SHOULDER_KF, shoulderPos, peakOutput);
+            }
+
+
         }
 
-
-        updateKf(Constants.Arm.KF, pos, peakOutput);
-
-
     }
-
-}
