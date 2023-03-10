@@ -34,9 +34,6 @@ public class Drivebase implements Subsystem {
         rightMotor2.set(TalonFXControlMode.PercentOutput, -turnSpeedRight);
     }
 
-    public void runMotorAtSpeed (double speedLeft, double speedRight) {}
-
-
     public double getPosLeft() {
         return leftMotor1.getSelectedSensorPosition() / TicksPerFoot;
     }

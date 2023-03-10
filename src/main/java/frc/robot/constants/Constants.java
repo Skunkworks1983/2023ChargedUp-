@@ -60,9 +60,6 @@ public class Constants extends CommandBase {
     }
 
     public class Arm {
-        public static final double KP = 0.064;
-        public static final double KI = 0;
-
         public static final double SHOULDER_SETPOINT_1 = -125;
         public static final double SHOULDER_SETPOINT_2 = -45;
         public static final double SHOULDER_SETPOINT_3 = 0;

@@ -126,7 +126,7 @@ public class Arm extends SubsystemBase {
         double kF = (kf / pos) * 1023;
         //lastAngle = pos;
 
-        configArmSlot(Constants.Arm.KP, Constants.Arm.KI, 0, kF, peakOutput);
+        configArmSlot(Constants.Arm.SHOULDER_KP, Constants.Arm.SHOULDER_KI, 0, kF, peakOutput);
     }
 
     public void SetWristSpeed(double speed) {
