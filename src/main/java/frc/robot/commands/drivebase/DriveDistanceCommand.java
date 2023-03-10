@@ -25,12 +25,15 @@ public class DriveDistanceCommand extends CommandBase
         // addRequirements() method (which takes a vararg of Subsystem)
         this.drivebase = drivebase;
         this.distanceFT = distanceFT;
+        this.startDegree = startDegree;
         addRequirements(drivebase);
     }
 
     @Override
     public void initialize()
     {
+
+        startDegree = drivebase.getHeading();
         startDistanceFT = drivebase.getPosLeft();
         finishDistanceFT = startDistanceFT+distanceFT;
         startDegree = drivebase.getHeading();
@@ -49,6 +52,7 @@ public class DriveDistanceCommand extends CommandBase
     @Override
     public void execute()
     {
+       // startDegree - ;
         double error = finishDistanceFT - drivebase.getPosLeft();
         if(error < 0)
         {
