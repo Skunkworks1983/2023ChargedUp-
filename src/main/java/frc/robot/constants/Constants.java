@@ -60,6 +60,16 @@ public class Constants extends CommandBase {
     }
 
     public class Arm {
+        public static final double SHOULDER_SETPOINT_1 = -125;
+        public static final double SHOULDER_SETPOINT_2 = -45;
+        public static final double SHOULDER_SETPOINT_3 = 0;
+        public static final double SHOULDER_SETPOINT_4 = 25;
+        public static final double SETPOINT_1_PEAK = .3;
+        public static final double SETPOINT_2_PEAK = .65;
+        public static final double SETPOINT_3_PEAK = .5;
+        public static final double SETPOINT_4_PEAK = .35;
+        public static final double SETPOINT_5_PEAK = .2;
+
         public static final double SHOULDER_TICKS_TO_DEGREES = ((1.0 / Constants.Falcon500.TICKS_PER_REV) / Arm.SHOULDER_GEAR_RATIO) * 360;
         public static final double WRIST_TICKS_TO_DEGREES = ((1.0 / Constants.Falcon500.TICKS_PER_REV) / Arm.WRIST_GEAR_RATIO) * 360;
         public static final double SHOULDER_KP = 0.06; //0.064
@@ -106,6 +116,7 @@ public class Constants extends CommandBase {
         public static final double CARRY_WRIST = 15.531;
         public static final double CONE_FLOOR_PICKUP_SHOULDER = Arm.SHOULDER_RESTING_ANGLE;
         public static final double CONE_FLOOR_PICKUP_WRIST = 103.05419;
+        public static final int WRIST_GEAR_RATIO = 96;
     }
 
 
