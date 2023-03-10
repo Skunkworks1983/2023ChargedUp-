@@ -159,8 +159,7 @@ public class Arm extends SubsystemBase {
         configArmKF(newKF, peakOutput);
     }
 
-    public boolean limitSwitchOutput(int limitSwitchPort) {
-        if (limitSwitchPort == Constants.Arm.SHOULDER_LIMIT_SWITCH_FRONT) {
+
     public boolean getLimitSwitchOutput(int limitSwitchPort)
     {
         if(limitSwitchPort == Constants.Arm.SHOULDER_LIMIT_SWITCH_FRONT)
@@ -235,8 +234,12 @@ public class Arm extends SubsystemBase {
 
         } else if (getShoulderAngle() >= Constants.Arm.SHOULDER_SETPOINT_4) {
 
-            peakOutput = Constants.Arm.SETPOINT_5_PEAK;}
+            peakOutput = Constants.Arm.SETPOINT_5_PEAK;
             System.out.println(peakOutput);
+        }
+
+
+
 
         SmartDashboard.putNumber("wrist position", wristPos);
             SmartDashboard.putNumber("shoulder position", shoulderPos);
@@ -247,8 +250,6 @@ public class Arm extends SubsystemBase {
                 updateKf(Constants.Arm.SHOULDER_KF, shoulderPos, peakOutput);
             }
 
-
-        }
         SmartDashboard.putNumber("Shoulder back Limit", ShoulderMotor.getSensorCollection().isRevLimitSwitchClosed());
         SmartDashboard.putNumber("Wrist Limit: " , WristMotor.getSensorCollection().isRevLimitSwitchClosed());
         //System.out.println("Shoulder Limit Switch: " + ShoulderMotor.getSensorCollection().isRevLimitSwitchClosed());
@@ -256,7 +257,7 @@ public class Arm extends SubsystemBase {
         if (Math.abs(wristPos - lastAngle) > Constants.Arm.SHOULDER_ANGLE_UPDATE) {
             lastAngle = wristPos;
             //System.out.println("updating kf");
-            updateKf(Constants.Arm.SHOULDER_KF, wristPos);
+            updateKf(Constants.Arm.SHOULDER_KF, wristPos, peakOutput);
         }
         if(ShoulderMotor.getSensorCollection().isRevLimitSwitchClosed() == 1)
         {
@@ -267,5 +268,4 @@ public class Arm extends SubsystemBase {
             WristMotor.setSelectedSensorPosition(Constants.Arm.WRIST_RESTING_ANGLE / Constants.Arm.WRIST_TICKS_TO_DEGREES);
         }
     }
-
-    }}
+}

@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.autos.*;
 import frc.robot.commands.autos.SimpleAutoCommandGroup;
 import frc.robot.commands.drivebase.ArcadeDrive;
+import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Collector;
 import frc.robot.subsystems.Drivebase;
