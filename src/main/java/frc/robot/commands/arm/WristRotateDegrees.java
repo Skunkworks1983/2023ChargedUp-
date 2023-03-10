@@ -25,33 +25,26 @@ public class WristRotateDegrees extends CommandBase {
 
     @Override
     public void initialize() {
-        System.out.println("rotate degrees init");
+        System.out.println("wrist rotate degrees init");
 
         startAngle = arm.getWristAngle();
 
         rotateTo = offsetDegrees;
-
-        System.out.println("Starting at " + startAngle);
 
         if (ignore) {
             rotateTo = startAngle + offsetDegrees;
         }
 
         arm.setWristAnglePosition(rotateTo);
-
-        System.out.println("Going to " + rotateTo);
     }
 
     @Override
     public void execute() {
-        //System.out.println("motor output: " + arm.getCurrentOutput());
     }
 
     @Override
     public boolean isFinished() {
         if (Math.abs(arm.WristMotor.getClosedLoopError() * Constants.Arm.WRIST_TICKS_TO_DEGREES) < Constants.Arm.WRIST_TOLERANCE) {
-            System.out.println("Ended");
-            System.out.println("end error: " + arm.WristMotor.getClosedLoopError() * Constants.Arm.WRIST_TICKS_TO_DEGREES);
             return false; //todo
         } else {
             return false;
@@ -60,7 +53,8 @@ public class WristRotateDegrees extends CommandBase {
     }
 
     @Override
-    public void end(boolean interrupted) {
-        System.out.println("actual end");
+    public void end(boolean interrupted)
+    {
+        System.out.println("WristRotateDegrees ended");
     }
 }

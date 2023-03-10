@@ -88,7 +88,7 @@ public class Constants extends CommandBase {
         public static final int WRIST_LIMIT_SWITCH = 2;
         //once shoulder is passed this angle, wrist can go anywhere.
         public static final double SHOULDER_SAFE_WRIST_ANGLE = SHOULDER_RESTING_ANGLE;
-        public static final int MAX_WRIST_ROTATION = 116;
+        public static final int MAX_WRIST_ROTATION = 180;
         public static final double WRIST_TOLERANCE = 2;
         public static final int WRIST_MOTOR_DEVICE_NUMBER = 6;
         public static final double WRIST_GEAR_RATIO = 176;

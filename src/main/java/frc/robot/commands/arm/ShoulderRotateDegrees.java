@@ -20,32 +20,25 @@ public class ShoulderRotateDegrees extends CommandBase {
         this.offsetDegrees = offsetDegrees;
         this.ignore = ignore;
 
-        System.out.println("rotate degrees constructor");
     }
 
     @Override
     public void initialize() {
-        System.out.println("rotate degrees init");
+        System.out.println("shoulder rotate degrees Initialize, offsetDegrees: " + offsetDegrees + " Ignore: " + ignore);
 
         startAngle = arm.getShoulderAngle();
 
         rotateTo = offsetDegrees;
-
-        System.out.println("Starting at " + startAngle);
 
         if (ignore) {
             rotateTo = startAngle + offsetDegrees;
         }
 
         arm.setShoulderAnglePosition(rotateTo);
-
-        System.out.println("Going to " + rotateTo);
     }
 
     @Override
     public void execute() {
-        //System.out.println("motor output: " + arm.getCurrentOutput());
-
         double angle = arm.getShoulderAngle();
 
         if (angle >= Constants.Arm.SHOULDER_SWAP_ANGLE + Constants.Arm.SHOULDER_SWAP_ANGLE_ADDITION) {
@@ -63,8 +56,6 @@ public class ShoulderRotateDegrees extends CommandBase {
     @Override
     public boolean isFinished() {
         if (Math.abs(arm.ShoulderMotor.getClosedLoopError() * Constants.Arm.SHOULDER_TICKS_TO_DEGREES) < Constants.Arm.SHOULDER_TOLERANCE) {
-            System.out.println("Ended");
-            System.out.println("end error: " + arm.ShoulderMotor.getClosedLoopError() * Constants.Arm.SHOULDER_TICKS_TO_DEGREES);
             return false; //todo
         } else {
             return false;
@@ -73,7 +64,8 @@ public class ShoulderRotateDegrees extends CommandBase {
     }
 
     @Override
-    public void end(boolean interrupted) {
-        System.out.println("actual end");
+    public void end(boolean interrupted)
+    {
+        System.out.println("ShoulderRotateDegrees ended");
     }
 }

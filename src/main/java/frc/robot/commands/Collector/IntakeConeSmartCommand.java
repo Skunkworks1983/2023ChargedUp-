@@ -19,7 +19,9 @@ public class IntakeConeSmartCommand extends CommandBase {
     }
 
     @Override
-    public void initialize() {
+    public void initialize()
+    {
+        System.out.println("Intake Cone Smart Command Initialize");
         countConeHeld = 0;
     }
 
@@ -43,13 +45,21 @@ public class IntakeConeSmartCommand extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        System.out.println("the collector says its been holding cone " + countConeHeld);
         return countConeHeld >= Constants.Collector.CONE_COLLECTED_VALUE;
 
     }
 
     @Override
-    public void end(boolean interrupted) {
+    public void end(boolean interrupted)
+    {
         collectorInstance.Setspeed(0);
+        if(interrupted)
+        {
+            System.out.println("Intake Cone Smart Command Ended, interrupted");
+        }
+        else
+        {
+            System.out.println("Intake Cone Smart Command Ended");
+        }
     }
 }

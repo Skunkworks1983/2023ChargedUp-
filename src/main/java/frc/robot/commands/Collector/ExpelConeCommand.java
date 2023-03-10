@@ -28,9 +28,7 @@ public class ExpelConeCommand extends CommandBase {
         else {
             collectorInstance.Setspeed(-Constants.Collector.EXPEL_MOTOR_SPEED);
         }
-
-
-
+        System.out.println("Initializing ExpelConeCommand");
     }
 
     @Override
@@ -45,7 +43,16 @@ public class ExpelConeCommand extends CommandBase {
     }
 
     @Override
-    public void end(boolean interrupted) {
+    public void end(boolean interrupted)
+    {
         collectorInstance.Setspeed(0);
+        if(interrupted)
+        {
+            System.out.println("Expel Cone Command ended, interrupted");
+        }
+        else
+        {
+            System.out.println("Expel Cone Command ended");
+        }
     }
 }

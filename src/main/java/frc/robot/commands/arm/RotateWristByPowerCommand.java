@@ -18,7 +18,7 @@ public class RotateWristByPowerCommand extends CommandBase {
 
     @Override
     public void initialize() {
-        System.out.println("command initialized at speed:" + speed);
+        System.out.println("RotateWristByPower initialized at speed:" + speed);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class RotateWristByPowerCommand extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        System.out.println("ended");
+        System.out.println("ended rotateWristByPower");
         arm.SetWristSpeed(0);
     }
 }
