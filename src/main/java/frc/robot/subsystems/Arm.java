@@ -84,7 +84,6 @@ public class Arm extends SubsystemBase {
     public double getShoulderCurrentOutput() {
         return ShoulderMotor.getMotorOutputPercent();
     }
-
     public double getWristCurrentOutput() {
         return WristMotor.getMotorOutputPercent();
     }
@@ -162,6 +161,10 @@ public class Arm extends SubsystemBase {
 
     public boolean limitSwitchOutput(int limitSwitchPort) {
         if (limitSwitchPort == Constants.Arm.SHOULDER_LIMIT_SWITCH_FRONT) {
+    public boolean getLimitSwitchOutput(int limitSwitchPort)
+    {
+        if(limitSwitchPort == Constants.Arm.SHOULDER_LIMIT_SWITCH_FRONT)
+        {
             return ShoulderMotor.getSensorCollection().isFwdLimitSwitchClosed() == 1;
         } else if (limitSwitchPort == Constants.Arm.SHOULDER_LIMIT_SWITCH_BACK) {
             return ShoulderMotor.getSensorCollection().isRevLimitSwitchClosed() == 1;
@@ -246,5 +249,23 @@ public class Arm extends SubsystemBase {
 
 
         }
-
+        SmartDashboard.putNumber("Shoulder back Limit", ShoulderMotor.getSensorCollection().isRevLimitSwitchClosed());
+        SmartDashboard.putNumber("Wrist Limit: " , WristMotor.getSensorCollection().isRevLimitSwitchClosed());
+        //System.out.println("Shoulder Limit Switch: " + ShoulderMotor.getSensorCollection().isRevLimitSwitchClosed());
+        //System.out.println("Wrist Limit Switch: " + WristMotor.getSensorCollection().isRevLimitSwitchClosed());
+        if (Math.abs(wristPos - lastAngle) > Constants.Arm.SHOULDER_ANGLE_UPDATE) {
+            lastAngle = wristPos;
+            //System.out.println("updating kf");
+            updateKf(Constants.Arm.SHOULDER_KF, wristPos);
+        }
+        if(ShoulderMotor.getSensorCollection().isRevLimitSwitchClosed() == 1)
+        {
+            ShoulderMotor.setSelectedSensorPosition(Constants.Arm.SHOULDER_RESTING_ANGLE / Constants.Arm.SHOULDER_TICKS_TO_DEGREES);
+        }
+        if(WristMotor.getSensorCollection().isRevLimitSwitchClosed() == 1)
+        {
+            WristMotor.setSelectedSensorPosition(Constants.Arm.WRIST_RESTING_ANGLE / Constants.Arm.WRIST_TICKS_TO_DEGREES);
+        }
     }
+
+    }}

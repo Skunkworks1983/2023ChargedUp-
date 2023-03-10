@@ -112,13 +112,13 @@ public class Constants extends CommandBase {
         public static final double PLAYER_CUBE_PICKUP_SHOULDER = 46.68152;
         public static final double PLAYER_CUBE_PICKUP_WRIST = 171.73779;
         public static final double FLOOR_CUBE_PICKUP_SHOULDER = Arm.SHOULDER_RESTING_ANGLE;
-        public static final double FLOOR_CUBE_PICKUP_WRIST = 113;
+        public static final double FLOOR_CUBE_PICKUP_WRIST = 114.25;
         public static final double FLOOR_NORMAL_SCORE_SHOULDER = Arm.SHOULDER_RESTING_ANGLE;
         public static final double FLOOR_NORMAL_SCORE_WRIST = 100.70434;
         public static final double CARRY_SHOULDER = Arm.SHOULDER_RESTING_ANGLE;
         public static final double CARRY_WRIST = 15.531;
         public static final double CONE_FLOOR_PICKUP_SHOULDER = Arm.SHOULDER_RESTING_ANGLE;
-        public static final double CONE_FLOOR_PICKUP_WRIST = 108.05419;
+        public static final double CONE_FLOOR_PICKUP_WRIST = 103.05419;
         public static final int WRIST_GEAR_RATIO = 96;
     }
 
