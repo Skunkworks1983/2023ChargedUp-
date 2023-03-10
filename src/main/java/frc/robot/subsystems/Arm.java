@@ -201,9 +201,8 @@ public class Arm extends SubsystemBase {
         SmartDashboard.putNumber("Error:", WristMotor.getClosedLoopError());
 
         SmartDashboard.putNumber("setpoint", setpoint);
-        SmartDashboard.putNumber("wrist position", wristPos);
-        SmartDashboard.putNumber("shoulder position", shoulderPos);
-        SmartDashboard.putNumber("Motor output: " , ShoulderMotor.getMotorOutputPercent());
+        SmartDashboard.putNumber("Shoulder back Limit", ShoulderMotor.getSensorCollection().isRevLimitSwitchClosed());
+        SmartDashboard.putNumber("Wrist Limit: " , WristMotor.getSensorCollection().isRevLimitSwitchClosed());
         //System.out.println("Shoulder Limit Switch: " + ShoulderMotor.getSensorCollection().isRevLimitSwitchClosed());
         //System.out.println("Wrist Limit Switch: " + WristMotor.getSensorCollection().isRevLimitSwitchClosed());
         if (Math.abs(wristPos - lastAngle) > Constants.Arm.SHOULDER_ANGLE_UPDATE) {
