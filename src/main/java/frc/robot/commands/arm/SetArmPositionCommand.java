@@ -24,15 +24,7 @@ public class SetArmPositionCommand extends CommandBase
     @Override
     public void initialize()
     {
-        if(wristAngleSetpoint >= Constants.Arm.MAX_WRIST_ROTATION)
-        {
-            System.out.println("Not setting Wrist angle on initialize");
-            needWristSet = true;
-        }
-        else
-        {
-            arm.setWristAnglePosition(wristAngleSetpoint);
-        }
+        arm.setWristAnglePosition(wristAngleSetpoint);
         arm.setShoulderAnglePosition(shoulderAngleSetpoint);
     }
 

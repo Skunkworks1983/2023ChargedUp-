@@ -41,9 +41,6 @@ public class ArcadeDrive extends CommandBase {
 
         double turnThrottle = pidController.calculate(heading, targetHeading);
 
-        System.out.println("error: " + turnThrottle);
-        System.out.println("heading: " + heading);
-
         if (Math.abs(leftX) > 0.01) {
             turnThrottle = leftX;
             targetHeading = drivebase.getHeading();

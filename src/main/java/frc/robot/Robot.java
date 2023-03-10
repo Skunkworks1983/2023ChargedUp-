@@ -79,6 +79,8 @@ public class Robot extends TimedRobot
         // autonomous chooser on the dashboard.\
         arm = Arm.getInstance();
         robotContainer = new RobotContainer();
+
+        SmartDashboard.putNumber("floor cube pickup", Constants.ArmPos.FLOOR_CUBE_PICKUP_WRIST);
     }
 
 
