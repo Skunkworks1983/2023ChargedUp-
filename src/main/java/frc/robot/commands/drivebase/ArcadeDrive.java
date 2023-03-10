@@ -7,6 +7,8 @@ import frc.robot.constants.Constants;
 import frc.robot.services.Oi;
 import frc.robot.subsystems.Drivebase;
 
+import static java.lang.Double.NaN;
+
 
 public class ArcadeDrive extends CommandBase {
     private final Drivebase drivebase;
@@ -23,6 +25,7 @@ public class ArcadeDrive extends CommandBase {
 
     @Override
     public void initialize() {
+
         targetHeading = drivebase.getHeading();
     }
 
@@ -38,13 +41,16 @@ public class ArcadeDrive extends CommandBase {
         rightY = Math.pow(rightY, 2) * (oldY < 0 ? -1 : 1);
 
         double heading = drivebase.getHeading();
-
-        if (Math.abs(leftX) > 0.01) {
-//
+        double turnThrottle = 0;
+        if (drivebase.getHeading() == NaN && Math.abs(leftX) > 0.01) {
+            turnThrottle = leftX;
+        }
+        else if (Math.abs(leftX) > 0.01) {
             targetHeading = targetHeading - ((Constants.Drivebase.ARCADE_DRIVE_MAX_DEGREES_PER_SECOND/
                     Constants.Drivebase.EXECUTES_PER_SECOND)*leftX) ;
+
+            turnThrottle = pidController.calculate(heading, targetHeading);
         }
-        double turnThrottle = pidController.calculate(heading, targetHeading);
 
         System.out.println("error: " + pidController.getPositionError());
         System.out.println("heading: " + heading);
@@ -55,7 +61,6 @@ public class ArcadeDrive extends CommandBase {
 //            turnThrottle = leftX;
 //            targetHeading = drivebase.getHeading();
 //        }
-
         //System.out.printf("Turn Speed: %f%n", turnThrottle);
 
         double leftSpeed = rightY + turnThrottle;
@@ -66,7 +71,7 @@ public class ArcadeDrive extends CommandBase {
 //        System.out.printf("Target Heading: %f | Current Heading: %f%n", targetHeading, heading);
 
         drivebase.runMotor(leftSpeed, rightSpeed);
-    }
+         }
 
     @Override
     public boolean isFinished() {

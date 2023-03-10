@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.constants.Constants;
 
+import static java.lang.Double.NaN;
+
 public class Drivebase implements Subsystem {
 
     private static Drivebase OGDrivebase;
@@ -16,6 +18,8 @@ public class Drivebase implements Subsystem {
     TalonFX leftMotor2 = new TalonFX(Constants.Wobbles.LEFT_MOTOR_2);
     TalonFX rightMotor1 = new TalonFX(Constants.Wobbles.RIGHT_MOTOR_1);
     TalonFX rightMotor2 = new TalonFX(Constants.Wobbles.RIGHT_MOTOR_2);
+
+    private boolean isHeadingReliable = true;
 
     private final double TicksPerFoot =
             Constants.Wobbles.TICKS_PER_MOTOR_REV * Constants.Drivebase.GEAR_RATIO /
@@ -46,13 +50,21 @@ public class Drivebase implements Subsystem {
 
 
     public double getHeading() {
-        return gyro.getAngle();
+
+        if (isHeadingReliable) {
+
+            return gyro.getAngle();
+
+        } else {
+
+            return NaN;
+        }
     }
 
 
-    public boolean isCalibrating() {
-        return gyro.isCalibrating();
-    }
+//    public boolean isCalibrating() {
+//        return gyro.isCalibrating();
+//    }
 
 
     public double getTicksLeft() {
@@ -83,6 +95,24 @@ public class Drivebase implements Subsystem {
 
     public double getSpeedRight() {
         return (-rightMotor1.getSelectedSensorVelocity());
+    }
+
+    public void waitForHeadingReliable () {
+        while (gyro.isCalibrating()) {
+
+        }
+        isHeadingReliable = true;
+    }
+
+
+    @Override
+    public void periodic () {
+
+        if (gyro.isCalibrating()) {
+
+            isHeadingReliable = false;
+
+        }
     }
 
     public static Drivebase GetDrivebase() {

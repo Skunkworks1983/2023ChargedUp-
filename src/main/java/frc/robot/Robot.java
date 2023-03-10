@@ -55,6 +55,8 @@ public class Robot extends TimedRobot
         // autonomous chooser on the dashboard.
         arm = Arm.getInstance();
         robotContainer = new RobotContainer();
+
+
     }
     
     
@@ -98,12 +100,16 @@ public class Robot extends TimedRobot
 
     public void autonomousInit() {
 
+        drivebase.setHeadingReliable();
+
     }
 
 
     @Override
     public void teleopInit()
     {
+        drivebase.setHeadingReliable();
+
         drivebase.SetBrakeMode(true);
         Command arcadeDrive = new ArcadeDrive(drivebase, oi);
         arcadeDrive.schedule();
