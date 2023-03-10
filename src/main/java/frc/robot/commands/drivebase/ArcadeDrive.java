@@ -39,15 +39,22 @@ public class ArcadeDrive extends CommandBase {
 
         double heading = drivebase.getHeading();
 
+        if (Math.abs(leftX) > 0.01) {
+//
+            targetHeading = targetHeading - ((Constants.Drivebase.ARCADE_DRIVE_MAX_DEGREES_PER_SECOND/
+                    Constants.Drivebase.EXECUTES_PER_SECOND)*leftX) ;
+        }
         double turnThrottle = pidController.calculate(heading, targetHeading);
 
-        System.out.println("error: " + turnThrottle);
+        System.out.println("error: " + pidController.getPositionError());
         System.out.println("heading: " + heading);
+        System.out.println("target heading: " + targetHeading);
+        System.out.println("turn throttle: " + turnThrottle);
 
-        if (Math.abs(leftX) > 0.01) {
-            turnThrottle = leftX;
-            targetHeading = drivebase.getHeading();
-        }
+//        if (Math.abs(leftX) > 0.01) {
+//            turnThrottle = leftX;
+//            targetHeading = drivebase.getHeading();
+//        }
 
         //System.out.printf("Turn Speed: %f%n", turnThrottle);
 
