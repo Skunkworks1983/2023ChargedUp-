@@ -18,7 +18,7 @@ public class HoldConeCommand extends CommandBase {
         collectorInstance = Collector.getInstance();
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
-        addRequirements();
+        addRequirements(collectorInstance);
     }
 
     @Override
@@ -41,10 +41,7 @@ public class HoldConeCommand extends CommandBase {
     @Override
     public boolean isFinished() {
 
-        if(countConeHeld >= Constants.Collector.CONE_COLLECTED_VALUE)
-        {
-            return true;
-        }
+
         return false;
     }
 

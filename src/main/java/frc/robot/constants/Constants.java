@@ -41,12 +41,15 @@ public class Constants extends CommandBase {
     public class OIButtons {
         public static final int ARM_UP_BUTTON = 12;
         public static final int ARM_DOWN_BUTTON = 15;
-        public static final int WRIST_UP_BUTTON = 4; // NEEDS CHANGING BEFORE COMMITTING
+        public static final int WRIST_UP_BUTTON = 4;
         public static final int WRIST_DOWN_BUTTON=2;
         public static final int INTAKE_BUTTON = 13; // 13 on comp robot, 5 on  single stick
         public static final int EXPEL_BUTTON = 9; // 9 on comp robot, 6 on single stick
         public static final int CONE_TOGGLE = 10;
         public static final int MANUAL_TOGGLE = 1;
+        public static final int SCORE_MID = 14;
+        public static final int CONE_FLOOR_PICKUP = 11;
+        public static final int CUBE_FLOOR_PICKUP = 3;
 
 
     }
@@ -98,10 +101,12 @@ public class Constants extends CommandBase {
 
     public class ArmPos
     {
-        public static final double SCORE_CONE_MID_SHOULDER = 51.23676;
-        public static final double SCORE_CONE_MID_WRIST = 160.13574;
+
+
         public static final double PLAYER_CONE_PICKUP_SHOULDER = 39.56579;
+        public static final double SCORE_CONE_MID_SHOULDER = PLAYER_CONE_PICKUP_SHOULDER;
         public static final double PLAYER_CONE_PICKUP_WRIST = 156.46118;
+        public static final double SCORE_CONE_MID_WRIST = PLAYER_CONE_PICKUP_WRIST;
         public static final double PLAYER_CUBE_PICKUP_SHOULDER = 46.68152;
         public static final double PLAYER_CUBE_PICKUP_WRIST = 171.73779;
         public static final double FLOOR_CUBE_PICKUP_SHOULDER = Arm.SHOULDER_RESTING_ANGLE;
