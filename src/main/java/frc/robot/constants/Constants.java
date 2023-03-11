@@ -57,6 +57,7 @@ public class Constants extends CommandBase {
         public static final int DRIVE_OUT_OF_COMMUNITY = -9;
         public static final double ARCADE_DRIVE_KP = 0.001;
         public static final double ARCADE_DRIVE_KD = 0;
+        public static final double MAX_DRIVE_DISTANCE_SPEED = 0.3;
     }
 
     public class Arm {

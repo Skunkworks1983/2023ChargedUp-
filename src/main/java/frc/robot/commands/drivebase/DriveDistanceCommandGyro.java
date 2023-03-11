@@ -1,11 +1,12 @@
 package frc.robot.commands.drivebase;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Drivebase;
 
 
-public class DriveDistanceCommand extends CommandBase
+public class DriveDistanceCommandGyro extends CommandBase
 {
     private final Drivebase drivebase;
     private final double distanceFT;
@@ -13,16 +14,19 @@ public class DriveDistanceCommand extends CommandBase
     private double finishDistanceFT;
     private int direction;
     private double startDegree;
+    private double baseSpeed;
+    private PIDController pidController = new PIDController(Constants.Drivebase.ARCADE_DRIVE_KP, 0, Constants.Drivebase.ARCADE_DRIVE_KD);
 
     /**
      *
      * @param drivebase what drivebase to use
      * @param distanceFT The direction and distance in which to go
      */
-    public DriveDistanceCommand(Drivebase drivebase, double distanceFT)
+    public DriveDistanceCommandGyro(Drivebase drivebase, double distanceFT, double baseSpeed)
     {
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
+        this.baseSpeed = baseSpeed;
         this.drivebase = drivebase;
         this.distanceFT = distanceFT;
         this.startDegree = startDegree;
@@ -33,6 +37,7 @@ public class DriveDistanceCommand extends CommandBase
     public void initialize()
     {
 
+        startDegree = drivebase.getHeading();
         startDistanceFT = drivebase.getPosLeft();
         finishDistanceFT = startDistanceFT+distanceFT;
         startDegree = drivebase.getHeading();
@@ -51,6 +56,7 @@ public class DriveDistanceCommand extends CommandBase
     @Override
     public void execute()
     {
+        double headingError = startDegree - drivebase.getHeading();
         double error = finishDistanceFT - drivebase.getPosLeft();
         if(error < 0)
         {
@@ -60,7 +66,7 @@ public class DriveDistanceCommand extends CommandBase
         {
             direction = 1;
         }
-        double speed = Constants.Drivebase.DISTANCE_KP * error + Constants.Drivebase.DRIVEBASE_KF * direction;
+        double speed = Constants.Drivebase.DISTANCE_KP * error + this.baseSpeed * direction;
         if (speed > Constants.Drivebase.MAX_DRIVE_DISTANCE_SPEED)
         {
             speed = Constants.Drivebase.MAX_DRIVE_DISTANCE_SPEED;
@@ -69,10 +75,14 @@ public class DriveDistanceCommand extends CommandBase
         {
             speed = -Constants.Drivebase.MAX_DRIVE_DISTANCE_SPEED;
         }
+        double turnThrottle = pidController.calculate(drivebase.getHeading(), startDegree);
+        double leftSpeed = speed + turnThrottle;
+        double rightSpeed = speed - turnThrottle;
        // double speedLeft = speed + Math.max(Math.min(Constants.Drivebase.ANGLE_KP*(startDegree - drivebase.getHeading()), 0.25), -0.25);
        // double speedRight = speed - Math.max(Math.min(Constants.Drivebase.ANGLE_KP*(startDegree - drivebase.getHeading()), 0.25), -0.25);
-        drivebase.runMotor(speed, speed);
+        drivebase.runMotor(leftSpeed, rightSpeed);
         //SmartDashboard.putNumber("FT moved", drivebase.getPosLeft()-startDistanceFT);
+
     }
 
     @Override
