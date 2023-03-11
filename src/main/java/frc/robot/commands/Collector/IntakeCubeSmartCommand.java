@@ -21,7 +21,7 @@ public class IntakeCubeSmartCommand extends CommandBase {
 
     @Override
     public void initialize() {
-
+        System.out.println("intake cube initialize");
     }
 
     @Override
@@ -43,6 +43,7 @@ public class IntakeCubeSmartCommand extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
+        System.out.println("intake cube end");
         collectorInstance.Setspeed(0);
     }
 }

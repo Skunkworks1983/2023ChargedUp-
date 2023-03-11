@@ -23,6 +23,7 @@ public class HoldConeCommand extends CommandBase {
 
     @Override
     public void initialize() {
+        System.out.println("Cone held command initialize");
         countConeHeld = 0;
 
     }
@@ -47,6 +48,7 @@ public class HoldConeCommand extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
+        System.out.println("Hold cone command end");
         collectorInstance.Setspeed(0);
     }
 }

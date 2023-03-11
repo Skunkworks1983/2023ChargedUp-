@@ -20,6 +20,7 @@ public class IntakeCubeManualCommand extends CommandBase {
 
     @Override
     public void initialize() {
+        System.out.println("intake cube manual initialize");
 
     }
 
@@ -40,6 +41,7 @@ public class IntakeCubeManualCommand extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
+        System.out.println("intake cube manual end");
         collectorInstance.Setspeed(0);
     }
 }

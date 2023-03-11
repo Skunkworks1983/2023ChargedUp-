@@ -21,6 +21,7 @@ public class ExpelCubeCommand extends CommandBase {
 
     @Override
     public void initialize() {
+        System.out.println("Expel Cube Initialized");
 
         if(armInstance.getShoulderAngle() < 0) {
             collectorInstance.Setspeed(-Constants.Collector.EXPEL_MOTOR_SPEED);
@@ -46,6 +47,7 @@ public class ExpelCubeCommand extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
+        System.out.println("Expel cube command end");
         collectorInstance.Setspeed(0);
     }
     }

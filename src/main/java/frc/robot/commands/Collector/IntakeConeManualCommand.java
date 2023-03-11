@@ -21,7 +21,7 @@ public class IntakeConeManualCommand extends CommandBase {
 
     @Override
     public void initialize() {
-
+        System.out.println("Intake cone manual initialize");
     }
 
     @Override
@@ -42,6 +42,7 @@ public class IntakeConeManualCommand extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
+        System.out.println("Intake cone manual end");
         collectorInstance.Setspeed(0);
     }
 }
