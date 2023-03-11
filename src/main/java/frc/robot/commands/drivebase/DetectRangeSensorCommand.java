@@ -38,7 +38,9 @@ public class DetectRangeSensorCommand extends CommandBase {
 
     @Override
     public void initialize() {
+        System.out.println("DetectRangeSensor started");
     }
+
 
     @Override
     public void execute() {
@@ -48,8 +50,7 @@ public class DetectRangeSensorCommand extends CommandBase {
 
         Drivebase.GetDrivebase().getBackRangeSensor();
         completeState();
-        System.out.println("frontDistance: "+ frontVoltage +" backDistance: " + backVoltage);
-    }
+        }
 
     public void completeState(){
 
@@ -105,5 +106,7 @@ public class DetectRangeSensorCommand extends CommandBase {
     @Override
     public void end(boolean interrupted) {
 
+
+        System.out.println("DetectRangeSensor ended. Interupted:"+interrupted);
     }
 }

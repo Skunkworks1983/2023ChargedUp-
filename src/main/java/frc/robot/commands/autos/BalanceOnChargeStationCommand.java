@@ -35,6 +35,7 @@ public class BalanceOnChargeStationCommand extends CommandBase {
 
     @Override
     public void initialize() {
+        System.out.println("BalanceOnChargeStation started");
     }
 
     @Override
@@ -42,7 +43,6 @@ public class BalanceOnChargeStationCommand extends CommandBase {
 
 
         error= Drivebase.GetDrivebase().getPitch();
-        //System.out.println(error);
         double derivative = (error-lastError)*50;
         integral+=(error/50);
         double f =(error*p)+(derivative*d)+ (integral*i);
@@ -51,8 +51,8 @@ public class BalanceOnChargeStationCommand extends CommandBase {
         if(f>0)rangeSensor.setCurrentDirection(Drivebase.DriveDirection.FORWARD);
         if(f<0)rangeSensor.setCurrentDirection(Drivebase.DriveDirection.BACKWARD);
         if(f==0)rangeSensor.setCurrentDirection(Drivebase.DriveDirection.MOTIONLESS);
-        if(f>0&&rangeSensor.getFrontVoltage()> Constants.Drivebase.MAXIMUM_BALANCE_DISTANCE_FROM_GROUND_FRONT){f=0;System.out.println("front voltage too high");}
-        if(f<0&&rangeSensor.getBackVoltage()> Constants.Drivebase.MAXIMUM_BALANCE_DISTANCE_FROM_GROUND_BACK){f=0;System.out.println("back voltage too high");}
+        if(f>0&&rangeSensor.getFrontVoltage()> Constants.Drivebase.MAXIMUM_BALANCE_DISTANCE_FROM_GROUND_FRONT){f=0;}
+        if(f<0&&rangeSensor.getBackVoltage()> Constants.Drivebase.MAXIMUM_BALANCE_DISTANCE_FROM_GROUND_BACK){f=0;}
 
         Drivebase.GetDrivebase().runMotor(f,f);
         lastError=error;
@@ -65,6 +65,6 @@ public class BalanceOnChargeStationCommand extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-
+        System.out.println("BalanceOnChargeStation ended. interupted:" + interrupted);
     }
 }
