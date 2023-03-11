@@ -14,7 +14,7 @@ public class ArcadeDrive extends CommandBase {
 
     private double targetHeading;
 
-    private PIDController pidController = new PIDController(Constants.Drivebase.ARCADE_DRIVE_KP, 0, Constants.Drivebase.ARCADE_DRIVE_KD);
+    private final PIDController pidController = new PIDController(Constants.Drivebase.ARCADE_DRIVE_KP, 0, Constants.Drivebase.ARCADE_DRIVE_KD);
 
     public ArcadeDrive(Drivebase drivebase, Oi oi) {
         this.drivebase = drivebase;
@@ -41,9 +41,15 @@ public class ArcadeDrive extends CommandBase {
 
         double turnThrottle = pidController.calculate(heading, targetHeading);
 
-        if (Math.abs(leftX) > 0.001) {
+        boolean gyroIsDead = turnThrottle >= Constants.Drivebase.ARCADE_DRIVE_GYRO_FAIL;
+
+        if (Math.abs(leftX) > Constants.Drivebase.ARCADE_DRIVE_LEFT_JOYSTICK_DEADBAND || gyroIsDead) {
             turnThrottle = leftX;
-            targetHeading = drivebase.getHeading();
+            if (!gyroIsDead) {
+                targetHeading = drivebase.getHeading();
+            } else {
+                //System.out.println("Gyro is broken");
+            }
         }
 
         //System.out.printf("Turn Speed: %f%n", turnThrottle);
