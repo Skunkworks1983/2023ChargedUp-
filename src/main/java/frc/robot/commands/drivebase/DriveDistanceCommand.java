@@ -31,6 +31,7 @@ public class DriveDistanceCommand extends CommandBase
     @Override
     public void initialize()
     {
+        System.out.println("Initialising Drive Distance Command");
         startDistanceFT = drivebase.getPosLeft();
         finishDistanceFT = startDistanceFT+distanceFT;
         startDegree = drivebase.getHeading();
@@ -42,7 +43,7 @@ public class DriveDistanceCommand extends CommandBase
         {
             direction = -1;
         }
-        System.out.println("moving from " +startDistanceFT + " to " + finishDistanceFT);
+        drivebase.SetBrakeMode(true);
     }
 
     @Override
@@ -66,9 +67,9 @@ public class DriveDistanceCommand extends CommandBase
         {
             speed = -0.3;
         }
-        double speedLeft = speed + Math.max(Math.min(Constants.Drivebase.ANGLE_KP*(startDegree - drivebase.getHeading()), 0.25), -0.25);
-        double speedRight = speed - Math.max(Math.min(Constants.Drivebase.ANGLE_KP*(startDegree - drivebase.getHeading()), 0.25), -0.25);
-        drivebase.runMotor(speedLeft, speedRight);
+       // double speedLeft = speed + Math.max(Math.min(Constants.Drivebase.ANGLE_KP*(startDegree - drivebase.getHeading()), 0.25), -0.25);
+       // double speedRight = speed - Math.max(Math.min(Constants.Drivebase.ANGLE_KP*(startDegree - drivebase.getHeading()), 0.25), -0.25);
+        drivebase.runMotor(speed, speed);
         //SmartDashboard.putNumber("FT moved", drivebase.getPosLeft()-startDistanceFT);
     }
 
@@ -82,6 +83,6 @@ public class DriveDistanceCommand extends CommandBase
     public void end(boolean interrupted)
     {
         drivebase.runMotor(0, 0);
-        System.out.println("Ended at: "+drivebase.getPosLeft());
+        //ystem.out.println("Ending Drive Distance Command");
     }
 }

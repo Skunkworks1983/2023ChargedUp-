@@ -16,26 +16,23 @@ public class IntakeConeManualCommand extends CommandBase {
         collectorInstance = Collector.getInstance();
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
-        addRequirements();
+        addRequirements(collectorInstance);
     }
 
     @Override
-    public void initialize() {
+    public void initialize()
+    {
+        System.out.println("Enabling Intake Cone Manual Command");
+    }
 
+    @Override
+    public void execute() {
         if(armInstance.getShoulderAngle() < 0) {
             collectorInstance.Setspeed(-Constants.Collector.INTAKE_MOTOR_SPEED * Constants.Collector.MANUAL_INTAKE_MULTIPLIER);
         }
         else {
             collectorInstance.Setspeed(Constants.Collector.INTAKE_MOTOR_SPEED * Constants.Collector.MANUAL_INTAKE_MULTIPLIER);
         }
-
-
-
-    }
-
-    @Override
-    public void execute() {
-        SmartDashboard.putNumber("Colletor current", collectorInstance.GetCollectorCurrent());
     }
 
     @Override
@@ -44,7 +41,16 @@ public class IntakeConeManualCommand extends CommandBase {
     }
 
     @Override
-    public void end(boolean interrupted) {
+    public void end(boolean interrupted)
+    {
         collectorInstance.Setspeed(0);
+        if(interrupted)
+        {
+            System.out.println("Intake Cone Manual Command Ended, interrupted");
+        }
+        else
+        {
+            System.out.println("Intake Cone Manual Command Ended");
+        }
     }
 }

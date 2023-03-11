@@ -8,6 +8,7 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.autos.BalanceOnChargeStationCommand;
@@ -16,10 +17,14 @@ import frc.robot.commands.drivebase.DetectRangeSensorWithoutDrivebaseCommand;
 import frc.robot.commands.arm.WaveCollectorCommandGroup;
 import frc.robot.commands.drivebase.TankDrive;
 import frc.robot.commands.arm.RotateDegrees;
+import frc.robot.commands.autos.*;
+import frc.robot.commands.autos.SimpleAutoCommandGroup;
+import frc.robot.commands.drivebase.ArcadeDrive;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
-import frc.robot.services.Oi;
+import frc.robot.subsystems.Collector;
 import frc.robot.subsystems.Drivebase;
+import frc.robot.services.Oi;
 
 
 /**
@@ -31,15 +36,15 @@ import frc.robot.subsystems.Drivebase;
 public class Robot extends TimedRobot
 {
     private Drivebase drivebase = Drivebase.GetDrivebase();
-    private Oi oi = new Oi(drivebase);
-
-
-    private Command autonomousCommand;
+    private Collector collector = Collector.getInstance();
+    private Oi oi = new Oi(drivebase,collector);
+    Command SimpleAuto = new SimpleAutoCommandGroup();
+    Command ScoreAndExitCommunityP2 = new ScoreAndExitCommunityP2CommandGroup();
 
     private RobotContainer robotContainer;
 
-
     private Arm arm;
+    Command scoreAndDriveOutP3 = new ScoreAndDriveOutP3CommandGroup();
 
     
     /**
@@ -53,6 +58,8 @@ public class Robot extends TimedRobot
         // autonomous chooser on the dashboard.
         arm = Arm.getInstance();
         robotContainer = new RobotContainer();
+
+        SmartDashboard.putNumber("floor cube pickup", Constants.ArmPos.FLOOR_CUBE_PICKUP_WRIST);
     }
     
     
@@ -93,29 +100,17 @@ public class Robot extends TimedRobot
     @Override
 
     public void autonomousInit() {
-        Command WaveCollector = new WaveCollectorCommandGroup();
 
-        //WaveCollector.schedule();
-        //CommandScheduler.getInstance().schedule(new WaveCollectorCommandGroup());
     }
 
 
     @Override
     public void teleopInit()
     {
-        arm = Arm.getInstance();
-        arm.ShoulderMotor.set(TalonFXControlMode.PercentOutput, 0);
-        arm.ShoulderMotor.setNeutralMode(NeutralMode.Brake);
+        drivebase.SetBrakeMode(true);
+        Command arcadeDrive = new ArcadeDrive(drivebase, oi);
+        arcadeDrive.schedule();
 
-        //double rotateTo = 15;
-        Command TankDrive = new TankDrive(drivebase, oi);
-
-        TankDrive.schedule();
-
-        /* if (autonomousCommand != null)
-        {
-            autonomousCommand.cancel();
-        } */
     }
     
     
@@ -129,6 +124,9 @@ public class Robot extends TimedRobot
     {
         // Cancels all running commands at the start of test mode.
         CommandScheduler.getInstance().cancelAll();
+        arm = Arm.getInstance();
+        arm.SetBrakeMode(false, arm.ShoulderMotor);
+        arm.SetBrakeMode(false, arm.WristMotor);
     }
     
     
@@ -136,10 +134,7 @@ public class Robot extends TimedRobot
     @Override
     public void testPeriodic()
     {
-        arm = Arm.getInstance();
 
-        System.out.println("Limit switch front: " + arm.limitSwitchOutput(Constants.Arm.SHOULDER_LIMIT_SWITCH_FRONT));
-        System.out.println("Limit switch back: " + arm.limitSwitchOutput(Constants.Arm.SHOULDER_LIMIT_SWITCH_BACK));
     }
     
     
