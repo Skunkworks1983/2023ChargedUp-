@@ -57,6 +57,21 @@ public class Constants extends CommandBase {
         public static final int DRIVE_OUT_OF_COMMUNITY = -9;
         public static final double ARCADE_DRIVE_KP = 0.001;
         public static final double ARCADE_DRIVE_KD = 0;
+        public static final int DRIVE_OUT_OF_COMMUINITY = -9;
+
+        public static final double VOLTAGE_TO_DISTANCE_SENSOR=1;
+        public static final double MAXIMUM_BALANCE_DISTANCE_FROM_GROUND_FRONT=100;
+
+        public static final double MAXIMUM_BALANCE_DISTANCE_FROM_GROUND_BACK=800;
+
+        //set these
+        public static final int FRONT_RANGE_SENSOR_OUTPUT_CHANNEL=4;
+
+        public static final int BACK_RANGE_SENSOR_OUTPUT_CHANNEL=5;
+
+        public static final int FRONT_RANGE_SENSOR_INPUT_CHANNEL=0;
+
+        public static final int BACK_RANGE_SENSOR_INPUT_CHANNEL=1;
     }
 
     public class Arm {
