@@ -14,12 +14,13 @@ import frc.robot.commands.autos.BalanceOnChargeStationCommand;
 import frc.robot.commands.autos.WaveCollectorCommandGroup;
 import frc.robot.commands.drivebase.DetectRangeSensorCommand;
 import frc.robot.commands.drivebase.DetectRangeSensorWithoutDrivebaseCommand;
+import frc.robot.commands.arm.WaveCollectorCommandGroup;
 import frc.robot.commands.drivebase.TankDrive;
+import frc.robot.commands.arm.RotateDegrees;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
 import frc.robot.services.Oi;
-import frc.robot.subsystems.multidrivebase.Drivebase;
-import frc.robot.subsystems.multidrivebase.Drivebase4MotorTalonFX;
+import frc.robot.subsystems.Drivebase;
 
 
 /**
@@ -30,13 +31,14 @@ import frc.robot.subsystems.multidrivebase.Drivebase4MotorTalonFX;
  */
 public class Robot extends TimedRobot
 {
-    //private Drivebase drivebase = Drivebase4MotorTalonFX.GetDrivebase();
-    //private Oi oi = new Oi(drivebase);
+    private Drivebase drivebase = Drivebase.GetDrivebase();
+    private Oi oi = new Oi(drivebase);
 
 
     private Command autonomousCommand;
-    
+
     private RobotContainer robotContainer;
+
 
     private Arm arm;
 
@@ -50,9 +52,8 @@ public class Robot extends TimedRobot
     {
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         // autonomous chooser on the dashboard.
-
-        //arm = Arm.getInstance();
-        //robotContainer = new RobotContainer();
+        arm = Arm.getInstance();
+        robotContainer = new RobotContainer();
     }
     
     
@@ -83,9 +84,7 @@ public class Robot extends TimedRobot
     
     
     @Override
-    public void disabledPeriodic()
-    {
-
+    public void disabledPeriodic() {
     }
 
 
@@ -93,11 +92,11 @@ public class Robot extends TimedRobot
      * This autonomous runs the autonomous command selected by your {@link RobotContainer} class.
      */
     @Override
+
     public void autonomousInit() {
-        DetectRangeSensorCommand a = new DetectRangeSensorCommand();
-        BalanceOnChargeStationCommand b = new BalanceOnChargeStationCommand(.023,0,0,.08,a);
-        a.schedule();
-        b.schedule();
+        Command WaveCollector = new WaveCollectorCommandGroup();
+
+        //WaveCollector.schedule();
         //CommandScheduler.getInstance().schedule(new WaveCollectorCommandGroup());
     }
 
@@ -106,8 +105,8 @@ public class Robot extends TimedRobot
     public void teleopInit()
     {
         arm = Arm.getInstance();
-        arm.Motor.set(TalonFXControlMode.PercentOutput, 0);
-        arm.Motor.setNeutralMode(NeutralMode.Brake);
+        arm.ShoulderMotor.set(TalonFXControlMode.PercentOutput, 0);
+        arm.ShoulderMotor.setNeutralMode(NeutralMode.Brake);
 
         //double rotateTo = 15;
         //Command TankDrive = new TankDrive(drivebase, oi);
@@ -138,8 +137,10 @@ public class Robot extends TimedRobot
     @Override
     public void testPeriodic()
     {
-        System.out.println("Limit switch front: " + arm.limitSwitchOutput(Constants.Arm.LIMIT_SWITCH_FRONT));
-        System.out.println("Limit switch back: " + arm.limitSwitchOutput(Constants.Arm.LIMIT_SWITCH_BACK));
+        arm = Arm.getInstance();
+
+        System.out.println("Limit switch front: " + arm.limitSwitchOutput(Constants.Arm.SHOULDER_LIMIT_SWITCH_FRONT));
+        System.out.println("Limit switch back: " + arm.limitSwitchOutput(Constants.Arm.SHOULDER_LIMIT_SWITCH_BACK));
     }
     
     

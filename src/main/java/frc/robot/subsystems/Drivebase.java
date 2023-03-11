@@ -1,4 +1,4 @@
-package frc.robot.subsystems.multidrivebase;
+package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
@@ -10,9 +10,11 @@ import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.constants.Constants;
 
-public class Drivebase4MotorTalonFX extends Drivebase {
+public class Drivebase implements Subsystem {
 
     private static Drivebase OGDrivebase;
     TalonFX leftMotor1 = new TalonFX(Constants.Wobbles.LEFT_MOTOR_1);
@@ -35,12 +37,13 @@ public class Drivebase4MotorTalonFX extends Drivebase {
             Constants.Wobbles.TICKS_PER_MOTOR_REV*Constants.Drivebase.GEAR_RATIO /
                     (Constants.Drivebase.WHEEL_DIAMETER * Math.PI);
 
-    AHRS gyro = new AHRS(I2C.Port.kMXP);
+    AHRS gyro = new AHRS(SerialPort.Port.kMXP);
 
-    private Drivebase4MotorTalonFX ()
+    private Drivebase()
     {
+        gyro.calibrate();
     }
-    @Override
+
         public void runMotor(double turnSpeedLeft, double turnSpeedRight)
     {
         leftMotor1.set(TalonFXControlMode.PercentOutput, turnSpeedLeft);
@@ -49,48 +52,24 @@ public class Drivebase4MotorTalonFX extends Drivebase {
         rightMotor2.set(TalonFXControlMode.PercentOutput, -turnSpeedRight);
     }
 
-/*
-    @Override
-    public void periodic() {
-        // Update the odometry in the periodic block
-        updateOdometry();
-    }
-    public void updateOdometry() {
-        odometry.update(
-                navX.getRotation2d(), ticksToMeters((int)leftFrontMotorController.getSelectedSensorPosition()), ticksToMeters((int)rightFrontMotorController.getSelectedSensorPosition()));
-    }
 
-    public void resetOdometry(){
-        leftFrontMotorController.setSelectedSensorPosition(0);
-
-        rightFrontMotorController.setSelectedSensorPosition(0);
-
-        leftBackMotorController.setSelectedSensorPosition(0);
-
-        navX.reset();
-
-        rightBackMotorController.setSelectedSensorPosition(0);
-        odometry.resetPosition(new Rotation2d(0),0,0,new Pose2d(0,0,new Rotation2d(0)));
-
-    }
-*/
-    @Override
         public double getPosLeft()
     {
         return leftMotor1.getSelectedSensorPosition()/TicksPerFoot;
     }
 
-    @Override
+
         public double getPosRight()
     {
         return -(rightMotor1.getSelectedSensorPosition()/TicksPerFoot);
     }
 
-    @Override
+
         public double getHeading()
     {
         return gyro.getAngle();
     }
+
 
     public double getPitch()
     {
@@ -103,12 +82,12 @@ public class Drivebase4MotorTalonFX extends Drivebase {
         return gyro.isCalibrating();
     }
 
-    @Override
+
         public double getTicksLeft() {
 
         return leftMotor1.getSelectedSensorPosition();
     }
-    @Override
+
         public void SetBrakeMode(boolean enable)
     {
         if (enable) {
@@ -127,12 +106,12 @@ public class Drivebase4MotorTalonFX extends Drivebase {
         }
     }
 
-    @Override
+
         public double getSpeedLeft()
     {
         return leftMotor1.getSelectedSensorVelocity();
     }
-    @Override
+
         public double getSpeedRight()
     {
         return (-rightMotor1.getSelectedSensorVelocity());
@@ -165,7 +144,7 @@ public class Drivebase4MotorTalonFX extends Drivebase {
     public static Drivebase GetDrivebase() {
 
         if (OGDrivebase == null) {
-            OGDrivebase = new Drivebase4MotorTalonFX();
+            OGDrivebase = new Drivebase();
         }
 
         return OGDrivebase;
