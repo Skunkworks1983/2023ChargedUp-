@@ -14,7 +14,7 @@ public class DriveOnChargeStationAndBalanceP2CommandGroup extends SequentialComm
     {
         // TODO: Add your sequential commands in the super() call, e.g.
         //           super(new OpenClawCommand(), new MoveArmCommand());
-        super(/*new PlaceGpInAutoConeCommandGroup(),*/ new DriveDistanceCommandGyro(Drivebase.GetDrivebase(), -14, Constants.Drivebase.DRIVEBASE_KF), new DriveDistanceCommandGyro(Drivebase.GetDrivebase(), 7, Constants.Drivebase.DRIVEBASE_KF + .02)
+        super(/*new PlaceGpInAutoConeCommandGroup(),*/ new DriveDistanceCommandGyro(Drivebase.GetDrivebase(), -14, Constants.Drivebase.DRIVEBASE_KF), new DriveDistanceCommandGyro(Drivebase.GetDrivebase(), 7, Constants.Drivebase.DRIVEBASE_KF + .05)
                 /*add balance code from Eleanor*/);
     }
 }
