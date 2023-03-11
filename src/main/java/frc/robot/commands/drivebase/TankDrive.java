@@ -54,8 +54,6 @@ public class TankDrive extends CommandBase
             outputRight = -Math.abs(Math.pow(outputRight, 2)/2);
         }
         drivebase.runMotor(-outputLeft, -outputRight);
-        //System.out.println("left: " + -outputLeft + " right: " + -outputRight);
-        //System.out.println("ticks: " + drivebase.getTicksLeft());
     }
     // Called once the command ends or is interrupted.
     @Override

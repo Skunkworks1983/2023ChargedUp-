@@ -1,8 +1,10 @@
 package frc.robot.services;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Collector.*;
+import frc.robot.commands.arm.ResetArm;
 import frc.robot.commands.arm.SetArmPositionCommand;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
@@ -35,6 +37,8 @@ public class Oi
 
         JoystickButton coneFloorPickup;
         JoystickButton cubeFloorPickup;
+
+        JoystickButton resetArm;
 
         Arm arm = Arm.getInstance();
 
@@ -73,6 +77,8 @@ public class Oi
         coneFloorPickup = new JoystickButton(buttonStick, 11);
         cubeFloorPickup = new JoystickButton(buttonStick, 3);
 
+        resetArm = new JoystickButton(buttonStick, 5);
+
         //when held
         expelButton.and(coneToggle).whileTrue(new ExpelConeCommand());
         expelButton.and(coneToggle.negate()).whileTrue(new ExpelCubeCommand());
@@ -88,6 +94,7 @@ public class Oi
         scoreMid.whileTrue(new SetArmPositionCommand(Constants.ArmPos.SCORE_CONE_MID_SHOULDER, Constants.ArmPos.SCORE_CONE_MID_WRIST));
         cubeFloorPickup.onTrue(new SetArmPositionCommand(Constants.ArmPos.FLOOR_CUBE_PICKUP_SHOULDER, Constants.ArmPos.FLOOR_CUBE_PICKUP_WRIST));
         coneFloorPickup.onTrue(new SetArmPositionCommand(Constants.ArmPos.CONE_FLOOR_PICKUP_SHOULDER, Constants.ArmPos.CONE_FLOOR_PICKUP_WRIST));
+        resetArm.whileTrue(new ResetArm());
     }
 
 
