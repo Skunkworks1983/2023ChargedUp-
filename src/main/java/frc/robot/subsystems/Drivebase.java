@@ -234,11 +234,9 @@ public class Drivebase implements Subsystem {
 
     public void setRightMeters(double meters){
         rightMotor1.set(ControlMode.Velocity,meters);
-        rightMotor2.set(ControlMode.Velocity,meters);
     }
     public void setLeftMeters(double meters){
         leftMotor1.set(ControlMode.Velocity,meters);
-        leftMotor2.set(ControlMode.Velocity,meters);
     }
 
 
