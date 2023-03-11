@@ -20,7 +20,7 @@ public class Drivebase implements Subsystem {
     TalonFX rightMotor1 = new TalonFX(Constants.Wobbles.RIGHT_MOTOR_1);
     TalonFX rightMotor2 = new TalonFX(Constants.Wobbles.RIGHT_MOTOR_2);
 
-    private boolean isHeadingReliable = true;
+    private boolean isHeadingReliable = false;
 
     private final double TicksPerFoot =
             Constants.Wobbles.TICKS_PER_MOTOR_REV * Constants.Drivebase.GEAR_RATIO /
@@ -53,13 +53,9 @@ public class Drivebase implements Subsystem {
 
 
     public double getHeading() {
-
         if (isHeadingReliable) {
-
             return gyro.getAngle();
-
         } else {
-
             return NaN;
         }
     }
@@ -100,7 +96,7 @@ public class Drivebase implements Subsystem {
         return (-rightMotor1.getSelectedSensorVelocity());
     }
 
-    public void waitForHeadingReliable () {
+    public void waitForHeadingReliable() {
 
         System.out.println("waitForHeadingReliable method is called");
 
@@ -127,7 +123,7 @@ public class Drivebase implements Subsystem {
 
 
     @Override
-    public void periodic () {
+    public void periodic() {
 
         if (gyro.isCalibrating()) {
 

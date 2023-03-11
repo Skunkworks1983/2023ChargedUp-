@@ -25,7 +25,6 @@ public class ArcadeDrive extends CommandBase {
 
     @Override
     public void initialize() {
-
         targetHeading = drivebase.getHeading();
     }
 
@@ -42,19 +41,18 @@ public class ArcadeDrive extends CommandBase {
 
         double heading = drivebase.getHeading();
         double turnThrottle = 0;
-        if (drivebase.getHeading() == NaN && Math.abs(leftX) > 0.01) {
+        if (Double.isNaN(heading) && Math.abs(leftX) > 0.01) {
             turnThrottle = leftX;
-        }
-        else if (Math.abs(leftX) > 0.01) {
-            targetHeading = targetHeading - ((Constants.Drivebase.ARCADE_DRIVE_MAX_DEGREES_PER_SECOND/
-                    Constants.Drivebase.EXECUTES_PER_SECOND)*leftX) ;
+        } else if (Math.abs(leftX) > 0.01) {
+            targetHeading = targetHeading + ((Constants.Drivebase.ARCADE_DRIVE_MAX_DEGREES_PER_SECOND /
+                    Constants.Drivebase.EXECUTES_PER_SECOND) * leftX);
 
             turnThrottle = pidController.calculate(heading, targetHeading);
         }
 
 //      //  System.out.println("error: " + pidController.getPositionError());
 //       // System.out.println("heading: " + heading);
-//        System.out.println("target heading: " + targetHeading);
+        //System.out.println("target heading: " + targetHeading);
 //        System.out.println("turn throttle: " + turnThrottle);
 
 //        if (Math.abs(leftX) > 0.01) {
@@ -71,7 +69,7 @@ public class ArcadeDrive extends CommandBase {
 //        System.out.printf("Target Heading: %f | Current Heading: %f%n", targetHeading, heading);
 
         drivebase.runMotor(leftSpeed, rightSpeed);
-         }
+    }
 
     @Override
     public boolean isFinished() {
