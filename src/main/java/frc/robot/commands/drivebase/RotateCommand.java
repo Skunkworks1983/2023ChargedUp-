@@ -24,8 +24,7 @@ public class RotateCommand extends CommandBase
     {
         startDegree = drivebase.getHeading();
         finishDegree = startDegree + degree;
-        System.out.println("turning to: " + (finishDegree));
-        System.out.println("starting speed is: " + (Constants.Drivebase.ROTATE_KP * (finishDegree - drivebase.getHeading())) + ", starting degree is: " + startDegree);
+        System.out.println("starting RotateCommand");
     }
 
     @Override
@@ -33,7 +32,6 @@ public class RotateCommand extends CommandBase
     {
         double error = finishDegree - drivebase.getHeading();
 
-        System.out.println("error: "+error+" heading "+drivebase.getHeading());
         double speed = (Constants.Drivebase.ANGLE_KP * error) + Math.copySign(Constants.Drivebase.ROTATE_KF, error);
         if (speed > 0.5)
         {
@@ -44,7 +42,6 @@ public class RotateCommand extends CommandBase
             speed = -0.5;
         }
         drivebase.runMotor(speed, -speed);
-        //SmartDashboard.putNumber("angle", drivebase.getHeading());
     }
 
     @Override
@@ -73,6 +70,6 @@ public class RotateCommand extends CommandBase
     public void end(boolean interrupted)
     {
         drivebase.runMotor(0, 0);
-        System.out.println("ending, final degree: " + drivebase.getHeading());
+        System.out.println("ending RotateCommand");
     }
 }

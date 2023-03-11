@@ -36,14 +36,21 @@ public class IntakeCubeSmartCommand extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        System.out.println("the collector is holding cube" + collectorInstance.isHoldingCube());
         return collectorInstance.isHoldingCube();
     }
 
 
     @Override
-    public void end(boolean interrupted) {
-        System.out.println("intake cube end");
+    public void end(boolean interrupted)
+    {
         collectorInstance.Setspeed(0);
+        if(interrupted)
+        {
+            System.out.println("Intake Cube Smart Command Ended, interrupted");
+        }
+        else
+        {
+            System.out.println("Intake Cube Smart Command Ended");
+        }
     }
 }

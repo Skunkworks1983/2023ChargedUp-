@@ -46,8 +46,16 @@ public class ExpelConeCommand extends CommandBase {
     }
 
     @Override
-    public void end(boolean interrupted) {
-        System.out.println("Expel Cone End");
+    public void end(boolean interrupted)
+    {
         collectorInstance.Setspeed(0);
+        if(interrupted)
+        {
+            System.out.println("Expel Cone Command ended, interrupted");
+        }
+        else
+        {
+            System.out.println("Expel Cone Command ended");
+        }
     }
 }

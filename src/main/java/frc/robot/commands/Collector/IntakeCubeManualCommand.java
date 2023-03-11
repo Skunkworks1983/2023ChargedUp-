@@ -40,8 +40,16 @@ public class IntakeCubeManualCommand extends CommandBase {
     }
 
     @Override
-    public void end(boolean interrupted) {
-        System.out.println("intake cube manual end");
+    public void end(boolean interrupted)
+    {
         collectorInstance.Setspeed(0);
+        if(interrupted)
+        {
+            System.out.println("Intake Cube Manual Command Ended, interrupted");
+        }
+        else
+        {
+            System.out.println("Intake Cube Manual Command Ended");
+        }
     }
 }

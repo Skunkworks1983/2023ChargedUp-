@@ -13,12 +13,12 @@ public class RotateWristByPowerCommand extends CommandBase {
         this.speed = speed;
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
-        addRequirements();
+        addRequirements(arm);
     }
 
     @Override
     public void initialize() {
-        System.out.println("command initialized at speed:" + speed);
+        System.out.println("RotateWristByPower initialized at speed:" + speed);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class RotateWristByPowerCommand extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        System.out.println("ended");
+        System.out.println("ended rotateWristByPower");
         arm.SetWristSpeed(0);
     }
 }

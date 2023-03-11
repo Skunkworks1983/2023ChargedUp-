@@ -41,8 +41,16 @@ public class IntakeConeManualCommand extends CommandBase {
     }
 
     @Override
-    public void end(boolean interrupted) {
-        System.out.println("Intake cone manual end");
+    public void end(boolean interrupted)
+    {
         collectorInstance.Setspeed(0);
+        if(interrupted)
+        {
+            System.out.println("Intake Cone Manual Command Ended, interrupted");
+        }
+        else
+        {
+            System.out.println("Intake Cone Manual Command Ended");
+        }
     }
 }
