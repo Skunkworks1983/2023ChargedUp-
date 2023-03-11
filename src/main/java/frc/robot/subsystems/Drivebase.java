@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.constants.Constants;
+import edu.wpi.first.wpilibj.Timer;
 
 import static java.lang.Double.NaN;
 
@@ -26,6 +27,8 @@ public class Drivebase implements Subsystem {
                     (Constants.Drivebase.WHEEL_DIAMETER * Math.PI);
 
     AHRS gyro = new AHRS(SPI.Port.kMXP);
+
+    Timer timer = new Timer();
 
     private Drivebase() {
         gyro.calibrate();
@@ -98,10 +101,28 @@ public class Drivebase implements Subsystem {
     }
 
     public void waitForHeadingReliable () {
+
+        System.out.println("waitForHeadingReliable method is called");
+
+        timer.start();
+
         while (gyro.isCalibrating()) {
 
+            if (timer.hasElapsed(Constants.Drivebase.WAIT_TIME_FOR_GYRO_CALIBRATION)) {
+
+                System.out.println("gyro took too long to calibrate");
+                System.out.println("heading reliability is " + isHeadingReliable);
+
+                return;
+            }
         }
+
+
         isHeadingReliable = true;
+
+        System.out.println("gyro finished calibrating");
+        System.out.println("heading reliablity is " + isHeadingReliable);
+
     }
 
 

@@ -56,7 +56,7 @@ public class Robot extends TimedRobot
         arm = Arm.getInstance();
         robotContainer = new RobotContainer();
 
-
+        drivebase.waitForHeadingReliable();
     }
     
     
@@ -100,7 +100,7 @@ public class Robot extends TimedRobot
 
     public void autonomousInit() {
 
-        drivebase.setHeadingReliable();
+        drivebase.waitForHeadingReliable();
 
     }
 
@@ -108,7 +108,7 @@ public class Robot extends TimedRobot
     @Override
     public void teleopInit()
     {
-        drivebase.setHeadingReliable();
+        drivebase.waitForHeadingReliable();
 
         drivebase.SetBrakeMode(true);
         Command arcadeDrive = new ArcadeDrive(drivebase, oi);

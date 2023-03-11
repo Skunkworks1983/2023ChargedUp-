@@ -59,6 +59,7 @@ public class Constants extends CommandBase {
         public static final double ARCADE_DRIVE_KD = 0;
         public static final double ARCADE_DRIVE_MAX_DEGREES_PER_SECOND = 150;
         public static final int EXECUTES_PER_SECOND = 50;
+        public static final double  WAIT_TIME_FOR_GYRO_CALIBRATION = 3;
     }
 
     public class Arm {
