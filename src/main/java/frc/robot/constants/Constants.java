@@ -50,6 +50,7 @@ public class Constants extends CommandBase {
         public static final int SCORE_MID = 14;
         public static final int CONE_FLOOR_PICKUP = 11;
         public static final int CUBE_FLOOR_PICKUP = 3;
+        public static final int RESET_ARM = 5;
 
 
     }

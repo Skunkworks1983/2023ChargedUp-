@@ -75,9 +75,9 @@ public class Oi
         floorNormalScore = new JoystickButton(buttonStick, Constants.OIButtons.WRIST_DOWN_BUTTON);//2
 
         coneFloorPickup = new JoystickButton(buttonStick, Constants.OIButtons.CONE_FLOOR_PICKUP);
-        cubeFloorPickup = new JoystickButton(buttonStick, 3);
+        cubeFloorPickup = new JoystickButton(buttonStick, Constants.OIButtons.CUBE_FLOOR_PICKUP);
 
-        resetArm = new JoystickButton(buttonStick, 5);
+        resetArm = new JoystickButton(buttonStick, Constants.OIButtons.RESET_ARM);
 
         //when held
         expelButton.and(coneToggle).whileTrue(new ExpelConeCommand());

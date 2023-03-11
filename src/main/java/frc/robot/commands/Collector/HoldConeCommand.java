@@ -47,8 +47,17 @@ public class HoldConeCommand extends CommandBase {
     }
 
     @Override
-    public void end(boolean interrupted) {
-        System.out.println("Hold cone command end");
+    public void end(boolean interrupted)
+    {
+        if(interrupted) {
+            System.out.println("Hold cone command interrupted");
+        }
+        else{
+            System.out.println("hold cone command end");
+        }
+
+
+
         collectorInstance.Setspeed(0);
     }
 }
