@@ -129,10 +129,11 @@ public class Drivebase implements Subsystem {
     @Override
     public void periodic () {
 
-        if (gyro.isCalibrating()) {
+        if (gyro.isCalibrating() || !gyro.isConnected()) {
 
             isHeadingReliable = false;
 
+            System.out.println("GYRO CRASHED!!!");
         }
     }
 

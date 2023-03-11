@@ -42,6 +42,7 @@ public class ArcadeDrive extends CommandBase {
 
         double heading = drivebase.getHeading();
         double turnThrottle = 0;
+
         if (drivebase.getHeading() == NaN && Math.abs(leftX) > 0.01) {
             turnThrottle = leftX;
         }
