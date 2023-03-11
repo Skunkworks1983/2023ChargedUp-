@@ -16,7 +16,6 @@ import frc.robot.commands.drivebase.DetectRangeSensorCommand;
 import frc.robot.commands.drivebase.DetectRangeSensorWithoutDrivebaseCommand;
 import frc.robot.commands.arm.WaveCollectorCommandGroup;
 import frc.robot.commands.drivebase.TankDrive;
-import frc.robot.commands.arm.RotateDegrees;
 import frc.robot.commands.autos.*;
 import frc.robot.commands.autos.SimpleAutoCommandGroup;
 import frc.robot.commands.drivebase.ArcadeDrive;
@@ -59,6 +58,8 @@ public class Robot extends TimedRobot
         arm = Arm.getInstance();
         robotContainer = new RobotContainer();
 
+        drivebase.waitForHeadingReliable();
+
         SmartDashboard.putNumber("floor cube pickup", Constants.ArmPos.FLOOR_CUBE_PICKUP_WRIST);
     }
     
@@ -86,6 +87,8 @@ public class Robot extends TimedRobot
     @Override
     public void disabledInit() {
 
+        drivebase.SetBrakeMode(false);
+
     }
     
     
@@ -101,12 +104,16 @@ public class Robot extends TimedRobot
 
     public void autonomousInit() {
 
+        drivebase.waitForHeadingReliable();
+
     }
 
 
     @Override
     public void teleopInit()
     {
+        drivebase.waitForHeadingReliable();
+
         drivebase.SetBrakeMode(true);
         Command arcadeDrive = new ArcadeDrive(drivebase, oi);
         arcadeDrive.schedule();
