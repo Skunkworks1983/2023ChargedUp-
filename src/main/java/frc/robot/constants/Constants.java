@@ -1,9 +1,14 @@
 package frc.robot.constants;
 
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.math.trajectory.constraint.MaxVelocityConstraint;
+import edu.wpi.first.math.trajectory.constraint.TrajectoryConstraint;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 
 public class Constants extends CommandBase {
+
+
     public static class Collector {
         public static final int MOTOR_ID = 7;
 
@@ -33,6 +38,8 @@ public class Constants extends CommandBase {
     }
 
     public class OIButtons {
+
+        public static final int AUTO_BALANCE = 1;
         public static final int ARM_UP_BUTTON = 12;
         public static final int ARM_DOWN_BUTTON = 15;
         public static final int WRIST_UP_BUTTON = 4; // NEEDS CHANGING BEFORE COMMITTING
@@ -46,7 +53,26 @@ public class Constants extends CommandBase {
     }
 
     public class Drivebase {
+
+        public static final double kMaxSpeedMetersPerSecond=1;//was 3.47472
+        public static final double kMaxAccelerationMetersPerSecondSquared=2.0792;//was 24.0792
+
+        public static final int FRONT_RANGE_SENSOR_OUTPUT_CHANNEL=4;
+
+        public static final int BACK_RANGE_SENSOR_OUTPUT_CHANNEL=5;
+
+        public static final int FRONT_RANGE_SENSOR_INPUT_CHANNEL=0;
+
+        public static final int BACK_RANGE_SENSOR_INPUT_CHANNEL=1;
+
+        public static final double MAXIMUM_BALANCE_DISTANCE_FROM_GROUND_FRONT=100;
+
+        public static final double MAXIMUM_BALANCE_DISTANCE_FROM_GROUND_BACK=800;
         public static final double GEAR_RATIO = 10.71;
+
+        public static final double kTrackwidthMeters=.38;
+        public static final double FEET_PER_METER=3.28084;
+        public static final int TICKS_PER_ROTATION=2048;
         public static final double WHEEL_DIAMETER = 0.5;
         public static final double DISTANCE_KP = 0.05;
         public static final double ROTATE_KP = 0.001;

@@ -7,15 +7,24 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.arm.WaveCollectorCommandGroup;
+import frc.robot.commands.autos.SmartDriveCommand;
+import frc.robot.commands.autos.TestVolocityModeCommand;
 import frc.robot.commands.drivebase.TankDrive;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
 import frc.robot.services.Oi;
 import frc.robot.subsystems.Drivebase;
+
+import java.util.List;
 
 
 /**
@@ -50,6 +59,8 @@ public class Robot extends TimedRobot
         arm = Arm.getInstance();
         robotContainer = new RobotContainer();
     }
+
+
     
     
     /**
@@ -93,6 +104,22 @@ public class Robot extends TimedRobot
 
         //WaveCollector.schedule();
         //CommandScheduler.getInstance().schedule(new WaveCollectorCommandGroup());
+        Trajectory exampleTrajectoryInMeters =
+                TrajectoryGenerator.generateTrajectory(
+                        // Start at the origin facing the +X direction
+                        new Pose2d(0, 0, new Rotation2d(0)),
+                        // Pass through these two interior waypoints, making an 's' curve path
+                        List.of(new Translation2d(3, 0)),
+                        // End 3 meters straight ahead of where we started, facing forward
+                        new Pose2d(9, 0, new Rotation2d(Math.PI/2)),
+                        // Pass config
+                        Drivebase.GetDrivebase().config);//*/
+
+        SmartDriveCommand drive = new SmartDriveCommand(exampleTrajectoryInMeters);
+        TestVolocityModeCommand t = new TestVolocityModeCommand();
+        t.schedule();
+        //drive.schedule();
+
     }
 
 
@@ -104,9 +131,9 @@ public class Robot extends TimedRobot
         arm.ShoulderMotor.setNeutralMode(NeutralMode.Brake);
 
         //double rotateTo = 15;
-        Command TankDrive = new TankDrive(drivebase, oi);
+        //Command TankDrive = new TankDrive(drivebase, oi);
 
-        TankDrive.schedule();
+        //TankDrive.schedule();
 
         /* if (autonomousCommand != null)
         {

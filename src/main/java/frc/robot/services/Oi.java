@@ -5,6 +5,10 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Collector.*;
 import frc.robot.commands.arm.RotateWristByPowerCommand;
 import frc.robot.commands.arm.SetShoulderSpeed;
+import frc.robot.commands.autos.BalanceOnChargeStationCommand;
+import frc.robot.commands.autos.DetectRangeSensorCommand;
+import frc.robot.commands.drivebase.ArcadeDrive;
+import frc.robot.commands.drivebase.TankDrive;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drivebase;
@@ -25,6 +29,8 @@ public class Oi
 
         JoystickButton intakeButton;
         JoystickButton expelButton;
+
+        JoystickButton autoBalance;
 
         JoystickButton coneToggle;
         JoystickButton manualToggle;
@@ -53,7 +59,14 @@ public class Oi
         wristUp = new JoystickButton(buttonStick,Constants.OIButtons.WRIST_UP_BUTTON);//4
         wristDown = new JoystickButton(buttonStick,Constants.OIButtons.WRIST_DOWN_BUTTON);//2
 
+        autoBalance = new JoystickButton(leftStick,Constants.OIButtons.AUTO_BALANCE);
+
         //when held
+
+        DetectRangeSensorCommand a = new DetectRangeSensorCommand();
+        BalanceOnChargeStationCommand b = new BalanceOnChargeStationCommand(.023,0,0,.08,a);
+        autoBalance.whileFalse(new TankDrive(drivebase,this));
+
         expelButton.and(coneToggle).whileTrue(new ExpelConeCommand());
         expelButton.and(coneToggle.negate()).whileTrue(new ExpelCubeCommand());
         intakeButton.and(coneToggle).and(manualToggle).whileTrue(new IntakeConeManualCommand());
