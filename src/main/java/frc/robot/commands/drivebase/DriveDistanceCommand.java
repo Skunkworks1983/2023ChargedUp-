@@ -32,7 +32,7 @@ public class DriveDistanceCommand extends CommandBase
     @Override
     public void initialize()
     {
-
+        System.out.println("Initialising Drive Distance Command");
         startDistanceFT = drivebase.getPosLeft();
         finishDistanceFT = startDistanceFT+distanceFT;
         startDegree = drivebase.getHeading();
@@ -45,7 +45,6 @@ public class DriveDistanceCommand extends CommandBase
             direction = -1;
         }
         drivebase.SetBrakeMode(true);
-        System.out.println("moving from " +startDistanceFT + " to " + finishDistanceFT);
     }
 
     @Override
@@ -85,6 +84,6 @@ public class DriveDistanceCommand extends CommandBase
     public void end(boolean interrupted)
     {
         drivebase.runMotor(0, 0);
-        System.out.println("Ended at: "+drivebase.getPosLeft());
+        //ystem.out.println("Ending Drive Distance Command");
     }
 }

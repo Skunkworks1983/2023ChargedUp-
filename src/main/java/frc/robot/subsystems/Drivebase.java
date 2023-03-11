@@ -4,7 +4,12 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.kauailabs.navx.frc.AHRS;
-import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DigitalOutput;
+import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.constants.Constants;
@@ -16,6 +21,17 @@ public class Drivebase implements Subsystem {
     TalonFX leftMotor2 = new TalonFX(Constants.Wobbles.LEFT_MOTOR_2);
     TalonFX rightMotor1 = new TalonFX(Constants.Wobbles.RIGHT_MOTOR_1);
     TalonFX rightMotor2 = new TalonFX(Constants.Wobbles.RIGHT_MOTOR_2);
+
+    DigitalOutput frontRangeSensorTrigger = new DigitalOutput(Constants.Drivebase.FRONT_RANGE_SENSOR_OUTPUT_CHANNEL);
+
+    DigitalOutput backRangeSensorTrigger = new DigitalOutput(Constants.Drivebase.BACK_RANGE_SENSOR_OUTPUT_CHANNEL);
+
+    AnalogInput frontRangeSensorValue = new AnalogInput(Constants.Drivebase.FRONT_RANGE_SENSOR_INPUT_CHANNEL);
+
+    AnalogInput backRangeSensorValue = new AnalogInput(Constants.Drivebase.BACK_RANGE_SENSOR_INPUT_CHANNEL);
+
+    public enum DriveDirection {FORWARD,BACKWARD,MOTIONLESS}
+    DriveDirection driveDirection = DriveDirection.FORWARD;
 
     private final double TicksPerFoot =
             Constants.Wobbles.TICKS_PER_MOTOR_REV * Constants.Drivebase.GEAR_RATIO /
@@ -34,7 +50,6 @@ public class Drivebase implements Subsystem {
         rightMotor2.set(TalonFXControlMode.PercentOutput, -turnSpeedRight);
     }
 
-
     public double getPosLeft() {
         return leftMotor1.getSelectedSensorPosition() / TicksPerFoot;
     }
@@ -50,7 +65,13 @@ public class Drivebase implements Subsystem {
     }
 
 
-    public boolean isCalibrating() {
+    public double getPitch()
+    {
+        return gyro.getPitch();
+    }
+
+        public boolean isCalibrating()
+    {
         return gyro.isCalibrating();
     }
 
@@ -84,6 +105,30 @@ public class Drivebase implements Subsystem {
     public double getSpeedRight() {
         return (-rightMotor1.getSelectedSensorVelocity());
     }
+
+    public DriveDirection getDriveDirection(){return driveDirection;}
+
+    public int getFrontRangeSensor(){
+        return frontRangeSensorValue.getValue();
+    }
+    public int getBackRangeSensor(){
+        return backRangeSensorValue.getValue();
+    }
+
+    public int getDirectionRangeSensor(){
+        if(driveDirection==DriveDirection.FORWARD)return getFrontRangeSensor();
+        if(driveDirection==DriveDirection.BACKWARD)return getBackRangeSensor();
+        return 0;
+    }
+
+    public void setDirectionRangeSensor(boolean value){
+        if(driveDirection==DriveDirection.FORWARD)setFrontRangeSensor(value);
+        if(driveDirection==DriveDirection.BACKWARD)setBackRangeSensor(value);
+    }
+
+    public void setBackRangeSensor(boolean value){backRangeSensorTrigger.set(value);}
+
+    public void setFrontRangeSensor(boolean value){frontRangeSensorTrigger.set(value);}
 
     public static Drivebase GetDrivebase() {
 

@@ -20,8 +20,9 @@ public class IntakeConeManualCommand extends CommandBase {
     }
 
     @Override
-    public void initialize() {
-
+    public void initialize()
+    {
+        System.out.println("Enabling Intake Cone Manual Command");
     }
 
     @Override
@@ -32,7 +33,6 @@ public class IntakeConeManualCommand extends CommandBase {
         else {
             collectorInstance.Setspeed(Constants.Collector.INTAKE_MOTOR_SPEED * Constants.Collector.MANUAL_INTAKE_MULTIPLIER);
         }
-        SmartDashboard.putNumber("Colletor current", collectorInstance.GetCollectorCurrent());
     }
 
     @Override
@@ -41,7 +41,16 @@ public class IntakeConeManualCommand extends CommandBase {
     }
 
     @Override
-    public void end(boolean interrupted) {
+    public void end(boolean interrupted)
+    {
         collectorInstance.Setspeed(0);
+        if(interrupted)
+        {
+            System.out.println("Intake Cone Manual Command Ended, interrupted");
+        }
+        else
+        {
+            System.out.println("Intake Cone Manual Command Ended");
+        }
     }
 }

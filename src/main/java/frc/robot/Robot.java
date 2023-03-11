@@ -5,11 +5,19 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.autos.BalanceOnChargeStationCommand;
+import frc.robot.commands.drivebase.DetectRangeSensorCommand;
+import frc.robot.commands.drivebase.DetectRangeSensorWithoutDrivebaseCommand;
+import frc.robot.commands.drivebase.TankDrive;
+import frc.robot.commands.arm.RotateDegrees;
+import frc.robot.commands.autos.*;
 import frc.robot.commands.autos.DriveOnChargeStationAndBalanceP2CommandGroup;
 import frc.robot.commands.autos.E2ToGamePiece4;
 import frc.robot.commands.autos.LeaveCommunityP2E2;
@@ -17,12 +25,6 @@ import frc.robot.commands.autos.ScoreAndDriveOutP3CommandGroup;
 import frc.robot.commands.autos.ScoreAndExitCommunityP1CommandGroup;
 import frc.robot.commands.autos.ScoreAndExitCommunityP2CommandGroup;
 import frc.robot.commands.autos.SimpleAutoCommandGroup;
-import frc.robot.commands.drivebase.ArcadeDrive;
-import frc.robot.commands.drivebase.TankDrive;
-import frc.robot.commands.Collector.IntakeConeCollectorCommand;
-import frc.robot.commands.arm.SetArmPositionCommand;
-import frc.robot.commands.arm.WristRotateDegrees;
-import frc.robot.commands.autos.PositionShoulderAndWrist;
 import frc.robot.commands.drivebase.ArcadeDrive;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
@@ -146,6 +148,7 @@ public class Robot extends TimedRobot
         drivebase.SetBrakeMode(true);
         Command arcadeDrive = new ArcadeDrive(drivebase, oi);
         arcadeDrive.schedule();
+
     }
 
 

@@ -22,7 +22,7 @@ public class SetShoulderSpeed extends CommandBase {
 
         arm.SetPercentOutput(percentOutput);
 
-        System.out.println("ENABLING ARM!!!!!!!!");
+        System.out.println("SetShoulderSpeed Enabling");
     }
 
     @Override
@@ -41,7 +41,7 @@ public class SetShoulderSpeed extends CommandBase {
     public void end(boolean interrupted) {
 
     arm.SetPercentOutput(0);
-        System.out.println("DISABLING ARM!!!!!!!!");
+        System.out.println("SetShoulderSpeed disabling");
 
     }
 

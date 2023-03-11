@@ -28,7 +28,6 @@ public class Collector extends SubsystemBase {
 
         if(cubeBreak1.get() == false && cubeBreak2.get() == false)
         {
-            System.out.println("returns true");
             return true;
         }
         if(cubeBreak1.get() == false && cubeBreak2.get() == false) {

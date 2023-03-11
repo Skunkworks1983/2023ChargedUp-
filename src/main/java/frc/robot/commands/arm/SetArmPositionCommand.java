@@ -11,7 +11,6 @@ public class SetArmPositionCommand extends CommandBase
     private final Arm arm;
     private final double shoulderAngleSetpoint;
     private final double wristAngleSetpoint;
-    private boolean needWristSet = false;
 
     public SetArmPositionCommand(double shoulderAngleSetpoint, double wristAngleSetpoint)
     {
@@ -24,6 +23,7 @@ public class SetArmPositionCommand extends CommandBase
     @Override
     public void initialize()
     {
+        System.out.println("set arm pos with wristAngleSetpoint: " + wristAngleSetpoint + " and shoulderAngleSetpoint: " + shoulderAngleSetpoint);
         arm.setWristAnglePosition(wristAngleSetpoint);
         arm.setShoulderAnglePosition(shoulderAngleSetpoint);
     }
@@ -31,19 +31,12 @@ public class SetArmPositionCommand extends CommandBase
     @Override
     public void execute()
     {
-        if(needWristSet && arm.getShoulderAngle() >= Constants.Arm.SHOULDER_SAFE_WRIST_ANGLE)
-        {
-            arm.setWristAnglePosition(wristAngleSetpoint);
-            needWristSet = false;
-            System.out.println("Now Enabling Wrist");
-        }
+
     }
 
     @Override
     public boolean isFinished()
     {
-        //System.out.print("Shoulder error: " + Math.abs(arm.ShoulderMotor.getClosedLoopError() * Constants.Arm.SHOULDER_TICKS_TO_DEGREES));
-        //System.out.println(" Wrist error: " + Math.abs(arm.WristMotor.getClosedLoopError() * Constants.Arm.WRIST_TICKS_TO_DEGREES));
         //return Math.abs(arm.ShoulderMotor.getClosedLoopError() * Constants.Arm.SHOULDER_TICKS_TO_DEGREES) < Constants.Arm.SHOULDER_TOLERANCE &&
         //       Math.abs(arm.WristMotor.getClosedLoopError() * Constants.Arm.WRIST_TICKS_TO_DEGREES) < Constants.Arm.WRIST_TOLERANCE;
         return false;
@@ -52,6 +45,13 @@ public class SetArmPositionCommand extends CommandBase
     @Override
     public void end(boolean interrupted)
     {
-        System.out.println("Done!");
+        if(interrupted)
+        {
+            System.out.println("SetArmPositionCommand Ending, interrupted");
+        }
+        else
+        {
+            System.out.println("SetArmPositionCommand Ending");
+        }
     }
 }

@@ -28,9 +28,7 @@ public class ExpelCubeCommand extends CommandBase {
         else {
             collectorInstance.Setspeed(Constants.Collector.EXPEL_MOTOR_SPEED);
         }
-
-
-
+        System.out.println("Initializing Expel Cube Command");
     }
 
     @Override
@@ -45,7 +43,16 @@ public class ExpelCubeCommand extends CommandBase {
     }
 
     @Override
-    public void end(boolean interrupted) {
+    public void end(boolean interrupted)
+    {
         collectorInstance.Setspeed(0);
+        if(interrupted)
+        {
+            System.out.println("Expel Cube Command Ended, interrupted");
+        }
+        else
+        {
+            System.out.println("Expel Cube Command Ended");
+        }
     }
-    }
+}
