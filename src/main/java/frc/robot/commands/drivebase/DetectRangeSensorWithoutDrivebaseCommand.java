@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.constants.Constants;
-import frc.robot.subsystems.multidrivebase.Drivebase4MotorTalonFX;
+import frc.robot.subsystems.Drivebase;
 
 import static frc.robot.constants.Constants.Drivebase.VOLTAGE_TO_DISTANCE_SENSOR;
 
@@ -29,7 +29,7 @@ public class DetectRangeSensorWithoutDrivebaseCommand extends CommandBase {
 
 
 
-    Drivebase4MotorTalonFX.DriveDirection currentDirection;
+    Drivebase.DriveDirection currentDirection;
     public double getBackDistance(){return backVoltage*VOLTAGE_TO_DISTANCE_SENSOR;}
     public double getFrontDistance(){return frontVoltage*VOLTAGE_TO_DISTANCE_SENSOR;}
 

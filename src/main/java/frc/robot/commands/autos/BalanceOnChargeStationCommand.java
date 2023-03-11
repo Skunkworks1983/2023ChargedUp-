@@ -4,7 +4,7 @@ package frc.robot.commands.autos;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.commands.drivebase.DetectRangeSensorCommand;
 import frc.robot.constants.Constants;
-import frc.robot.subsystems.multidrivebase.Drivebase4MotorTalonFX;
+import frc.robot.subsystems.Drivebase;
 
 
 public class BalanceOnChargeStationCommand extends CommandBase {
@@ -41,20 +41,20 @@ public class BalanceOnChargeStationCommand extends CommandBase {
     public void execute() {
 
 
-        error=((Drivebase4MotorTalonFX)Drivebase4MotorTalonFX.GetDrivebase()).getPitch();
+        error= Drivebase.GetDrivebase().getPitch();
         //System.out.println(error);
         double derivative = (error-lastError)*50;
         integral+=(error/50);
         double f =(error*p)+(derivative*d)+ (integral*i);
         if(f>maxSpeed)f=maxSpeed;
         if(f<-maxSpeed)f=-maxSpeed;
-        if(f>0)rangeSensor.setCurrentDirection(Drivebase4MotorTalonFX.DriveDirection.FORWARD);
-        if(f<0)rangeSensor.setCurrentDirection(Drivebase4MotorTalonFX.DriveDirection.BACKWARD);
-        if(f==0)rangeSensor.setCurrentDirection(Drivebase4MotorTalonFX.DriveDirection.MOTIONLESS);
+        if(f>0)rangeSensor.setCurrentDirection(Drivebase.DriveDirection.FORWARD);
+        if(f<0)rangeSensor.setCurrentDirection(Drivebase.DriveDirection.BACKWARD);
+        if(f==0)rangeSensor.setCurrentDirection(Drivebase.DriveDirection.MOTIONLESS);
         if(f>0&&rangeSensor.getFrontVoltage()> Constants.Drivebase.MAXIMUM_BALANCE_DISTANCE_FROM_GROUND_FRONT){f=0;System.out.println("front voltage too high");}
         if(f<0&&rangeSensor.getBackVoltage()> Constants.Drivebase.MAXIMUM_BALANCE_DISTANCE_FROM_GROUND_BACK){f=0;System.out.println("back voltage too high");}
 
-        ((Drivebase4MotorTalonFX)Drivebase4MotorTalonFX.GetDrivebase()).runMotor(f,f);
+        Drivebase.GetDrivebase().runMotor(f,f);
         lastError=error;
 
     }

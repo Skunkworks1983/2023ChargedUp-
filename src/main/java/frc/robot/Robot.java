@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.autos.BalanceOnChargeStationCommand;
-import frc.robot.commands.autos.WaveCollectorCommandGroup;
 import frc.robot.commands.drivebase.DetectRangeSensorCommand;
 import frc.robot.commands.drivebase.DetectRangeSensorWithoutDrivebaseCommand;
 import frc.robot.commands.arm.WaveCollectorCommandGroup;
@@ -109,9 +108,9 @@ public class Robot extends TimedRobot
         arm.ShoulderMotor.setNeutralMode(NeutralMode.Brake);
 
         //double rotateTo = 15;
-        //Command TankDrive = new TankDrive(drivebase, oi);
+        Command TankDrive = new TankDrive(drivebase, oi);
 
-        //TankDrive.schedule();
+        TankDrive.schedule();
 
         /* if (autonomousCommand != null)
         {
