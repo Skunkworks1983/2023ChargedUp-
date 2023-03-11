@@ -23,6 +23,7 @@ public class Arm extends SubsystemBase
     public double lastAngle;
     public double setpoint;
     private final static Arm INSTANCE = new Arm();
+    boolean isLimitSwitchTrue = false;
 
     public static Arm getInstance()
     {
@@ -217,73 +218,52 @@ public class Arm extends SubsystemBase
     {
         double wristPos = getWristAngle();
         double shoulderPos = getShoulderAngle();
-        SmartDashboard.putNumber("Error:", WristMotor.getClosedLoopError());
+        //SmartDashboard.putNumber("Error:", WristMotor.getClosedLoopError());
 
-        SmartDashboard.putNumber("setpoint", setpoint);
-        SmartDashboard.putNumber("position", shoulderPos);
+        //SmartDashboard.putNumber("setpoint", setpoint);
+        //SmartDashboard.putNumber("position", shoulderPos);
 
-        if(Math.abs(shoulderPos - lastAngle) > Constants.Arm.SHOULDER_ANGLE_UPDATE)
+        double m = (Constants.Arm.MIN_PEAK - Constants.Arm.MAX_PEAK)/(Constants.Arm.MAX_ANGLE - Constants.Arm.MIN_ANGLE);
+        double b = Constants.Arm.MIN_PEAK - (m * Constants.Arm.MAX_ANGLE);
+        peakOutput = (m * shoulderPos + b);
+        if(peakOutput > Constants.Arm.MAX_PEAK)
         {
-            lastAngle = shoulderPos;
+            peakOutput = Constants.Arm.MAX_PEAK;
+        }
+        else if(peakOutput < Constants.Arm.MIN_PEAK)
+        {
+            peakOutput = Constants.Arm.MIN_PEAK;
         }
 
-
-        if(getShoulderAngle() < Constants.Arm.SHOULDER_SETPOINT_1)
-        {
-
-            peakOutput = Constants.Arm.SETPOINT_1_PEAK;
-
-        }
-        else if(getShoulderAngle() >= Constants.Arm.SHOULDER_SETPOINT_1 &&
-                getShoulderAngle() < Constants.Arm.SHOULDER_SETPOINT_2)
-        {
-
-            peakOutput = Constants.Arm.SETPOINT_2_PEAK;
-
-
-        }
-        else if(getShoulderAngle() >= Constants.Arm.SHOULDER_SETPOINT_2 &&
-                getShoulderAngle() < Constants.Arm.SHOULDER_SETPOINT_3)
-        {
-
-            peakOutput = Constants.Arm.SETPOINT_3_PEAK;
-
-        }
-        else if(getShoulderAngle() >= Constants.Arm.SHOULDER_SETPOINT_3 &&
-                getShoulderAngle() < Constants.Arm.SHOULDER_SETPOINT_4)
-        {
-
-            peakOutput = Constants.Arm.SETPOINT_4_PEAK;
-
-        }
-        else if(getShoulderAngle() >= Constants.Arm.SHOULDER_SETPOINT_4)
-        {
-
-            peakOutput = Constants.Arm.SETPOINT_5_PEAK;
-        }
-
-
-        SmartDashboard.putNumber("wrist position", wristPos);
-        SmartDashboard.putNumber("shoulder position", shoulderPos);
-        SmartDashboard.putNumber("Motor output: ", ShoulderMotor.getMotorOutputPercent());
+        //SmartDashboard.putNumber("wrist position", wristPos);
+        //SmartDashboard.putNumber("shoulder position", shoulderPos);
+        //SmartDashboard.putNumber("Motor output: ", ShoulderMotor.getMotorOutputPercent());
         if(Math.abs(wristPos - lastAngle) > Constants.Arm.SHOULDER_ANGLE_UPDATE)
         {
             lastAngle = wristPos;
             updateKf(Constants.Arm.SHOULDER_KF, shoulderPos, peakOutput);
         }
 
-        SmartDashboard.putNumber("Shoulder back Limit", ShoulderMotor.getSensorCollection().isRevLimitSwitchClosed());
-        SmartDashboard.putNumber("Wrist Limit: ", WristMotor.getSensorCollection().isRevLimitSwitchClosed());
+        //SmartDashboard.putNumber("Shoulder back Limit", ShoulderMotor.getSensorCollection().isRevLimitSwitchClosed());
+        //SmartDashboard.putNumber("Wrist Limit: ", WristMotor.getSensorCollection().isRevLimitSwitchClosed());
         if(Math.abs(wristPos - lastAngle) > Constants.Arm.SHOULDER_ANGLE_UPDATE)
         {
             lastAngle = wristPos;
             updateKf(Constants.Arm.SHOULDER_KF, wristPos, peakOutput);
         }
-        if(WristMotor.getSensorCollection().isRevLimitSwitchClosed() == 1)
+        if(WristMotor.getSensorCollection().isRevLimitSwitchClosed() == 1 && !isLimitSwitchTrue)
         {
-            System.out.println("limit switch tripped ");
+            System.out.println("limit switch returning true");
+            isLimitSwitchTrue = true;
         }
-        if(getWristAngle() >= Constants.Arm.MAX_WRIST_ROTATION)
+        else if(WristMotor.getSensorCollection().isRevLimitSwitchClosed() == 0 && isLimitSwitchTrue)
+        {
+            System.out.println("limit switch returning false");
+            isLimitSwitchTrue = false;
+
+        }
+
+        if(wristPos >= Constants.Arm.MAX_WRIST_ROTATION)
         {
             System.out.println("WRIST IS NOT IN GOOD POS, SENDING TO CARRY");
             setWristAnglePosition(Constants.ArmPos.CARRY_WRIST);
