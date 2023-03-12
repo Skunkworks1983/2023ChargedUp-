@@ -16,7 +16,6 @@ import frc.robot.commands.drivebase.DetectRangeSensorCommand;
 import frc.robot.commands.drivebase.DetectRangeSensorWithoutDrivebaseCommand;
 import frc.robot.commands.arm.WaveCollectorCommandGroup;
 import frc.robot.commands.drivebase.TankDrive;
-import frc.robot.commands.arm.RotateDegrees;
 import frc.robot.commands.autos.*;
 import frc.robot.commands.autos.SimpleAutoCommandGroup;
 import frc.robot.commands.drivebase.ArcadeDrive;

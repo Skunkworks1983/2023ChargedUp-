@@ -1,5 +1,6 @@
 package frc.robot.commands.arm;
 
+import com.fasterxml.jackson.databind.ser.impl.PropertySerializerMap;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.constants.Constants;
@@ -37,9 +38,13 @@ public class SetArmPositionCommand extends CommandBase
     @Override
     public boolean isFinished()
     {
-        //return Math.abs(arm.ShoulderMotor.getClosedLoopError() * Constants.Arm.SHOULDER_TICKS_TO_DEGREES) < Constants.Arm.SHOULDER_TOLERANCE &&
-        //       Math.abs(arm.WristMotor.getClosedLoopError() * Constants.Arm.WRIST_TICKS_TO_DEGREES) < Constants.Arm.WRIST_TOLERANCE;
-        return false;
+        double shoulderError = arm.getShoulderAngle() - shoulderAngleSetpoint;
+        double wristError = arm.getWristAngle() - wristAngleSetpoint;
+        SmartDashboard.putNumber("shoulder error: ", arm.getShoulderAngle());
+        SmartDashboard.putNumber("wrist error: ", arm.getWristAngle());
+
+        return Math.abs(shoulderError) < Constants.Arm.SHOULDER_TOLERANCE &&
+               Math.abs(wristError) < Constants.Arm.WRIST_TOLERANCE;
     }
 
     @Override
