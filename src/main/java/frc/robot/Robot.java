@@ -53,6 +53,8 @@ public class Robot extends TimedRobot
         arm = Arm.getInstance();
         robotContainer = new RobotContainer();
 
+        drivebase.waitForHeadingReliable();
+
         SmartDashboard.putNumber("floor cube pickup", Constants.ArmPos.FLOOR_CUBE_PICKUP_WRIST);
     }
     
@@ -79,6 +81,8 @@ public class Robot extends TimedRobot
      */
     @Override
     public void disabledInit() {
+
+        drivebase.SetBrakeMode(false);
 
     }
     
@@ -128,7 +132,6 @@ public class Robot extends TimedRobot
     @Override
     public void testPeriodic()
     {
-
     }
     
     
