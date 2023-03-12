@@ -11,9 +11,10 @@ public class ExpelConeCommand extends CommandBase {
     private Collector collectorInstance;
     private Arm armInstance;
 
-    public ExpelConeCommand() {
+    public ExpelConeCommand(double expelSpeed) {
         armInstance = Arm.getInstance();
         collectorInstance = Collector.getInstance();
+        addRequirements(expelSpeed);
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
         addRequirements(collectorInstance);
