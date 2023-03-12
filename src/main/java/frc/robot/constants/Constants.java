@@ -55,7 +55,7 @@ public class Constants extends CommandBase {
         public static final double DRIVEBASE_KF = 0.08;
         public static final double THRESHOLD_ROTATE = .5;
         public static final int DRIVE_OUT_OF_COMMUNITY = -9;
-        public static final double ARCADE_DRIVE_KP = 0.015;
+        public static final double ARCADE_DRIVE_KP = 0.03;
         public static final double ARCADE_DRIVE_KD = 0;
         public static final int DRIVE_OUT_OF_COMMUINITY = -9;
 
