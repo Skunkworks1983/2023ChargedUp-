@@ -81,6 +81,8 @@ public class Robot extends TimedRobot
         arm = Arm.getInstance();
         robotContainer = new RobotContainer();
 
+        drivebase.waitForHeadingReliable();
+
         SmartDashboard.putNumber("floor cube pickup", Constants.ArmPos.FLOOR_CUBE_PICKUP_WRIST);
     }
 
@@ -106,9 +108,10 @@ public class Robot extends TimedRobot
      * This method is called once each time the robot enters Disabled mode.
      */
     @Override
-    public void disabledInit()
-    {
-        Drivebase.GetDrivebase().SetBrakeMode(false);
+    public void disabledInit() {
+
+        drivebase.SetBrakeMode(false);
+
     }
 
 
@@ -138,12 +141,16 @@ public class Robot extends TimedRobot
      //   ScoreAndExitCommunityP2.schedule();
      //   ScoreAndExitCommunityP1.schedule();
 
+        drivebase.waitForHeadingReliable();
+
     }
 
 
     @Override
     public void teleopInit()
     {
+        drivebase.waitForHeadingReliable();
+
         drivebase.SetBrakeMode(true);
         Command arcadeDrive = new ArcadeDrive(drivebase, oi);
         arcadeDrive.schedule();
@@ -172,7 +179,6 @@ public class Robot extends TimedRobot
     @Override
     public void testPeriodic()
     {
-
     }
 
 
