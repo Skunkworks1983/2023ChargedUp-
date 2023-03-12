@@ -38,13 +38,7 @@ public class SetArmPositionCommand extends CommandBase
     @Override
     public boolean isFinished()
     {
-        double shoulderError = arm.getShoulderAngle() - shoulderAngleSetpoint;
-        double wristError = arm.getWristAngle() - wristAngleSetpoint;
-        SmartDashboard.putNumber("shoulder error: ", arm.getShoulderAngle());
-        SmartDashboard.putNumber("wrist error: ", arm.getWristAngle());
-
-        return Math.abs(shoulderError) < Constants.Arm.SHOULDER_TOLERANCE &&
-               Math.abs(wristError) < Constants.Arm.WRIST_TOLERANCE;
+        return false;
     }
 
     @Override
