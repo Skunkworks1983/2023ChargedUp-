@@ -20,9 +20,8 @@ public class IntakeCubeSmartCommand extends CommandBase {
     }
 
     @Override
-    public void initialize()
-    {
-        System.out.println("Intake Cube Smart Command Initialise");
+    public void initialize() {
+        System.out.println("intake cube initialize");
     }
 
     @Override

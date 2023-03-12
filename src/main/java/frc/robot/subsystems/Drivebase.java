@@ -12,8 +12,11 @@ import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.constants.Constants;
+
+import static java.lang.Double.NaN;
 
 public class Drivebase implements Subsystem {
 
@@ -34,11 +37,15 @@ public class Drivebase implements Subsystem {
     public enum DriveDirection {FORWARD,BACKWARD,MOTIONLESS}
     DriveDirection driveDirection = DriveDirection.FORWARD;
 
+    private boolean isHeadingReliable = false;
+
     private final double TicksPerFoot =
             Constants.Wobbles.TICKS_PER_MOTOR_REV * Constants.Drivebase.GEAR_RATIO /
                     (Constants.Drivebase.WHEEL_DIAMETER * Math.PI);
 
     AHRS gyro = new AHRS(SPI.Port.kMXP);
+
+    Timer timer = new Timer();
 
     private Drivebase() {
         gyro.calibrate();
@@ -62,7 +69,11 @@ public class Drivebase implements Subsystem {
 
 
     public double getHeading() {
-        return gyro.getAngle();
+        if (isHeadingReliable) {
+            return gyro.getAngle();
+        } else {
+            return NaN;
+        }
     }
 
 
@@ -71,7 +82,7 @@ public class Drivebase implements Subsystem {
         return gyro.getPitch();
     }
 
-        public boolean isCalibrating()
+    public boolean isCalibrating()
     {
         return gyro.isCalibrating();
     }
@@ -105,6 +116,43 @@ public class Drivebase implements Subsystem {
 
     public double getSpeedRight() {
         return (-rightMotor1.getSelectedSensorVelocity());
+    }
+
+    public void waitForHeadingReliable() {
+
+        System.out.println("waitForHeadingReliable method is called");
+
+        timer.start();
+
+        while (gyro.isCalibrating()) {
+
+            if (timer.hasElapsed(Constants.Drivebase.WAIT_TIME_FOR_GYRO_CALIBRATION)) {
+
+                System.out.println("gyro took too long to calibrate");
+                System.out.println("heading reliability is " + isHeadingReliable);
+
+                return;
+            }
+        }
+
+
+        isHeadingReliable = true;
+
+        System.out.println("gyro finished calibrating");
+        System.out.println("heading reliablity is " + isHeadingReliable);
+
+    }
+
+
+    @Override
+    public void periodic() {
+
+        if (gyro.isCalibrating() || !gyro.isConnected()) {
+
+            isHeadingReliable = false;
+
+            System.out.println("GYRO CRASHED!!!");
+        }
     }
 
     public DriveDirection getDriveDirection(){return driveDirection;}
