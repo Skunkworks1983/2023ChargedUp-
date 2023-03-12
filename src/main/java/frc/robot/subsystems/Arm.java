@@ -7,6 +7,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.SlotConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.Constants;
@@ -18,6 +19,11 @@ public class Arm extends SubsystemBase
     public TalonFX WristMotor = new TalonFX(Constants.Arm.WRIST_MOTOR_DEVICE_NUMBER);
     public double shoulderEncoderToAngleFactor = ((1.0 / Constants.Falcon500.TICKS_PER_REV) / Constants.Arm.SHOULDER_GEAR_RATIO) * 360;
     public double wristEncoderToAngleFactor = ((1.0 / Constants.Falcon500.TICKS_PER_REV) / Constants.Arm.WRIST_GEAR_RATIO) * 360;
+    public DigitalOutput lightBit0 = new DigitalOutput(Constants.Lights.LIGHT_BIT_0);
+    public DigitalOutput lightBit1 = new DigitalOutput(Constants.Lights.LIGHT_BIT_1);
+    public DigitalOutput lightBit2 = new DigitalOutput(Constants.Lights.LIGHT_BIT_2);
+    public DigitalOutput lightBit3 = new DigitalOutput(Constants.Lights.LIGHT_BIT_3);
+
 
     public double peakOutput;
     public double lastAngle;
@@ -210,6 +216,42 @@ public class Arm extends SubsystemBase
         {
 
             Motor.setNeutralMode(NeutralMode.Coast);
+        }
+    }
+
+    public void SetLightMode(int mode)
+    {
+        if((mode & 0x01) == 0x01)
+        {
+            lightBit0.set(true);
+        }
+        else
+        {
+            lightBit0.set(false);
+        }
+        if((mode & 0x02) == 0x02)
+        {
+            lightBit1.set(true);
+        }
+        else
+        {
+            lightBit1.set(false);
+        }
+        if((mode & 0x04) == 0x04)
+        {
+            lightBit2.set(true);
+        }
+        else
+        {
+            lightBit2.set(false);
+        }
+        if((mode & 0x08) == 0x08)
+        {
+            lightBit3.set(true);
+        }
+        else
+        {
+            lightBit3.set(false);
         }
     }
 

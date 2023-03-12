@@ -146,6 +146,20 @@ public class Constants extends CommandBase {
         public static final int WRIST_GEAR_RATIO = 96;
     }
 
+    public class Lights
+    {
+        public static final int LIGHT_BIT_0 = 6;
+        public static final int LIGHT_BIT_1 = 7;
+        public static final int LIGHT_BIT_2 = 8;
+        public static final int LIGHT_BIT_3 = 9;
+
+        //colors
+        public static final int BLANK = 0;
+        public static final int CONE = 1;
+        public static final int CUBE = 2;
+        public static final int BLUE = 3;
+        public static final int RED = 4;
+    }
 
     public class Falcon500 {
         public static final int TICKS_PER_REV = 2048;
