@@ -63,6 +63,8 @@ public class Robot extends TimedRobot
     @Override
     public void robotInit()
     {
+        arm = Arm.getInstance();
+        arm.WristMotor.setNeutralMode(NeutralMode.Coast);
         autoChooser = new SendableChooser();
         autoChooser.addOption("SimpleAuto", new SimpleAutoCommandGroup());
         autoChooser.addOption("DriveOnChargeStationAndBalanceP2", new DriveOnChargeStationAndBalanceP2CommandGroup());
@@ -78,7 +80,7 @@ public class Robot extends TimedRobot
 
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         // autonomous chooser on the dashboard.\
-        arm = Arm.getInstance();
+
         robotContainer = new RobotContainer();
 
         drivebase.waitForHeadingReliable();
@@ -108,9 +110,11 @@ public class Robot extends TimedRobot
      * This method is called once each time the robot enters Disabled mode.
      */
     @Override
-    public void disabledInit() {
+    public void disabledInit()
+    {
 
-        drivebase.SetBrakeMode(false);
+        arm.WristMotor.setNeutralMode(NeutralMode.Coast);
+        drivebase.SetBrakeMode(true);
 
     }
 
@@ -126,6 +130,7 @@ public class Robot extends TimedRobot
     @Override
     public void autonomousInit()
     {
+        arm.WristMotor.setNeutralMode(NeutralMode.Brake);
         CommandScheduler.getInstance().cancelAll();
         SendableChooser autoChooser = (SendableChooser) SmartDashboard.getData("autoChooser");
         autonomousCommand = (Command)autoChooser.getSelected();
@@ -142,7 +147,7 @@ public class Robot extends TimedRobot
      //   ScoreAndExitCommunityP1.schedule();
 
         drivebase.waitForHeadingReliable();
-
+        drivebase.SetBrakeMode(true);
     }
 
 
@@ -166,7 +171,7 @@ public class Robot extends TimedRobot
     @Override
     public void testInit()
     {
-
+        drivebase.SetBrakeMode(false);
         // Cancels all running commands at the start of test mode.
         CommandScheduler.getInstance().cancelAll();
         arm = Arm.getInstance();
