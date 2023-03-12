@@ -13,7 +13,7 @@ public class Constants extends CommandBase {
         public static final int CUBE_BREAK_1_PORT = 2;
         public static final int CUBE_BREAK_2_PORT = 3;
 
-        public static final double CONE_COLLECT_AMP_THRESHOLD = 22;
+        public static final double CONE_COLLECT_AMP_THRESHOLD = 10;
         public static final double CONE_AMPS_HOLDING_THRESHOLD = 10;
         public static final double INTAKE_SPEED = 10; //inches per second
         public static final double INTAKE_MOTOR_SPEED =
@@ -26,9 +26,9 @@ public class Constants extends CommandBase {
         public static final double K_P = 0.03;
         public static final double MANUAL_INTAKE_MULTIPLIER = 0.4;
         public static final int CONE_COLLECTED_VALUE = 3;
-        public static final int CONE_HOLDING_AMPS = 12;
+        public static final int CONE_HOLDING_AMPS = 8;
 
-        public static final double INTAKE_HOLDING = 1;
+        public static final double INTAKE_HOLDING = .025;
         public static final double INTAKE_HOLDING_SPEED = INTAKE_HOLDING / WHEEL_CIRCUMFERENCE * WHEEL_REVS_PER_SEC_TO_VELOCITY;
     }
     public class JoystickPorts {
@@ -47,8 +47,8 @@ public class Constants extends CommandBase {
         public static final int EXPEL_BUTTON = 9; // 9 on comp robot, 6 on single stick
         public static final int CONE_TOGGLE = 10;
         public static final int MANUAL_TOGGLE = 1;
-        public static final int SCORE_MID = 14;
-        public static final int CONE_FLOOR_PICKUP = 11;
+        public static final int CONE_SCORE_MID = 14;
+        // public static final int CONE_FLOOR_PICKUP = 11;
         public static final int CUBE_FLOOR_PICKUP = 3;
         public static final int RESET_ARM = 5;
 
@@ -118,7 +118,7 @@ public class Constants extends CommandBase {
         public static final int WRIST_MOTOR_DEVICE_NUMBER = 6;
         public static final double WRIST_GEAR_RATIO = 176;
         public static final double WRIST_RESTING_ANGLE = 0;
-        public static final double WRIST_PEAK_OUTPUT = 0.4;
+        public static final double WRIST_PEAK_OUTPUT = 0.6;
         public static final double WRIST_KP = 0.05;
         public static final double WRIST_KI = 0;
         public static final double WRIST_KD = 0;
@@ -130,9 +130,11 @@ public class Constants extends CommandBase {
 
 
         public static final double PLAYER_CONE_PICKUP_SHOULDER = 39.56579;
-        public static final double SCORE_CONE_MID_SHOULDER = PLAYER_CONE_PICKUP_SHOULDER;
-        public static final double PLAYER_CONE_PICKUP_WRIST = 156.46118;
-        public static final double SCORE_CONE_MID_WRIST = PLAYER_CONE_PICKUP_WRIST;
+        public static final double SCORE_CONE_MID_SHOULDER = 44.56579;
+        public static final double SCORE_CUBE_MID_SHOULDER = 49.56579;
+        public static final double PLAYER_CONE_PICKUP_WRIST = 158.46118;
+        public static final double SCORE_CONE_MID_WRIST = 156.46118;
+        public static final double SCORE_CUBE_MID_WRIST = 154.46118;
         public static final double PLAYER_CUBE_PICKUP_SHOULDER = 46.68152;
         public static final double PLAYER_CUBE_PICKUP_WRIST = 171.73779;
         public static final double FLOOR_CUBE_PICKUP_SHOULDER = Arm.SHOULDER_RESTING_ANGLE;
