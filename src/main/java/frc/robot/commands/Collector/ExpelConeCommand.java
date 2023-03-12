@@ -11,10 +11,9 @@ public class ExpelConeCommand extends CommandBase {
     private Collector collectorInstance;
     private Arm armInstance;
 
-    public ExpelConeCommand(double expelSpeed) {
+    public ExpelConeCommand() {
         armInstance = Arm.getInstance();
         collectorInstance = Collector.getInstance();
-        addRequirements(expelSpeed);
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
         addRequirements(collectorInstance);
@@ -25,10 +24,10 @@ public class ExpelConeCommand extends CommandBase {
         System.out.println("Expel Cone Initialized");
 
         if(armInstance.getShoulderAngle() < 0) {
-            collectorInstance.Setspeed(Constants.Collector.EXPEL_MOTOR_SPEED*3);
+            collectorInstance.Setspeed(Constants.Collector.EXPEL_MOTOR_SPEED);
         }
         else {
-            collectorInstance.Setspeed(-Constants.Collector.EXPEL_MOTOR_SPEED*3);
+            collectorInstance.Setspeed(-Constants.Collector.EXPEL_MOTOR_SPEED);
         }
 
 

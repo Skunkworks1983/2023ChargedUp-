@@ -63,8 +63,8 @@ public class Oi
 
         //button sticks
 
-       // scoreCubeHigh = new JoystickButton(buttonStick,4);
-        scoreConeHigh = new JoystickButton(buttonStick,4);
+        scoreCubeHigh = new JoystickButton(buttonStick,4);
+//        scoreConeHigh = new JoystickButton(buttonStick,4);
 
 
         manualToggle = new JoystickButton(buttonStick,Constants.OIButtons.MANUAL_TOGGLE);
@@ -100,10 +100,10 @@ public class Oi
         intakeButton.and(coneToggle).and(manualToggle.negate()).onTrue(new IntakeConeAndHoldCommandGroup());
         intakeButton.and(coneToggle.negate()).and(manualToggle.negate()).onTrue(new IntakeCubeSmartCommand());
 
-//        scoreCubeHigh.onTrue(new SetArmPositionCommand
-//                (Constants.ArmPos.SCORE_CUBE_HIGH_SHOULDER, Constants.ArmPos.SCORE_CUBE_HIGH_WRIST));
-        scoreConeHigh.onTrue(new SetArmPositionCommand
-                (Constants.ArmPos.SCORE_CONE_HIGH_SHOULDER, Constants.ArmPos.SCORE_CONE_HIGH_WRIST));
+        scoreCubeHigh.onTrue(new SetArmPositionCommand
+                (Constants.ArmPos.SCORE_CUBE_HIGH_SHOULDER, Constants.ArmPos.SCORE_CUBE_HIGH_WRIST));
+//        scoreConeHigh.onTrue(new SetArmPositionCommand
+//                (Constants.ArmPos.SCORE_CONE_HIGH_SHOULDER, Constants.ArmPos.SCORE_CONE_HIGH_WRIST));
 
         //floorWeirdScore.whileTrue(new SetArmPositionCommand(Constants.Arm.SHOULDER_RESTING_ANGLE, Constants.Arm.WRIST_RESTING_ANGLE));
         floorNormalScore.whileTrue(new SetArmPositionCommand(Constants.ArmPos.FLOOR_NORMAL_SCORE_SHOULDER, Constants.ArmPos.FLOOR_NORMAL_SCORE_WRIST));
