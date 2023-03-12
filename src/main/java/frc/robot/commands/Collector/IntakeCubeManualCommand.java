@@ -19,9 +19,9 @@ public class IntakeCubeManualCommand extends CommandBase {
     }
 
     @Override
-    public void initialize()
-    {
-        System.out.println("Intake Cube Manual Command Initialize");
+    public void initialize() {
+        System.out.println("intake cube manual initialize");
+
     }
 
     @Override
