@@ -47,7 +47,7 @@ public class RotateCommand extends CommandBase
     @Override
     public boolean isFinished()
     {
-        if(Math.abs(drivebase.getHeading() - finishDegree)< 0.8)
+        if(Math.abs(drivebase.getHeading() - finishDegree)< 1)
         {
             onTargetCount++;
         }
