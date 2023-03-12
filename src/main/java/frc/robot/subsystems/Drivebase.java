@@ -10,8 +10,10 @@ import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj2.command.Subsystem;
+import frc.robot.commands.drivebase.DetectRangeSensorCommand;
 import frc.robot.constants.Constants;
 
 public class Drivebase implements Subsystem {
@@ -22,6 +24,15 @@ public class Drivebase implements Subsystem {
     TalonFX rightMotor1 = new TalonFX(Constants.Wobbles.RIGHT_MOTOR_1);
     TalonFX rightMotor2 = new TalonFX(Constants.Wobbles.RIGHT_MOTOR_2);
 
+    double backRangeVoltage;
+
+    double frontRangeVoltage;
+    public double getFrontRangeVoltage(){return frontRangeVoltage;}
+    public double getBackRangeVoltage(){return backRangeVoltage;}
+
+    public void setFrontRangeVoltage(double voltage){frontRangeVoltage=voltage;}
+    public void setBackRangeVoltage(double voltage){backRangeVoltage=voltage;}
+
     DigitalOutput frontRangeSensorTrigger = new DigitalOutput(Constants.Drivebase.FRONT_RANGE_SENSOR_OUTPUT_CHANNEL);
 
     DigitalOutput backRangeSensorTrigger = new DigitalOutput(Constants.Drivebase.BACK_RANGE_SENSOR_OUTPUT_CHANNEL);
@@ -30,8 +41,10 @@ public class Drivebase implements Subsystem {
 
     AnalogInput backRangeSensorValue = new AnalogInput(Constants.Drivebase.BACK_RANGE_SENSOR_INPUT_CHANNEL);
 
-    public enum DriveDirection {FORWARD,BACKWARD,MOTIONLESS}
+    public enum DriveDirection {FORWARD,BACKWARD,MOTIONLESS,UNCLEAR}
     DriveDirection driveDirection = DriveDirection.FORWARD;
+
+    public void setCurrentDirection(Drivebase.DriveDirection direction){driveDirection=direction;}
 
     private final double TicksPerFoot =
             Constants.Wobbles.TICKS_PER_MOTOR_REV * Constants.Drivebase.GEAR_RATIO /
@@ -48,6 +61,9 @@ public class Drivebase implements Subsystem {
         leftMotor2.set(TalonFXControlMode.PercentOutput, turnSpeedLeft);
         rightMotor1.set(TalonFXControlMode.PercentOutput, -turnSpeedRight);
         rightMotor2.set(TalonFXControlMode.PercentOutput, -turnSpeedRight);
+        if(turnSpeedLeft>0&&turnSpeedRight>0)driveDirection=DriveDirection.FORWARD;
+        else if(turnSpeedLeft<0&&turnSpeedRight<0)driveDirection=DriveDirection.BACKWARD;
+        else{driveDirection=DriveDirection.UNCLEAR;}
     }
 
     public double getPosLeft() {

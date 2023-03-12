@@ -1,7 +1,6 @@
 package frc.robot.commands.autos;
 
 
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.drivebase.DriveDistanceCommandGyro;
 import frc.robot.constants.Constants;
@@ -14,7 +13,9 @@ public class DriveOnChargeStationAndBalanceP2CommandGroup extends SequentialComm
     {
         // TODO: Add your sequential commands in the super() call, e.g.
         //           super(new OpenClawCommand(), new MoveArmCommand());
-        super(/*new PlaceGpInAutoConeCommandGroup(),*/ new DriveDistanceCommandGyro(Drivebase.GetDrivebase(), -14, Constants.Drivebase.DRIVEBASE_KF), new DriveDistanceCommandGyro(Drivebase.GetDrivebase(), 7, Constants.Drivebase.DRIVEBASE_KF + .05)
-                /*add balance code from Eleanor*/);
+        super(/*new PlaceGpInAutoConeCommandGroup(),*/
+                new DriveDistanceCommandGyro(Drivebase.GetDrivebase(), 11, Constants.Drivebase.DRIVEBASE_KF),
+                new DriveDistanceCommandGyro(Drivebase.GetDrivebase(), -6, Constants.Drivebase.DRIVEBASE_KF + .05)
+                , new SafeBalanceCommandGroup());
     }
 }
