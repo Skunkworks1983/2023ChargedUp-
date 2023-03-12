@@ -25,7 +25,8 @@ public class Constants extends CommandBase {
 
         public static final double K_P = 0.03;
         public static final double MANUAL_INTAKE_MULTIPLIER = 0.4;
-        public static final int CONE_COLLECTED_VALUE = 3;
+        public static final int CONE_COLLECTED_VALUE = 5;
+        public static final int TICKS_BEFORE_FINISHED = 3;
         public static final int CONE_HOLDING_AMPS = 8;
 
         public static final double INTAKE_HOLDING = .025;
@@ -65,7 +66,7 @@ public class Constants extends CommandBase {
         public static final double DRIVEBASE_KF = 0.08;
         public static final double THRESHOLD_ROTATE = .5;
         public static final int DRIVE_OUT_OF_COMMUNITY = -9;
-        public static final double ARCADE_DRIVE_KP = 0.015;
+        public static final double ARCADE_DRIVE_KP = 0.007;
         public static final double ARCADE_DRIVE_KD = 0;
         public static final int DRIVE_OUT_OF_COMMUINITY = -9;
 
