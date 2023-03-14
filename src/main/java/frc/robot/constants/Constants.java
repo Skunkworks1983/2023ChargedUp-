@@ -61,7 +61,8 @@ public class Constants extends CommandBase {
         public static final double DISTANCE_KP = 0.05;
         public static final double ROTATE_KP = 0.0026/* 16,17,18 */;
         public static final double ROTATE_KF = 0.04;
-        public static final double ANGLE_KP = 0.0065;
+        public static final double ANGLE_KP = 0.007;
+        public static final double ANGLE_KD = 0.002;
         public static final double DRIVEBASE_KF = 0.08;
         public static final double THRESHOLD_ROTATE = .5;
         public static final int DRIVE_OUT_OF_COMMUNITY = -9;
