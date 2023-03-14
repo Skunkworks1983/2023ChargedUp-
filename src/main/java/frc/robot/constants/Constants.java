@@ -25,7 +25,8 @@ public class Constants extends CommandBase {
 
         public static final double K_P = 0.03;
         public static final double MANUAL_INTAKE_MULTIPLIER = 0.4;
-        public static final int CONE_COLLECTED_VALUE = 3;
+        public static final int CONE_COLLECTED_VALUE = 5;
+        public static final int TICKS_BEFORE_FINISHED = 3;
         public static final int CONE_HOLDING_AMPS = 8;
 
         public static final double INTAKE_HOLDING = .025;
@@ -65,7 +66,7 @@ public class Constants extends CommandBase {
         public static final double DRIVEBASE_KF = 0.08;
         public static final double THRESHOLD_ROTATE = .5;
         public static final int DRIVE_OUT_OF_COMMUNITY = -9;
-        public static final double ARCADE_DRIVE_KP = 0.0126;
+        public static final double ARCADE_DRIVE_KP = 0.007;
         public static final double ARCADE_DRIVE_KD = 0;
         public static final int DRIVE_OUT_OF_COMMUINITY = -9;
 
@@ -82,7 +83,7 @@ public class Constants extends CommandBase {
         public static final int FRONT_RANGE_SENSOR_INPUT_CHANNEL=0;
 
         public static final int BACK_RANGE_SENSOR_INPUT_CHANNEL=1;
-        public static final double ARCADE_DRIVE_MAX_DEGREES_PER_SECOND = 150;
+        public static final double ARCADE_DRIVE_MAX_DEGREES_PER_SECOND = 250;
         public static final int EXECUTES_PER_SECOND = 50;
         public static final double  WAIT_TIME_FOR_GYRO_CALIBRATION = 3;
     }
@@ -116,6 +117,7 @@ public class Constants extends CommandBase {
         public static final int WRIST_MOTOR_DEVICE_NUMBER = 6;
         public static final double WRIST_GEAR_RATIO = 176;
         public static final double WRIST_RESTING_ANGLE = 0;
+        public static final double WRIST_LIMIT_ANGLE = 12.36;
         public static final double WRIST_PEAK_OUTPUT = 0.6;
         public static final double WRIST_KP = 0.05;
         public static final double WRIST_KI = 0;
@@ -135,7 +137,7 @@ public class Constants extends CommandBase {
         public static final double PLAYER_CUBE_PICKUP_SHOULDER = 46.68152;
         public static final double PLAYER_CUBE_PICKUP_WRIST = 171.73779;
         public static final double FLOOR_CUBE_PICKUP_SHOULDER = Arm.SHOULDER_RESTING_ANGLE;
-        public static final double FLOOR_CUBE_PICKUP_WRIST = 114.25;
+        public static final double FLOOR_CUBE_PICKUP_WRIST = 112.75;
         public static final double FLOOR_NORMAL_SCORE_SHOULDER = Arm.SHOULDER_RESTING_ANGLE;
         public static final double FLOOR_NORMAL_SCORE_WRIST = 100.70434;
         public static final double CARRY_SHOULDER = Arm.SHOULDER_RESTING_ANGLE;
