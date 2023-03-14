@@ -10,6 +10,7 @@ public class IntakeConeSmartCommand extends CommandBase {
     private Collector collectorInstance;
     private Arm armInstance;
     private int countConeHeld;
+    private int ticksElapsed;
     public IntakeConeSmartCommand() {
         armInstance = Arm.getInstance();
         collectorInstance = Collector.getInstance();
@@ -23,7 +24,9 @@ public class IntakeConeSmartCommand extends CommandBase {
     {
         System.out.println("Intake Cone Smart Command Initialize");
         countConeHeld = 0;
+        ticksElapsed = 0;
     }
+
 
     @Override
     public void execute()
@@ -41,12 +44,13 @@ public class IntakeConeSmartCommand extends CommandBase {
         else{
             countConeHeld = 0;
         }
+        ticksElapsed++;
     }
 
     @Override
-    public boolean isFinished() {
-        return countConeHeld >= Constants.Collector.CONE_COLLECTED_VALUE;
-
+    public boolean isFinished()
+    {
+        return countConeHeld >= Constants.Collector.CONE_COLLECTED_VALUE && ticksElapsed >= Constants.Collector.TICKS_BEFORE_FINISHED;
     }
 
     @Override

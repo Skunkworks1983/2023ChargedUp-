@@ -5,10 +5,17 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.autos.BalanceOnChargeStationCommand;
+import frc.robot.commands.drivebase.DetectRangeSensorCommand;
+import frc.robot.commands.drivebase.DetectRangeSensorWithoutDrivebaseCommand;
+import frc.robot.commands.arm.WaveCollectorCommandGroup;
+import frc.robot.commands.drivebase.TankDrive;
 import frc.robot.commands.autos.*;
 import frc.robot.commands.autos.SimpleAutoCommandGroup;
 import frc.robot.commands.drivebase.ArcadeDrive;
@@ -51,6 +58,8 @@ public class Robot extends TimedRobot
         arm = Arm.getInstance();
         robotContainer = new RobotContainer();
 
+        drivebase.waitForHeadingReliable();
+
         SmartDashboard.putNumber("floor cube pickup", Constants.ArmPos.FLOOR_CUBE_PICKUP_WRIST);
     }
     
@@ -77,6 +86,8 @@ public class Robot extends TimedRobot
      */
     @Override
     public void disabledInit() {
+
+        drivebase.SetBrakeMode(false);
 
     }
     
@@ -108,7 +119,10 @@ public class Robot extends TimedRobot
     
     /** This method is called periodically during operator control. */
     @Override
-    public void teleopPeriodic() {}
+    public void teleopPeriodic()
+    {
+
+    }
     
     
     @Override
@@ -126,7 +140,6 @@ public class Robot extends TimedRobot
     @Override
     public void testPeriodic()
     {
-
     }
     
     

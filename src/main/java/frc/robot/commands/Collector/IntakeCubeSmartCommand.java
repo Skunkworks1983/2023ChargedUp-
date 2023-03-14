@@ -9,7 +9,7 @@ import frc.robot.subsystems.Collector;
 public class IntakeCubeSmartCommand extends CommandBase {
     private Collector collectorInstance;
     private Arm armInstance;
-
+    private int ticksElapsed;
 
     public IntakeCubeSmartCommand() {
         armInstance = Arm.getInstance();
@@ -17,12 +17,12 @@ public class IntakeCubeSmartCommand extends CommandBase {
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
         addRequirements(collectorInstance);
+        ticksElapsed = 0;
     }
 
     @Override
-    public void initialize()
-    {
-        System.out.println("Intake Cube Smart Command Initialise");
+    public void initialize() {
+        System.out.println("intake cube initialize");
     }
 
     @Override
@@ -33,11 +33,12 @@ public class IntakeCubeSmartCommand extends CommandBase {
         else {
             collectorInstance.Setspeed(-Constants.Collector.INTAKE_MOTOR_SPEED);
         }
+        ticksElapsed++;
     }
 
     @Override
     public boolean isFinished() {
-        return collectorInstance.isHoldingCube();
+        return collectorInstance.isHoldingCube() && ticksElapsed >= Constants.Collector.TICKS_BEFORE_FINISHED;
     }
 
 
