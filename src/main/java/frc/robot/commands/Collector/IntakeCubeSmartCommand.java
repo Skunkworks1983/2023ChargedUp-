@@ -7,8 +7,8 @@ import frc.robot.subsystems.Collector;
 
 
 public class IntakeCubeSmartCommand extends CommandBase {
-    private Collector collectorInstance;
-    private Arm armInstance;
+    private final Collector collectorInstance;
+    private final Arm armInstance;
 
 
     public IntakeCubeSmartCommand() {
@@ -26,13 +26,32 @@ public class IntakeCubeSmartCommand extends CommandBase {
 
     @Override
     public void execute() {
-        if(armInstance.getShoulderAngle() < 0) {
-            collectorInstance.Setspeed(Constants.Collector.INTAKE_MOTOR_SPEED);
-        }
-        else {
-            collectorInstance.Setspeed(-Constants.Collector.INTAKE_MOTOR_SPEED);
+        if (armInstance.getShoulderAngle() < 0) {
+
+            if (collectorInstance.isIntaking()) {
+
+                collectorInstance.Setspeed(Constants.Collector.INTAKE_MOTOR_SPEED_SLOW);
+
+            } else {
+
+                collectorInstance.Setspeed(Constants.Collector.INTAKE_MOTOR_SPEED);
+            }
+
+        } else {
+
+            if (collectorInstance.isIntaking()) {
+
+                collectorInstance.Setspeed(-Constants.Collector.INTAKE_MOTOR_SPEED_SLOW);
+
+            } else {
+
+                collectorInstance.Setspeed(-Constants.Collector.INTAKE_MOTOR_SPEED);
+
+
+            }
         }
     }
+
 
     @Override
     public boolean isFinished() {
@@ -41,15 +60,11 @@ public class IntakeCubeSmartCommand extends CommandBase {
 
 
     @Override
-    public void end(boolean interrupted)
-    {
+    public void end(boolean interrupted) {
         collectorInstance.Setspeed(0);
-        if(interrupted)
-        {
+        if (interrupted) {
             System.out.println("Intake Cube Smart Command Ended, interrupted");
-        }
-        else
-        {
+        } else {
             System.out.println("Intake Cube Smart Command Ended");
         }
     }
