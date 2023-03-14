@@ -69,6 +69,9 @@ public class Collector extends SubsystemBase {
     public void Setspeed(double speed) {
         this.Motor.set(TalonFXControlMode.Velocity, speed);
     }
+    public void SetPercentOutput(double speed) {
+        this.Motor.set(TalonFXControlMode.PercentOutput, speed);
+    }
 
 
 }

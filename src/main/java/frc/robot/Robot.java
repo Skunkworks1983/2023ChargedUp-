@@ -36,7 +36,7 @@ public class Robot extends TimedRobot
 {
     private Drivebase drivebase = Drivebase.GetDrivebase();
     private Collector collector = Collector.getInstance();
-    private Oi oi = new Oi(drivebase,collector);
+    private Oi oi = new Oi();
     Command SimpleAuto = new SimpleAutoCommandGroup();
     Command ScoreAndExitCommunityP2 = new ScoreAndExitCommunityP2CommandGroup();
 

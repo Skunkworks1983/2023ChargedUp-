@@ -48,9 +48,20 @@ public class Constants extends CommandBase {
 
         public static final int MANUAL_COLLECTOR_DOWN=0;
 
+        public static final int RESET_POSITION=0;
+
+        public static final int SHOULDER_UP=0;
+
+        public static final int SHOULDER_DOWN=0;
+
+        public static final int COLLECTOR_UP=0;
+
+        public static final int COLLECTOR_DOWN=0;
         public static final int WRIST_UP=0;
 
         public static final int WRIST_DOWN=0;
+
+        public static final int FLOOR_NORMAL_SCORE=0;
 
         public static final int MANUAL_SHOULDER_UP=0;
 
@@ -126,6 +137,8 @@ public class Constants extends CommandBase {
         public static final double MIN_PEAK = .3;
         public static final double MAX_PEAK = .65;
 
+        public static final double SHOULDER_MANUAL_SPEED=0.12;
+
         public static final double SHOULDER_TICKS_TO_DEGREES = ((1.0 / Falcon500.TICKS_PER_REV) / Arm.SHOULDER_GEAR_RATIO) * 360;
         public static final double WRIST_TICKS_TO_DEGREES = ((1.0 / Falcon500.TICKS_PER_REV) / Arm.WRIST_GEAR_RATIO) * 360;
         public static final double SHOULDER_KP = 0.06; //0.064
@@ -146,6 +159,8 @@ public class Constants extends CommandBase {
         public static final double SHOULDER_SAFE_WRIST_ANGLE = SHOULDER_RESTING_ANGLE;
         public static final int MAX_WRIST_ROTATION = 235;
         public static final double WRIST_TOLERANCE = 2;
+
+        public static final double WRIST_POWER=.15;
         public static final int WRIST_MOTOR_DEVICE_NUMBER = 6;
         public static final double WRIST_GEAR_RATIO = 176;
         public static final double WRIST_RESTING_ANGLE = 0;
