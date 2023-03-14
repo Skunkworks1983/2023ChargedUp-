@@ -9,9 +9,9 @@ import frc.robot.subsystems.Collector;
 public class IntakeCubeSmartCommand extends CommandBase {
     private Collector collectorInstance;
     private Arm armInstance;
-
-
+    private int countCube;
     public IntakeCubeSmartCommand() {
+        countCube = 0;
         armInstance = Arm.getInstance();
         collectorInstance = Collector.getInstance();
         // each subsystem used by the command must be passed into the
@@ -26,17 +26,23 @@ public class IntakeCubeSmartCommand extends CommandBase {
 
     @Override
     public void execute() {
+        countCube++;
+
         if(armInstance.getShoulderAngle() < 0) {
             collectorInstance.Setspeed(Constants.Collector.INTAKE_MOTOR_SPEED);
         }
         else {
             collectorInstance.Setspeed(-Constants.Collector.INTAKE_MOTOR_SPEED);
         }
+
     }
 
     @Override
     public boolean isFinished() {
-        return collectorInstance.isHoldingCube();
+        if(collectorInstance.isHoldingCube()) {
+            return true;
+        }
+        return false;
     }
 
 

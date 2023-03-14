@@ -21,6 +21,7 @@ public class Constants extends CommandBase {
         public static final double EXPEL_SPEED = 10; // inches per second
         public static final double EXPEL_MOTOR_SPEED =
                 EXPEL_SPEED / WHEEL_CIRCUMFERENCE * WHEEL_REVS_PER_SEC_TO_VELOCITY;
+        public static final double CONE_COLLECTED_LOOP = 10;
 
 
         public static final double K_P = 0.03;
@@ -125,14 +126,10 @@ public class Constants extends CommandBase {
 
     public class ArmPos
     {
-
-
+        public static final double SCORE_CONE_MID_SHOULDER = 51.23676;
+        public static final double SCORE_CONE_MID_WRIST = 160.13574;
         public static final double PLAYER_CONE_PICKUP_SHOULDER = 39.56579;
-        public static final double SCORE_CONE_MID_SHOULDER = 44.56579;
-        public static final double SCORE_CUBE_MID_SHOULDER = 49.56579;
-        public static final double PLAYER_CONE_PICKUP_WRIST = 158.46118;
-        public static final double SCORE_CONE_MID_WRIST = 156.46118;
-        public static final double SCORE_CUBE_MID_WRIST = 154.46118;
+        public static final double PLAYER_CONE_PICKUP_WRIST = 156.46118;
         public static final double PLAYER_CUBE_PICKUP_SHOULDER = 46.68152;
         public static final double PLAYER_CUBE_PICKUP_WRIST = 171.73779;
         public static final double FLOOR_CUBE_PICKUP_SHOULDER = Arm.SHOULDER_RESTING_ANGLE;
