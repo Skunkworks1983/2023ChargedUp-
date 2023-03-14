@@ -33,14 +33,50 @@ public class Constants extends CommandBase {
     }
 
     public class OIButtons {
-        public static final int ARM_UP_BUTTON = 12;
-        public static final int ARM_DOWN_BUTTON = 15;
-        public static final int WRIST_UP_BUTTON = 4; // NEEDS CHANGING BEFORE COMMITTING
-        public static final int WRIST_DOWN_BUTTON=2;
-        public static final int INTAKE_BUTTON = 13; // 13 on comp robot, 5 on  single stick
-        public static final int EXPEL_BUTTON = 9; // 9 on comp robot, 6 on single stick
-        public static final int CONE_TOGGLE = 10;
-        public static final int MANUAL_TOGGLE = 1;
+
+        //top row
+        public static final int ENABLE_MANUAL =0;
+
+        public static final int MANUAL_COLLECTOR_UP=0;
+
+        public static final int MANUAL_COLLECTOR_DOWN=0;
+
+        public static final int WRIST_UP=0;
+
+        public static final int WRIST_DOWN=0;
+
+        public static final int MANUAL_SHOULDER_UP=0;
+
+        public static final int MANUAL_SHOULDER_DOWN=0;
+
+        public static final int OTHER_LIGHTS=0;
+
+        //middle row
+
+        public static final int SHOOT_CUBE=0;
+
+        public static final int SCORE_LOW=0;
+
+        public static final int SCORE_MID=0;
+
+        public static final int STOW=0;
+
+        public static final int COLLECT_GROUND=0;
+
+        public static final int COLLECT_SHELF=0;
+
+        public static final int INTAKE=0;
+
+        public static final int EXPEL=0;
+
+        //bottom row
+
+        public static final int CONE_MODE=0;//both part of cone/cube mode button
+
+        public static final int CUBE_MODE=0;
+
+        public static final int LIGHTS=0;
+
 
 
     }
