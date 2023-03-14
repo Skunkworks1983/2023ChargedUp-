@@ -26,12 +26,10 @@ public class Constants extends CommandBase {
         public static final double EXPEL_SPEED = 10; // inches per second
         public static final double EXPEL_MOTOR_SPEED =
                 EXPEL_SPEED / WHEEL_CIRCUMFERENCE * WHEEL_REVS_PER_SEC_TO_VELOCITY;
-
-
         public static final double K_P = 0.03;
         public static final double MANUAL_INTAKE_MULTIPLIER = 0.4;
         public static final int CONE_COLLECTED_VALUE = 5;
-        public static final int TICKS_BEFORE_FINISHED = 5;
+        public static final int TICKS_BEFORE_FINISHED = 3;
         public static final int CONE_HOLDING_AMPS = 8;
 
         public static final double INTAKE_HOLDING = .025;

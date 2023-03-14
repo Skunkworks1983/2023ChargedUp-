@@ -17,11 +17,12 @@ public class IntakeCubeSmartCommand extends CommandBase {
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
         addRequirements(collectorInstance);
-        ticksElapsed = 0;
+
     }
 
     @Override
     public void initialize() {
+        ticksElapsed = 0;
         System.out.println("intake cube initialize");
     }
 
@@ -54,10 +55,9 @@ public class IntakeCubeSmartCommand extends CommandBase {
         ticksElapsed++;
     }
 
-
     @Override
     public boolean isFinished() {
-        return collectorInstance.isHoldingCube() && ticksElapsed >= Constants.Collector.TICKS_BEFORE_FINISHED;
+            return collectorInstance.isHoldingCube() && ticksElapsed >= Constants.Collector.TICKS_BEFORE_FINISHED;
     }
 
 
