@@ -15,6 +15,11 @@ import frc.robot.commands.autos.BalanceOnChargeStationCommand;
 import frc.robot.commands.drivebase.DetectRangeSensorCommand;
 import frc.robot.commands.drivebase.DetectRangeSensorWithoutDrivebaseCommand;
 import frc.robot.commands.drivebase.TankDrive;
+import frc.robot.commands.autos.BalanceOnChargeStationCommand;
+import frc.robot.commands.drivebase.DetectRangeSensorCommand;
+import frc.robot.commands.drivebase.DetectRangeSensorWithoutDrivebaseCommand;
+import frc.robot.commands.arm.WaveCollectorCommandGroup;
+import frc.robot.commands.drivebase.TankDrive;
 import frc.robot.commands.autos.*;
 import frc.robot.commands.autos.DriveOnChargeStationAndBalanceP2ConeCommandGroup;
 import frc.robot.commands.autos.DriveOnChargeStationAndBalanceP2CubeCommandGroup;
@@ -122,7 +127,9 @@ public class Robot extends TimedRobot
 
 
     @Override
-    public void disabledPeriodic() {
+    public void disabledPeriodic()
+    {
+        SmartDashboard.putNumber("wrist angle: " , arm.getWristAngle());
     }
 
 
@@ -165,9 +172,11 @@ public class Robot extends TimedRobot
 
     /** This method is called periodically during operator control. */
     @Override
-    public void teleopPeriodic() {}
-
-
+    public void teleopPeriodic()
+{
+}
+    
+    
     @Override
     public void testInit()
     {
