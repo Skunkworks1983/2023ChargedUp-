@@ -14,9 +14,6 @@ public class E2ToGamePiece4 extends ParallelCommandGroup
 {
     public E2ToGamePiece4()
     {
-        // TODO: Add your sequential commands in the super() call, e.g.
-        //           super(new OpenClawCommand(), new MoveArmCommand());
-
         super(new DriveDistanceCommand(Drivebase.GetDrivebase(), -9.75)); //drive straight to 4th game piece
                 //new );
     }

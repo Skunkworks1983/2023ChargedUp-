@@ -11,8 +11,6 @@ public class ScoreAndExitCommunityP1CommandGroup extends SequentialCommandGroup
 
     public ScoreAndExitCommunityP1CommandGroup()
     {
-        // TODO: Add your sequential commands in the super() call, e.g.
-        //           super(new OpenClawCommand(), new MoveArmCommand());
         super(/*move arm and expel gp*/new DriveDistanceCommand(Drivebase.GetDrivebase(), 16.25));
     }
 }

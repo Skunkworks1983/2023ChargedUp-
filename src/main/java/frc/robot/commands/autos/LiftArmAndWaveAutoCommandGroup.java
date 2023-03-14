@@ -12,8 +12,6 @@ public class LiftArmAndWaveAutoCommandGroup extends ParallelRaceGroup
 
     public LiftArmAndWaveAutoCommandGroup()
     {
-        // TODO: Add your sequential commands in the super() call, e.g.
-        //           super(new OpenClawCommand(), new MoveArmCommand());
         super(new WaveCollectorCommandGroup(), new SetShoulderSpeed(Arm.getInstance(), Constants.Arm.SHOULDER_LIMIT_SWITCH_FRONT, 0.08));
     }
 }

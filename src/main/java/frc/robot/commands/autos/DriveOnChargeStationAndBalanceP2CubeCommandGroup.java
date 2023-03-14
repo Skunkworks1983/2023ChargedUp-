@@ -15,8 +15,6 @@ public class DriveOnChargeStationAndBalanceP2CubeCommandGroup extends Sequential
 
     public DriveOnChargeStationAndBalanceP2CubeCommandGroup()
     {
-        // TODO: Add your sequential commands in the super() call, e.g.
-        //           super(new OpenClawCommand(), new MoveArmCommand());
         super(new SetArmRaceCommandGroup(Constants.ArmPos.SCORE_CUBE_MID_SHOULDER, Constants.ArmPos.SCORE_CUBE_MID_WRIST,1.75),
               new ParallelRaceGroup(new ExpelConeCommand(), new TimerCommand(.2)),
               new SetArmRaceCommandGroup(Constants.ArmPos.CARRY_SHOULDER,Constants.ArmPos.CARRY_WRIST,.75),

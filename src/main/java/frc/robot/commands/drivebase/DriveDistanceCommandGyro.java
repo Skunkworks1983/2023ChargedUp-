@@ -78,11 +78,7 @@ public class DriveDistanceCommandGyro extends CommandBase
         double turnThrottle = pidController.calculate(drivebase.getHeading(), startDegree);
         double leftSpeed = speed + turnThrottle;
         double rightSpeed = speed - turnThrottle;
-       // double speedLeft = speed + Math.max(Math.min(Constants.Drivebase.ANGLE_KP*(startDegree - drivebase.getHeading()), 0.25), -0.25);
-       // double speedRight = speed - Math.max(Math.min(Constants.Drivebase.ANGLE_KP*(startDegree - drivebase.getHeading()), 0.25), -0.25);
         drivebase.runMotor(leftSpeed, rightSpeed);
-        //SmartDashboard.putNumber("FT moved", drivebase.getPosLeft()-startDistanceFT);
-
     }
 
     @Override

@@ -13,8 +13,6 @@ public class SimpleAutoCommandGroup extends SequentialCommandGroup
 
     public SimpleAutoCommandGroup()
     {
-        // TODO: Add your sequential commands in the super() call, e.g.
-        //           super(new OpenClawCommand(), new MoveArmCommand());
         super(new DriveDistanceCommand(Drivebase.GetDrivebase(), 1 ), new DriveDistanceCommand(Drivebase.GetDrivebase(), -1), new LiftArmAndWaveAutoCommandGroup()/*, RotateCommand*/);
     }
 }

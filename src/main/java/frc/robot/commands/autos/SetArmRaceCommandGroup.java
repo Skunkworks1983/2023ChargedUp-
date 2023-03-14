@@ -10,8 +10,6 @@ public class SetArmRaceCommandGroup extends ParallelRaceGroup
 
     public SetArmRaceCommandGroup(double shoulderPos, double wristPos,double timerSecond)
     {
-        // TODO: Add your sequential commands in the super() call, e.g.
-        //           super(new OpenClawCommand(), new MoveArmCommand());
         super((Command) new SetArmPositionCommand(shoulderPos,wristPos), new TimerCommand(timerSecond));
     }
 }

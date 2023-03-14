@@ -18,8 +18,6 @@ public class DriveOnChargeStationAndBalanceP2ConeCommandGroup extends Sequential
 
     public DriveOnChargeStationAndBalanceP2ConeCommandGroup()
     {
-        // TODO: Add your sequential commands in the super() call, e.g.
-        //           super(new OpenClawCommand(), new MoveArmCommand());
         super(new SetArmRaceCommandGroup(Constants.ArmPos.SCORE_CONE_MID_SHOULDER, Constants.ArmPos.SCORE_CONE_MID_WRIST,1.75),
               new ParallelRaceGroup(new ExpelConeCommand(), new TimerCommand(.2)),
               new SetArmRaceCommandGroup(Constants.ArmPos.CARRY_SHOULDER,Constants.ArmPos.CARRY_WRIST,.75),
