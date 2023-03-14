@@ -87,13 +87,20 @@ public class Drivebase implements Subsystem {
         rightMotor1.setSelectedSensorPosition(0);
         leftMotor1.setSelectedSensorPosition(0);
 
+        var a=.040;
+        leftMotor1.config_kP(0,a);
+        leftMotor2.config_kP(0,a);
+
+        rightMotor1.config_kP(0,a);
+        rightMotor2.config_kP(0,a);
+
         kinematics = new DifferentialDriveKinematics(Constants.Drivebase.kTrackwidthMeters);
         ramseteController = new RamseteController();
         odometry =
                 new DifferentialDriveOdometry(
                         gyro.getRotation2d(), leftMotor1.getSelectedSensorPosition(), rightMotor1.getSelectedSensorPosition());
 
-        poseEstimator = new DifferentialDrivePoseEstimator(kinematics,gyro.getRotation2d(), ticksToMeters(leftMotor1.getSelectedSensorPosition()), ticksToMeters(rightMotor1.getSelectedSensorPosition()), new Pose2d(8.27,.4191,new Rotation2d(Math.PI /2)));
+        poseEstimator = new DifferentialDrivePoseEstimator(kinematics,gyro.getRotation2d(), ticksToMeters(leftMotor1.getSelectedSensorPosition()), ticksToMeters(rightMotor1.getSelectedSensorPosition()), new Pose2d(0,0,new Rotation2d(Math.PI /2)));
 
         CommandScheduler.getInstance().registerSubsystem(this);
 
@@ -243,9 +250,11 @@ public class Drivebase implements Subsystem {
     public void setSpeedChassis(ChassisSpeeds chassisSpeeds){
 
         DifferentialDriveWheelSpeeds wheelSpeeds = kinematics.toWheelSpeeds(chassisSpeeds);
-        System.out.println(wheelSpeeds.leftMetersPerSecond+" , "+wheelSpeeds.rightMetersPerSecond);
-        setLeftMeters(wheelSpeeds.leftMetersPerSecond);
-        setRightMeters(wheelSpeeds.rightMetersPerSecond);
+        //System.out.println(wheelSpeeds.leftMetersPerSecond+" , "+wheelSpeeds.rightMetersPerSecond);
+        SmartDashboard.putNumber("leftMPS",wheelSpeeds.leftMetersPerSecond);
+        SmartDashboard.putNumber("rightMPS",wheelSpeeds.leftMetersPerSecond);
+        setLeftMeters(metersToTicks(wheelSpeeds.leftMetersPerSecond));
+        setRightMeters(metersToTicks(wheelSpeeds.rightMetersPerSecond));
 
     }
 
