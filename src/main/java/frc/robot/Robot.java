@@ -104,16 +104,12 @@ public class Robot extends TimedRobot
 
     public void autonomousInit() {
 
-        drivebase.waitForHeadingReliable();
-
     }
 
 
     @Override
     public void teleopInit()
     {
-        drivebase.waitForHeadingReliable();
-
         drivebase.SetBrakeMode(true);
         Command arcadeDrive = new ArcadeDrive(drivebase, oi);
         arcadeDrive.schedule();
@@ -123,7 +119,10 @@ public class Robot extends TimedRobot
     
     /** This method is called periodically during operator control. */
     @Override
-    public void teleopPeriodic() {}
+    public void teleopPeriodic()
+    {
+
+    }
     
     
     @Override

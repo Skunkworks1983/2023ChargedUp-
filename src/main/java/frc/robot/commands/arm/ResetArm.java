@@ -38,7 +38,7 @@ public class ResetArm extends CommandBase {
         if(!interrupted)
         {
             arm.ShoulderMotor.setSelectedSensorPosition(Constants.Arm.SHOULDER_RESTING_ANGLE / Constants.Arm.SHOULDER_TICKS_TO_DEGREES);
-            arm.WristMotor.setSelectedSensorPosition(Constants.Arm.WRIST_RESTING_ANGLE / Constants.Arm.WRIST_TICKS_TO_DEGREES);
+            arm.WristMotor.setSelectedSensorPosition(Constants.Arm.WRIST_LIMIT_ANGLE / Constants.Arm.WRIST_TICKS_TO_DEGREES);
             arm.setWristAnglePosition(Constants.Arm.WRIST_RESTING_ANGLE);
             arm.setShoulderAnglePosition(Constants.Arm.SHOULDER_RESTING_ANGLE);
             System.out.println("ENDED RESET ARM!!!!!!!");

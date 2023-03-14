@@ -4,7 +4,6 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.Constants;
 
@@ -26,10 +25,6 @@ public class Collector extends SubsystemBase {
     }
     public boolean isHoldingCube() {
 
-        if(cubeBreak1.get() == false && cubeBreak2.get() == false)
-        {
-            return true;
-        }
         if(cubeBreak1.get() == false && cubeBreak2.get() == false) {
             return true;
         }
@@ -37,6 +32,17 @@ public class Collector extends SubsystemBase {
             return false;
         }
 
+    }
+
+    public boolean isIntaking () {
+
+        if (cubeBreak1.get() == cubeBreak2.get()) {
+
+            return false;
+        } else {
+
+            return true;
+        }
     }
 
     public double GetCollectorCurrent()
@@ -56,6 +62,9 @@ public class Collector extends SubsystemBase {
     }
     public boolean isHoldingCone() {
         return Motor.getSupplyCurrent() >= Constants.Collector.CONE_COLLECT_AMP_THRESHOLD;
+    }
+    public boolean coneCurrentHolding() {
+        return Motor.getSupplyCurrent() >= Constants.Collector.CONE_HOLDING_AMPS;
     }
     public static Collector getInstance(){
         if ( instance == null){

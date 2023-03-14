@@ -21,6 +21,7 @@ public class ExpelConeCommand extends CommandBase {
 
     @Override
     public void initialize() {
+        System.out.println("Expel Cone Initialized");
 
         if(armInstance.getShoulderAngle() < 0) {
             collectorInstance.Setspeed(Constants.Collector.EXPEL_MOTOR_SPEED);
@@ -28,7 +29,9 @@ public class ExpelConeCommand extends CommandBase {
         else {
             collectorInstance.Setspeed(-Constants.Collector.EXPEL_MOTOR_SPEED);
         }
-        System.out.println("Initializing ExpelConeCommand");
+
+
+
     }
 
     @Override

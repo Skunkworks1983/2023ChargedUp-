@@ -9,14 +9,15 @@ import frc.robot.subsystems.Collector;
 public class IntakeCubeSmartCommand extends CommandBase {
     private Collector collectorInstance;
     private Arm armInstance;
-    private int countCubeTicks;
+    private int ticksElapsed;
+
     public IntakeCubeSmartCommand() {
-        countCubeTicks = 0;
         armInstance = Arm.getInstance();
         collectorInstance = Collector.getInstance();
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
         addRequirements(collectorInstance);
+        ticksElapsed = 0;
     }
 
     @Override
@@ -26,35 +27,48 @@ public class IntakeCubeSmartCommand extends CommandBase {
 
     @Override
     public void execute() {
-        countCubeTicks++;
+        if (armInstance.getShoulderAngle() < 0) {
 
-        if(armInstance.getShoulderAngle() < 0) {
-            collectorInstance.Setspeed(Constants.Collector.INTAKE_MOTOR_SPEED);
+            if (collectorInstance.isIntaking()) {
+
+                collectorInstance.Setspeed(Constants.Collector.INTAKE_MOTOR_SPEED_SLOW);
+
+            } else {
+
+                collectorInstance.Setspeed(Constants.Collector.INTAKE_MOTOR_SPEED);
+            }
+
+        } else {
+
+            if (collectorInstance.isIntaking()) {
+
+                collectorInstance.Setspeed(-Constants.Collector.INTAKE_MOTOR_SPEED_SLOW);
+
+            } else {
+
+                collectorInstance.Setspeed(-Constants.Collector.INTAKE_MOTOR_SPEED);
+
+
+            }
         }
-        else {
-            collectorInstance.Setspeed(-Constants.Collector.INTAKE_MOTOR_SPEED);
-        }
+        ticksElapsed++;
     }
 
     @Override
     public boolean isFinished() {
-        if(countCubeTicks >= Constants.Collector.CUBE_COLLECTED_MINIMUM_TICKS) {
-            return collectorInstance.isHoldingCube();
+        if(ticksElapsed >= Constants.Collector.CUBE_COLLECTED_MINIMUM_TICKS) {
+            return collectorInstance.isHoldingCube() && ticksElapsed >= Constants.Collector.TICKS_BEFORE_FINISHED;
         }
         return false;
     }
 
 
     @Override
-    public void end(boolean interrupted)
-    {
+    public void end(boolean interrupted) {
         collectorInstance.Setspeed(0);
-        if(interrupted)
-        {
+        if (interrupted) {
             System.out.println("Intake Cube Smart Command Ended, interrupted");
-        }
-        else
-        {
+        } else {
             System.out.println("Intake Cube Smart Command Ended");
         }
     }
