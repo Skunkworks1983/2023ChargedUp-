@@ -13,7 +13,7 @@ public class Constants extends CommandBase {
         public static final int CUBE_BREAK_1_PORT = 2;
         public static final int CUBE_BREAK_2_PORT = 3;
 
-        public static final double CONE_COLLECT_AMP_THRESHOLD = 10;
+        public static final double CONE_COLLECT_AMP_THRESHOLD = 12;
         public static final double CONE_AMPS_HOLDING_THRESHOLD = 10;
         public static final double INTAKE_SPEED = 10; //inches per second
         public static final double INTAKE_MOTOR_SPEED =
@@ -26,7 +26,7 @@ public class Constants extends CommandBase {
         public static final double K_P = 0.03;
         public static final double MANUAL_INTAKE_MULTIPLIER = 0.4;
         public static final int CONE_COLLECTED_VALUE = 5;
-        public static final int TICKS_BEFORE_FINISHED = 3;
+        public static final int TICKS_BEFORE_FINISHED = 5;
         public static final int CONE_HOLDING_AMPS = 8;
 
         public static final double INTAKE_HOLDING = .025;
@@ -129,11 +129,11 @@ public class Constants extends CommandBase {
     {
 
         public static final double PLAYER_CONE_PICKUP_SHOULDER = 39.56579;
+        public static final double PLAYER_CONE_PICKUP_WRIST = 155.46118;
         public static final double SCORE_CONE_MID_SHOULDER = 44.56579;
         public static final double SCORE_CUBE_MID_SHOULDER = 49.56579;
-        public static final double PLAYER_CONE_PICKUP_WRIST = 158.46118;
-        public static final double SCORE_CONE_MID_WRIST = 156.46118;
-        public static final double SCORE_CUBE_MID_WRIST = 154.46118;
+        public static final double SCORE_CONE_MID_WRIST = 150.46118;
+        public static final double SCORE_CUBE_MID_WRIST = 160.46118;
         public static final double PLAYER_CUBE_PICKUP_SHOULDER = 46.68152;
         public static final double PLAYER_CUBE_PICKUP_WRIST = 171.73779;
         public static final double FLOOR_CUBE_PICKUP_SHOULDER = Arm.SHOULDER_RESTING_ANGLE;
