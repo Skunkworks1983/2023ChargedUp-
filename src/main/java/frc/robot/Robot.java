@@ -93,7 +93,9 @@ public class Robot extends TimedRobot
     
     
     @Override
-    public void disabledPeriodic() {
+    public void disabledPeriodic()
+    {
+        SmartDashboard.putNumber("wrist angle: " , arm.getWristAngle());
     }
 
 
