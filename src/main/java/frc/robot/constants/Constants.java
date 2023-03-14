@@ -65,9 +65,10 @@ public class Constants extends CommandBase {
         public static final double GEAR_RATIO = 10.71;
         public static final double WHEEL_DIAMETER = 0.5;
         public static final double DISTANCE_KP = 0.05;
-        public static final double ROTATE_KP = 0.0015/* 14 or 13 */;
+        public static final double ROTATE_KP = 0.0026/* 16,17,18 */;
         public static final double ROTATE_KF = 0.04;
-        public static final double ANGLE_KP = 0.003;
+        public static final double ANGLE_KP = 0.007;
+        public static final double ANGLE_KD = 0.002;
         public static final double DRIVEBASE_KF = 0.08;
         public static final double THRESHOLD_ROTATE = .5;
         public static final int DRIVE_OUT_OF_COMMUNITY = -9;
@@ -91,13 +92,14 @@ public class Constants extends CommandBase {
         public static final double ARCADE_DRIVE_MAX_DEGREES_PER_SECOND = 250;
         public static final int EXECUTES_PER_SECOND = 50;
         public static final double  WAIT_TIME_FOR_GYRO_CALIBRATION = 3;
+        public static final double MAX_DRIVE_DISTANCE_SPEED = 0.3;
     }
 
     public class Arm {
         public static final double MIN_ANGLE = Arm.SHOULDER_RESTING_ANGLE;
         public static final double MAX_ANGLE = 25;
         public static final double MIN_PEAK = .3;
-        public static final double MAX_PEAK = .65;
+        public static final double MAX_PEAK = .7;
 
         public static final double SHOULDER_TICKS_TO_DEGREES = ((1.0 / Falcon500.TICKS_PER_REV) / Arm.SHOULDER_GEAR_RATIO) * 360;
         public static final double WRIST_TICKS_TO_DEGREES = ((1.0 / Falcon500.TICKS_PER_REV) / Arm.WRIST_GEAR_RATIO) * 360;
