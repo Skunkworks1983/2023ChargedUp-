@@ -135,7 +135,7 @@ public class Constants extends CommandBase {
 
         public static final double PLAYER_CONE_PICKUP_SHOULDER = 39.56579;
         public static final double PLAYER_CONE_PICKUP_WRIST = 155.46118;
-        public static final double SCORE_CONE_MID_SHOULDER = 44.56579;
+        public static final double SCORE_CONE_MID_SHOULDER = 42.56579;
         public static final double SCORE_CUBE_MID_SHOULDER = 49.56579;
         public static final double SCORE_CONE_MID_WRIST = 150.46118;
         public static final double SCORE_CUBE_MID_WRIST = 160.46118;
