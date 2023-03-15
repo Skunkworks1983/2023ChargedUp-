@@ -13,6 +13,11 @@ import frc.robot.constants.Constants;
 
 public class Arm extends SubsystemBase
 {
+    public enum PoseType {
+        RESTING,
+        COLLECT,
+        SCORE
+    }
 
     public TalonFX ShoulderMotor = new TalonFX(Constants.Arm.SHOULDER_MOTOR_ID);
     public TalonFX WristMotor = new TalonFX(Constants.Arm.WRIST_MOTOR_DEVICE_NUMBER);
@@ -24,6 +29,8 @@ public class Arm extends SubsystemBase
     public double setpoint;
     private final static Arm INSTANCE = new Arm();
     boolean isLimitSwitchTrue = false;
+
+    PoseType currentPose;
 
     public static Arm getInstance()
     {
@@ -97,6 +104,13 @@ public class Arm extends SubsystemBase
     public double getWristCurrentOutput()
     {
         return WristMotor.getMotorOutputPercent();
+    }
+
+    public PoseType getCurrentPose(){
+        return currentPose;
+    }
+    public void setCurrentPose(PoseType Newpose){
+        currentPose = Newpose;
     }
 
     /*

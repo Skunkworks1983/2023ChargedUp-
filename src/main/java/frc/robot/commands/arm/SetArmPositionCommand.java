@@ -11,9 +11,10 @@ public class SetArmPositionCommand extends CommandBase
     private final double shoulderAngleSetpoint;
     private final double wristAngleSetpoint;
 
-    public SetArmPositionCommand(double shoulderAngleSetpoint, double wristAngleSetpoint)
+    public SetArmPositionCommand(Arm.PoseType pose, double shoulderAngleSetpoint, double wristAngleSetpoint)
     {
         this.arm = Arm.getInstance();
+        this.arm.setCurrentPose(pose);
         this.shoulderAngleSetpoint = shoulderAngleSetpoint;
         this.wristAngleSetpoint = wristAngleSetpoint;
         addRequirements(arm);
