@@ -53,7 +53,12 @@ public class ArcadeDrive extends CommandBase {
         {
             targetHeading = heading;
         }
-        SmartDashboard.putNumber("turn error", pidController.getPositionError());
+
+        SmartDashboard.putNumber("arcade drive turn error", pidController.getPositionError());
+        SmartDashboard.putNumber("arcade drive turn joystick value", leftX);
+        SmartDashboard.putNumber("arcade drive throttle joystick value", rightY);
+        SmartDashboard.putNumber("arcade drive turn throttle", turnThrottle);
+
 //      //  System.out.println("error: " + pidController.getPositionError());
 //       // System.out.println("heading: " + heading);
         //System.out.println("target heading: " + targetHeading);
