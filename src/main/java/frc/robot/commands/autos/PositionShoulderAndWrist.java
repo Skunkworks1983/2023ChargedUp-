@@ -13,8 +13,6 @@ public class PositionShoulderAndWrist extends ParallelCommandGroup
 {
     public PositionShoulderAndWrist(Arm arm, double wristDegrees, double shoulderDegrees)
     {
-        // TODO: Add your sequential commands in the super() call, e.g.
-        //           super(new OpenClawCommand(), new MoveArmCommand());
         super(new ShoulderRotateDegrees(arm, shoulderDegrees, true), new WristRotateDegrees(arm, wristDegrees, true));
     }
 }

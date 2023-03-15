@@ -45,10 +45,6 @@ public class DetectRangeSensorCommand extends CommandBase {
     @Override
     public void execute() {
 
-
-        Drivebase.GetDrivebase().getFrontRangeSensor();
-
-        Drivebase.GetDrivebase().getBackRangeSensor();
         completeState();
         }
 
@@ -79,10 +75,10 @@ public class DetectRangeSensorCommand extends CommandBase {
                 break;
             case READ_FREQUENCY:
                 if (directionToMessure == Drivebase.DriveDirection.FORWARD) {
-                    frontVoltage =Drivebase.GetDrivebase().getFrontRangeSensor();}
+                    Drivebase.GetDrivebase().setFrontRangeVoltage(Drivebase.GetDrivebase().getFrontRangeSensor());}
 
                 else {
-                    backVoltage = Drivebase.GetDrivebase().getBackRangeSensor();}
+                    Drivebase.GetDrivebase().setBackRangeVoltage(Drivebase.GetDrivebase().getBackRangeSensor());}
                 sensorMode=SensorDetectionMode.WAIT_TO_SEND_FREQUENCY;
 
                 break;

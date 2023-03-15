@@ -1,5 +1,6 @@
 package frc.robot.commands.drivebase;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Drivebase;
@@ -11,6 +12,7 @@ public class RotateCommand extends CommandBase
     private double startDegree;
     private double finishDegree;
     private int onTargetCount;
+   private PIDController pidController = new PIDController(Constants.Drivebase.ANGLE_KP, 0, Constants.Drivebase.ANGLE_KD,Constants.Drivebase.DRIVEBASE_KF);
 
     public RotateCommand(Drivebase drivebase, double degree)
     {
@@ -30,24 +32,16 @@ public class RotateCommand extends CommandBase
     @Override
     public void execute()
     {
-        double error = finishDegree - drivebase.getHeading();
 
-        double speed = (Constants.Drivebase.ANGLE_KP * error) + Math.copySign(Constants.Drivebase.ROTATE_KF, error);
-        if (speed > 0.5)
-        {
-            speed = 0.5;
-        }
-        if(speed < -0.5)
-        {
-            speed = -0.5;
-        }
+        double speed = 0;
+        speed = pidController.calculate(drivebase.getHeading(), finishDegree);
         drivebase.runMotor(speed, -speed);
     }
 
     @Override
     public boolean isFinished()
     {
-        if(Math.abs(drivebase.getHeading() - finishDegree)< 0.8)
+        if(Math.abs(drivebase.getHeading() - finishDegree)< 1)
         {
             onTargetCount++;
         }

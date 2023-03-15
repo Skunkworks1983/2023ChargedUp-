@@ -17,41 +17,56 @@ public class IntakeCubeSmartCommand extends CommandBase {
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
         addRequirements(collectorInstance);
-        ticksElapsed = 0;
+
     }
 
     @Override
     public void initialize() {
+        ticksElapsed = 0;
         System.out.println("intake cube initialize");
     }
 
     @Override
     public void execute() {
-        if(armInstance.getShoulderAngle() < 0) {
-            collectorInstance.Setspeed(Constants.Collector.INTAKE_MOTOR_SPEED);
-        }
-        else {
-            collectorInstance.Setspeed(-Constants.Collector.INTAKE_MOTOR_SPEED);
+        if (armInstance.getShoulderAngle() < 0) {
+
+            if (collectorInstance.isIntaking()) {
+
+                collectorInstance.Setspeed(Constants.Collector.INTAKE_MOTOR_SPEED_SLOW);
+
+            } else {
+
+                collectorInstance.Setspeed(Constants.Collector.INTAKE_MOTOR_SPEED);
+            }
+
+        } else {
+
+            if (collectorInstance.isIntaking()) {
+
+                collectorInstance.Setspeed(-Constants.Collector.INTAKE_MOTOR_SPEED_SLOW);
+
+            } else {
+
+                collectorInstance.Setspeed(-Constants.Collector.INTAKE_MOTOR_SPEED);
+
+
+            }
         }
         ticksElapsed++;
     }
 
     @Override
     public boolean isFinished() {
-        return collectorInstance.isHoldingCube() && ticksElapsed >= Constants.Collector.TICKS_BEFORE_FINISHED;
+            return collectorInstance.isHoldingCube() && ticksElapsed >= Constants.Collector.TICKS_BEFORE_FINISHED;
     }
 
 
     @Override
-    public void end(boolean interrupted)
-    {
+    public void end(boolean interrupted) {
         collectorInstance.Setspeed(0);
-        if(interrupted)
-        {
+        if (interrupted) {
             System.out.println("Intake Cube Smart Command Ended, interrupted");
-        }
-        else
-        {
+        } else {
             System.out.println("Intake Cube Smart Command Ended");
         }
     }

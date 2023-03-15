@@ -13,16 +13,19 @@ public class Constants extends CommandBase {
         public static final int CUBE_BREAK_1_PORT = 2;
         public static final int CUBE_BREAK_2_PORT = 3;
 
-        public static final double CONE_COLLECT_AMP_THRESHOLD = 10;
+        public static final double CONE_COLLECT_AMP_THRESHOLD = 12;
         public static final double CONE_AMPS_HOLDING_THRESHOLD = 10;
         public static final double INTAKE_SPEED = 10; //inches per second
         public static final double INTAKE_MOTOR_SPEED =
                 INTAKE_SPEED / WHEEL_CIRCUMFERENCE * WHEEL_REVS_PER_SEC_TO_VELOCITY;
+
+        public static final double INTAKE_SPEED_SLOW = (INTAKE_SPEED / 2);
+        public static final double INTAKE_MOTOR_SPEED_SLOW =
+                INTAKE_SPEED_SLOW / WHEEL_CIRCUMFERENCE * WHEEL_REVS_PER_SEC_TO_VELOCITY;
+
         public static final double EXPEL_SPEED = 10; // inches per second
         public static final double EXPEL_MOTOR_SPEED =
                 EXPEL_SPEED / WHEEL_CIRCUMFERENCE * WHEEL_REVS_PER_SEC_TO_VELOCITY;
-
-
         public static final double K_P = 0.03;
         public static final double MANUAL_INTAKE_MULTIPLIER = 0.4;
         public static final int CONE_COLLECTED_VALUE = 5;
@@ -103,9 +106,10 @@ public class Constants extends CommandBase {
         public static final double GEAR_RATIO = 10.71;
         public static final double WHEEL_DIAMETER = 0.5;
         public static final double DISTANCE_KP = 0.05;
-        public static final double ROTATE_KP = 0.0015/* 14 or 13 */;
+        public static final double ROTATE_KP = 0.0026/* 16,17,18 */;
         public static final double ROTATE_KF = 0.04;
-        public static final double ANGLE_KP = 0.003;
+        public static final double ANGLE_KP = 0.007;
+        public static final double ANGLE_KD = 0.002;
         public static final double DRIVEBASE_KF = 0.08;
         public static final double THRESHOLD_ROTATE = .5;
         public static final int DRIVE_OUT_OF_COMMUNITY = -9;
@@ -129,13 +133,14 @@ public class Constants extends CommandBase {
         public static final double ARCADE_DRIVE_MAX_DEGREES_PER_SECOND = 250;
         public static final int EXECUTES_PER_SECOND = 50;
         public static final double  WAIT_TIME_FOR_GYRO_CALIBRATION = 3;
+        public static final double MAX_DRIVE_DISTANCE_SPEED = 0.3;
     }
 
     public class Arm {
         public static final double MIN_ANGLE = Arm.SHOULDER_RESTING_ANGLE;
         public static final double MAX_ANGLE = 25;
         public static final double MIN_PEAK = .3;
-        public static final double MAX_PEAK = .65;
+        public static final double MAX_PEAK = .7;
 
         public static final double SHOULDER_MANUAL_SPEED=0.12;
 
@@ -176,11 +181,11 @@ public class Constants extends CommandBase {
     {
 
         public static final double PLAYER_CONE_PICKUP_SHOULDER = 39.56579;
+        public static final double PLAYER_CONE_PICKUP_WRIST = 155.46118;
         public static final double SCORE_CONE_MID_SHOULDER = 44.56579;
         public static final double SCORE_CUBE_MID_SHOULDER = 49.56579;
-        public static final double PLAYER_CONE_PICKUP_WRIST = 158.46118;
-        public static final double SCORE_CONE_MID_WRIST = 156.46118;
-        public static final double SCORE_CUBE_MID_WRIST = 154.46118;
+        public static final double SCORE_CONE_MID_WRIST = 150.46118;
+        public static final double SCORE_CUBE_MID_WRIST = 160.46118;
         public static final double PLAYER_CUBE_PICKUP_SHOULDER = 46.68152;
         public static final double PLAYER_CUBE_PICKUP_WRIST = 171.73779;
         public static final double FLOOR_CUBE_PICKUP_SHOULDER = Arm.SHOULDER_RESTING_ANGLE;

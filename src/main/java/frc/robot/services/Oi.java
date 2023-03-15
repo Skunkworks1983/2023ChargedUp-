@@ -1,9 +1,11 @@
 package frc.robot.services;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Collector.*;
-import frc.robot.commands.arm.*;
+import frc.robot.commands.arm.ResetArm;
+import frc.robot.commands.arm.SetArmPositionCommand;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Collector;
@@ -28,9 +30,7 @@ public class Oi
         JoystickButton intakeButton;
         JoystickButton expelButton;
 
-        JoystickButton coneMode;
-
-        JoystickButton cubeMode;
+        JoystickButton coneToggle;
         JoystickButton manualToggle;
 
         JoystickButton manualShoulderUp;
