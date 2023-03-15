@@ -51,6 +51,7 @@ public class IntakeCubeSmartCommand extends CommandBase {
 
             }
         }
+
         ticksElapsed++;
     }
 

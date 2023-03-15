@@ -20,7 +20,7 @@ public class SimpleAuto4_6 extends SequentialCommandGroup
 
     public SimpleAuto4_6()
     {
-        super(new SetArmRaceCommandGroup(Constants.ArmPos.SCORE_CONE_MID_SHOULDER, Constants.ArmPos.SCORE_CONE_MID_WRIST,1.75), // set arm position over 2nd row
+        super(new SetArmRaceCommandGroup(Constants.ArmPos.SCORE_CONE_MID_SHOULDER, Constants.ArmPos.SCORE_CONE_MID_WRIST,1.75), // set arm position mid scoring thing
                 new ParallelRaceGroup(new ExpelConeCommand(), new TimerCommand(.2)), //expel cone
                 new SetArmRaceCommandGroup(Constants.ArmPos.CARRY_SHOULDER,Constants.ArmPos.CARRY_WRIST,.75), // set arm back into carry position
                 new DriveDistanceCommand(Drivebase.GetDrivebase(),-.5), // drive backwards a little
