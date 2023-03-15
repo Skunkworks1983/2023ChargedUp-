@@ -156,6 +156,7 @@ public class Robot extends TimedRobot
      //   ScoreAndExitCommunityP1.schedule();
 
         drivebase.waitForHeadingReliable();
+
         drivebase.SetBrakeMode(true);
     }
 
@@ -163,6 +164,7 @@ public class Robot extends TimedRobot
     @Override
     public void teleopInit()
     {
+
         drivebase.SetBrakeMode(true);
         Command arcadeDrive = new ArcadeDrive(drivebase, oi);
         arcadeDrive.schedule();
