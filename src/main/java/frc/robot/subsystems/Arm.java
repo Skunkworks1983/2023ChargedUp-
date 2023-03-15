@@ -30,7 +30,7 @@ public class Arm extends SubsystemBase
     private final static Arm INSTANCE = new Arm();
     boolean isLimitSwitchTrue = false;
 
-    PoseType currentPose;
+    PoseType currentPose = PoseType.RESTING;
 
     public static Arm getInstance()
     {
