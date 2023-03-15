@@ -45,58 +45,50 @@ public class Constants extends CommandBase {
     public class OIButtons {
 
         //top row
-        public static final int ENABLE_MANUAL =0;
+        public static final int ENABLE_MANUAL =8;
 
-        public static final int MANUAL_COLLECTOR_UP=0;
+        public static final int MANUAL_COLLECTOR_UP=6;
 
-        public static final int MANUAL_COLLECTOR_DOWN=0;
+        public static final int MANUAL_COLLECTOR_DOWN=7;
 
-        public static final int RESET_POSITION=0;
+        public static final int RESET_POSITION=1;
 
-        public static final int SHOULDER_UP=0;
+        public static final int WRIST_UP=5;
 
-        public static final int SHOULDER_DOWN=0;
+        public static final int WRIST_DOWN=4;
+        public static final int MANUAL_SHOULDER_UP=2;
 
-        public static final int COLLECTOR_UP=0;
+        public static final int MANUAL_SHOULDER_DOWN=3;
 
-        public static final int COLLECTOR_DOWN=0;
-        public static final int WRIST_UP=0;
+        public static final int OTHER_LIGHTS_UP=20;
 
-        public static final int WRIST_DOWN=0;
-
-        public static final int FLOOR_NORMAL_SCORE=0;
-
-        public static final int MANUAL_SHOULDER_UP=0;
-
-        public static final int MANUAL_SHOULDER_DOWN=0;
-
-        public static final int OTHER_LIGHTS=0;
+        public static final int OTHER_LIGHTS_DOWN=12;
 
         //middle row
 
-        public static final int SHOOT_CUBE=0;
+        public static final int SHOOT_CUBE=18;
 
-        public static final int SCORE_LOW=0;
+        public static final int SCORE_LOW=17;
 
-        public static final int SCORE_MID=0;
+        public static final int SCORE_MID=24;
 
-        public static final int STOW=0;
+        public static final int STOW=13;
 
-        public static final int COLLECT_GROUND=0;
+        public static final int COLLECT_GROUND=12;
 
-        public static final int COLLECT_SHELF=0;
+        public static final int COLLECT_SHELF=11;
 
-        public static final int INTAKE=0;
+        public static final int INTAKE=23;
 
-        public static final int EXPEL=0;
+        public static final int EXPEL=22;
 
         //bottom row
 
-        public static final int CONE_MODE=0;//both part of cone/cube mode button
+        public static final int CONE_TOGGLE=10;
 
-        public static final int CUBE_MODE=0;
+        public static final int LIGHTS_UP=9;
 
-        public static final int LIGHTS=0;
+        public static final int LIGHTS_DOWN=16;
 
 
 
