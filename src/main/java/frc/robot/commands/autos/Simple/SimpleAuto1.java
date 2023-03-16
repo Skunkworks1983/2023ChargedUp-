@@ -16,9 +16,9 @@ public class SimpleAuto1 extends SequentialCommandGroup {
         super(
                 new SetArmRaceCommandGroup(Constants.ArmPos.SCORE_CONE_MID_SHOULDER, Constants.ArmPos.SCORE_CONE_MID_WRIST, 3),
                 new ParallelRaceGroup(new ExpelConeCommand(), new TimerCommand(.2)),
-                new ParallelRaceGroup(new DriveDistanceCommandGyro(Drivebase.GetDrivebase(), -6.5, Constants.Drivebase.DRIVEBASE_KF + .07), new SetArmPositionCommand(Constants.ArmPos.CARRY_SHOULDER, Constants.ArmPos.CARRY_WRIST)),
+                new ParallelRaceGroup(new DriveDistanceCommandGyro(Drivebase.GetDrivebase(), -6, Constants.Drivebase.DRIVEBASE_KF + .07), new SetArmPositionCommand(Constants.ArmPos.CARRY_SHOULDER, Constants.ArmPos.CARRY_WRIST)),
                 new RotateCommand(Drivebase.GetDrivebase(), 90),
-                new DriveDistanceCommandGyro(Drivebase.GetDrivebase(), -4.5, Constants.Drivebase.DRIVEBASE_KF + .07)
+                new DriveDistanceCommandGyro(Drivebase.GetDrivebase(), -3, Constants.Drivebase.DRIVEBASE_KF + .07)
         );
     }
 }
