@@ -33,14 +33,14 @@ public class IntakeConeSmartCommand extends CommandBase {
     {
         if(armInstance.getShoulderAngle() < 0) {
             if(armInstance.getWristAngle() < 50) {
-                collectorInstance.Setspeed(Constants.Collector.INTAKE_MOTOR_SPEED);
+                collectorInstance.SetspeedVelocity(Constants.Collector.INTAKE_MOTOR_SPEED);
             }
             else {
-                collectorInstance.Setspeed(-Constants.Collector.INTAKE_MOTOR_SPEED);
+                collectorInstance.SetspeedVelocity(-Constants.Collector.INTAKE_MOTOR_SPEED);
             }
         }
         else {
-            collectorInstance.Setspeed(Constants.Collector.INTAKE_MOTOR_SPEED);
+            collectorInstance.SetspeedVelocity(Constants.Collector.INTAKE_MOTOR_SPEED);
         }
 
 
@@ -62,7 +62,7 @@ public class IntakeConeSmartCommand extends CommandBase {
     @Override
     public void end(boolean interrupted)
     {
-        collectorInstance.Setspeed(0);
+        collectorInstance.SetspeedVelocity(0);
         if(interrupted)
         {
             System.out.println("Intake Cone Smart Command Ended, interrupted");

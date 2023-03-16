@@ -39,10 +39,10 @@ public class HoldConeCommand extends CommandBase {
                 countConeHeld = 0;
             }
             if(countConeHeld >= Constants.Collector.CONE_COLLECTED_VALUE) {
-                collectorInstance.Motor.set(TalonFXControlMode.PercentOutput, .01);
+                collectorInstance.SetspeedPercentOutput( .0);
             }
             else{
-                collectorInstance.Motor.set(TalonFXControlMode.PercentOutput, .0);
+                collectorInstance.SetspeedPercentOutput( .01);
             }
     }
 
@@ -65,6 +65,6 @@ public class HoldConeCommand extends CommandBase {
 
 
 
-        collectorInstance.Setspeed(0);
+        collectorInstance.SetspeedVelocity(0);
     }
 }

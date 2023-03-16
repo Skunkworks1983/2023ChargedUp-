@@ -1,9 +1,6 @@
 package frc.robot.commands.Collector;
 
-import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.constants.Constants;
-import frc.robot.services.Oi;
 import frc.robot.subsystems.Collector;
 
 
@@ -18,7 +15,7 @@ public class CollectorTestingCommand extends CommandBase {
     @Override
     public void initialize() {
        // Collector.getInstance().intake();
-          Collector.getInstance().Setspeed(-3411);
+          Collector.getInstance().SetspeedVelocity(-3411);
     }
 
     @Override

@@ -32,22 +32,22 @@ public class IntakeCubeSmartCommand extends CommandBase {
 
             if (collectorInstance.isIntaking()) {
 
-                collectorInstance.Setspeed(Constants.Collector.INTAKE_MOTOR_SPEED_SLOW);
+                collectorInstance.SetspeedVelocity(Constants.Collector.INTAKE_MOTOR_SPEED_SLOW);
 
             } else {
 
-                collectorInstance.Setspeed(Constants.Collector.INTAKE_MOTOR_SPEED);
+                collectorInstance.SetspeedVelocity(Constants.Collector.INTAKE_MOTOR_SPEED);
             }
 
         } else {
 
             if (collectorInstance.isIntaking()) {
 
-                collectorInstance.Setspeed(-Constants.Collector.INTAKE_MOTOR_SPEED_SLOW);
+                collectorInstance.SetspeedVelocity(-Constants.Collector.INTAKE_MOTOR_SPEED_SLOW);
 
             } else {
 
-                collectorInstance.Setspeed(-Constants.Collector.INTAKE_MOTOR_SPEED);
+                collectorInstance.SetspeedVelocity(-Constants.Collector.INTAKE_MOTOR_SPEED);
 
 
             }
@@ -63,7 +63,7 @@ public class IntakeCubeSmartCommand extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        collectorInstance.Setspeed(0);
+        collectorInstance.SetspeedVelocity(0);
         if (interrupted) {
             System.out.println("Intake Cube Smart Command Ended, interrupted");
         } else {

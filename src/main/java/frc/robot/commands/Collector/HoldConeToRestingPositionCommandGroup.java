@@ -30,15 +30,16 @@ public class HoldConeToRestingPositionCommandGroup extends CommandBase {
         }
     }
 
-    @Override
-    public boolean isFinished() {
-        return HoldCone.isFinished() && ArmToCarry.isFinished();
-    }
 
     @Override
     public void execute()
     {
 
+
+    }
+    @Override
+    public boolean isFinished() {
+        return HoldCone.isFinished() &&   ArmToCarry.isFinished();
     }
 
     @Override
