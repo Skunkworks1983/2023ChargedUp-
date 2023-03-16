@@ -22,7 +22,7 @@ double speed;
 
     @Override
     public void execute() {
-        collector.SetPercentOutput(speed);
+        collector.SetspeedPercentOutput(speed);
     }
 
     @Override
@@ -33,6 +33,6 @@ double speed;
 
     @Override
     public void end(boolean interrupted) {
-        collector.SetPercentOutput(0);
+        collector.SetspeedPercentOutput(0);
     }
 }
