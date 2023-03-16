@@ -13,7 +13,7 @@ import frc.robot.commands.drivebase.RotateCommand;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Drivebase;
 
-public class SimpleAuto2_8 extends SequentialCommandGroup
+public class  SimpleAuto2_8 extends SequentialCommandGroup
 {
     public SimpleAuto2_8()
     {
@@ -23,20 +23,21 @@ public class SimpleAuto2_8 extends SequentialCommandGroup
                         new ParallelRaceGroup(new ExpelCubeCommand(), new TimerCommand(.2)),
                         new ParallelRaceGroup
                                 (
-                                        new DriveDistanceCommandGyro(Drivebase.GetDrivebase(), -11.5, Constants.Drivebase.DRIVEBASE_KF + .07),
-                                        new SetArmPositionCommand(Constants.ArmPos.FLOOR_CUBE_PICKUP_SHOULDER, Constants.ArmPos.FLOOR_CUBE_PICKUP_WRIST)
+                                        new DriveDistanceCommandGyro(Drivebase.GetDrivebase(), -10, Constants.Drivebase.DRIVEBASE_KF + .07),
+                                        new SetArmPositionCommand(Constants.ArmPos.CONE_FLOOR_PICKUP_SHOULDER, Constants.ArmPos.CONE_FLOOR_PICKUP_WRIST)
                                 ),
                         new ParallelRaceGroup
                                 (
-                                        new DriveDistanceCommandGyro(Drivebase.GetDrivebase(), -3, Constants.Drivebase.DRIVEBASE_KF - 0.05),
+                                        new DriveDistanceCommandGyro(Drivebase.GetDrivebase(), -5, Constants.Drivebase.DRIVEBASE_KF - 0.05),
                                         new IntakeConeSmartCommand()
+
                                 ),
+                                        new RotateCommand(Drivebase.GetDrivebase(), 180),
                         new ParallelRaceGroup
                                 (
-                                        new DriveDistanceCommandGyro(Drivebase.GetDrivebase(), 11.5, Constants.Drivebase.DRIVEBASE_KF + .07),
+                                        new DriveDistanceCommandGyro(Drivebase.GetDrivebase(), 12, Constants.Drivebase.DRIVEBASE_KF + .07),
                                         new SetArmPositionCommand(Constants.ArmPos.CARRY_SHOULDER, Constants.ArmPos.CARRY_WRIST)
                                 ),
-                        new RotateCommand(Drivebase.GetDrivebase(), 180),
                         new SetArmRaceCommandGroup(Constants.ArmPos.FLOOR_NORMAL_SCORE_SHOULDER, Constants.ArmPos.FLOOR_NORMAL_SCORE_WRIST, 2),
                         new ParallelRaceGroup(new ExpelConeCommand(), new TimerCommand(.2))
                 );
