@@ -22,7 +22,7 @@ public class ExpelConeCommand extends CommandBase {
     public void initialize() {
         System.out.println("Expel Cone Initialized");
 
-        if(armInstance.getShoulderAngle() -armInstance.getWristAngle() < 180 - Constants.Arm.WRIST_LIMIT_ANGLE) {
+        if(armInstance.isArmForward()) {
             collectorInstance.SetSpeedVelocity(-Constants.Collector.INTAKE_MOTOR_SPEED);
         }
         else {

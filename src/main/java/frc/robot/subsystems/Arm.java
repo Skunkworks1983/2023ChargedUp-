@@ -282,5 +282,12 @@ public class Arm extends SubsystemBase
             System.out.println("WRIST IS NOT IN GOOD POS, SENDING TO CARRY");
             setWristAnglePosition(Constants.ArmPos.CARRY_WRIST);
         }
+
+    }
+    public boolean isArmForward() {
+        System.out.println("Shoulder angle" + getShoulderAngle());
+        System.out.println("Wrist angle" + getWristAngle());
+        return getShoulderAngle() -getWristAngle() < -180 + Constants.Arm.WRIST_LIMIT_ANGLE;
+
     }
 }

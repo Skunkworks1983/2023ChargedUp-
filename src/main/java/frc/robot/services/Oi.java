@@ -101,8 +101,8 @@ public class Oi
         expelButton.and(cubeToggle).whileTrue(new ExpelCubeCommand());
         intakeButton.and((cubeToggle).negate()).and(manualToggle).whileTrue(new IntakeConeManualCommand());
         intakeButton.and(cubeToggle).and(manualToggle).whileTrue(new IntakeCubeManualCommand());
-        intakeButton.and((cubeToggle).negate()).and(manualToggle.negate()).onTrue(new IntakeConeAndHoldCommandGroup());
-        intakeButton.and(cubeToggle).and(manualToggle.negate()).onTrue(new IntakeCubeSmartCommand());
+        intakeButton.and((cubeToggle).negate()).and(manualToggle.negate()).whileTrue(new IntakeConeAndHoldCommandGroup());
+        intakeButton.and(cubeToggle).and(manualToggle.negate()).whileTrue(new IntakeCubeSmartCommand());
         floorNormalScore.whileTrue(new SetArmPositionCommand(Arm.PoseType.SCORE, Constants.ArmPos.FLOOR_NORMAL_SCORE_SHOULDER, Constants.ArmPos.FLOOR_NORMAL_SCORE_WRIST));
         humanPlayerPickup.and(cubeToggle.negate()).whileTrue(new SetArmPositionCommand(Arm.PoseType.COLLECT,Constants.ArmPos.PLAYER_CONE_PICKUP_SHOULDER, Constants.ArmPos.PLAYER_CONE_PICKUP_WRIST));
         humanPlayerPickup.and(cubeToggle).whileTrue(new SetArmPositionCommand(Arm.PoseType.COLLECT, Constants.ArmPos.PLAYER_CUBE_PICKUP_SHOULDER, Constants.ArmPos.PLAYER_CUBE_PICKUP_WRIST));
