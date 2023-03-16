@@ -15,7 +15,7 @@ public class CollectorTestingCommand extends CommandBase {
     @Override
     public void initialize() {
        // Collector.getInstance().intake();
-          Collector.getInstance().SetspeedVelocity(-3411);
+          Collector.getInstance().SetSpeedVelocity(-3411);
     }
 
     @Override

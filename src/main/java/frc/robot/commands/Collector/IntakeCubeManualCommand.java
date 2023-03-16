@@ -27,10 +27,10 @@ public class IntakeCubeManualCommand extends CommandBase {
     @Override
     public void execute() {
         if(armInstance.getShoulderAngle() < 0) {
-            collectorInstance.SetspeedVelocity(Constants.Collector.INTAKE_MOTOR_SPEED * Constants.Collector.MANUAL_INTAKE_MULTIPLIER);
+            collectorInstance.SetSpeedVelocity(Constants.Collector.INTAKE_MOTOR_SPEED * Constants.Collector.MANUAL_INTAKE_MULTIPLIER);
         }
         else {
-            collectorInstance.SetspeedVelocity(-Constants.Collector.INTAKE_MOTOR_SPEED * Constants.Collector.MANUAL_INTAKE_MULTIPLIER);
+            collectorInstance.SetSpeedVelocity(-Constants.Collector.INTAKE_MOTOR_SPEED * Constants.Collector.MANUAL_INTAKE_MULTIPLIER);
         }
     }
 
@@ -42,7 +42,7 @@ public class IntakeCubeManualCommand extends CommandBase {
     @Override
     public void end(boolean interrupted)
     {
-        collectorInstance.SetspeedVelocity(0);
+        collectorInstance.SetSpeedVelocity(0);
         if(interrupted)
         {
             System.out.println("Intake Cube Manual Command Ended, interrupted");

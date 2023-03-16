@@ -73,10 +73,10 @@ public class Collector extends SubsystemBase {
         return instance;
     }
     private static Collector instance;
-    public void SetspeedVelocity(double speed) {
+    public void SetSpeedVelocity(double speed) {
         this.Motor.set(TalonFXControlMode.Velocity, speed);
     }
-    public void SetspeedPercentOutput(double speed) {
+    public void SetSpeedPercentOutput(double speed) {
         this.Motor.set(TalonFXControlMode.PercentOutput, speed);
     }
 

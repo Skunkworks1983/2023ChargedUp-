@@ -1,7 +1,6 @@
 package frc.robot.commands.Collector;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.constants.Constants;
 import frc.robot.subsystems.Collector;
 
 
@@ -22,7 +21,7 @@ double speed;
 
     @Override
     public void execute() {
-        collector.SetspeedPercentOutput(speed);
+        collector.SetSpeedPercentOutput(speed);
     }
 
     @Override
@@ -33,6 +32,6 @@ double speed;
 
     @Override
     public void end(boolean interrupted) {
-        collector.SetspeedPercentOutput(0);
+        collector.SetSpeedPercentOutput(0);
     }
 }

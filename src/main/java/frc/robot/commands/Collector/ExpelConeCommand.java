@@ -22,11 +22,11 @@ public class ExpelConeCommand extends CommandBase {
     public void initialize() {
         System.out.println("Expel Cone Initialized");
 
-        if(armInstance.getShoulderAngle() < 0) {
-            collectorInstance.SetspeedVelocity(Constants.Collector.EXPEL_MOTOR_SPEED);
+        if(armInstance.getShoulderAngle() -armInstance.getWristAngle() < 180 - Constants.Arm.WRIST_LIMIT_ANGLE) {
+            collectorInstance.SetSpeedVelocity(-Constants.Collector.INTAKE_MOTOR_SPEED);
         }
         else {
-            collectorInstance.SetspeedVelocity(-Constants.Collector.EXPEL_MOTOR_SPEED);
+            collectorInstance.SetSpeedVelocity(Constants.Collector.INTAKE_MOTOR_SPEED);
         }
 
 
@@ -36,6 +36,12 @@ public class ExpelConeCommand extends CommandBase {
     @Override
     public void execute()
     {
+        if(armInstance.getShoulderAngle() -armInstance.getWristAngle() < 180 - Constants.Arm.WRIST_LIMIT_ANGLE) {
+            collectorInstance.SetSpeedVelocity(-Constants.Collector.INTAKE_MOTOR_SPEED);
+        }
+        else {
+            collectorInstance.SetSpeedVelocity(Constants.Collector.INTAKE_MOTOR_SPEED);
+        }
 
     }
 
@@ -47,7 +53,7 @@ public class ExpelConeCommand extends CommandBase {
     @Override
     public void end(boolean interrupted)
     {
-        collectorInstance.SetspeedVelocity(0);
+        collectorInstance.SetSpeedVelocity(0);
         if(interrupted)
         {
             System.out.println("Expel Cone Command ended, interrupted");
