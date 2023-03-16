@@ -235,7 +235,6 @@ public class Arm extends SubsystemBase
             peakOutput = Constants.Arm.MIN_PEAK;
         }
 
-        //SmartDashboard.putNumber("wrist position", wristPos);
         //SmartDashboard.putNumber("shoulder position", shoulderPos);
         //SmartDashboard.putNumber("Motor output: ", ShoulderMotor.getMotorOutputPercent());
         if(Math.abs(shoulderPos - lastAngle) > Constants.Arm.SHOULDER_ANGLE_UPDATE)

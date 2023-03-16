@@ -11,6 +11,19 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.arm.SetArmPositionCommand;
+import frc.robot.commands.autos.BalanceOnChargeStationCommand;
+import frc.robot.commands.autos.Simple.SimpleAuto1_9;
+import frc.robot.commands.autos.Simple.SimpleAuto2_8;
+import frc.robot.commands.autos.Simple.SimpleAuto5;
+import frc.robot.commands.drivebase.DetectRangeSensorCommand;
+import frc.robot.commands.drivebase.DetectRangeSensorWithoutDrivebaseCommand;
+import frc.robot.commands.drivebase.TankDrive;
+import frc.robot.commands.autos.BalanceOnChargeStationCommand;
+import frc.robot.commands.drivebase.DetectRangeSensorCommand;
+import frc.robot.commands.drivebase.DetectRangeSensorWithoutDrivebaseCommand;
+import frc.robot.commands.arm.WaveCollectorCommandGroup;
+import frc.robot.commands.drivebase.TankDrive;
 import frc.robot.commands.autos.*;
 import frc.robot.commands.autos.Simple.SimpleAuto1;
 import frc.robot.commands.autos.Simple.SimpleAuto5;
@@ -31,7 +44,7 @@ import frc.robot.subsystems.Drivebase;
  */
 public class Robot extends TimedRobot
 {
-
+    private boolean setBrakeModeOnDisable = true;
     private Command autonomousCommand;
     private SendableChooser autoChooser;
     private Drivebase drivebase = Drivebase.GetDrivebase();
@@ -61,10 +74,9 @@ public class Robot extends TimedRobot
         autoChooser.addOption("DriveOnChargeStationAndBalanceConeP2", new DriveOnChargeStationAndBalanceP2ConeCommandGroup());
         autoChooser.addOption("ScoreAndExitCommunityP2", new ScoreAndExitCommunityP2CommandGroup());
         autoChooser.addOption("ScoreAndExitCommunityP1", new ScoreAndExitCommunityP1CommandGroup());
-        autoChooser.addOption("E2toGamePiece4", new E2ToGamePiece4());
-        autoChooser.addOption("LeaveCommunityP2E2", new LeaveCommunityP2E2());
-        autoChooser.addOption("ScoreAndDriveOutP3", new ScoreAndDriveOutP3CommandGroup());
-        autoChooser.addOption("DriveOnChargeStationAndBalanceCubeP2", new DriveOnChargeStationAndBalanceP2CubeCommandGroup());
+        autoChooser.addOption("E2toGamePiece4",new E2ToGamePiece4());
+        autoChooser.addOption("LeaveCommunityP2E2",new LeaveCommunityP2E2());
+        autoChooser.addOption("ScoreAndDriveOutP3",new ScoreAndDriveOutP3CommandGroup());
 
         autoChooser.addOption("ExitCommunityFrom1", new SimpleAuto1());
         autoChooser.addOption("ExitCommunityFrom9", new SimpleAuto9());
@@ -110,7 +122,10 @@ public class Robot extends TimedRobot
     {
         drivebase.runMotor(0,0);
         arm.WristMotor.setNeutralMode(NeutralMode.Coast);
-        drivebase.SetBrakeMode(true);
+        if (setBrakeModeOnDisable)
+        {
+            drivebase.SetBrakeMode(true);
+        }
 
     }
 
@@ -128,6 +143,7 @@ public class Robot extends TimedRobot
     @Override
     public void autonomousInit()
     {
+        setBrakeModeOnDisable = true;
         arm.WristMotor.setNeutralMode(NeutralMode.Brake);
         CommandScheduler.getInstance().cancelAll();
         SendableChooser autoChooser = (SendableChooser) SmartDashboard.getData("autoChooser");
@@ -153,7 +169,7 @@ public class Robot extends TimedRobot
     @Override
     public void teleopInit()
     {
-
+        setBrakeModeOnDisable = true;
         drivebase.SetBrakeMode(true);
         Command arcadeDrive = new ArcadeDrive(drivebase, oi);
         arcadeDrive.schedule();
@@ -173,6 +189,7 @@ public class Robot extends TimedRobot
     @Override
     public void testInit()
     {
+        setBrakeModeOnDisable = false;
         drivebase.SetBrakeMode(false);
         // Cancels all running commands at the start of test mode.
         CommandScheduler.getInstance().cancelAll();
