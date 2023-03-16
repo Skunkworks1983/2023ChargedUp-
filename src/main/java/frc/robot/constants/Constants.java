@@ -159,7 +159,7 @@ public class Constants extends CommandBase {
         public static final double SHOULDER_SAFE_WRIST_ANGLE = SHOULDER_RESTING_ANGLE;
         public static final int MAX_WRIST_ROTATION = 235;
         public static final double WRIST_TOLERANCE = 2;
-
+        public static final double WRIST_PARALLEL_WITH_SHOULDER = 164.05;
         public static final double WRIST_POWER=.15;
         public static final int WRIST_MOTOR_DEVICE_NUMBER = 6;
         public static final double WRIST_GEAR_RATIO = 176;
