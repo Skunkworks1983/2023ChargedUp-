@@ -107,6 +107,8 @@ public class Constants extends CommandBase {
         public static final int DRIVE_OUT_OF_COMMUNITY = -9;
         public static final double ARCADE_DRIVE_KP = 0.007;
         public static final double ARCADE_DRIVE_KD = 0;
+        public static final double ARCADE_DRIVE_LEFTX_DEADBAND = 0.01;
+
         public static final int DRIVE_OUT_OF_COMMUINITY = -9;
 
         public static final double VOLTAGE_TO_DISTANCE_SENSOR=1;
@@ -125,6 +127,7 @@ public class Constants extends CommandBase {
         public static final double ARCADE_DRIVE_MAX_DEGREES_PER_SECOND = 250;
         public static final int EXECUTES_PER_SECOND = 50;
         public static final double  WAIT_TIME_FOR_GYRO_CALIBRATION = 3;
+        public static final double HEADING_TOO_BIG = 20;
         public static final double MAX_DRIVE_DISTANCE_SPEED = 0.3;
     }
 
