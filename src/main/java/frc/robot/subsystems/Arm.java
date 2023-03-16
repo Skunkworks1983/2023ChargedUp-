@@ -109,8 +109,8 @@ public class Arm extends SubsystemBase
     public PoseType getCurrentPose(){
         return currentPose;
     }
-    public void setCurrentPose(PoseType Newpose){
-        currentPose = Newpose;
+    public void setCurrentPose(PoseType newPose){
+        currentPose = newPose;
     }
 
     /*
