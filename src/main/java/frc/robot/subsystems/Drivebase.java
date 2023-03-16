@@ -4,19 +4,11 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.kauailabs.navx.frc.AHRS;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DigitalOutput;
-import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.SerialPort;
-import edu.wpi.first.wpilibj.*;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Subsystem;
-import frc.robot.commands.drivebase.DetectRangeSensorCommand;
 import frc.robot.constants.Constants;
 
 import static java.lang.Double.NaN;
@@ -34,11 +26,22 @@ public class Drivebase implements Subsystem {
     double frontRangeVoltage;
 
     private double lastHeading;
-    public double getFrontRangeVoltage(){return frontRangeVoltage;}
-    public double getBackRangeVoltage(){return backRangeVoltage;}
 
-    public void setFrontRangeVoltage(double voltage){frontRangeVoltage=voltage;}
-    public void setBackRangeVoltage(double voltage){backRangeVoltage=voltage;}
+    public double getFrontRangeVoltage() {
+        return frontRangeVoltage;
+    }
+
+    public double getBackRangeVoltage() {
+        return backRangeVoltage;
+    }
+
+    public void setFrontRangeVoltage(double voltage) {
+        frontRangeVoltage = voltage;
+    }
+
+    public void setBackRangeVoltage(double voltage) {
+        backRangeVoltage = voltage;
+    }
 
     DigitalOutput frontRangeSensorTrigger = new DigitalOutput(Constants.Drivebase.FRONT_RANGE_SENSOR_OUTPUT_CHANNEL);
 
@@ -48,10 +51,13 @@ public class Drivebase implements Subsystem {
 
     AnalogInput backRangeSensorValue = new AnalogInput(Constants.Drivebase.BACK_RANGE_SENSOR_INPUT_CHANNEL);
 
-    public enum DriveDirection {FORWARD,BACKWARD,MOTIONLESS,UNCLEAR}
+    public enum DriveDirection {FORWARD, BACKWARD, MOTIONLESS, UNCLEAR}
+
     DriveDirection driveDirection = DriveDirection.FORWARD;
 
-    public void setCurrentDirection(Drivebase.DriveDirection direction){driveDirection=direction;}
+    public void setCurrentDirection(Drivebase.DriveDirection direction) {
+        driveDirection = direction;
+    }
 
     private boolean isHeadingReliable = false;
 
@@ -72,9 +78,11 @@ public class Drivebase implements Subsystem {
         leftMotor2.set(TalonFXControlMode.PercentOutput, turnSpeedLeft);
         rightMotor1.set(TalonFXControlMode.PercentOutput, -turnSpeedRight);
         rightMotor2.set(TalonFXControlMode.PercentOutput, -turnSpeedRight);
-        if(turnSpeedLeft>0&&turnSpeedRight>0)driveDirection=DriveDirection.FORWARD;
-        else if(turnSpeedLeft<0&&turnSpeedRight<0)driveDirection=DriveDirection.BACKWARD;
-        else{driveDirection=DriveDirection.UNCLEAR;}
+        if (turnSpeedLeft > 0 && turnSpeedRight > 0) driveDirection = DriveDirection.FORWARD;
+        else if (turnSpeedLeft < 0 && turnSpeedRight < 0) driveDirection = DriveDirection.BACKWARD;
+        else {
+            driveDirection = DriveDirection.UNCLEAR;
+        }
     }
 
     public double getPosLeft() {
@@ -101,15 +109,11 @@ public class Drivebase implements Subsystem {
     }
 
 
-
-
-    public double getPitch()
-    {
+    public double getPitch() {
         return gyro.getPitch();
     }
 
-    public boolean isCalibrating()
-    {
+    public boolean isCalibrating() {
         return gyro.isCalibrating();
     }
 
@@ -172,46 +176,55 @@ public class Drivebase implements Subsystem {
 
     @Override
     public void periodic() {
-        if (gyro.isCalibrating() || !gyro.isConnected()) {
+        if (isHeadingReliable) {
+            if (gyro.isCalibrating() || !gyro.isConnected()) {
 
-            isHeadingReliable = false;
+                isHeadingReliable = false;
 
-            System.out.println("GYRO CRASHED!! - GYRO IS NOT CALIBRATED OR CONNECTED");
+                System.out.println("GYRO CRASHED!! - GYRO IS NOT CALIBRATED OR CONNECTED");
+            }
+
+            if (Math.abs(getHeading() - lastHeading) >= Constants.Drivebase.HEADING_TOO_BIG) {
+
+                isHeadingReliable = false;
+
+                System.out.println("THE GYROSCOPE HAS CRASHED!!! - HEADING IS TOO LARGE");
+            }
+
+            lastHeading = getHeading();
         }
-
-        if (getHeading() - lastHeading >= Constants.Drivebase.HEADING_TOO_BIG) {
-
-            isHeadingReliable = false;
-
-            System.out.println("THE GYROSCOPE HAS CRASHED!!! - HEADING IS TOO LARGE");
-        }
-
-       lastHeading = getHeading();
     }
 
-    public DriveDirection getDriveDirection(){return driveDirection;}
+    public DriveDirection getDriveDirection() {
+        return driveDirection;
+    }
 
-    public int getFrontRangeSensor(){
+    public int getFrontRangeSensor() {
         return frontRangeSensorValue.getValue();
     }
-    public int getBackRangeSensor(){
+
+    public int getBackRangeSensor() {
         return backRangeSensorValue.getValue();
     }
 
-    public int getDirectionRangeSensor(){
-        if(driveDirection==DriveDirection.FORWARD)return getFrontRangeSensor();
-        if(driveDirection==DriveDirection.BACKWARD)return getBackRangeSensor();
+    public int getDirectionRangeSensor() {
+        if (driveDirection == DriveDirection.FORWARD) return getFrontRangeSensor();
+        if (driveDirection == DriveDirection.BACKWARD) return getBackRangeSensor();
         return 0;
     }
 
-    public void setDirectionRangeSensor(boolean value){
-        if(driveDirection==DriveDirection.FORWARD)setFrontRangeSensor(value);
-        if(driveDirection==DriveDirection.BACKWARD)setBackRangeSensor(value);
+    public void setDirectionRangeSensor(boolean value) {
+        if (driveDirection == DriveDirection.FORWARD) setFrontRangeSensor(value);
+        if (driveDirection == DriveDirection.BACKWARD) setBackRangeSensor(value);
     }
 
-    public void setBackRangeSensor(boolean value){backRangeSensorTrigger.set(value);}
+    public void setBackRangeSensor(boolean value) {
+        backRangeSensorTrigger.set(value);
+    }
 
-    public void setFrontRangeSensor(boolean value){frontRangeSensorTrigger.set(value);}
+    public void setFrontRangeSensor(boolean value) {
+        frontRangeSensorTrigger.set(value);
+    }
 
     public static Drivebase GetDrivebase() {
 
