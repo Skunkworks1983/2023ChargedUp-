@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.arm.SetArmPositionCommand;
 import frc.robot.commands.autos.BalanceOnChargeStationCommand;
 import frc.robot.commands.autos.Simple.SimpleAuto1_9;
 import frc.robot.commands.autos.Simple.SimpleAuto2_8;
@@ -85,7 +86,6 @@ public class Robot extends TimedRobot
         autoChooser.addOption("SimpleAuto1_9",new SimpleAuto1_9());
         autoChooser.addOption("SimpleAuto2_8",new SimpleAuto2_8());
         autoChooser.addOption("SimpleAuto5",new SimpleAuto5());
-
 
 
         //autoChooser.addOption("oneBallAutosHigh", new OneBallAutosHighCommandGroup());
@@ -175,6 +175,8 @@ public class Robot extends TimedRobot
         drivebase.SetBrakeMode(true);
         Command arcadeDrive = new ArcadeDrive(drivebase, oi);
         arcadeDrive.schedule();
+
+
 
     }
 

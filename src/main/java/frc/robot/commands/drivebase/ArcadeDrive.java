@@ -8,9 +8,6 @@ import frc.robot.constants.Constants;
 import frc.robot.services.Oi;
 import frc.robot.subsystems.Drivebase;
 
-import static java.lang.Double.NaN;
-
-
 public class ArcadeDrive extends CommandBase {
     private final Drivebase drivebase;
     private final Oi oi;
@@ -41,17 +38,15 @@ public class ArcadeDrive extends CommandBase {
         rightY = Math.pow(rightY, 2) * (oldY < 0 ? -1 : 1);
 
         double heading = drivebase.getHeading();
-        double turnThrottle = 0;
-        turnThrottle = pidController.calculate(heading, targetHeading);
-        if (Double.isNaN(heading) && Math.abs(leftX) > 0.01) {
-            turnThrottle = leftX;
-        } else if (Math.abs(leftX) > 0.01) {
+
+        double turnThrottle;
+
+        if (!Double.isNaN(heading) && Math.abs(leftX) > Constants.Drivebase.ARCADE_DRIVE_LEFTX_DEADBAND) {
             targetHeading = targetHeading + ((Constants.Drivebase.ARCADE_DRIVE_MAX_DEGREES_PER_SECOND /
                     Constants.Drivebase.EXECUTES_PER_SECOND) * leftX);
-        }
-        else if(!Double.isNaN(heading))
-        {
-            targetHeading = heading;
+            turnThrottle = pidController.calculate(heading, targetHeading);
+        } else {
+            turnThrottle = leftX;
         }
 
         SmartDashboard.putNumber("arcade drive turn error", pidController.getPositionError());
@@ -59,23 +54,11 @@ public class ArcadeDrive extends CommandBase {
         SmartDashboard.putNumber("arcade drive throttle joystick value", rightY);
         SmartDashboard.putNumber("arcade drive turn throttle", turnThrottle);
 
-//      //  System.out.println("error: " + pidController.getPositionError());
-//       // System.out.println("heading: " + heading);
-        //System.out.println("target heading: " + targetHeading);
-//        System.out.println("turn throttle: " + turnThrottle);
-
-//        if (Math.abs(leftX) > 0.01) {
-//            turnThrottle = leftX;
-//            targetHeading = drivebase.getHeading();
-//        }
-        //System.out.printf("Turn Speed: %f%n", turnThrottle);
-
         double leftSpeed = rightY + turnThrottle;
         double rightSpeed = rightY - turnThrottle;
 
-//        System.out.printf("Left: %f | Right: %f%n", leftSpeed, rightSpeed);
-//
-//        System.out.printf("Target Heading: %f | Current Heading: %f%n", targetHeading, heading);
+        leftSpeed = MathUtil.clamp(leftSpeed, -1, 1);
+        rightSpeed = MathUtil.clamp(rightSpeed, -1, 1);
 
         drivebase.runMotor(leftSpeed, rightSpeed);
     }
