@@ -178,7 +178,7 @@ public class Constants extends CommandBase {
         public static final double PLAYER_CONE_PICKUP_SHOULDER = 39.56579;
         public static final double PLAYER_CONE_PICKUP_WRIST = 155.46118;
         public static final double SCORE_CONE_MID_SHOULDER = 44.56579;
-        public static final double SCORE_CUBE_MID_SHOULDER = 49.56579;
+        public static final double SCORE_CUBE_MID_SHOULDER = 56.56579;
         public static final double SCORE_CONE_MID_WRIST = 150.46118;
         public static final double SCORE_CUBE_MID_WRIST = 160.46118;
         public static final double PLAYER_CUBE_PICKUP_SHOULDER = 43.68152;
@@ -200,6 +200,8 @@ public class Constants extends CommandBase {
         //public static final double SCORE_CUBE_HIGH_WRIST = 100;
         public static final double SCORE_CONE_HIGH_SHOULDER = 30;
         public static final double SCORE_CONE_HIGH_WRIST = 230;
+        public static final double SCORE_CONE_WEIRD_SHOULDER = -90;
+        public static final double SCORE_CODE_WEIRD_WRIST = 220;
     }
 
 
