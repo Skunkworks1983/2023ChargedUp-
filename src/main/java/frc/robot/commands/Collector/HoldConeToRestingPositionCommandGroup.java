@@ -21,11 +21,15 @@ public class HoldConeToRestingPositionCommandGroup extends CommandBase {
 
     @Override
     public void initialize() {
+
         if (Arm.getInstance().getCurrentPose() == Arm.PoseType.COLLECT) {
+            System.out.println("Hold Cone to Stow Run");
             HoldCone.schedule();
             ArmToCarry.schedule();
         }
         else {
+            System.out.println("Only Holds Cone");
+
             HoldCone.schedule();
         }
     }
