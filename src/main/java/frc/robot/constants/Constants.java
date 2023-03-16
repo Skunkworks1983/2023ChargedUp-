@@ -161,7 +161,7 @@ public class Constants extends CommandBase {
         public static final int WRIST_MOTOR_DEVICE_NUMBER = 6;
         public static final double WRIST_GEAR_RATIO = 176;
         public static final double WRIST_RESTING_ANGLE = 0;
-        public static final double WRIST_LIMIT_ANGLE = 12.36;
+        public static final double WRIST_LIMIT_ANGLE = 15.96;
         public static final double WRIST_PEAK_OUTPUT = 0.6;
         public static final double WRIST_KP = 0.05;
         public static final double WRIST_KI = 0;
@@ -174,7 +174,7 @@ public class Constants extends CommandBase {
 
         public static final double PLAYER_CONE_PICKUP_SHOULDER = 39.56579;
         public static final double PLAYER_CONE_PICKUP_WRIST = 155.46118;
-        public static final double SCORE_CONE_MID_SHOULDER = 44.56579;
+        public static final double SCORE_CONE_MID_SHOULDER = 42.56579;
         public static final double SCORE_CUBE_MID_SHOULDER = 49.56579;
         public static final double SCORE_CONE_MID_WRIST = 150.46118;
         public static final double SCORE_CUBE_MID_WRIST = 160.46118;

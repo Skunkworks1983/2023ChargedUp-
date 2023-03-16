@@ -27,10 +27,10 @@ public class IntakeConeManualCommand extends CommandBase {
     @Override
     public void execute() {
         if(armInstance.getShoulderAngle() < 0) {
-            collectorInstance.Setspeed(-Constants.Collector.INTAKE_MOTOR_SPEED * Constants.Collector.MANUAL_INTAKE_MULTIPLIER);
+            collectorInstance.SetSpeedVelocity(-Constants.Collector.INTAKE_MOTOR_SPEED * Constants.Collector.MANUAL_INTAKE_MULTIPLIER);
         }
         else {
-            collectorInstance.Setspeed(Constants.Collector.INTAKE_MOTOR_SPEED * Constants.Collector.MANUAL_INTAKE_MULTIPLIER);
+            collectorInstance.SetSpeedVelocity(Constants.Collector.INTAKE_MOTOR_SPEED * Constants.Collector.MANUAL_INTAKE_MULTIPLIER);
         }
         SmartDashboard.putNumber("Colletor current", collectorInstance.GetCollectorCurrent());
     }
@@ -43,7 +43,7 @@ public class IntakeConeManualCommand extends CommandBase {
     @Override
     public void end(boolean interrupted)
     {
-        collectorInstance.Setspeed(0);
+        collectorInstance.SetSpeedVelocity(0);
         if(interrupted)
         {
             System.out.println("Intake Cone Manual Command Ended, interrupted");

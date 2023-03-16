@@ -1,7 +1,6 @@
 package frc.robot.commands.Collector;
 
 
-import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
@@ -39,10 +38,10 @@ public class HoldConeCommand extends CommandBase {
                 countConeHeld = 0;
             }
             if(countConeHeld >= Constants.Collector.CONE_COLLECTED_VALUE) {
-                collectorInstance.Motor.set(TalonFXControlMode.PercentOutput, .01);
+                collectorInstance.SetSpeedPercentOutput( .0);
             }
             else{
-                collectorInstance.Motor.set(TalonFXControlMode.PercentOutput, .0);
+                collectorInstance.SetSpeedPercentOutput( .01);
             }
     }
 
@@ -65,6 +64,6 @@ public class HoldConeCommand extends CommandBase {
 
 
 
-        collectorInstance.Setspeed(0);
+        collectorInstance.SetSpeedVelocity(0);
     }
 }

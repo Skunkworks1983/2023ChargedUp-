@@ -13,6 +13,11 @@ import frc.robot.constants.Constants;
 
 public class Arm extends SubsystemBase
 {
+    public enum PoseType {
+        RESTING,
+        COLLECT,
+        SCORE
+    }
 
     public TalonFX ShoulderMotor = new TalonFX(Constants.Arm.SHOULDER_MOTOR_ID);
     public TalonFX WristMotor = new TalonFX(Constants.Arm.WRIST_MOTOR_DEVICE_NUMBER);
@@ -24,6 +29,8 @@ public class Arm extends SubsystemBase
     public double setpoint;
     private final static Arm INSTANCE = new Arm();
     boolean isLimitSwitchTrue = false;
+
+    PoseType currentPose = PoseType.RESTING;
 
     public static Arm getInstance()
     {
@@ -97,6 +104,13 @@ public class Arm extends SubsystemBase
     public double getWristCurrentOutput()
     {
         return WristMotor.getMotorOutputPercent();
+    }
+
+    public PoseType getCurrentPose(){
+        return currentPose;
+    }
+    public void setCurrentPose(PoseType newPose){
+        currentPose = newPose;
     }
 
     /*
@@ -261,5 +275,12 @@ public class Arm extends SubsystemBase
             System.out.println("WRIST IS NOT IN GOOD POS, SENDING TO CARRY");
             setWristAnglePosition(Constants.ArmPos.CARRY_WRIST);
         }
+
+    }
+    public boolean isArmForward() {
+        System.out.println("Shoulder angle" + getShoulderAngle());
+        System.out.println("Wrist angle" + getWristAngle());
+        return getShoulderAngle() -getWristAngle() < -180 + Constants.Arm.WRIST_LIMIT_ANGLE;
+
     }
 }
