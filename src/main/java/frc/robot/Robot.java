@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.arm.SetArmPositionCommand;
 import frc.robot.commands.autos.BalanceOnChargeStationCommand;
 import frc.robot.commands.drivebase.DetectRangeSensorCommand;
 import frc.robot.commands.drivebase.DetectRangeSensorWithoutDrivebaseCommand;
@@ -79,7 +80,6 @@ public class Robot extends TimedRobot
         autoChooser.addOption("LeaveCommunityP2E2",new LeaveCommunityP2E2());
         autoChooser.addOption("ScoreAndDriveOutP3",new ScoreAndDriveOutP3CommandGroup());
         autoChooser.addOption("DriveOnChargeStationAndBalanceCubeP2", new DriveOnChargeStationAndBalanceP2CubeCommandGroup());
-
 
         //autoChooser.addOption("oneBallAutosHigh", new OneBallAutosHighCommandGroup());
        // autoChooser.addOption("oneBallAutosLow", new OneBallAutosLowCommandGroup());
