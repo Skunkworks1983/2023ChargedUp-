@@ -87,7 +87,6 @@ public class Oi {
         manualShoulderDown = new JoystickButton(buttonStick, Constants.OIButtons.MANUAL_SHOULDER_DOWN);
 
         floorNormalScore = new JoystickButton(buttonStick, Constants.OIButtons.SCORE_LOW);
-
         floorPickup = new JoystickButton(buttonStick, Constants.OIButtons.COLLECT_GROUND);
 
         resetArm = new JoystickButton(buttonStick, Constants.OIButtons.RESET_POSITION);
@@ -117,7 +116,7 @@ public class Oi {
         manualCollectorUp.whileTrue(new CollectorPercentOutputCommand(.1));
         manualCollectorDown.whileTrue(new CollectorPercentOutputCommand(-.1));
 
-        //manualToggle.onTrue(new GyroFailCommand(false));
+        //manualToggle.onTrue(new ChangeGyroStatus(false));
 
         floorNormalScore.whileTrue(new SetArmPositionCommand(Constants.ArmPos.FLOOR_NORMAL_SCORE_SHOULDER, Constants.ArmPos.FLOOR_NORMAL_SCORE_WRIST));
         shootCube.onTrue(new SetArmPositionCommand

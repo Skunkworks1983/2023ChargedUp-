@@ -4,12 +4,12 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivebase;
 
 
-public class GyroFailTestCommand extends CommandBase {
+public class ChangeGyroStatus extends CommandBase {
 
     private boolean gyroSet = false;
     private boolean status;
 
-    public GyroFailTestCommand(boolean status) {
+    public ChangeGyroStatus(boolean status) {
         this.status = status;
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
