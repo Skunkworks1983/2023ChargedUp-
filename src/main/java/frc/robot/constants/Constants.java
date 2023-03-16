@@ -107,6 +107,7 @@ public class Constants extends CommandBase {
         public static final int DRIVE_OUT_OF_COMMUNITY = -9;
         public static final double ARCADE_DRIVE_KP = 0.007;
         public static final double ARCADE_DRIVE_KD = 0;
+        public static final double ARCADE_DRIVE_LEFTX_DEADBAND = 0.01;
 
         public static final int DRIVE_OUT_OF_COMMUINITY = -9;
 

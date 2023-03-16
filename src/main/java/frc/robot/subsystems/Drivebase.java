@@ -173,6 +173,10 @@ public class Drivebase implements Subsystem {
 
     }
 
+    public void setGyroStatus(boolean status) {
+        isHeadingReliable = status;
+    }
+
 
     @Override
     public void periodic() {
@@ -181,7 +185,7 @@ public class Drivebase implements Subsystem {
 
                 isHeadingReliable = false;
 
-                System.out.println("GYRO CRASHED!! - GYRO IS NOT CALIBRATED OR CONNECTED");
+                System.out.println("GYRO CRASHED!!! - GYRO IS NOT CALIBRATED OR CONNECTED");
             }
 
             if (Math.abs(getHeading() - lastHeading) >= Constants.Drivebase.HEADING_TOO_BIG) {

@@ -1,7 +1,6 @@
 package frc.robot.services;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Collector.*;
 import frc.robot.commands.arm.ResetArm;
@@ -10,56 +9,49 @@ import frc.robot.commands.arm.SetArmPositionCommand;
 import frc.robot.commands.arm.SetShoulderSpeed;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.Collector;
-
-import static frc.robot.constants.Constants.Collector.INTAKE_MOTOR_SPEED;
 
 
-public class Oi
-    {
+public class Oi {
 
-        public static Oi Instance;
+    public static Oi Instance;
 
-        Joystick leftStick;
-        Joystick rightStick;
-        Joystick buttonStick;
+    Joystick leftStick;
+    Joystick rightStick;
+    Joystick buttonStick;
 
-        JoystickButton floorNormalScore;
+    JoystickButton floorNormalScore;
 
-        //JoystickButton gyroFail;
-        JoystickButton humanPlayerPickup;
-        JoystickButton carry;
+    JoystickButton humanPlayerPickup;
+    JoystickButton carry;
 
-        JoystickButton scoreMid;
+    JoystickButton scoreMid;
 
-        JoystickButton intakeButton;
-        JoystickButton expelButton;
+    JoystickButton intakeButton;
+    JoystickButton expelButton;
 
-        JoystickButton cubeToggle;
-        JoystickButton manualToggle;
+    JoystickButton cubeToggle;
+    JoystickButton manualToggle;
 
-        JoystickButton manualShoulderUp;
+    JoystickButton manualShoulderUp;
 
-        JoystickButton manualShoulderDown;
+    JoystickButton manualShoulderDown;
 
-        JoystickButton shootCube;
+    JoystickButton shootCube;
 
-        JoystickButton wristUp;
+    JoystickButton wristUp;
 
-        JoystickButton wristDown;
+    JoystickButton wristDown;
 
-        JoystickButton manualCollectorUp;
+    JoystickButton manualCollectorUp;
 
-        JoystickButton manualCollectorDown;
+    JoystickButton manualCollectorDown;
 
-        JoystickButton floorPickup;
+    JoystickButton floorPickup;
 
-        JoystickButton resetArm;
+    JoystickButton resetArm;
 
 
-
-    public Oi()
-    {
+    public Oi() {
 
         System.out.println("oi init");
 
@@ -69,7 +61,7 @@ public class Oi
         buttonStick = new Joystick(Constants.JoystickPorts.BUTTON_STICK_PORT);
 
         //button sticks
-        manualToggle = new JoystickButton(buttonStick,Constants.OIButtons.ENABLE_MANUAL);
+        manualToggle = new JoystickButton(buttonStick, Constants.OIButtons.ENABLE_MANUAL);
 
         humanPlayerPickup = new JoystickButton(buttonStick, Constants.OIButtons.COLLECT_SHELF);
         carry = new JoystickButton(buttonStick, Constants.OIButtons.STOW);
@@ -78,31 +70,27 @@ public class Oi
 
         cubeToggle = new JoystickButton(buttonStick, Constants.OIButtons.CONE_TOGGLE);
 
-        shootCube = new JoystickButton(buttonStick,Constants.OIButtons.SHOOT_CUBE);
+        shootCube = new JoystickButton(buttonStick, Constants.OIButtons.SHOOT_CUBE);
 
         expelButton = new JoystickButton(buttonStick, Constants.OIButtons.EXPEL);
         intakeButton = new JoystickButton(buttonStick, Constants.OIButtons.INTAKE);
 
-        wristUp = new JoystickButton(buttonStick,Constants.OIButtons.WRIST_UP);
+        wristUp = new JoystickButton(buttonStick, Constants.OIButtons.WRIST_UP);
 
-        wristDown = new JoystickButton(buttonStick,Constants.OIButtons.WRIST_DOWN);
+        wristDown = new JoystickButton(buttonStick, Constants.OIButtons.WRIST_DOWN);
 
-        manualCollectorUp = new JoystickButton(buttonStick,Constants.OIButtons.MANUAL_COLLECTOR_UP);
+        manualCollectorUp = new JoystickButton(buttonStick, Constants.OIButtons.MANUAL_COLLECTOR_UP);
 
-        manualCollectorDown = new JoystickButton(buttonStick,Constants.OIButtons.MANUAL_COLLECTOR_DOWN);
+        manualCollectorDown = new JoystickButton(buttonStick, Constants.OIButtons.MANUAL_COLLECTOR_DOWN);
 
-        manualShoulderUp= new JoystickButton(buttonStick,Constants.OIButtons.MANUAL_SHOULDER_UP);
-        manualShoulderDown= new JoystickButton(buttonStick,Constants.OIButtons.MANUAL_SHOULDER_DOWN);
+        manualShoulderUp = new JoystickButton(buttonStick, Constants.OIButtons.MANUAL_SHOULDER_UP);
+        manualShoulderDown = new JoystickButton(buttonStick, Constants.OIButtons.MANUAL_SHOULDER_DOWN);
 
         floorNormalScore = new JoystickButton(buttonStick, Constants.OIButtons.SCORE_LOW);
 
         floorPickup = new JoystickButton(buttonStick, Constants.OIButtons.COLLECT_GROUND);
 
         resetArm = new JoystickButton(buttonStick, Constants.OIButtons.RESET_POSITION);
-
-       // gyroFail = new JoystickButton(rightStick, 1);
-
-
 
         //when held
         expelButton.and((cubeToggle).negate()).whileTrue(new ExpelConeCommand());
@@ -124,21 +112,20 @@ public class Oi
         (resetArm.negate()).whileTrue(new ResetArm());
         wristUp.whileTrue(new RotateWristByPowerCommand(Constants.Arm.WRIST_POWER));
         wristDown.whileTrue(new RotateWristByPowerCommand(-Constants.Arm.WRIST_POWER));
-        manualShoulderUp.whileTrue(new SetShoulderSpeed(Arm.getInstance(),Constants.Arm.SHOULDER_LIMIT_SWITCH_FRONT,Constants.Arm.SHOULDER_MANUAL_SPEED));
-        manualShoulderDown.whileTrue(new SetShoulderSpeed(Arm.getInstance(),Constants.Arm.SHOULDER_LIMIT_SWITCH_FRONT,-Constants.Arm.SHOULDER_MANUAL_SPEED));
+        manualShoulderUp.whileTrue(new SetShoulderSpeed(Arm.getInstance(), Constants.Arm.SHOULDER_LIMIT_SWITCH_FRONT, Constants.Arm.SHOULDER_MANUAL_SPEED));
+        manualShoulderDown.whileTrue(new SetShoulderSpeed(Arm.getInstance(), Constants.Arm.SHOULDER_LIMIT_SWITCH_FRONT, -Constants.Arm.SHOULDER_MANUAL_SPEED));
         manualCollectorUp.whileTrue(new CollectorPercentOutputCommand(.1));
         manualCollectorDown.whileTrue(new CollectorPercentOutputCommand(-.1));
+
+        //manualToggle.onTrue(new GyroFailCommand(false));
 
         floorNormalScore.whileTrue(new SetArmPositionCommand(Constants.ArmPos.FLOOR_NORMAL_SCORE_SHOULDER, Constants.ArmPos.FLOOR_NORMAL_SCORE_WRIST));
         shootCube.onTrue(new SetArmPositionCommand
                 (Constants.ArmPos.SCORE_CUBE_HIGH_SHOULDER, Constants.ArmPos.SCORE_CUBE_HIGH_WRIST));
-
-        //gyroFail.onTrue()
     }
 
 
-
-        public double getLeftY() {
+    public double getLeftY() {
         return leftStick.getY();
     }
 
