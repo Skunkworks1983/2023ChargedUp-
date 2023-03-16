@@ -14,33 +14,26 @@ public class HoldConeToRestingPositionCommandGroup extends CommandBase {
 
     public HoldConeToRestingPositionCommandGroup() {
         super();
-        // TODO: Add your sequential commands in the super() call, e.g.
-        //           super(new OpenClawCommand(), new MoveArmCommand());
-
     }
 
     @Override
     public void initialize() {
 
         if (Arm.getInstance().getCurrentPose() == Arm.PoseType.COLLECT) {
-            System.out.println("Hold Cone to Stow Run");
+            System.out.println("Hold cone and go to stow position");
             HoldCone.schedule();
             ArmToCarry.schedule();
         }
         else {
-            System.out.println("Only Holds Cone");
+            System.out.println("it does Hold Cone ");
 
             HoldCone.schedule();
         }
     }
 
-
     @Override
-    public void execute()
-    {
+    public void execute() {}
 
-
-    }
     @Override
     public boolean isFinished() {
         return HoldCone.isFinished() &&   ArmToCarry.isFinished();
