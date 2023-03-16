@@ -50,7 +50,7 @@ public class Robot extends TimedRobot
     private SendableChooser autoChooser;
     private Drivebase drivebase = Drivebase.GetDrivebase();
     private Collector collector = Collector.getInstance();
-    private Oi oi = new Oi(drivebase,collector);
+    private Oi oi = new Oi();
     Command DriveOnChargeStationAndBalanceP2 = new DriveOnChargeStationAndBalanceP2ConeCommandGroup();
     Command SimpleAuto = new SimpleAutoCommandGroup();
     Command ScoreAndExitCommunityP2 = new ScoreAndExitCommunityP2CommandGroup();
@@ -156,6 +156,7 @@ public class Robot extends TimedRobot
      //   ScoreAndExitCommunityP1.schedule();
 
         drivebase.waitForHeadingReliable();
+
         drivebase.SetBrakeMode(true);
     }
 
@@ -163,6 +164,7 @@ public class Robot extends TimedRobot
     @Override
     public void teleopInit()
     {
+
         drivebase.SetBrakeMode(true);
         Command arcadeDrive = new ArcadeDrive(drivebase, oi);
         arcadeDrive.schedule();
