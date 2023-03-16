@@ -11,34 +11,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.arm.SetArmPositionCommand;
-import frc.robot.commands.autos.BalanceOnChargeStationCommand;
-import frc.robot.commands.autos.Simple.SimpleAuto1_9;
-import frc.robot.commands.autos.Simple.SimpleAuto2_8;
-import frc.robot.commands.autos.Simple.SimpleAuto5;
-import frc.robot.commands.drivebase.DetectRangeSensorCommand;
-import frc.robot.commands.drivebase.DetectRangeSensorWithoutDrivebaseCommand;
-import frc.robot.commands.drivebase.TankDrive;
-import frc.robot.commands.autos.BalanceOnChargeStationCommand;
-import frc.robot.commands.drivebase.DetectRangeSensorCommand;
-import frc.robot.commands.drivebase.DetectRangeSensorWithoutDrivebaseCommand;
-import frc.robot.commands.arm.WaveCollectorCommandGroup;
-import frc.robot.commands.drivebase.TankDrive;
 import frc.robot.commands.autos.*;
-import frc.robot.commands.autos.DriveOnChargeStationAndBalanceP2ConeCommandGroup;
-import frc.robot.commands.autos.DriveOnChargeStationAndBalanceP2CubeCommandGroup;
-import frc.robot.commands.autos.E2ToGamePiece4;
-import frc.robot.commands.autos.LeaveCommunityP2E2;
-import frc.robot.commands.autos.ScoreAndDriveOutP3CommandGroup;
-import frc.robot.commands.autos.ScoreAndExitCommunityP1CommandGroup;
-import frc.robot.commands.autos.ScoreAndExitCommunityP2CommandGroup;
-import frc.robot.commands.autos.SimpleAutoCommandGroup;
+import frc.robot.commands.autos.Simple.SimpleAuto1;
+import frc.robot.commands.autos.Simple.SimpleAuto5;
+import frc.robot.commands.autos.Simple.SimpleAuto9;
 import frc.robot.commands.drivebase.ArcadeDrive;
 import frc.robot.constants.Constants;
+import frc.robot.services.Oi;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Collector;
 import frc.robot.subsystems.Drivebase;
-import frc.robot.services.Oi;
 
 
 /**
@@ -82,14 +64,13 @@ public class Robot extends TimedRobot
         autoChooser.addOption("E2toGamePiece4",new E2ToGamePiece4());
         autoChooser.addOption("LeaveCommunityP2E2",new LeaveCommunityP2E2());
         autoChooser.addOption("ScoreAndDriveOutP3",new ScoreAndDriveOutP3CommandGroup());
-        autoChooser.addOption("DriveOnChargeStationAndBalanceCubeP2", new DriveOnChargeStationAndBalanceP2CubeCommandGroup());
-        autoChooser.addOption("SimpleAuto1_9",new SimpleAuto1_9());
-        autoChooser.addOption("SimpleAuto2_8",new SimpleAuto2_8());
-        autoChooser.addOption("SimpleAuto5",new SimpleAuto5());
 
+        autoChooser.addOption("ExitCommunityFrom1", new SimpleAuto1());
+        autoChooser.addOption("ExitCommunityFrom9", new SimpleAuto9());
+        autoChooser.addOption("ScoreAndBalanceFrom5", new SimpleAuto5());
 
         //autoChooser.addOption("oneBallAutosHigh", new OneBallAutosHighCommandGroup());
-       // autoChooser.addOption("oneBallAutosLow", new OneBallAutosLowCommandGroup());
+        // autoChooser.addOption("oneBallAutosLow", new OneBallAutosLowCommandGroup());
         SmartDashboard.putData("autoChooser", autoChooser);
 
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
