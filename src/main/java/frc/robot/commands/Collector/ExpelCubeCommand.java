@@ -22,13 +22,7 @@ public class ExpelCubeCommand extends CommandBase {
     public void initialize() {
         System.out.println("Expel Cube Initialized");
 
-        if(armInstance.isArmForward()) {
-            collectorInstance.SetSpeedVelocity(-Constants.Collector.INTAKE_MOTOR_SPEED);
-        }
-        else {
-            collectorInstance.SetSpeedVelocity(Constants.Collector.INTAKE_MOTOR_SPEED);
-        }
-
+        collectorInstance.SetSpeedVelocity(Constants.Collector.INTAKE_MOTOR_SPEED * -1 * collectorInstance.getLastIntake());
 
 
     }

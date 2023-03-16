@@ -41,7 +41,7 @@ public class HoldConeCommand extends CommandBase {
                 collectorInstance.SetSpeedPercentOutput( .0);
             }
             else{
-                collectorInstance.SetSpeedPercentOutput( .01);
+                collectorInstance.SetSpeedPercentOutput( .015);
             }
     }
 

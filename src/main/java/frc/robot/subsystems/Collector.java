@@ -9,6 +9,7 @@ import frc.robot.constants.Constants;
 
 public class Collector extends SubsystemBase {
     public TalonFX Motor;
+    int lastIntake;
 
     private DigitalInput cubeBreak1;
     private DigitalInput cubeBreak2;
@@ -79,6 +80,13 @@ public class Collector extends SubsystemBase {
     public void SetSpeedPercentOutput(double speed) {
         this.Motor.set(TalonFXControlMode.PercentOutput, speed);
     }
+    public int getLastIntake() {
+        return lastIntake;
+    }
+    public void setLastIntake(int newDirection) {
+        lastIntake = newDirection;
+    }
+
 
 
 

@@ -45,9 +45,11 @@ public class IntakeCubeSmartCommand extends CommandBase {
             } else {
 
                 if(armInstance.isArmForward()) {
+                    collectorInstance.setLastIntake(1);
                     collectorInstance.SetSpeedVelocity(Constants.Collector.INTAKE_MOTOR_SPEED);
                 }
                 else {
+                    collectorInstance.setLastIntake(-1);
                     collectorInstance.SetSpeedVelocity(-Constants.Collector.INTAKE_MOTOR_SPEED);
                 }
 

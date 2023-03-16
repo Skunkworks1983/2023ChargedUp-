@@ -109,6 +109,7 @@ public class Arm extends SubsystemBase
     public PoseType getCurrentPose(){
         return currentPose;
     }
+
     public void setCurrentPose(PoseType newPose){
         currentPose = newPose;
     }
@@ -285,9 +286,12 @@ public class Arm extends SubsystemBase
 
     }
     public boolean isArmForward() {
-        System.out.println("Shoulder angle" + getShoulderAngle());
-        System.out.println("Wrist angle" + getWristAngle());
-        return getShoulderAngle() -getWristAngle() < -180 + Constants.Arm.WRIST_LIMIT_ANGLE;
+        System.out.println("Shoulder angle " + getShoulderAngle());
+        System.out.println("Wrist angle " + getWristAngle());
+
+        boolean isForward = getShoulderAngle() -getWristAngle() < -180 + Constants.Arm.WRIST_LIMIT_ANGLE;
+        System.out.println("arm is forward? " + isForward);
+        return isForward;
 
     }
 }
