@@ -17,13 +17,16 @@ import static frc.robot.constants.Constants.Collector.INTAKE_MOTOR_SPEED;
 
 public class Oi
     {
+
         public static Oi Instance;
+
         Joystick leftStick;
         Joystick rightStick;
         Joystick buttonStick;
 
         JoystickButton floorNormalScore;
 
+        JoystickButton gyroFail;
         JoystickButton humanPlayerPickup;
         JoystickButton carry;
 
@@ -57,6 +60,7 @@ public class Oi
 
     public Oi()
     {
+
         System.out.println("oi init");
 
         Instance = this;
@@ -96,6 +100,10 @@ public class Oi
 
         resetArm = new JoystickButton(buttonStick, Constants.OIButtons.RESET_POSITION);
 
+        gyroFail = new JoystickButton(rightStick, 1);
+
+
+
         //when held
         expelButton.and((cubeToggle).negate()).whileTrue(new ExpelConeCommand());
         expelButton.and(cubeToggle).whileTrue(new ExpelCubeCommand());
@@ -124,6 +132,8 @@ public class Oi
         floorNormalScore.whileTrue(new SetArmPositionCommand(Constants.ArmPos.FLOOR_NORMAL_SCORE_SHOULDER, Constants.ArmPos.FLOOR_NORMAL_SCORE_WRIST));
         shootCube.onTrue(new SetArmPositionCommand
                 (Constants.ArmPos.SCORE_CUBE_HIGH_SHOULDER, Constants.ArmPos.SCORE_CUBE_HIGH_WRIST));
+
+        gyroFail.onTrue()
     }
 
 

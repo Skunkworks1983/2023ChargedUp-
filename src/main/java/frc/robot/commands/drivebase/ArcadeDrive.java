@@ -42,13 +42,18 @@ public class ArcadeDrive extends CommandBase {
 
         double heading = drivebase.getHeading();
         double turnThrottle = 0;
+
         turnThrottle = pidController.calculate(heading, targetHeading);
+
         if (Double.isNaN(heading) && Math.abs(leftX) > 0.01) {
+
             turnThrottle = leftX;
+
         } else if (Math.abs(leftX) > 0.01) {
             targetHeading = targetHeading + ((Constants.Drivebase.ARCADE_DRIVE_MAX_DEGREES_PER_SECOND /
                     Constants.Drivebase.EXECUTES_PER_SECOND) * leftX);
         }
+
         else if(!Double.isNaN(heading))
         {
             targetHeading = heading;

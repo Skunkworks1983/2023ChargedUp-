@@ -30,6 +30,8 @@ public class Drivebase implements Subsystem {
     double backRangeVoltage;
 
     double frontRangeVoltage;
+
+    private double lastHeading;
     public double getFrontRangeVoltage(){return frontRangeVoltage;}
     public double getBackRangeVoltage(){return backRangeVoltage;}
 
@@ -84,12 +86,19 @@ public class Drivebase implements Subsystem {
 
 
     public double getHeading() {
+
         if (isHeadingReliable) {
+
             return gyro.getAngle();
+
         } else {
+
             return NaN;
+
         }
     }
+
+
 
 
     public double getPitch()
@@ -158,16 +167,33 @@ public class Drivebase implements Subsystem {
 
     }
 
+    public double fakeHeading() {
+
+        get
+        return
+    }
+
 
     @Override
     public void periodic() {
+
+
 
         if (gyro.isCalibrating() || !gyro.isConnected()) {
 
             isHeadingReliable = false;
 
-            System.out.println("GYRO CRASHED!!!");
+            System.out.println("GYRO CRASHED!! - GYRO IS NOT CALIBRATED OR CONNECTED");
         }
+
+        if (getHeading() - lastHeading >= Constants.Drivebase.HEADING_TOO_BIG) {
+
+            isHeadingReliable = false;
+
+            System.out.println("THE GYROSCOPE HAS CRASHED!!! - HEADING IS TOO LARGE");
+        }
+
+       lastHeading = getHeading();
     }
 
     public DriveDirection getDriveDirection(){return driveDirection;}
