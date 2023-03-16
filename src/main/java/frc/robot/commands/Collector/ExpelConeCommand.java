@@ -23,10 +23,10 @@ public class ExpelConeCommand extends CommandBase {
         System.out.println("Expel Cone Initialized");
 
         if(armInstance.isArmForward()) {
-            collectorInstance.SetSpeedVelocity(-Constants.Collector.INTAKE_MOTOR_SPEED);
+            collectorInstance.SetSpeedVelocity(Constants.Collector.INTAKE_MOTOR_SPEED);
         }
         else {
-            collectorInstance.SetSpeedVelocity(Constants.Collector.INTAKE_MOTOR_SPEED);
+            collectorInstance.SetSpeedVelocity(-Constants.Collector.INTAKE_MOTOR_SPEED);
         }
 
 

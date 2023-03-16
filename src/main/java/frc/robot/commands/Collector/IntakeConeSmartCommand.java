@@ -33,10 +33,10 @@ public class IntakeConeSmartCommand extends CommandBase {
     {
 
             if(armInstance.isArmForward()) {
-                collectorInstance.SetSpeedVelocity(Constants.Collector.INTAKE_MOTOR_SPEED);
+                collectorInstance.SetSpeedVelocity(-Constants.Collector.INTAKE_MOTOR_SPEED);
             }
             else {
-                collectorInstance.SetSpeedVelocity(-Constants.Collector.INTAKE_MOTOR_SPEED);
+                collectorInstance.SetSpeedVelocity(Constants.Collector.INTAKE_MOTOR_SPEED);
             }
 
 
