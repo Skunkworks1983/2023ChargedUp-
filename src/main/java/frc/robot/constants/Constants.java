@@ -26,12 +26,10 @@ public class Constants extends CommandBase {
         public static final double EXPEL_SPEED = 10; // inches per second
         public static final double EXPEL_MOTOR_SPEED =
                 EXPEL_SPEED / WHEEL_CIRCUMFERENCE * WHEEL_REVS_PER_SEC_TO_VELOCITY;
-
-
         public static final double K_P = 0.03;
         public static final double MANUAL_INTAKE_MULTIPLIER = 0.4;
         public static final int CONE_COLLECTED_VALUE = 5;
-        public static final int TICKS_BEFORE_FINISHED = 5;
+        public static final int TICKS_BEFORE_FINISHED = 3;
         public static final int CONE_HOLDING_AMPS = 8;
 
         public static final double INTAKE_HOLDING = .025;
@@ -45,18 +43,53 @@ public class Constants extends CommandBase {
     }
 
     public class OIButtons {
-        public static final int ARM_UP_BUTTON = 12;
-        public static final int ARM_DOWN_BUTTON = 15;
-        public static final int WRIST_UP_BUTTON = 4;
-        public static final int WRIST_DOWN_BUTTON=2;
-        public static final int INTAKE_BUTTON = 13; // 13 on comp robot, 5 on  single stick
-        public static final int EXPEL_BUTTON = 9; // 9 on comp robot, 6 on single stick
-        public static final int CONE_TOGGLE = 10;
-        public static final int MANUAL_TOGGLE = 1;
-        public static final int CONE_SCORE_MID = 14;
-        // public static final int CONE_FLOOR_PICKUP = 11;
-        public static final int CUBE_FLOOR_PICKUP = 3;
-        public static final int RESET_ARM = 5;
+
+        //top row
+        public static final int ENABLE_MANUAL =8;
+
+        public static final int MANUAL_COLLECTOR_UP=6;
+
+        public static final int MANUAL_COLLECTOR_DOWN=7;
+
+        public static final int RESET_POSITION=1;
+
+        public static final int WRIST_UP=5;
+
+        public static final int WRIST_DOWN=4;
+        public static final int MANUAL_SHOULDER_UP=2;
+
+        public static final int MANUAL_SHOULDER_DOWN=3;
+
+        public static final int OTHER_LIGHTS_UP=20;
+
+        public static final int OTHER_LIGHTS_DOWN=12;
+
+        //middle row
+
+        public static final int SHOOT_CUBE=18;
+
+        public static final int SCORE_LOW=17;
+
+        public static final int SCORE_MID=24;
+
+        public static final int STOW=13;
+
+        public static final int COLLECT_GROUND=12;
+
+        public static final int COLLECT_SHELF=11;
+
+        public static final int INTAKE=23;
+
+        public static final int EXPEL=22;
+
+        //bottom row
+
+        public static final int CONE_TOGGLE=10;
+
+        public static final int LIGHTS_UP=9;
+
+        public static final int LIGHTS_DOWN=16;
+
 
 
     }
@@ -74,6 +107,8 @@ public class Constants extends CommandBase {
         public static final int DRIVE_OUT_OF_COMMUNITY = -9;
         public static final double ARCADE_DRIVE_KP = 0.007;
         public static final double ARCADE_DRIVE_KD = 0;
+        public static final double ARCADE_DRIVE_LEFTX_DEADBAND = 0.01;
+
         public static final int DRIVE_OUT_OF_COMMUINITY = -9;
 
         public static final double VOLTAGE_TO_DISTANCE_SENSOR=1;
@@ -92,6 +127,7 @@ public class Constants extends CommandBase {
         public static final double ARCADE_DRIVE_MAX_DEGREES_PER_SECOND = 250;
         public static final int EXECUTES_PER_SECOND = 50;
         public static final double  WAIT_TIME_FOR_GYRO_CALIBRATION = 3;
+        public static final double HEADING_TOO_BIG = 20;
         public static final double MAX_DRIVE_DISTANCE_SPEED = 0.3;
     }
 
@@ -100,6 +136,8 @@ public class Constants extends CommandBase {
         public static final double MAX_ANGLE = 25;
         public static final double MIN_PEAK = .3;
         public static final double MAX_PEAK = .7;
+
+        public static final double SHOULDER_MANUAL_SPEED=0.12;
 
         public static final double SHOULDER_TICKS_TO_DEGREES = ((1.0 / Falcon500.TICKS_PER_REV) / Arm.SHOULDER_GEAR_RATIO) * 360;
         public static final double WRIST_TICKS_TO_DEGREES = ((1.0 / Falcon500.TICKS_PER_REV) / Arm.WRIST_GEAR_RATIO) * 360;
@@ -121,6 +159,8 @@ public class Constants extends CommandBase {
         public static final double SHOULDER_SAFE_WRIST_ANGLE = SHOULDER_RESTING_ANGLE;
         public static final int MAX_WRIST_ROTATION = 235;
         public static final double WRIST_TOLERANCE = 2;
+
+        public static final double WRIST_POWER=.15;
         public static final int WRIST_MOTOR_DEVICE_NUMBER = 6;
         public static final double WRIST_GEAR_RATIO = 176;
         public static final double WRIST_RESTING_ANGLE = 0;
