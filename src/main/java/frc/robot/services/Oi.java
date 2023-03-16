@@ -26,7 +26,7 @@ public class Oi
 
         JoystickButton floorNormalScore;
 
-        JoystickButton gyroFail;
+        //JoystickButton gyroFail;
         JoystickButton humanPlayerPickup;
         JoystickButton carry;
 
@@ -100,7 +100,7 @@ public class Oi
 
         resetArm = new JoystickButton(buttonStick, Constants.OIButtons.RESET_POSITION);
 
-        gyroFail = new JoystickButton(rightStick, 1);
+       // gyroFail = new JoystickButton(rightStick, 1);
 
 
 
@@ -133,7 +133,7 @@ public class Oi
         shootCube.onTrue(new SetArmPositionCommand
                 (Constants.ArmPos.SCORE_CUBE_HIGH_SHOULDER, Constants.ArmPos.SCORE_CUBE_HIGH_WRIST));
 
-        gyroFail.onTrue()
+        //gyroFail.onTrue()
     }
 
 

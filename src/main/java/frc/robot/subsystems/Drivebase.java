@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DigitalOutput;
@@ -13,6 +14,7 @@ import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.commands.drivebase.DetectRangeSensorCommand;
 import frc.robot.constants.Constants;
@@ -163,22 +165,13 @@ public class Drivebase implements Subsystem {
         isHeadingReliable = true;
 
         System.out.println("gyro finished calibrating");
-        System.out.println("heading reliablity is " + isHeadingReliable);
+        System.out.println("heading reliability is " + isHeadingReliable);
 
-    }
-
-    public double fakeHeading() {
-
-        get
-        return
     }
 
 
     @Override
     public void periodic() {
-
-
-
         if (gyro.isCalibrating() || !gyro.isConnected()) {
 
             isHeadingReliable = false;
