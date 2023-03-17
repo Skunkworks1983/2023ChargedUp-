@@ -29,6 +29,7 @@ public class ArcadeDrive extends CommandBase {
     @Override
     public void initialize() {
         targetHeading = drivebase.getHeading();
+        System.out.println("Arcadedrive beginning");
     }
 
     @Override
@@ -39,20 +40,20 @@ public class ArcadeDrive extends CommandBase {
         double oldX = leftX;
         double oldY = rightY;
 
-        leftX = Math.pow(leftX, 2) * (oldX < 0 ? -1 : 1);
-        rightY = Math.pow(rightY, 2) * (oldY < 0 ? -1 : 1);
+        leftX = (Math.pow(Math.abs(leftX), 2.2)) * (oldX < 0 ? -1 : 1);
+        rightY = (Math.pow(Math.abs(rightY), 2)) * (oldY < 0 ? -1 : 1);
 
         double heading = drivebase.getHeading();
 
         double turnThrottle;
 
-        if (!Double.isNaN(heading) && Math.abs(leftX) > Constants.Drivebase.ARCADE_DRIVE_LEFTX_DEADBAND) {
+       /* if (!Double.isNaN(heading) && Math.abs(leftX) > Constants.Drivebase.ARCADE_DRIVE_LEFTX_DEADBAND) {
             targetHeading = targetHeading + ((Constants.Drivebase.ARCADE_DRIVE_MAX_DEGREES_PER_SECOND /
                     Constants.Drivebase.EXECUTES_PER_SECOND) * leftX);
             turnThrottle = pidController.calculate(heading, targetHeading);
-        } else {
-            turnThrottle = leftX;
-        }
+        } else {*/
+        turnThrottle = leftX * Constants.Drivebase.TURN_THROTTLE_MULTIPLIER;
+    //}
 
         SmartDashboard.putNumber("arcade drive turn error", pidController.getPositionError());
         SmartDashboard.putNumber("arcade drive turn joystick value", leftX);
@@ -75,6 +76,6 @@ public class ArcadeDrive extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-
+        System.out.println("Arcadedrive end Inturr " +interrupted );
     }
 }

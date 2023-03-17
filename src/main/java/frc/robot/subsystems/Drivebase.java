@@ -60,7 +60,7 @@ public class Drivebase implements Subsystem {
         driveDirection = direction;
     }
 
-    private boolean isHeadingReliable = false;
+    private boolean isHeadingReliable;
 
     private final double TicksPerFoot =
             Constants.Wobbles.TICKS_PER_MOTOR_REV * Constants.Drivebase.GEAR_RATIO /
@@ -73,6 +73,8 @@ public class Drivebase implements Subsystem {
     private Drivebase() {
         setDefaultCommand(ArcadeDrive);
         gyro.calibrate();
+        isHeadingReliable = false;
+        System.out.println("drivebase is constructing");
     }
 
     public void runMotor(double turnSpeedLeft, double turnSpeedRight) {
@@ -180,7 +182,7 @@ public class Drivebase implements Subsystem {
     }
 
 
-    @Override
+    /*@Override
     public void periodic() {
         if (isHeadingReliable) {
             if (gyro.isCalibrating() || !gyro.isConnected()) {
@@ -199,7 +201,7 @@ public class Drivebase implements Subsystem {
 
             lastHeading = getHeading();
         }
-    }
+    }*/
 
     public DriveDirection getDriveDirection() {
         return driveDirection;
