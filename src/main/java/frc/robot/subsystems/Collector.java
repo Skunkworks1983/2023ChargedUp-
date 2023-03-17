@@ -25,10 +25,6 @@ public class Collector extends SubsystemBase {
     }
     public boolean isHoldingCube() {
 
-        if(cubeBreak1.get() == false && cubeBreak2.get() == false)
-        {
-            return true;
-        }
         if(cubeBreak1.get() == false && cubeBreak2.get() == false) {
             return true;
         }
@@ -36,6 +32,17 @@ public class Collector extends SubsystemBase {
             return false;
         }
 
+    }
+
+    public boolean isIntaking () {
+
+        if (cubeBreak1.get() == cubeBreak2.get()) {
+
+            return false;
+        } else {
+
+            return true;
+        }
     }
 
     public double GetCollectorCurrent()
@@ -68,6 +75,9 @@ public class Collector extends SubsystemBase {
     private static Collector instance;
     public void Setspeed(double speed) {
         this.Motor.set(TalonFXControlMode.Velocity, speed);
+    }
+    public void SetPercentOutput(double speed) {
+        this.Motor.set(TalonFXControlMode.PercentOutput, speed);
     }
 
 

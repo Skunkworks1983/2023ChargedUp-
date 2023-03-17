@@ -277,22 +277,14 @@ public class Arm extends SubsystemBase
             peakOutput = Constants.Arm.MIN_PEAK;
         }
 
-        //SmartDashboard.putNumber("wrist position", wristPos);
         //SmartDashboard.putNumber("shoulder position", shoulderPos);
         //SmartDashboard.putNumber("Motor output: ", ShoulderMotor.getMotorOutputPercent());
-        if(Math.abs(wristPos - lastAngle) > Constants.Arm.SHOULDER_ANGLE_UPDATE)
+        if(Math.abs(shoulderPos - lastAngle) > Constants.Arm.SHOULDER_ANGLE_UPDATE)
         {
-            lastAngle = wristPos;
+            lastAngle = shoulderPos;
             updateKf(Constants.Arm.SHOULDER_KF, shoulderPos, peakOutput);
         }
 
-        //SmartDashboard.putNumber("Shoulder back Limit", ShoulderMotor.getSensorCollection().isRevLimitSwitchClosed());
-        //SmartDashboard.putNumber("Wrist Limit: ", WristMotor.getSensorCollection().isRevLimitSwitchClosed());
-        if(Math.abs(wristPos - lastAngle) > Constants.Arm.SHOULDER_ANGLE_UPDATE)
-        {
-            lastAngle = wristPos;
-            updateKf(Constants.Arm.SHOULDER_KF, wristPos, peakOutput);
-        }
         if(WristMotor.getSensorCollection().isRevLimitSwitchClosed() == 1 && !isLimitSwitchTrue)
         {
             System.out.println("limit switch returning true");

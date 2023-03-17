@@ -13,19 +13,23 @@ public class Constants extends CommandBase {
         public static final int CUBE_BREAK_1_PORT = 2;
         public static final int CUBE_BREAK_2_PORT = 3;
 
-        public static final double CONE_COLLECT_AMP_THRESHOLD = 10;
+        public static final double CONE_COLLECT_AMP_THRESHOLD = 12;
         public static final double CONE_AMPS_HOLDING_THRESHOLD = 10;
         public static final double INTAKE_SPEED = 10; //inches per second
         public static final double INTAKE_MOTOR_SPEED =
                 INTAKE_SPEED / WHEEL_CIRCUMFERENCE * WHEEL_REVS_PER_SEC_TO_VELOCITY;
+
+        public static final double INTAKE_SPEED_SLOW = (INTAKE_SPEED / 2);
+        public static final double INTAKE_MOTOR_SPEED_SLOW =
+                INTAKE_SPEED_SLOW / WHEEL_CIRCUMFERENCE * WHEEL_REVS_PER_SEC_TO_VELOCITY;
+
         public static final double EXPEL_SPEED = 10; // inches per second
         public static final double EXPEL_MOTOR_SPEED =
                 EXPEL_SPEED / WHEEL_CIRCUMFERENCE * WHEEL_REVS_PER_SEC_TO_VELOCITY;
-
-
         public static final double K_P = 0.03;
         public static final double MANUAL_INTAKE_MULTIPLIER = 0.4;
-        public static final int CONE_COLLECTED_VALUE = 3;
+        public static final int CONE_COLLECTED_VALUE = 5;
+        public static final int TICKS_BEFORE_FINISHED = 3;
         public static final int CONE_HOLDING_AMPS = 8;
 
         public static final double INTAKE_HOLDING = .025;
@@ -39,18 +43,53 @@ public class Constants extends CommandBase {
     }
 
     public class OIButtons {
-        public static final int ARM_UP_BUTTON = 12;
-        public static final int ARM_DOWN_BUTTON = 15;
-        public static final int WRIST_UP_BUTTON = 4;
-        public static final int WRIST_DOWN_BUTTON=2;
-        public static final int INTAKE_BUTTON = 13; // 13 on comp robot, 5 on  single stick
-        public static final int EXPEL_BUTTON = 9; // 9 on comp robot, 6 on single stick
-        public static final int CONE_TOGGLE = 10;
-        public static final int MANUAL_TOGGLE = 1;
-        public static final int CONE_SCORE_MID = 14;
-        // public static final int CONE_FLOOR_PICKUP = 11;
-        public static final int CUBE_FLOOR_PICKUP = 3;
-        public static final int RESET_ARM = 5;
+
+        //top row
+        public static final int ENABLE_MANUAL =8;
+
+        public static final int MANUAL_COLLECTOR_UP=6;
+
+        public static final int MANUAL_COLLECTOR_DOWN=7;
+
+        public static final int RESET_POSITION=1;
+
+        public static final int WRIST_UP=5;
+
+        public static final int WRIST_DOWN=4;
+        public static final int MANUAL_SHOULDER_UP=2;
+
+        public static final int MANUAL_SHOULDER_DOWN=3;
+
+        public static final int OTHER_LIGHTS_UP=20;
+
+        public static final int OTHER_LIGHTS_DOWN=12;
+
+        //middle row
+
+        public static final int SHOOT_CUBE=18;
+
+        public static final int SCORE_LOW=17;
+
+        public static final int SCORE_MID=24;
+
+        public static final int STOW=13;
+
+        public static final int COLLECT_GROUND=12;
+
+        public static final int COLLECT_SHELF=11;
+
+        public static final int INTAKE=23;
+
+        public static final int EXPEL=22;
+
+        //bottom row
+
+        public static final int CONE_TOGGLE=10;
+
+        public static final int LIGHTS_UP=9;
+
+        public static final int LIGHTS_DOWN=16;
+
 
 
     }
@@ -59,14 +98,17 @@ public class Constants extends CommandBase {
         public static final double GEAR_RATIO = 10.71;
         public static final double WHEEL_DIAMETER = 0.5;
         public static final double DISTANCE_KP = 0.05;
-        public static final double ROTATE_KP = 0.0015/* 14 or 13 */;
+        public static final double ROTATE_KP = 0.0026/* 16,17,18 */;
         public static final double ROTATE_KF = 0.04;
-        public static final double ANGLE_KP = 0.003;
+        public static final double ANGLE_KP = 0.007;
+        public static final double ANGLE_KD = 0.002;
         public static final double DRIVEBASE_KF = 0.08;
         public static final double THRESHOLD_ROTATE = .5;
         public static final int DRIVE_OUT_OF_COMMUNITY = -9;
-        public static final double ARCADE_DRIVE_KP = 0.015;
+        public static final double ARCADE_DRIVE_KP = 0.007;
         public static final double ARCADE_DRIVE_KD = 0;
+        public static final double ARCADE_DRIVE_LEFTX_DEADBAND = 0.01;
+
         public static final int DRIVE_OUT_OF_COMMUINITY = -9;
 
         public static final double VOLTAGE_TO_DISTANCE_SENSOR=1;
@@ -82,16 +124,20 @@ public class Constants extends CommandBase {
         public static final int FRONT_RANGE_SENSOR_INPUT_CHANNEL=0;
 
         public static final int BACK_RANGE_SENSOR_INPUT_CHANNEL=1;
-        public static final double ARCADE_DRIVE_MAX_DEGREES_PER_SECOND = 150;
+        public static final double ARCADE_DRIVE_MAX_DEGREES_PER_SECOND = 250;
         public static final int EXECUTES_PER_SECOND = 50;
         public static final double  WAIT_TIME_FOR_GYRO_CALIBRATION = 3;
+        public static final double HEADING_TOO_BIG = 20;
+        public static final double MAX_DRIVE_DISTANCE_SPEED = 0.3;
     }
 
     public class Arm {
         public static final double MIN_ANGLE = Arm.SHOULDER_RESTING_ANGLE;
         public static final double MAX_ANGLE = 25;
-        public static final double MIN_PEAK = .3;
-        public static final double MAX_PEAK = .65;
+        public static final double MIN_PEAK = .2;
+        public static final double MAX_PEAK = .7;
+
+        public static final double SHOULDER_MANUAL_SPEED=0.12;
 
         public static final double SHOULDER_TICKS_TO_DEGREES = ((1.0 / Falcon500.TICKS_PER_REV) / Arm.SHOULDER_GEAR_RATIO) * 360;
         public static final double WRIST_TICKS_TO_DEGREES = ((1.0 / Falcon500.TICKS_PER_REV) / Arm.WRIST_GEAR_RATIO) * 360;
@@ -111,11 +157,14 @@ public class Constants extends CommandBase {
         public static final int WRIST_LIMIT_SWITCH = 2;
         //once shoulder is passed this angle, wrist can go anywhere.
         public static final double SHOULDER_SAFE_WRIST_ANGLE = SHOULDER_RESTING_ANGLE;
-        public static final int MAX_WRIST_ROTATION = 180;
+        public static final int MAX_WRIST_ROTATION = 235;
         public static final double WRIST_TOLERANCE = 2;
+
+        public static final double WRIST_POWER=.15;
         public static final int WRIST_MOTOR_DEVICE_NUMBER = 6;
         public static final double WRIST_GEAR_RATIO = 176;
         public static final double WRIST_RESTING_ANGLE = 0;
+        public static final double WRIST_LIMIT_ANGLE = 0;
         public static final double WRIST_PEAK_OUTPUT = 0.6;
         public static final double WRIST_KP = 0.05;
         public static final double WRIST_KI = 0;
@@ -126,24 +175,31 @@ public class Constants extends CommandBase {
     public class ArmPos
     {
 
-
         public static final double PLAYER_CONE_PICKUP_SHOULDER = 39.56579;
+        public static final double PLAYER_CONE_PICKUP_WRIST = 155.46118;
         public static final double SCORE_CONE_MID_SHOULDER = 44.56579;
         public static final double SCORE_CUBE_MID_SHOULDER = 49.56579;
-        public static final double PLAYER_CONE_PICKUP_WRIST = 158.46118;
-        public static final double SCORE_CONE_MID_WRIST = 156.46118;
-        public static final double SCORE_CUBE_MID_WRIST = 154.46118;
-        public static final double PLAYER_CUBE_PICKUP_SHOULDER = 46.68152;
-        public static final double PLAYER_CUBE_PICKUP_WRIST = 171.73779;
+        public static final double SCORE_CONE_MID_WRIST = 150.46118;
+        public static final double SCORE_CUBE_MID_WRIST = 160.46118;
+        public static final double PLAYER_CUBE_PICKUP_SHOULDER = 43.68152;
+        public static final double PLAYER_CUBE_PICKUP_WRIST = 174.73779;
         public static final double FLOOR_CUBE_PICKUP_SHOULDER = Arm.SHOULDER_RESTING_ANGLE;
-        public static final double FLOOR_CUBE_PICKUP_WRIST = 114.25;
+        public static final double FLOOR_CUBE_PICKUP_WRIST = 112.75;
         public static final double FLOOR_NORMAL_SCORE_SHOULDER = Arm.SHOULDER_RESTING_ANGLE;
         public static final double FLOOR_NORMAL_SCORE_WRIST = 100.70434;
         public static final double CARRY_SHOULDER = Arm.SHOULDER_RESTING_ANGLE;
         public static final double CARRY_WRIST = 15.531;
         public static final double CONE_FLOOR_PICKUP_SHOULDER = Arm.SHOULDER_RESTING_ANGLE;
-        public static final double CONE_FLOOR_PICKUP_WRIST = 103.05419;
+        public static final double CONE_FLOOR_PICKUP_WRIST = 102.05419;
         public static final int WRIST_GEAR_RATIO = 96;
+        public static final double SCORE_CUBE_HIGH_SHOULDER = 45;// scores high cube with wrist up.
+        public static final double SCORE_CUBE_HIGH_WRIST = 225; // scores high cube with wrist up.
+
+        //The following two constants work well for scoring high with a cube with the wrist down.
+        //public static final double SCORE_CUBE_HIGH_SHOULDER = 39.57;
+        //public static final double SCORE_CUBE_HIGH_WRIST = 100;
+        public static final double SCORE_CONE_HIGH_SHOULDER = 30;
+        public static final double SCORE_CONE_HIGH_WRIST = 230;
     }
 
     public class Lights
