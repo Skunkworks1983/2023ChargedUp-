@@ -28,7 +28,7 @@ public class BalanceOnChargeStationCommand extends CommandBase {
 
         //defaults //p=.022//d=0//max=.085
 
-        addRequirements();
+        addRequirements(Drivebase.GetDrivebase());
     }
 
 
