@@ -6,6 +6,7 @@ import frc.robot.commands.Collector.*;
 import frc.robot.commands.arm.ResetArm;
 import frc.robot.commands.arm.RotateWristByPowerCommand;
 import frc.robot.commands.arm.SetArmPositionCommand;
+import frc.robot.commands.arm.SetLightsCommand;
 import frc.robot.commands.arm.SetShoulderSpeed;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
@@ -50,6 +51,10 @@ public class Oi {
 
     JoystickButton resetArm;
 
+    JoystickButton lightSwitchCube;
+    JoystickButton lightSwitchCone;
+    JoystickButton funSwitch1;
+    JoystickButton funSwitch2;
 
     public Oi() {
 
@@ -91,6 +96,11 @@ public class Oi {
 
         resetArm = new JoystickButton(buttonStick, Constants.OIButtons.RESET_POSITION);
 
+        lightSwitchCube = new JoystickButton(buttonStick, 16);
+        lightSwitchCone = new JoystickButton(buttonStick, 9);
+        funSwitch1 = new JoystickButton(buttonStick, 19);
+        funSwitch2 = new JoystickButton(buttonStick, 20);
+
         //when held
         expelButton.and((cubeToggle).negate()).whileTrue(new ExpelConeCommand());
         expelButton.and(cubeToggle).whileTrue(new ExpelCubeCommand());
@@ -115,6 +125,10 @@ public class Oi {
         manualShoulderDown.whileTrue(new SetShoulderSpeed(Arm.getInstance(), Constants.Arm.SHOULDER_LIMIT_SWITCH_FRONT, -Constants.Arm.SHOULDER_MANUAL_SPEED));
         manualCollectorUp.whileTrue(new CollectorPercentOutputCommand(.1));
         manualCollectorDown.whileTrue(new CollectorPercentOutputCommand(-.1));
+        lightSwitchCube.onTrue(new SetLightsCommand(Constants.Lights.CUBE));
+        lightSwitchCone.onTrue(new SetLightsCommand(Constants.Lights.CONE));
+        funSwitch1.onTrue(new SetLightsCommand(Constants.Lights.CYLON));
+        funSwitch1.onTrue(new SetLightsCommand(Constants.Lights.PARTY));
 
         //manualToggle.onTrue(new ChangeGyroStatus(false));
 
