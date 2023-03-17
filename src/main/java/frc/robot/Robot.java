@@ -174,10 +174,10 @@ public class Robot extends TimedRobot
     @Override
     public void teleopInit()
     {
+        drivebase.setGyroStatus(false);
         setBrakeModeOnDisable = true;
         drivebase.SetBrakeMode(true);
-        Command arcadeDrive = new ArcadeDrive(drivebase, oi);
-        arcadeDrive.schedule();
+
 
 
 

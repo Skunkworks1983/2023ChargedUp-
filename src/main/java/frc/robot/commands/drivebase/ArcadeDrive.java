@@ -3,6 +3,7 @@ package frc.robot.commands.drivebase;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.constants.Constants;
 import frc.robot.services.Oi;
@@ -16,9 +17,13 @@ public class ArcadeDrive extends CommandBase {
 
     private PIDController pidController = new PIDController(Constants.Drivebase.ARCADE_DRIVE_KP, 0, Constants.Drivebase.ARCADE_DRIVE_KD);
 
+
     public ArcadeDrive(Drivebase drivebase, Oi oi) {
+
         this.drivebase = drivebase;
         this.oi = oi;
+
+        addRequirements(drivebase);
     }
 
     @Override
