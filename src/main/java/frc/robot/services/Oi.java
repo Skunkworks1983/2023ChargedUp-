@@ -7,6 +7,7 @@ import frc.robot.commands.arm.ResetArm;
 import frc.robot.commands.arm.RotateWristByPowerCommand;
 import frc.robot.commands.arm.SetArmPositionCommand;
 import frc.robot.commands.arm.SetShoulderSpeed;
+import frc.robot.commands.autos.SafeBalanceCommandGroup;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
 
@@ -29,8 +30,11 @@ public class Oi {
     JoystickButton intakeButton;
     JoystickButton expelButton;
 
+
     JoystickButton cubeToggle;
     JoystickButton manualToggle;
+    JoystickButton autoBalance;
+
 
     JoystickButton manualShoulderUp;
 
@@ -91,6 +95,8 @@ public class Oi {
 
         resetArm = new JoystickButton(buttonStick, Constants.OIButtons.RESET_POSITION);
 
+        autoBalance = new JoystickButton(rightStick, Constants.OIButtons.AUTO_BALANCE_BUTTON);
+
         //when held
         expelButton.and((cubeToggle).negate()).whileTrue(new ExpelConeCommand());
         expelButton.and(cubeToggle).whileTrue(new ExpelCubeCommand());
@@ -100,6 +106,7 @@ public class Oi {
         intakeButton.and(cubeToggle).and(manualToggle.negate()).onTrue(new IntakeCubeSmartCommand());
 
         floorNormalScore.whileTrue(new SetArmPositionCommand(Constants.ArmPos.FLOOR_NORMAL_SCORE_SHOULDER, Constants.ArmPos.FLOOR_NORMAL_SCORE_WRIST));
+
         humanPlayerPickup.and(cubeToggle.negate()).whileTrue(new SetArmPositionCommand(Constants.ArmPos.PLAYER_CONE_PICKUP_SHOULDER, Constants.ArmPos.PLAYER_CONE_PICKUP_WRIST));
         humanPlayerPickup.and(cubeToggle).whileTrue(new SetArmPositionCommand(Constants.ArmPos.PLAYER_CUBE_PICKUP_SHOULDER, Constants.ArmPos.PLAYER_CUBE_PICKUP_WRIST));
 
@@ -116,6 +123,7 @@ public class Oi {
         manualCollectorUp.whileTrue(new CollectorPercentOutputCommand(.1));
         manualCollectorDown.whileTrue(new CollectorPercentOutputCommand(-.1));
 
+        autoBalance.whileTrue(new SafeBalanceCommandGroup());
         //manualToggle.onTrue(new ChangeGyroStatus(false));
 
         floorNormalScore.whileTrue(new SetArmPositionCommand(Constants.ArmPos.FLOOR_NORMAL_SCORE_SHOULDER, Constants.ArmPos.FLOOR_NORMAL_SCORE_WRIST));

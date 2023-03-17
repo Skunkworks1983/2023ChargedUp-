@@ -92,6 +92,7 @@ public class Constants extends CommandBase {
 
 
 
+        public static final int AUTO_BALANCE_BUTTON = 3;
     }
 
     public class Drivebase {
