@@ -152,7 +152,7 @@ public class Drivebase implements Subsystem {
 
     public void waitForHeadingReliable() {
 
-        System.out.println("waitForHeadingReliable method is called");
+        //System.out.println("waitForHeadingReliable method is called");
 
         timer.start();
 
@@ -187,14 +187,14 @@ public class Drivebase implements Subsystem {
 
                 isHeadingReliable = false;
 
-                System.out.println("GYRO CRASHED!!! - GYRO IS NOT CALIBRATED OR CONNECTED");
+                //System.out.println("GYRO CRASHED!!! - GYRO IS NOT CALIBRATED OR CONNECTED");
             }
 
             if (Math.abs(getHeading() - lastHeading) >= Constants.Drivebase.HEADING_TOO_BIG) {
 
                 isHeadingReliable = false;
 
-                System.out.println("THE GYROSCOPE HAS CRASHED!!! - HEADING IS TOO LARGE");
+                //System.out.println("THE GYROSCOPE HAS CRASHED!!! - HEADING IS TOO LARGE");
             }
 
             lastHeading = getHeading();

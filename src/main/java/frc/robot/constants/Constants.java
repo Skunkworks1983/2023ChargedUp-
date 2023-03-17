@@ -204,6 +204,32 @@ public class Constants extends CommandBase {
         public static final double SCORE_CODE_WEIRD_WRIST = 220;
     }
 
+    public class Lights
+    {
+        public static final int LIGHT_BIT_0 = 6;
+        public static final int LIGHT_BIT_1 = 7;
+        public static final int LIGHT_BIT_2 = 8;
+        public static final int LIGHT_BIT_3 = 9;
+
+        //colors
+        public static final int BLANK = 0;
+        public static final int CUBE = 1;
+        public static final int CONE = 2;
+        public static final int BLUE_RED = 3;
+        public static final int BLUE_WITH_WHITE = 4;
+        public static final int RED_WITH_WHITE = 5;
+        public static final int PARTY = 6;
+        public static final int HARD_RIGHT = 7;
+        public static final int MEDIUM_RIGHT = 8;
+        public static final int SLIGHT_RIGHT = 9;
+        public static final int CENTER = 10;
+        public static final int SLIGHT_LEFT = 11;
+        public static final int MEDIUM_LEFT = 12;
+        public static final int HARD_LEFT = 13;
+        public static final int CYLON = 14;
+        public static final int RAINBOW_CHASE = 15;
+
+    }
 
     public class Falcon500 {
         public static final int TICKS_PER_REV = 2048;

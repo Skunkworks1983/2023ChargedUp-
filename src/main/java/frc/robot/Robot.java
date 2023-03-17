@@ -50,11 +50,11 @@ import frc.robot.services.Oi;
 public class Robot extends TimedRobot
 {
     private boolean setBrakeModeOnDisable = true;
+    private Oi oi = new Oi();
     private Command autonomousCommand;
     private SendableChooser autoChooser;
     private Drivebase drivebase = Drivebase.GetDrivebase();
     private Collector collector = Collector.getInstance();
-    private Oi oi = new Oi();
     Command DriveOnChargeStationAndBalanceP2 = new DriveOnChargeStationAndBalanceP2ConeCommandGroup();
     Command SimpleAuto = new SimpleAutoCommandGroup();
     Command ScoreAndExitCommunityP2 = new ScoreAndExitCommunityP2CommandGroup();
