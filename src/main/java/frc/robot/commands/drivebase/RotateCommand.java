@@ -12,7 +12,7 @@ public class RotateCommand extends CommandBase
     private double startDegree;
     private double finishDegree;
     private int onTargetCount;
-   private PIDController pidController = new PIDController(Constants.Drivebase.ANGLE_KP, 0, Constants.Drivebase.ANGLE_KD,Constants.Drivebase.DRIVEBASE_KF);
+   private PIDController pidController = new PIDController(Constants.Drivebase.ANGLE_KP, 0.0005, Constants.Drivebase.ANGLE_KD,Constants.Drivebase.DRIVEBASE_KF);
 
     public RotateCommand(Drivebase drivebase, double degree)
     {
