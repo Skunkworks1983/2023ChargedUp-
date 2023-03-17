@@ -8,13 +8,17 @@ import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
+import frc.robot.commands.drivebase.ArcadeDrive;
 import frc.robot.constants.Constants;
+import frc.robot.services.Oi;
 
 import static java.lang.Double.NaN;
 
 public class Drivebase implements Subsystem {
 
+    public Command ArcadeDrive = new ArcadeDrive(this, Oi.Instance);
     private static Drivebase OGDrivebase;
     TalonFX leftMotor1 = new TalonFX(Constants.Wobbles.LEFT_MOTOR_1);
     TalonFX leftMotor2 = new TalonFX(Constants.Wobbles.LEFT_MOTOR_2);
@@ -70,6 +74,7 @@ public class Drivebase implements Subsystem {
     Timer timer = new Timer();
 
     private Drivebase() {
+        setDefaultCommand(ArcadeDrive);
         gyro.calibrate();
     }
 
