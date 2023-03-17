@@ -35,6 +35,14 @@ public class RotateCommand extends CommandBase
 
         double speed = 0;
         speed = pidController.calculate(drivebase.getHeading(), finishDegree);
+        if(speed > 0.5)
+        {
+            speed =0.5;
+        }
+        else if(speed < -0.5)
+        {
+            speed = -0.5;
+        }
         drivebase.runMotor(speed, -speed);
     }
 
