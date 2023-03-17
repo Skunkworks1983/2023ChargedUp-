@@ -24,10 +24,7 @@ public class DriveOnChargeStationAndBalanceP2ConeCommandGroup extends Sequential
               new DriveDistanceCommand(Drivebase.GetDrivebase(),-.5),
               new RotateCommand(Drivebase.GetDrivebase(),180),
               new DriveDistanceCommandGyro(Drivebase.GetDrivebase(), 10, Constants.Drivebase.DRIVEBASE_KF + .1),
-              new ParallelRaceGroup(new RotateCommand(Drivebase.GetDrivebase(), 180), new SetArmPositionCommand(Constants.ArmPos.CONE_FLOOR_PICKUP_SHOULDER, Constants.ArmPos.CONE_FLOOR_PICKUP_WRIST )),
-              new ParallelRaceGroup(new IntakeConeSmartCommand(),new DriveDistanceCommand(Drivebase.GetDrivebase(),-2)),
-              new SetArmRaceCommandGroup(Constants.ArmPos.CARRY_SHOULDER,Constants.ArmPos.CARRY_WRIST, .7),
-              /*new RotateCommand(Drivebase.GetDrivebase(),180),*/
+              new RotateCommand(Drivebase.GetDrivebase(),180),
               new DriveDistanceCommandGyro(Drivebase.GetDrivebase(), 7, Constants.Drivebase.DRIVEBASE_KF + .15),
               new SafeBalanceCommandGroup());
     }

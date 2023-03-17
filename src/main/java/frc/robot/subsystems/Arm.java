@@ -265,9 +265,9 @@ public class Arm extends SubsystemBase
         //SmartDashboard.putNumber("setpoint", setpoint);
         //SmartDashboard.putNumber("position", shoulderPos);
 
-        double m = (Constants.Arm.MIN_PEAK - Constants.Arm.MAX_PEAK)/(Constants.Arm.MAX_ANGLE - Constants.Arm.MIN_ANGLE);
+        double m = -(Constants.Arm.MIN_PEAK - Constants.Arm.MAX_PEAK)/(Constants.Arm.MAX_ANGLE - Constants.Arm.MIN_ANGLE);
         double b = Constants.Arm.MIN_PEAK - (m * Constants.Arm.MAX_ANGLE);
-        peakOutput = (m * shoulderPos + b);
+        peakOutput = (m * Math.abs(ShoulderMotor.getClosedLoopError()*Constants.Arm.SHOULDER_TICKS_TO_DEGREES) + b);
         if(peakOutput > Constants.Arm.MAX_PEAK)
         {
             peakOutput = Constants.Arm.MAX_PEAK;
@@ -276,7 +276,7 @@ public class Arm extends SubsystemBase
         {
             peakOutput = Constants.Arm.MIN_PEAK;
         }
-
+        System.out.println("error: " + ShoulderMotor.getClosedLoopError()*Constants.Arm.SHOULDER_TICKS_TO_DEGREES + " peakoutput: " + peakOutput);
         //SmartDashboard.putNumber("shoulder position", shoulderPos);
         //SmartDashboard.putNumber("Motor output: ", ShoulderMotor.getMotorOutputPercent());
         if(Math.abs(shoulderPos - lastAngle) > Constants.Arm.SHOULDER_ANGLE_UPDATE)

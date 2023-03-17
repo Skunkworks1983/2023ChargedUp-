@@ -36,7 +36,7 @@ public class Oi {
 
     JoystickButton manualShoulderDown;
 
-    JoystickButton shootCube;
+    JoystickButton scoreWeird;
 
     JoystickButton wristUp;
 
@@ -70,7 +70,7 @@ public class Oi {
 
         cubeToggle = new JoystickButton(buttonStick, Constants.OIButtons.CONE_TOGGLE);
 
-        shootCube = new JoystickButton(buttonStick, Constants.OIButtons.SHOOT_CUBE);
+        scoreWeird = new JoystickButton(buttonStick, Constants.OIButtons.SHOOT_CUBE);
 
         expelButton = new JoystickButton(buttonStick, Constants.OIButtons.EXPEL);
         intakeButton = new JoystickButton(buttonStick, Constants.OIButtons.INTAKE);
@@ -103,7 +103,7 @@ public class Oi {
         humanPlayerPickup.and(cubeToggle.negate()).whileTrue(new SetArmPositionCommand(Constants.ArmPos.PLAYER_CONE_PICKUP_SHOULDER, Constants.ArmPos.PLAYER_CONE_PICKUP_WRIST));
         humanPlayerPickup.and(cubeToggle).whileTrue(new SetArmPositionCommand(Constants.ArmPos.PLAYER_CUBE_PICKUP_SHOULDER, Constants.ArmPos.PLAYER_CUBE_PICKUP_WRIST));
 
-        carry.whileTrue(new SetArmPositionCommand(Constants.ArmPos.CARRY_SHOULDER, Constants.ArmPos.CARRY_WRIST));
+        carry.onTrue(new SetArmPositionCommand(Constants.ArmPos.CARRY_SHOULDER, Constants.ArmPos.CARRY_WRIST));
         scoreMid.and(cubeToggle.negate()).whileTrue(new SetArmPositionCommand(Constants.ArmPos.SCORE_CONE_MID_SHOULDER, Constants.ArmPos.SCORE_CONE_MID_WRIST));
         scoreMid.and(cubeToggle).whileTrue(new SetArmPositionCommand(Constants.ArmPos.SCORE_CUBE_MID_SHOULDER, Constants.ArmPos.SCORE_CUBE_MID_WRIST));
         floorPickup.and(cubeToggle).onTrue(new SetArmPositionCommand(Constants.ArmPos.FLOOR_CUBE_PICKUP_SHOULDER, Constants.ArmPos.FLOOR_CUBE_PICKUP_WRIST));
@@ -119,8 +119,10 @@ public class Oi {
         //manualToggle.onTrue(new ChangeGyroStatus(false));
 
         floorNormalScore.whileTrue(new SetArmPositionCommand(Constants.ArmPos.FLOOR_NORMAL_SCORE_SHOULDER, Constants.ArmPos.FLOOR_NORMAL_SCORE_WRIST));
-        shootCube.onTrue(new SetArmPositionCommand
+        scoreWeird.and(cubeToggle).onTrue(new SetArmPositionCommand
                 (Constants.ArmPos.SCORE_CUBE_HIGH_SHOULDER, Constants.ArmPos.SCORE_CUBE_HIGH_WRIST));
+        scoreWeird.and(cubeToggle.negate()).onTrue(new SetArmPositionCommand
+                (Constants.ArmPos.SCORE_CONE_WEIRD_SHOULDER, Constants.ArmPos.SCORE_CODE_WEIRD_WRIST));
     }
 
 
