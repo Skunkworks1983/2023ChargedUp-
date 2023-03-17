@@ -276,7 +276,6 @@ public class Arm extends SubsystemBase
         {
             peakOutput = Constants.Arm.MIN_PEAK;
         }
-        System.out.println("error: " + ShoulderMotor.getClosedLoopError()*Constants.Arm.SHOULDER_TICKS_TO_DEGREES + " peakoutput: " + peakOutput);
         //SmartDashboard.putNumber("shoulder position", shoulderPos);
         //SmartDashboard.putNumber("Motor output: ", ShoulderMotor.getMotorOutputPercent());
         if(Math.abs(shoulderPos - lastAngle) > Constants.Arm.SHOULDER_ANGLE_UPDATE)

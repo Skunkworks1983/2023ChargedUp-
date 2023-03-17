@@ -45,7 +45,6 @@ public class DetectRangeSensorWithoutDrivebaseCommand extends CommandBase {
     public void execute() {
 
         completeState();
-        System.out.println("frontDistance: "+ frontVoltage +" backDistance: " + backVoltage);
     }
 
     public void completeState(){
@@ -75,7 +74,6 @@ public class DetectRangeSensorWithoutDrivebaseCommand extends CommandBase {
 
                     frontVoltage =frontRangeSensorValue.getValue();
                     sensorMode=SensorDetectionMode.WAIT_TO_SEND_FREQUENCY;
-                System.out.println("front distance: "+ frontVoltage);
 
                 break;
             case WAIT_TO_SEND_FREQUENCY:
