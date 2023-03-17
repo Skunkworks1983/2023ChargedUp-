@@ -125,10 +125,10 @@ public class Oi {
         manualShoulderDown.whileTrue(new SetShoulderSpeed(Arm.getInstance(), Constants.Arm.SHOULDER_LIMIT_SWITCH_FRONT, -Constants.Arm.SHOULDER_MANUAL_SPEED));
         manualCollectorUp.whileTrue(new CollectorPercentOutputCommand(.1));
         manualCollectorDown.whileTrue(new CollectorPercentOutputCommand(-.1));
-        lightSwitchCube.onTrue(new SetLightsCommand(Constants.Lights.CUBE));
-        lightSwitchCone.onTrue(new SetLightsCommand(Constants.Lights.CONE));
-        funSwitch1.onTrue(new SetLightsCommand(Constants.Lights.CYLON));
-        funSwitch1.onTrue(new SetLightsCommand(Constants.Lights.PARTY));
+        lightSwitchCube.whileTrue(new SetLightsCommand(Constants.Lights.CUBE));
+        lightSwitchCone.whileTrue(new SetLightsCommand(Constants.Lights.CONE));
+        funSwitch1.whileTrue(new SetLightsCommand(Constants.Lights.CYLON));
+        funSwitch1.whileTrue(new SetLightsCommand(Constants.Lights.PARTY));
 
         //manualToggle.onTrue(new ChangeGyroStatus(false));
 

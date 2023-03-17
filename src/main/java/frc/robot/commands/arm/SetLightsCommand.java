@@ -35,6 +35,6 @@ public class SetLightsCommand extends CommandBase {
     @Override
     public void end(boolean interrupted)
     {
-
+        arm.SetLightMode(Constants.Lights.BLANK);
     }
 }
