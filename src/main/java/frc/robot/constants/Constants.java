@@ -100,13 +100,16 @@ public class Constants extends CommandBase {
         public static final double DISTANCE_KP = 0.05;
         public static final double ROTATE_KP = 0.0026/* 16,17,18 */;
         public static final double ROTATE_KF = 0.04;
-        public static final double ANGLE_KP = 0.007;
-        public static final double ANGLE_KD = 0.002;
+        public static final double ANGLE_KP = 0.003;
+        public static final double ANGLE_KD = 0.005;
         public static final double DRIVEBASE_KF = 0.08;
-        public static final double THRESHOLD_ROTATE = .5;
+        public static final double THRESHOLD_ROTATE = 3;
         public static final int DRIVE_OUT_OF_COMMUNITY = -9;
+        public static final double TURN_THROTTLE_MULTIPLIER = 0.7;
         public static final double ARCADE_DRIVE_KP = 0.007;
         public static final double ARCADE_DRIVE_KD = 0;
+        public static final double ARCADE_DRIVE_LEFTX_DEADBAND = 0.01;
+
         public static final int DRIVE_OUT_OF_COMMUINITY = -9;
 
         public static final double VOLTAGE_TO_DISTANCE_SENSOR=1;
@@ -125,13 +128,14 @@ public class Constants extends CommandBase {
         public static final double ARCADE_DRIVE_MAX_DEGREES_PER_SECOND = 250;
         public static final int EXECUTES_PER_SECOND = 50;
         public static final double  WAIT_TIME_FOR_GYRO_CALIBRATION = 3;
+        public static final double HEADING_TOO_BIG = 20;
         public static final double MAX_DRIVE_DISTANCE_SPEED = 0.3;
     }
 
     public class Arm {
         public static final double MIN_ANGLE = Arm.SHOULDER_RESTING_ANGLE;
         public static final double MAX_ANGLE = 25;
-        public static final double MIN_PEAK = .3;
+        public static final double MIN_PEAK = .2;
         public static final double MAX_PEAK = .7;
 
         public static final double SHOULDER_MANUAL_SPEED=0.12;
@@ -156,12 +160,12 @@ public class Constants extends CommandBase {
         public static final double SHOULDER_SAFE_WRIST_ANGLE = SHOULDER_RESTING_ANGLE;
         public static final int MAX_WRIST_ROTATION = 235;
         public static final double WRIST_TOLERANCE = 2;
-
+        public static final double WRIST_PARALLEL_WITH_SHOULDER = 164.05;
         public static final double WRIST_POWER=.15;
         public static final int WRIST_MOTOR_DEVICE_NUMBER = 6;
         public static final double WRIST_GEAR_RATIO = 176;
         public static final double WRIST_RESTING_ANGLE = 0;
-        public static final double WRIST_LIMIT_ANGLE = 12.36;
+        public static final double WRIST_LIMIT_ANGLE = 0;
         public static final double WRIST_PEAK_OUTPUT = 0.6;
         public static final double WRIST_KP = 0.05;
         public static final double WRIST_KI = 0;
@@ -174,12 +178,12 @@ public class Constants extends CommandBase {
 
         public static final double PLAYER_CONE_PICKUP_SHOULDER = 39.56579;
         public static final double PLAYER_CONE_PICKUP_WRIST = 155.46118;
-        public static final double SCORE_CONE_MID_SHOULDER = 42.56579;
-        public static final double SCORE_CUBE_MID_SHOULDER = 49.56579;
+        public static final double SCORE_CONE_MID_SHOULDER = 44.56579;
+        public static final double SCORE_CUBE_MID_SHOULDER = 56.56579;
         public static final double SCORE_CONE_MID_WRIST = 150.46118;
         public static final double SCORE_CUBE_MID_WRIST = 160.46118;
-        public static final double PLAYER_CUBE_PICKUP_SHOULDER = 46.68152;
-        public static final double PLAYER_CUBE_PICKUP_WRIST = 171.73779;
+        public static final double PLAYER_CUBE_PICKUP_SHOULDER = 43.68152;
+        public static final double PLAYER_CUBE_PICKUP_WRIST = 174.73779;
         public static final double FLOOR_CUBE_PICKUP_SHOULDER = Arm.SHOULDER_RESTING_ANGLE;
         public static final double FLOOR_CUBE_PICKUP_WRIST = 112.75;
         public static final double FLOOR_NORMAL_SCORE_SHOULDER = Arm.SHOULDER_RESTING_ANGLE;
@@ -187,7 +191,7 @@ public class Constants extends CommandBase {
         public static final double CARRY_SHOULDER = Arm.SHOULDER_RESTING_ANGLE;
         public static final double CARRY_WRIST = 15.531;
         public static final double CONE_FLOOR_PICKUP_SHOULDER = Arm.SHOULDER_RESTING_ANGLE;
-        public static final double CONE_FLOOR_PICKUP_WRIST = 103.05419;
+        public static final double CONE_FLOOR_PICKUP_WRIST = 102.05419;
         public static final int WRIST_GEAR_RATIO = 96;
         public static final double SCORE_CUBE_HIGH_SHOULDER = 45;// scores high cube with wrist up.
         public static final double SCORE_CUBE_HIGH_WRIST = 225; // scores high cube with wrist up.
@@ -197,8 +201,36 @@ public class Constants extends CommandBase {
         //public static final double SCORE_CUBE_HIGH_WRIST = 100;
         public static final double SCORE_CONE_HIGH_SHOULDER = 30;
         public static final double SCORE_CONE_HIGH_WRIST = 230;
+        public static final double SCORE_CONE_WEIRD_SHOULDER = -90;
+        public static final double SCORE_CODE_WEIRD_WRIST = 220;
     }
 
+    public class Lights
+    {
+        public static final int LIGHT_BIT_0 = 6;
+        public static final int LIGHT_BIT_1 = 7;
+        public static final int LIGHT_BIT_2 = 8;
+        public static final int LIGHT_BIT_3 = 9;
+
+        //colors
+        public static final int BLANK = 0;
+        public static final int CUBE = 1;
+        public static final int CONE = 2;
+        public static final int BLUE_RED = 3;
+        public static final int BLUE_WITH_WHITE = 4;
+        public static final int RED_WITH_WHITE = 5;
+        public static final int PARTY = 6;
+        public static final int HARD_RIGHT = 7;
+        public static final int MEDIUM_RIGHT = 8;
+        public static final int SLIGHT_RIGHT = 9;
+        public static final int CENTER = 10;
+        public static final int SLIGHT_LEFT = 11;
+        public static final int MEDIUM_LEFT = 12;
+        public static final int HARD_LEFT = 13;
+        public static final int CYLON = 14;
+        public static final int RAINBOW_CHASE = 15;
+
+    }
 
     public class Falcon500 {
         public static final int TICKS_PER_REV = 2048;
