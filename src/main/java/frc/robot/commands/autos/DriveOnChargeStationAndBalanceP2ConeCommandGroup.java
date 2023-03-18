@@ -1,11 +1,13 @@
 package frc.robot.commands.autos;
 
 
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.Collector.ExpelConeCommand;
 import frc.robot.commands.Collector.IntakeConeSmartCommand;
 import frc.robot.commands.Collector.IntakeCubeSmartCommand;
+import frc.robot.commands.arm.ResetArm;
 import frc.robot.commands.arm.SetArmPositionCommand;
 import frc.robot.commands.drivebase.DriveDistanceCommand;
 import frc.robot.commands.drivebase.DriveDistanceCommandGyro;
@@ -25,7 +27,11 @@ public class DriveOnChargeStationAndBalanceP2ConeCommandGroup extends Sequential
               new RotateCommand(Drivebase.GetDrivebase(),180),
               new DriveDistanceCommandGyro(Drivebase.GetDrivebase(), 10, Constants.Drivebase.DRIVEBASE_KF + .1),
               new RotateCommand(Drivebase.GetDrivebase(),180),
-              new DriveDistanceCommandGyro(Drivebase.GetDrivebase(), 7, Constants.Drivebase.DRIVEBASE_KF + .15),
-              new SafeBalanceCommandGroup());
+              new DriveDistanceCommandGyro(Drivebase.GetDrivebase(), 6.5, Constants.Drivebase.DRIVEBASE_KF + .15),
+              new ParallelCommandGroup(
+                      new SafeBalanceCommandGroup(),
+                      new ResetArm()
+                    )
+                );
     }
 }
