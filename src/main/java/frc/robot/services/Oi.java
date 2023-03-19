@@ -8,6 +8,7 @@ import frc.robot.commands.arm.RotateWristByPowerCommand;
 import frc.robot.commands.arm.SetArmPositionCommand;
 import frc.robot.commands.arm.SetLightsCommand;
 import frc.robot.commands.arm.SetShoulderSpeed;
+import frc.robot.commands.autos.SafeBalanceCommandGroup;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
 
@@ -56,6 +57,8 @@ public class Oi {
     JoystickButton funSwitch1;
     JoystickButton funSwitch2;
 
+    JoystickButton balanceButton;
+
     public Oi() {
 
         System.out.println("oi init");
@@ -72,7 +75,7 @@ public class Oi {
         carry = new JoystickButton(buttonStick, Constants.OIButtons.STOW);
 
         scoreMid = new JoystickButton(buttonStick, Constants.OIButtons.SCORE_MID);
-
+        balanceButton = new JoystickButton(leftStick,3);//make constant later
         cubeToggle = new JoystickButton(buttonStick, Constants.OIButtons.CONE_TOGGLE);
 
         scoreWeird = new JoystickButton(buttonStick, Constants.OIButtons.SHOOT_CUBE);
@@ -129,8 +132,9 @@ public class Oi {
         lightSwitchCone.whileTrue(new SetLightsCommand(Constants.Lights.CONE));
         funSwitch1.whileTrue(new SetLightsCommand(Constants.Lights.CYLON));
         funSwitch1.whileTrue(new SetLightsCommand(Constants.Lights.PARTY));
-
+        balanceButton.whileTrue(new SafeBalanceCommandGroup());
         //manualToggle.onTrue(new ChangeGyroStatus(false));
+
 
         floorNormalScore.whileTrue(new SetArmPositionCommand(Constants.ArmPos.FLOOR_NORMAL_SCORE_SHOULDER, Constants.ArmPos.FLOOR_NORMAL_SCORE_WRIST));
         scoreWeird.and(cubeToggle).onTrue(new SetArmPositionCommand
