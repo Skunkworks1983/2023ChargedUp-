@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.arm.SetArmPositionCommand;
 import frc.robot.commands.arm.SetLightsCommand;
 import frc.robot.commands.autos.BalanceOnChargeStationCommand;
+import frc.robot.commands.autos.Simple.LowScoreLeaveCommunityBalanceCommand;
 import frc.robot.commands.autos.Simple.SimpleAuto1_9;
 import frc.robot.commands.autos.Simple.SimpleAuto2_8;
 import frc.robot.commands.autos.Simple.SimpleAuto5;
@@ -77,6 +78,7 @@ public class Robot extends TimedRobot
         arm.WristMotor.setNeutralMode(NeutralMode.Coast);
         autoChooser = new SendableChooser();
         autoChooser.addOption("ConeMidAndBalance4_6", new DriveOnChargeStationAndBalanceP2ConeCommandGroup());
+        autoChooser.addOption("CubeMidAndBalance5",new SimpleAuto5());
         //autoChooser.addOption("ScoreAndExitCommunity5", new ScoreAndExitCommunityP2CommandGroup());
         //autoChooser.addOption("ScoreAndExitCommunity2_8", new ScoreAndExitCommunityP1CommandGroup());
         // autoChooser.addOption("E2toGamePiece4",new E2ToGamePiece4());
@@ -85,7 +87,7 @@ public class Robot extends TimedRobot
         //autoChooser.addOption("DriveOnChargeStationAndBalanceCubeP2", new DriveOnChargeStationAndBalanceP2CubeCommandGroup());
         autoChooser.addOption("ConeMidLeaveCommunity1_9",new SimpleAuto1_9());
         autoChooser.addOption("CubeMidLeaveCommunity2_8",new SimpleAuto2_8());
-        autoChooser.addOption("CubeMidAndBalance5",new SimpleAuto5());
+        autoChooser.addOption("ConeLowAndBalance4_5_6",new LowScoreLeaveCommunityBalanceCommand());
 
 
         //autoChooser.addOption("oneBallAutosHigh", new OneBallAutosHighCommandGroup());

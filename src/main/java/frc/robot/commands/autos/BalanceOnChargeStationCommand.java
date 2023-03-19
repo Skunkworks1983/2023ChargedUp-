@@ -40,7 +40,6 @@ public class BalanceOnChargeStationCommand extends CommandBase {
     @Override
     public void execute() {
 
-
         error= Drivebase.GetDrivebase().getPitch();
         double derivative = (error-lastError)*50;
         integral+=(error/50);
@@ -49,7 +48,10 @@ public class BalanceOnChargeStationCommand extends CommandBase {
         if(f<-maxSpeed)f=-maxSpeed;
         if(f>0&&Drivebase.GetDrivebase().getFrontRangeVoltage()> Constants.Drivebase.MAXIMUM_BALANCE_DISTANCE_FROM_GROUND_FRONT){f=0;}
         if(f<0&&Drivebase.GetDrivebase().getBackRangeVoltage()> Constants.Drivebase.MAXIMUM_BALANCE_DISTANCE_FROM_GROUND_BACK){f=0;}
-
+        if(Math.abs(error) < 5)
+        {
+            f = 0;
+        }
         Drivebase.GetDrivebase().runMotor(f,f);
         lastError=error;
 
