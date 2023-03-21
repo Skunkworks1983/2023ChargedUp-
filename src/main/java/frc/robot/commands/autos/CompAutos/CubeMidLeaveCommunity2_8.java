@@ -1,22 +1,19 @@
-package frc.robot.commands.autos.Simple;
+package frc.robot.commands.autos.CompAutos;
 
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.Collector.ExpelConeCommand;
 import frc.robot.commands.Collector.ExpelCubeCommand;
-import frc.robot.commands.Collector.IntakeConeSmartCommand;
 import frc.robot.commands.arm.ResetArm;
 import frc.robot.commands.arm.SetArmPositionCommand;
 import frc.robot.commands.autos.SetArmRaceCommandGroup;
 import frc.robot.commands.autos.TimerCommand;
 import frc.robot.commands.drivebase.DriveDistanceCommandGyro;
-import frc.robot.commands.drivebase.RotateCommand;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Drivebase;
 
-public class  SimpleAuto2_8 extends SequentialCommandGroup
+public class CubeMidLeaveCommunity2_8 extends SequentialCommandGroup
 {
-    public SimpleAuto2_8()
+    public CubeMidLeaveCommunity2_8()
     {
         super
                 (
