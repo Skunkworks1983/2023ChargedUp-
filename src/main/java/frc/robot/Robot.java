@@ -54,7 +54,7 @@ import frc.robot.services.Oi;
 public class Robot extends TimedRobot
 {
     private boolean setBrakeModeOnDisable = true;
-    private Oi oi = new Oi();
+    private Oi oi = Oi.GetInstance();
     private Command autonomousCommand;
     private SendableChooser autoChooser;
     private Drivebase drivebase = Drivebase.GetDrivebase();

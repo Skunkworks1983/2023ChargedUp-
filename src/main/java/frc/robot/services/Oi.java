@@ -11,6 +11,7 @@ import frc.robot.commands.arm.SetShoulderSpeed;
 import frc.robot.commands.autos.SafeBalanceCommandGroup;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Drivebase;
 
 
 public class Oi {
@@ -61,7 +62,7 @@ public class Oi {
 
     JoystickButton balanceButton;
 
-    public Oi() {
+    private Oi() {
 
         System.out.println("oi init");
 
@@ -167,5 +168,15 @@ public class Oi {
     public boolean isSlowMode () {
 
         return slowMode.getAsBoolean();
+    }
+
+    public static Oi GetInstance() {
+
+        if (Instance == null) {
+            Instance = new Oi();
+        }
+
+        return Instance;
+
     }
 }
