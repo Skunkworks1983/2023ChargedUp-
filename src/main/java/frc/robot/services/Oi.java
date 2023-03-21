@@ -21,6 +21,8 @@ public class Oi {
     Joystick rightStick;
     Joystick buttonStick;
 
+    JoystickButton slowMode;
+
     JoystickButton floorNormalScore;
 
     JoystickButton humanPlayerPickup;
@@ -99,6 +101,8 @@ public class Oi {
 
         resetArm = new JoystickButton(buttonStick, Constants.OIButtons.RESET_POSITION);
 
+        slowMode = new JoystickButton(rightStick, Constants.OIButtons.DRIVE_SLOW);
+
         lightSwitchCube = new JoystickButton(buttonStick, 16);
         lightSwitchCone = new JoystickButton(buttonStick, 9);
         funSwitch1 = new JoystickButton(buttonStick, 19);
@@ -158,5 +162,10 @@ public class Oi {
 
     public double getRightX() {
         return rightStick.getX();
+    }
+
+    public boolean isSlowMode () {
+
+        return slowMode.getAsBoolean();
     }
 }

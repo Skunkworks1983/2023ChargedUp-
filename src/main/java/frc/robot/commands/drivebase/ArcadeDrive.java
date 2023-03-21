@@ -66,7 +66,16 @@ public class ArcadeDrive extends CommandBase {
         leftSpeed = MathUtil.clamp(leftSpeed, -1, 1);
         rightSpeed = MathUtil.clamp(rightSpeed, -1, 1);
 
-        drivebase.runMotor(leftSpeed, rightSpeed);
+        if (Oi.Instance.isSlowMode()) {
+
+        drivebase.runMotor(leftSpeed*Constants.Drivebase.SLOW_MODE_RATIO,
+                rightSpeed*Constants.Drivebase.SLOW_MODE_RATIO);
+
+        } else {
+
+            drivebase.runMotor(leftSpeed, rightSpeed);
+        }
+
     }
 
     @Override

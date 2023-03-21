@@ -44,6 +44,9 @@ public class Constants extends CommandBase {
 
     public class OIButtons {
 
+        //slow mode driving
+        public static final int DRIVE_SLOW = 1;
+
         //top row
         public static final int ENABLE_MANUAL =8;
 
@@ -95,6 +98,8 @@ public class Constants extends CommandBase {
     }
 
     public class Drivebase {
+
+        public static final double SLOW_MODE_RATIO = .5;
         public static final double GEAR_RATIO = 10.71;
         public static final double WHEEL_DIAMETER = 0.5;
         public static final double DISTANCE_KP = 0.05;
