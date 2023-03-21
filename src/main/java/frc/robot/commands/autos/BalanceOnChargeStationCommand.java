@@ -1,9 +1,12 @@
 package frc.robot.commands.autos;
 
 //import com.ctre.phoenix.motorcontrol.can.SlotConfiguration;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.commands.drivebase.DetectRangeSensorCommand;
 import frc.robot.constants.Constants;
+import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drivebase;
 
 
@@ -17,6 +20,8 @@ public class BalanceOnChargeStationCommand extends CommandBase {
     double error=0;
     double integral=0;
     double lastError;
+    NetworkTable table = NetworkTableInstance.getDefault().getTable("FMSInfo");
+
 
     double i;
     public BalanceOnChargeStationCommand(double p, double d, double i, double maxSpeed) {
@@ -33,13 +38,14 @@ public class BalanceOnChargeStationCommand extends CommandBase {
 
 
     @Override
-    public void initialize() {
+    public void initialize()
+    {
+
         System.out.println("BalanceOnChargeStation started");
     }
 
     @Override
     public void execute() {
-
         error= Drivebase.GetDrivebase().getPitch();
         double derivative = (error-lastError)*50;
         integral+=(error/50);
@@ -51,6 +57,18 @@ public class BalanceOnChargeStationCommand extends CommandBase {
         if(Math.abs(error) < 5)
         {
             f = 0;
+            if(table.getEntry("IsRedAlliance").getBoolean(false))
+            {
+                Arm.getInstance().SetLightMode(Constants.Lights.RED_WITH_WHITE);
+            }
+            else
+            {
+                Arm.getInstance().SetLightMode(Constants.Lights.BLUE_WITH_WHITE);
+            }
+        }
+        else
+        {
+            Arm.getInstance().SetLightMode(Constants.Lights.CENTER);
         }
         Drivebase.GetDrivebase().runMotor(f,f);
         lastError=error;
@@ -64,5 +82,6 @@ public class BalanceOnChargeStationCommand extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         System.out.println("BalanceOnChargeStation ended. interupted:" + interrupted);
+        Arm.getInstance().SetLightMode(Constants.Lights.BLANK);
     }
 }
