@@ -226,38 +226,11 @@ public class Arm extends SubsystemBase
 
     public void SetLightMode(int mode)
     {
-        if((mode & 0x01) == 0x01)
-        {
-            lightBit0.set(false);
-        }
-        else
-        {
-            lightBit0.set(true);
-        }
-        if((mode & 0x02) == 0x02)
-        {
-            lightBit1.set(false);
-        }
-        else
-        {
-            lightBit1.set(true);
-        }
-        if((mode & 0x04) == 0x04)
-        {
-            lightBit2.set(false);
-        }
-        else
-        {
-            lightBit2.set(true);
-        }
-        if((mode & 0x08) == 0x08)
-        {
-            lightBit3.set(false);
-        }
-        else
-        {
-            lightBit3.set(true);
-        }
+        lightBit0.set((mode & 0x01) == 0x01);
+        lightBit1.set((mode & 0x02) == 0x02);
+        lightBit2.set((mode & 0x04) == 0x04);
+        lightBit3.set((mode & 0x08) == 0x08);
+        //System.out.println("mode: "+mode+": " + ((mode & 0x08) != 0x08) + ", " + ((mode & 0x04) != 0x04) + ", " + ((mode & 0x02) != 0x02) + ", " + ((mode & 0x01) != 0x01));
     }
 
     @Override

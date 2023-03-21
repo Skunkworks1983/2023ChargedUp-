@@ -29,7 +29,7 @@ public class SetLightsCommand extends CommandBase {
     @Override
     public boolean isFinished()
     {
-        return true;
+        return false;
     }
 
     @Override

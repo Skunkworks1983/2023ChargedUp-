@@ -12,7 +12,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.arm.SetArmPositionCommand;
+import frc.robot.commands.arm.SetLightsCommand;
 import frc.robot.commands.autos.BalanceOnChargeStationCommand;
+import frc.robot.commands.autos.Simple.CubeHighBalance;
+import frc.robot.commands.autos.Simple.CubeHighLeaveComunity;
+import frc.robot.commands.autos.Simple.LowScoreLeaveCommunityBalanceCommand;
 import frc.robot.commands.autos.Simple.SimpleAuto1_9;
 import frc.robot.commands.autos.Simple.SimpleAuto2_8;
 import frc.robot.commands.autos.Simple.SimpleAuto5;
@@ -75,16 +79,19 @@ public class Robot extends TimedRobot
         arm = Arm.getInstance();
         arm.WristMotor.setNeutralMode(NeutralMode.Coast);
         autoChooser = new SendableChooser();
-        autoChooser.addOption("DriveOnChargeStationAndBalanceCone4_6", new DriveOnChargeStationAndBalanceP2ConeCommandGroup());
-        autoChooser.addOption("ScoreAndExitCommunity5", new ScoreAndExitCommunityP2CommandGroup());
-        autoChooser.addOption("ScoreAndExitCommunity2_8", new ScoreAndExitCommunityP1CommandGroup());
-       // autoChooser.addOption("E2toGamePiece4",new E2ToGamePiece4());
-        autoChooser.addOption("LeaveCommunity5(doesnotscore)",new LeaveCommunityP2E2());
-        autoChooser.addOption("ScoreAndDriveOut1_9",new ScoreAndDriveOutP3CommandGroup());
-      //  autoChooser.addOption("DriveOnChargeStationAndBalanceCubeP2", new DriveOnChargeStationAndBalanceP2CubeCommandGroup());
-        autoChooser.addOption("SimpleAuto1_9",new SimpleAuto1_9());
-        autoChooser.addOption("SimpleAuto2_8",new SimpleAuto2_8());
-        autoChooser.addOption("SimpleAuto5",new SimpleAuto5());
+        autoChooser.addOption("ConeMidAndBalance4_6", new DriveOnChargeStationAndBalanceP2ConeCommandGroup());
+        autoChooser.addOption("CubeMidAndBalance5",new SimpleAuto5());
+        //autoChooser.addOption("ScoreAndExitCommunity5", new ScoreAndExitCommunityP2CommandGroup());
+        //autoChooser.addOption("ScoreAndExitCommunity2_8", new ScoreAndExitCommunityP1CommandGroup());
+        // autoChooser.addOption("E2toGamePiece4",new E2ToGamePiece4());
+        //autoChooser.addOption("LeaveCommunity5",new LeaveCommunityP2E2());
+        //autoChooser.addOption("ScoreAndDriveOut1_9",new ScoreAndDriveOutP3CommandGroup());
+        //autoChooser.addOption("DriveOnChargeStationAndBalanceCubeP2", new DriveOnChargeStationAndBalanceP2CubeCommandGroup());
+        autoChooser.addOption("ConeMidLeaveCommunity1_9",new SimpleAuto1_9());
+        autoChooser.addOption("CubeMidLeaveCommunity2_8",new SimpleAuto2_8());
+        autoChooser.addOption("ConeLowAndBalance4_5_6",new LowScoreLeaveCommunityBalanceCommand());
+        autoChooser.addOption("CubeHighAndBalance5",new CubeHighBalance());
+        autoChooser.addOption("CubeHighLeaveCommunity2_8",new CubeHighLeaveComunity());
 
 
         //autoChooser.addOption("oneBallAutosHigh", new OneBallAutosHighCommandGroup());
@@ -131,7 +138,8 @@ public class Robot extends TimedRobot
         {
             drivebase.SetBrakeMode(true);
         }
-
+        arm.SetLightMode(Constants.Lights.PARTY);
+        System.out.println("compete");
     }
 
 
@@ -148,6 +156,7 @@ public class Robot extends TimedRobot
     @Override
     public void autonomousInit()
     {
+        arm.SetLightMode(Constants.Lights.BLANK);
         setBrakeModeOnDisable = true;
         arm.WristMotor.setNeutralMode(NeutralMode.Brake);
         CommandScheduler.getInstance().cancelAll();
@@ -174,13 +183,10 @@ public class Robot extends TimedRobot
     @Override
     public void teleopInit()
     {
+        arm.SetLightMode(Constants.Lights.BLANK);
         drivebase.setGyroStatus(false);
         setBrakeModeOnDisable = true;
         drivebase.SetBrakeMode(true);
-
-
-
-
     }
 
 
