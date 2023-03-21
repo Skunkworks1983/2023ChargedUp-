@@ -14,6 +14,8 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.arm.SetArmPositionCommand;
 import frc.robot.commands.arm.SetLightsCommand;
 import frc.robot.commands.autos.BalanceOnChargeStationCommand;
+import frc.robot.commands.autos.Simple.CubeHighBalance;
+import frc.robot.commands.autos.Simple.CubeHighLeaveComunity;
 import frc.robot.commands.autos.Simple.LowScoreLeaveCommunityBalanceCommand;
 import frc.robot.commands.autos.Simple.SimpleAuto1_9;
 import frc.robot.commands.autos.Simple.SimpleAuto2_8;
@@ -88,6 +90,8 @@ public class Robot extends TimedRobot
         autoChooser.addOption("ConeMidLeaveCommunity1_9",new SimpleAuto1_9());
         autoChooser.addOption("CubeMidLeaveCommunity2_8",new SimpleAuto2_8());
         autoChooser.addOption("ConeLowAndBalance4_5_6",new LowScoreLeaveCommunityBalanceCommand());
+        autoChooser.addOption("CubeHighAndBalance5",new CubeHighBalance());
+        autoChooser.addOption("CubeHighLeaveCommunity2_8",new CubeHighLeaveComunity());
 
 
         //autoChooser.addOption("oneBallAutosHigh", new OneBallAutosHighCommandGroup());

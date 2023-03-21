@@ -176,7 +176,7 @@ public class Constants extends CommandBase {
     public class ArmPos
     {
 
-        public static final double PLAYER_CONE_PICKUP_SHOULDER = 39.56579;
+        public static final double PLAYER_CONE_PICKUP_SHOULDER = 40.56579;
         public static final double PLAYER_CONE_PICKUP_WRIST = 155.46118;
         public static final double SCORE_CONE_MID_SHOULDER = 44.56579;
         public static final double SCORE_CUBE_MID_SHOULDER = 56.56579;
@@ -193,12 +193,12 @@ public class Constants extends CommandBase {
         public static final double CONE_FLOOR_PICKUP_SHOULDER = Arm.SHOULDER_RESTING_ANGLE;
         public static final double CONE_FLOOR_PICKUP_WRIST = 105.05419;
         public static final int WRIST_GEAR_RATIO = 96;
-        public static final double SCORE_CUBE_HIGH_SHOULDER = 45;// scores high cube with wrist up.
-        public static final double SCORE_CUBE_HIGH_WRIST = 225; // scores high cube with wrist up.
+        //public static final double SCORE_CUBE_HIGH_SHOULDER = 45;// scores high cube with wrist up.
+        //public static final double SCORE_CUBE_HIGH_WRIST = 225; // scores high cube with wrist up.
 
         //The following two constants work well for scoring high with a cube with the wrist down.
-        //public static final double SCORE_CUBE_HIGH_SHOULDER = 39.57;
-        //public static final double SCORE_CUBE_HIGH_WRIST = 100;
+        public static final double SCORE_CUBE_HIGH_SHOULDER = 39.57;
+        public static final double SCORE_CUBE_HIGH_WRIST = 100;
         public static final double SCORE_CONE_HIGH_SHOULDER = 30;
         public static final double SCORE_CONE_HIGH_WRIST = 230;
         public static final double SCORE_CONE_WEIRD_SHOULDER = -90;
