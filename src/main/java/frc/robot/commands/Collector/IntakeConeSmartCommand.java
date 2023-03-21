@@ -15,6 +15,7 @@ public class IntakeConeSmartCommand extends CommandBase {
     public IntakeConeSmartCommand() {
         armInstance = Arm.getInstance();
         collectorInstance = Collector.getInstance();
+
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
         addRequirements(collectorInstance);

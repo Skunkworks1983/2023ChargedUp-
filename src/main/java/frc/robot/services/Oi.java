@@ -59,7 +59,9 @@ public class Oi {
 
     JoystickButton balanceButton;
 
+
     public Oi() {
+
 
         System.out.println("oi init");
 
@@ -112,15 +114,12 @@ public class Oi {
         intakeButton.and((cubeToggle).negate()).and(manualToggle.negate()).whileTrue(new IntakeConeSmartCommand());
         intakeButton.and(cubeToggle).and(manualToggle.negate()).whileTrue(new IntakeCubeSmartCommand());
 
-        floorNormalScore.whileTrue(new SetArmPositionCommand(Constants.ArmPos.FLOOR_NORMAL_SCORE_SHOULDER, Constants.ArmPos.FLOOR_NORMAL_SCORE_WRIST));
-        humanPlayerPickup.and(cubeToggle.negate()).whileTrue(new SetArmPositionCommand(Constants.ArmPos.PLAYER_CONE_PICKUP_SHOULDER, Constants.ArmPos.PLAYER_CONE_PICKUP_WRIST));
-        humanPlayerPickup.and(cubeToggle).whileTrue(new SetArmPositionCommand(Constants.ArmPos.PLAYER_CUBE_PICKUP_SHOULDER, Constants.ArmPos.PLAYER_CUBE_PICKUP_WRIST));
-
-        carry.onTrue(new SetArmPositionCommand(Constants.ArmPos.CARRY_SHOULDER, Constants.ArmPos.CARRY_WRIST));
-        scoreMid.and(cubeToggle.negate()).whileTrue(new SetArmPositionCommand(Constants.ArmPos.SCORE_CONE_MID_SHOULDER, Constants.ArmPos.SCORE_CONE_MID_WRIST));
-        scoreMid.and(cubeToggle).whileTrue(new SetArmPositionCommand(Constants.ArmPos.SCORE_CUBE_MID_SHOULDER, Constants.ArmPos.SCORE_CUBE_MID_WRIST));
-        floorPickup.and(cubeToggle).onTrue(new SetArmPositionCommand(Constants.ArmPos.FLOOR_CUBE_PICKUP_SHOULDER, Constants.ArmPos.FLOOR_CUBE_PICKUP_WRIST));
-        floorPickup.and(cubeToggle.negate()).onTrue(new SetArmPositionCommand(Constants.ArmPos.CONE_FLOOR_PICKUP_SHOULDER, Constants.ArmPos.CONE_FLOOR_PICKUP_WRIST));
+        floorNormalScore.whileTrue(new SetArmPositionCommand(Arm.ArmPosition.FLOOR_NORMAL));
+        scoreWeird.onTrue(new SetArmPositionCommand(Arm.ArmPosition.FLOOR_WEIRD));
+        humanPlayerPickup.whileTrue(new SetArmPositionCommand(Arm.ArmPosition.SUBSTATION));
+        carry.onTrue(new SetArmPositionCommand(Arm.ArmPosition.STOW));
+        scoreMid.whileTrue(new SetArmPositionCommand(Arm.ArmPosition.SCORE_MID));
+        floorPickup.onTrue(new SetArmPositionCommand(Arm.ArmPosition.FLOOR));
         (resetArm.negate()).whileTrue(new ResetArm());
         wristUp.whileTrue(new RotateWristByPowerCommand(Constants.Arm.WRIST_POWER));
         wristDown.whileTrue(new RotateWristByPowerCommand(-Constants.Arm.WRIST_POWER));
@@ -134,13 +133,6 @@ public class Oi {
         funSwitch1.whileTrue(new SetLightsCommand(Constants.Lights.PARTY));
         balanceButton.whileTrue(new SafeBalanceCommandGroup());
         //manualToggle.onTrue(new ChangeGyroStatus(false));
-
-
-        floorNormalScore.whileTrue(new SetArmPositionCommand(Constants.ArmPos.FLOOR_NORMAL_SCORE_SHOULDER, Constants.ArmPos.FLOOR_NORMAL_SCORE_WRIST));
-        scoreWeird.and(cubeToggle).onTrue(new SetArmPositionCommand
-                (Constants.ArmPos.SCORE_CUBE_HIGH_SHOULDER, Constants.ArmPos.SCORE_CUBE_HIGH_WRIST));
-        scoreWeird.and(cubeToggle.negate()).onTrue(new SetArmPositionCommand
-                (Constants.ArmPos.SCORE_CONE_WEIRD_SHOULDER, Constants.ArmPos.SCORE_CODE_WEIRD_WRIST));
     }
 
 
@@ -158,5 +150,8 @@ public class Oi {
 
     public double getRightX() {
         return rightStick.getX();
+    }
+    public boolean getCubeToggle() {
+    return cubeToggle.getAsBoolean();
     }
 }

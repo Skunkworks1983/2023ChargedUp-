@@ -9,6 +9,7 @@ import frc.robot.commands.autos.SetArmRaceCommandGroup;
 import frc.robot.commands.autos.TimerCommand;
 import frc.robot.commands.drivebase.DriveDistanceCommandGyro;
 import frc.robot.constants.Constants;
+import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drivebase;
 
 public class CubeMidLeaveCommunity2_8 extends SequentialCommandGroup
@@ -22,7 +23,7 @@ public class CubeMidLeaveCommunity2_8 extends SequentialCommandGroup
                         new ParallelRaceGroup
                                 (
                                         new DriveDistanceCommandGyro(Drivebase.GetDrivebase(), -12, Constants.Drivebase.DRIVEBASE_KF + .07),
-                                        new SetArmPositionCommand(Constants.ArmPos.CARRY_SHOULDER, Constants.ArmPos.CARRY_WRIST)
+                                        new SetArmPositionCommand(Arm.ArmPosition.STOW)
                                 ),
                         new ResetArm()
                 );

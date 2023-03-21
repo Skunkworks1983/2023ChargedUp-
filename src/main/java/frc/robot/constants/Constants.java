@@ -202,7 +202,7 @@ public class Constants extends CommandBase {
         public static final double SCORE_CONE_HIGH_SHOULDER = 30;
         public static final double SCORE_CONE_HIGH_WRIST = 230;
         public static final double SCORE_CONE_WEIRD_SHOULDER = -90;
-        public static final double SCORE_CODE_WEIRD_WRIST = 220;
+        public static final double SCORE_CONE_WEIRD_WRIST = 220;
     }
 
     public class Lights

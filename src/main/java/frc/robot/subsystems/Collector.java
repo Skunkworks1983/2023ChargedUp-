@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.Constants;
 
 public class Collector extends SubsystemBase {
+
     public TalonFX Motor;
 
     private DigitalInput cubeBreak1;
