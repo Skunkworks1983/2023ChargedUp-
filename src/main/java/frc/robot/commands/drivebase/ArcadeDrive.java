@@ -75,7 +75,6 @@ public class ArcadeDrive extends CommandBase {
 
             drivebase.runMotor(leftSpeed, rightSpeed);
         }
-
     }
 
     @Override
