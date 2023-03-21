@@ -12,7 +12,6 @@ import frc.robot.commands.autos.SafeBalanceCommandGroup;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
 
-
 public class Oi {
 
     public static Oi Instance;
@@ -20,6 +19,8 @@ public class Oi {
     Joystick leftStick;
     Joystick rightStick;
     Joystick buttonStick;
+
+    JoystickButton slowMode;
 
     JoystickButton floorNormalScore;
 
@@ -59,7 +60,7 @@ public class Oi {
 
     JoystickButton balanceButton;
 
-    public Oi() {
+    private Oi() {
 
         System.out.println("oi init");
 
@@ -98,6 +99,8 @@ public class Oi {
         floorPickup = new JoystickButton(buttonStick, Constants.OIButtons.COLLECT_GROUND);
 
         resetArm = new JoystickButton(buttonStick, Constants.OIButtons.RESET_POSITION);
+
+        slowMode = new JoystickButton(rightStick, Constants.OIButtons.DRIVE_SLOW);
 
         lightSwitchCube = new JoystickButton(buttonStick, 16);
         lightSwitchCone = new JoystickButton(buttonStick, 9);
@@ -158,5 +161,20 @@ public class Oi {
 
     public double getRightX() {
         return rightStick.getX();
+    }
+
+    public boolean isSlowMode () {
+
+        return slowMode.getAsBoolean();
+    }
+
+    public static Oi GetInstance() {
+
+        if (Instance == null) {
+            Instance = new Oi();
+        }
+
+        return Instance;
+
     }
 }
