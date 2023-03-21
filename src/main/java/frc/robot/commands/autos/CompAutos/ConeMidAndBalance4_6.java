@@ -5,7 +5,9 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.Collector.ExpelConeCommand;
+import frc.robot.commands.Collector.IntakeConeSmartCommand;
 import frc.robot.commands.arm.ResetArm;
+import frc.robot.commands.arm.SetArmPositionCommand;
 import frc.robot.commands.autos.SafeBalanceCommandGroup;
 import frc.robot.commands.autos.SetArmRaceCommandGroup;
 import frc.robot.commands.autos.TimerCommand;
@@ -25,9 +27,12 @@ public class ConeMidAndBalance4_6 extends SequentialCommandGroup
               new SetArmRaceCommandGroup(Constants.ArmPos.CARRY_SHOULDER,Constants.ArmPos.CARRY_WRIST,.75),
               new DriveDistanceCommand(Drivebase.GetDrivebase(),-.5),
               new RotateCommand(Drivebase.GetDrivebase(),180),
-              new DriveDistanceCommandGyro(Drivebase.GetDrivebase(), 10, Constants.Drivebase.DRIVEBASE_KF + .1),
-              new RotateCommand(Drivebase.GetDrivebase(),180),
-              new DriveDistanceCommandGyro(Drivebase.GetDrivebase(), 6.5, Constants.Drivebase.DRIVEBASE_KF + .15),
+              new DriveDistanceCommandGyro(Drivebase.GetDrivebase(), 9, Constants.Drivebase.DRIVEBASE_KF + .1),
+             new ParallelRaceGroup(new RotateCommand(Drivebase.GetDrivebase(),180),
+                                   new SetArmPositionCommand(Constants.ArmPos.CONE_FLOOR_PICKUP_SHOULDER, Constants.ArmPos.CONE_FLOOR_PICKUP_WRIST)),
+             new ParallelRaceGroup(new DriveDistanceCommand(Drivebase.GetDrivebase(),-5),new IntakeConeSmartCommand()),
+             new ParallelRaceGroup(new DriveDistanceCommand(Drivebase.GetDrivebase(),6.5),
+                                   new SetArmPositionCommand(Constants.ArmPos.CARRY_SHOULDER,Constants.ArmPos.CARRY_WRIST)),
               new ParallelCommandGroup(
                       new SafeBalanceCommandGroup(),
                       new ResetArm()
