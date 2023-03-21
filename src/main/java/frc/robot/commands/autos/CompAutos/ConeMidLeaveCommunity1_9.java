@@ -1,4 +1,4 @@
-package frc.robot.commands.autos.Simple;
+package frc.robot.commands.autos.CompAutos;
 
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -11,8 +11,8 @@ import frc.robot.commands.drivebase.DriveDistanceCommandGyro;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Drivebase;
 
-public class SimpleAuto1_9 extends SequentialCommandGroup {
-    public SimpleAuto1_9() {
+public class ConeMidLeaveCommunity1_9 extends SequentialCommandGroup {
+    public ConeMidLeaveCommunity1_9() {
         super(
                 new SetArmRaceCommandGroup(Constants.ArmPos.SCORE_CONE_MID_SHOULDER, Constants.ArmPos.SCORE_CONE_MID_WRIST, 2),
                 new ParallelRaceGroup(new ExpelConeCommand(), new TimerCommand(.2)),
