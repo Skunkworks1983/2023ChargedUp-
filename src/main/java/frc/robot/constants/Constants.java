@@ -135,6 +135,9 @@ public class Constants extends CommandBase {
         public static final double  WAIT_TIME_FOR_GYRO_CALIBRATION = 3;
         public static final double HEADING_TOO_BIG = 20;
         public static final double MAX_DRIVE_DISTANCE_SPEED = 0.3;
+
+        public static final double BASE_DRIVE_TO_CONE_SPEED = 0.18;
+        public static final double DRIVE_TO_CONE_KP = 0.001;
     }
 
     public class Arm {
