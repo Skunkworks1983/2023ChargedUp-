@@ -44,6 +44,7 @@ public class IntakeCubeSmartCommand extends CommandBase
         {
             collectorInstance.SetSpeed(armInstance.getCurrentPosition().CubeIntake() * Constants.Collector.INTAKE_MOTOR_SPEED);
         }
+        ticksElapsed++;
     }
 
     @Override
