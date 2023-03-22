@@ -17,10 +17,10 @@ import frc.robot.commands.drivebase.RotateCommand;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Drivebase;
 
-public class ConeMidAndBalance4_6 extends SequentialCommandGroup
+public class ConeMidAndBalance4_6AndPickUp extends SequentialCommandGroup
 {
 
-    public ConeMidAndBalance4_6()
+    public ConeMidAndBalance4_6AndPickUp()
     {
         super(new SetArmRaceCommandGroup(Constants.ArmPos.SCORE_CONE_MID_SHOULDER, Constants.ArmPos.SCORE_CONE_MID_WRIST, 1.75),
               new ParallelRaceGroup(new ExpelConeCommand(), new TimerCommand(.2)),
@@ -28,8 +28,15 @@ public class ConeMidAndBalance4_6 extends SequentialCommandGroup
               new DriveDistanceCommand(Drivebase.GetDrivebase(),-.5),
               new RotateCommand(Drivebase.GetDrivebase(),180),
               new DriveDistanceCommandGyro(Drivebase.GetDrivebase(), 9, Constants.Drivebase.DRIVEBASE_KF + .1),
-              new RotateCommand(Drivebase.GetDrivebase(),180),
-              new ParallelCommandGroup(new SafeBalanceCommandGroup(), new ResetArm())
+             new ParallelRaceGroup(new RotateCommand(Drivebase.GetDrivebase(),180),
+                                   new SetArmPositionCommand(Constants.ArmPos.CONE_FLOOR_PICKUP_SHOULDER, Constants.ArmPos.CONE_FLOOR_PICKUP_WRIST)),
+             new ParallelRaceGroup(new DriveDistanceCommand(Drivebase.GetDrivebase(),-5),new IntakeConeSmartCommand()),
+             new ParallelRaceGroup(new DriveDistanceCommand(Drivebase.GetDrivebase(),6.5),
+                                   new SetArmPositionCommand(Constants.ArmPos.CARRY_SHOULDER,Constants.ArmPos.CARRY_WRIST)),
+              new ParallelCommandGroup(
+                      new SafeBalanceCommandGroup(),
+                      new ResetArm()
+                    )
                 );
     }
 }

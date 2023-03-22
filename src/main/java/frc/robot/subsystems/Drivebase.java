@@ -182,21 +182,25 @@ public class Drivebase implements Subsystem {
     }
 
 
-    /*@Override
-    public void periodic() {
-        if (isHeadingReliable) {
-            if (gyro.isCalibrating() || !gyro.isConnected()) {
+   /* @Override
+    public void periodic()
+    {
+        if (isHeadingReliable)
+        {
+            if (gyro.isCalibrating() || !gyro.isConnected())
+            {
 
-                isHeadingReliable = false;
+                isHeadingReliable = false;E2
 
-                //System.out.println("GYRO CRASHED!!! - GYRO IS NOT CALIBRATED OR CONNECTED");
+                System.out.println("GYRO CRASHED!!! - GYRO IS NOT CALIBRATED OR CONNECTED");
             }
 
-            if (Math.abs(getHeading() - lastHeading) >= Constants.Drivebase.HEADING_TOO_BIG) {
+            if (Math.abs(getHeading() - lastHeading) >= Constants.Drivebase.HEADING_TOO_BIG)
+            {
 
                 isHeadingReliable = false;
 
-                //System.out.println("THE GYROSCOPE HAS CRASHED!!! - HEADING IS TOO LARGE");
+                System.out.println("THE GYROSCOPE HAS CRASHED!!! - HEADING IS TOO LARGE");
             }
 
             lastHeading = getHeading();
