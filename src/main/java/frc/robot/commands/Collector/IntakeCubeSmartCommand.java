@@ -28,18 +28,20 @@ public class IntakeCubeSmartCommand extends CommandBase {
 
     @Override
     public void execute() {
-        if (armInstance.getShoulderAngle() < 0) {
-
-            if (collectorInstance.isIntaking()) {
-
-                collectorInstance.Setspeed(Constants.Collector.INTAKE_MOTOR_SPEED_SLOW);
-
-            } else {
-
+        switch (armInstance.getCurrentPosition()) {
+            case FLOOR:
+            case FLOOR_NORMAL:
+            case HIGH_CUBE:
                 collectorInstance.Setspeed(Constants.Collector.INTAKE_MOTOR_SPEED);
-            }
+                break;
+            case FLOOR_WEIRD:
+            case SCORE_MID:
+            case SUBSTATION:
+                collectorInstance.Setspeed(-Constants.Collector.INTAKE_MOTOR_SPEED);
+                break;
+        }
 
-        } else {
+
 
             if (collectorInstance.isIntaking()) {
 
@@ -51,7 +53,7 @@ public class IntakeCubeSmartCommand extends CommandBase {
 
 
             }
-        }
+
         ticksElapsed++;
     }
 

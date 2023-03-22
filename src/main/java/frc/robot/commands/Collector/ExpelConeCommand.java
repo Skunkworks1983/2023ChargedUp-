@@ -22,12 +22,17 @@ public class ExpelConeCommand extends CommandBase {
     @Override
     public void initialize() {
         System.out.println("Expel Cone Initialized");
-
-        if(armInstance.getShoulderAngle() < 0) {
-            collectorInstance.Setspeed(Constants.Collector.EXPEL_MOTOR_SPEED);
-        }
-        else {
-            collectorInstance.Setspeed(-Constants.Collector.EXPEL_MOTOR_SPEED);
+        switch (armInstance.getCurrentPosition()) {
+            case FLOOR:
+            case FLOOR_NORMAL:
+            case HIGH_CUBE:
+                collectorInstance.Setspeed(Constants.Collector.INTAKE_MOTOR_SPEED);
+                break;
+            case SUBSTATION:
+            case FLOOR_WEIRD:
+            case SCORE_MID:
+                collectorInstance.Setspeed(-Constants.Collector.INTAKE_MOTOR_SPEED);
+                break;
         }
 
 
