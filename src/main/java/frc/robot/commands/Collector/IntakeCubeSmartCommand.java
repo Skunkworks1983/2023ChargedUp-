@@ -30,9 +30,13 @@ public class IntakeCubeSmartCommand extends CommandBase {
     public void execute() {
         if (armInstance.getShoulderAngle() < 0) {
 
-            if (collectorInstance.isTaking()) {
+            if (collectorInstance.isIntakingCube()) {
 
                 collectorInstance.SetSpeed(Constants.Collector.INTAKE_MOTOR_SPEED_SLOW);
+
+            } else if (collectorInstance.isHoldingCube()) {
+
+                collectorInstance.Setspeed(Constants.Collector.INTAKE_MOTOR_SPEED_VERY_SLOW);
 
             } else {
 
@@ -41,9 +45,13 @@ public class IntakeCubeSmartCommand extends CommandBase {
 
         } else {
 
-            if (collectorInstance.isTaking()) {
+            if (collectorInstance.isIntakingCube()) {
 
                 collectorInstance.SetSpeed(-Constants.Collector.INTAKE_MOTOR_SPEED_SLOW);
+
+            } else if (collectorInstance.isHoldingCube()) {
+
+                collectorInstance.Setspeed(-Constants.Collector.INTAKE_MOTOR_SPEED_VERY_SLOW);
 
             } else {
 
@@ -52,6 +60,7 @@ public class IntakeCubeSmartCommand extends CommandBase {
 
             }
         }
+
         ticksElapsed++;
     }
 
