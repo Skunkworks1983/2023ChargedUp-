@@ -39,7 +39,7 @@ public class ExpelCubeCommand extends CommandBase {
     @Override
     public void end(boolean interrupted)
     {
-        collectorInstance.Setspeed(0);
+        collectorInstance.SetSpeed(0);
         if(interrupted)
         {
             System.out.println("Expel Cube Command Ended, interrupted");
