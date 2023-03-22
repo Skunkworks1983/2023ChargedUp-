@@ -88,6 +88,7 @@ public class Robot extends TimedRobot
         autoChooser.addOption("SimpleAuto5",new SimpleAuto5());
 
 
+
         //autoChooser.addOption("oneBallAutosHigh", new OneBallAutosHighCommandGroup());
        // autoChooser.addOption("oneBallAutosLow", new OneBallAutosLowCommandGroup());
         SmartDashboard.putData("autoChooser", autoChooser);
