@@ -26,7 +26,7 @@ public class IntakeConeManualCommand extends CommandBase {
 
     @Override
     public void execute() {
-        collectorInstance.Setspeed(armInstance.getCurrentPosition().ConeIntake()
+        collectorInstance.SetSpeed(armInstance.getCurrentPosition().ConeIntake()
                 * Constants.Collector.INTAKE_MOTOR_SPEED + Constants.Collector.MANUAL_INTAKE_MULTIPLIER);
     }
 
@@ -38,7 +38,7 @@ public class IntakeConeManualCommand extends CommandBase {
     @Override
     public void end(boolean interrupted)
     {
-        collectorInstance.Setspeed(0);
+        collectorInstance.SetSpeed(0);
         if(interrupted)
         {
             System.out.println("Intake Cone Manual Command Ended, interrupted");

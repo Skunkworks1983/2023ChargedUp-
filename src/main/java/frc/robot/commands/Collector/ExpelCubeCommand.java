@@ -22,7 +22,7 @@ public class ExpelCubeCommand extends CommandBase {
     @Override
     public void initialize() {
         System.out.println("Expel Cube Initialized");
-        collectorInstance.Setspeed(armInstance.getCurrentPosition().CubeExpel() *Constants.Collector.EXPEL_MOTOR_SPEED);
+        collectorInstance.SetSpeed(armInstance.getCurrentPosition().CubeExpel() *Constants.Collector.EXPEL_MOTOR_SPEED);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class ExpelCubeCommand extends CommandBase {
     @Override
     public void end(boolean interrupted)
     {
-        collectorInstance.Setspeed(0);
+        collectorInstance.SetSpeed(0);
         if(interrupted)
         {
             System.out.println("Expel Cube Command Ended, interrupted");

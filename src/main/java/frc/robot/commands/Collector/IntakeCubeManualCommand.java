@@ -26,7 +26,7 @@ public class IntakeCubeManualCommand extends CommandBase {
 
     @Override
     public void execute() {
-        collectorInstance.Setspeed(
+        collectorInstance.SetSpeed(
                 armInstance.getCurrentPosition().CubeIntake()
                         * Constants.Collector.INTAKE_MOTOR_SPEED
                         * Constants.Collector.MANUAL_INTAKE_MULTIPLIER);
@@ -40,7 +40,7 @@ public class IntakeCubeManualCommand extends CommandBase {
     @Override
     public void end(boolean interrupted)
     {
-        collectorInstance.Setspeed(0);
+        collectorInstance.SetSpeed(0);
         if(interrupted)
         {
             System.out.println("Intake Cube Manual Command Ended, interrupted");
