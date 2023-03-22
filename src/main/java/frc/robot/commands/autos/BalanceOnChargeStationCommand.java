@@ -3,6 +3,7 @@ package frc.robot.commands.autos;
 //import com.ctre.phoenix.motorcontrol.can.SlotConfiguration;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.commands.drivebase.DetectRangeSensorCommand;
 import frc.robot.constants.Constants;
@@ -20,8 +21,8 @@ public class BalanceOnChargeStationCommand extends CommandBase {
     double error=0;
     double integral=0;
     double lastError;
-    NetworkTable table = NetworkTableInstance.getDefault().getTable("FMSInfo");
     boolean isRedAlliance;
+    Arm arm;
 
     double i;
     public BalanceOnChargeStationCommand(double p, double d, double i, double maxSpeed) {
@@ -30,7 +31,7 @@ public class BalanceOnChargeStationCommand extends CommandBase {
         this.d=d;
         this.maxSpeed = maxSpeed;
         this.i=i;
-
+        this.arm = Arm.getInstance();
         //defaults //p=.022//d=0//max=.085
 
         addRequirements(Drivebase.GetDrivebase());
@@ -40,7 +41,7 @@ public class BalanceOnChargeStationCommand extends CommandBase {
     @Override
     public void initialize()
     {
-        isRedAlliance = table.getEntry("IsRedAlliance").getBoolean(false);
+        isRedAlliance = DriverStation.getAlliance() == DriverStation.Alliance.Red;
         System.out.println("BalanceOnChargeStation started");
     }
 
@@ -59,16 +60,16 @@ public class BalanceOnChargeStationCommand extends CommandBase {
             f = 0;
             if(isRedAlliance)
             {
-                Arm.getInstance().SetLightMode(Constants.Lights.RED_WITH_WHITE);
+                arm.SetLightMode(Constants.Lights.RED_WITH_WHITE);
             }
             else
             {
-                Arm.getInstance().SetLightMode(Constants.Lights.BLUE_WITH_WHITE);
+                arm.SetLightMode(Constants.Lights.BLUE_WITH_WHITE);
             }
         }
         else
         {
-            Arm.getInstance().SetLightMode(Constants.Lights.CENTER);
+            arm.SetLightMode(Constants.Lights.CENTER);
         }
         Drivebase.GetDrivebase().runMotor(f,f);
         lastError=error;
