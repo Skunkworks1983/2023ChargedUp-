@@ -18,6 +18,7 @@ import frc.robot.commands.autos.CompAutos.ConeMidLeaveCommunity1_9;
 import frc.robot.commands.autos.CompAutos.CubeMidLeaveCommunity2_8;
 import frc.robot.commands.autos.CompAutos.CubeMidAndBalance5;
 import frc.robot.commands.autos.CompAutos.ConeMidAndBalance4_6;
+import frc.robot.commands.autos.CompAutos.DoNothingCommandGroup;
 import frc.robot.commands.autos.ScoreAndExitCommunityP1CommandGroup;
 import frc.robot.commands.autos.ScoreAndExitCommunityP2CommandGroup;
 import frc.robot.commands.autos.SimpleAutoCommandGroup;
@@ -69,11 +70,10 @@ public class Robot extends TimedRobot
         autoChooser.addOption("ConeLowAndBalance4_5_6",new ConeLowAndBalance4_5_6());
         autoChooser.addOption("CubeHighAndBalance5",new CubeHighAndBalance5());
         autoChooser.addOption("CubeHighLeaveCommunity2_8",new CubeHighLeaveCommunity2_8());
+        autoChooser.addOption("DoNothing",new DoNothingCommandGroup());
+        SmartDashboard.putNumber("AutoDelay",0);
+        //auto delay needs to be tested and maybe fixed bc I don't know how it works
 
-
-
-        //autoChooser.addOption("oneBallAutosHigh", new OneBallAutosHighCommandGroup());
-       // autoChooser.addOption("oneBallAutosLow", new OneBallAutosLowCommandGroup());
         SmartDashboard.putData("autoChooser", autoChooser);
 
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
