@@ -4,7 +4,10 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.kauailabs.navx.frc.AHRS;
-import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.DigitalOutput;
+import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.commands.drivebase.ArcadeDrive;
@@ -93,7 +96,6 @@ public class Drivebase implements Subsystem {
         return leftMotor1.getSelectedSensorPosition() / TicksPerFoot;
     }
 
-
     public double getPosRight() {
         return -(rightMotor1.getSelectedSensorPosition() / TicksPerFoot);
     }
@@ -142,7 +144,6 @@ public class Drivebase implements Subsystem {
             rightMotor2.setNeutralMode(NeutralMode.Coast);
         }
     }
-
 
     public double getSpeedLeft() {
         return leftMotor1.getSelectedSensorVelocity();
