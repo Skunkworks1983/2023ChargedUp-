@@ -37,7 +37,7 @@ import frc.robot.services.Oi;
 public class Robot extends TimedRobot
 {
     private boolean setBrakeModeOnDisable = true;
-    private Oi oi = new Oi();
+    private Oi oi = Oi.GetInstance();
     private Command autonomousCommand;
     private SendableChooser autoChooser;
     private Drivebase drivebase = Drivebase.GetDrivebase();
@@ -69,6 +69,7 @@ public class Robot extends TimedRobot
         autoChooser.addOption("ConeLowAndBalance4_5_6",new ConeLowAndBalance4_5_6());
         autoChooser.addOption("CubeHighAndBalance5",new CubeHighAndBalance5());
         autoChooser.addOption("CubeHighLeaveCommunity2_8",new CubeHighLeaveCommunity2_8());
+
 
 
         //autoChooser.addOption("oneBallAutosHigh", new OneBallAutosHighCommandGroup());

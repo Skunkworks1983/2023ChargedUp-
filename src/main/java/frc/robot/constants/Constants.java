@@ -15,13 +15,13 @@ public class Constants extends CommandBase {
 
         public static final double CONE_COLLECT_AMP_THRESHOLD = 12;
         public static final double CONE_AMPS_HOLDING_THRESHOLD = 10;
+        
         public static final double INTAKE_SPEED = 10; //inches per second
         public static final double INTAKE_MOTOR_SPEED =
                 INTAKE_SPEED / WHEEL_CIRCUMFERENCE * WHEEL_REVS_PER_SEC_TO_VELOCITY;
+        public static final double INTAKE_MOTOR_SPEED_SLOW = INTAKE_MOTOR_SPEED/2;
+        public static final double INTAKE_MOTOR_SPEED_VERY_SLOW = INTAKE_MOTOR_SPEED/4;
 
-        public static final double INTAKE_SPEED_SLOW = (INTAKE_SPEED / 2);
-        public static final double INTAKE_MOTOR_SPEED_SLOW =
-                INTAKE_SPEED_SLOW / WHEEL_CIRCUMFERENCE * WHEEL_REVS_PER_SEC_TO_VELOCITY;
 
         public static final double EXPEL_SPEED = 10; // inches per second
         public static final double EXPEL_MOTOR_SPEED =
@@ -43,6 +43,9 @@ public class Constants extends CommandBase {
     }
 
     public class OIButtons {
+
+        //slow mode driving
+        public static final int DRIVE_SLOW = 1;
 
         //top row
         public static final int ENABLE_MANUAL =8;
@@ -95,6 +98,8 @@ public class Constants extends CommandBase {
     }
 
     public class Drivebase {
+
+        public static final double SLOW_MODE_RATIO = .165;
         public static final double GEAR_RATIO = 10.71;
         public static final double WHEEL_DIAMETER = 0.5;
         public static final double DISTANCE_KP = 0.05;

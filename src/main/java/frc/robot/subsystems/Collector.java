@@ -24,6 +24,31 @@ public class Collector extends SubsystemBase {
         Motor.setNeutralMode(NeutralMode.Brake);
         Motor.setInverted(true);
     }
+
+
+    public boolean isEmptyCube () {
+
+        if(cubeBreak1.get() == true && cubeBreak2.get() == true) {
+
+            return true;
+        }
+        else {
+            return false;
+        }
+
+    }
+
+    public boolean isIntakingCube () {
+
+        if (cubeBreak1.get() == cubeBreak2.get()) {
+
+            return false;
+        } else {
+
+            return true;
+        }
+    }
+
     public boolean isHoldingCube() {
 
         if(cubeBreak1.get() == false && cubeBreak2.get() == false) {
@@ -35,16 +60,7 @@ public class Collector extends SubsystemBase {
 
     }
 
-    public boolean isIntaking () {
 
-        if (cubeBreak1.get() == cubeBreak2.get()) {
-
-            return false;
-        } else {
-
-            return true;
-        }
-    }
 
     public double GetCollectorCurrent()
     {
