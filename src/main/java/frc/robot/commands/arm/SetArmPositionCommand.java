@@ -2,21 +2,27 @@ package frc.robot.commands.arm;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.constants.Constants;
+import frc.robot.services.Oi;
 import frc.robot.subsystems.Arm;
 
 public class SetArmPositionCommand extends CommandBase
 {
 
     private final Arm arm;
-    private final double shoulderAngleSetpoint;
-    private final double wristAngleSetpoint;
+    private final Oi oi;
+    private double shoulderAngleSetpoint;
+    private double wristAngleSetpoint;
+    private Constants.ArmPose armPose;
     private boolean weirdAngle;
 
-    public SetArmPositionCommand(double shoulderAngleSetpoint, double wristAngleSetpoint)
+    public SetArmPositionCommand(Constants.ArmPose armPose)
     {
+        this.armPose = armPose;
+
+        oi = Oi.Instance;
         this.arm = Arm.getInstance();
-        this.shoulderAngleSetpoint = shoulderAngleSetpoint;
-        this.wristAngleSetpoint = wristAngleSetpoint;
+
+
         addRequirements(arm);
         weirdAngle = false;
     }
@@ -24,6 +30,9 @@ public class SetArmPositionCommand extends CommandBase
     @Override
     public void initialize()
     {
+        arm.setCurrentPosition(armPose);
+        this.shoulderAngleSetpoint = arm.getCurrentPosition().shoulderAngle;
+        this.wristAngleSetpoint = arm.getCurrentPosition().wristAngle;
         if(Math.abs(arm.ShoulderMotor.getClosedLoopTarget() * Constants.Arm.SHOULDER_TICKS_TO_DEGREES - Constants.ArmPos.SCORE_CONE_WEIRD_SHOULDER) < 1)
         {
             weirdAngle = true;
