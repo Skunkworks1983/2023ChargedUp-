@@ -21,9 +21,9 @@ public class ConeLowAndBalance4_5_6 extends SequentialCommandGroup
 
     public ConeLowAndBalance4_5_6()
     {
-        super(new SetArmRaceCommandGroup(Arm.ArmPosition.FLOOR_NORMAL, Arm.PostionPieceType.CONE, 1.75),
+        super(new SetArmRaceCommandGroup(Constants.ArmPose.FLOOR_NORMAL, 1.75),
               new ParallelRaceGroup(new ExpelConeCommand(), new TimerCommand(.2)),
-              new SetArmRaceCommandGroup(Arm.ArmPosition.STOW, Arm.PostionPieceType.DOESNT_MATTER,.75),
+              new SetArmRaceCommandGroup(Constants.ArmPose.STOW,.75),
               new DriveDistanceCommand(Drivebase.GetDrivebase(),.5),
               new DriveDistanceCommandGyro(Drivebase.GetDrivebase(), 10, Constants.Drivebase.DRIVEBASE_KF + .1),
               new RotateCommand(Drivebase.GetDrivebase(),180),

@@ -173,6 +173,29 @@ public class Constants extends CommandBase {
         public static final double WRIST_KF = 0;
     }
 
+    public enum ArmPose {
+        FLOOR_WEIRD (ArmPos.SCORE_CONE_WEIRD_SHOULDER, ArmPos.SCORE_CONE_WEIRD_WRIST, 1),
+        FLOOR_NORMAL  (ArmPos.FLOOR_NORMAL_SCORE_SHOULDER, ArmPos.FLOOR_NORMAL_SCORE_WRIST, -1),
+        FLOOR_CUBE (ArmPos.FLOOR_CUBE_PICKUP_SHOULDER, ArmPos.FLOOR_CUBE_PICKUP_WRIST, -1),
+        FLOOR_CONE (ArmPos.CONE_FLOOR_PICKUP_SHOULDER, ArmPos.CONE_FLOOR_PICKUP_WRIST, -1),
+        HIGH_CUBE (ArmPos.SCORE_CUBE_HIGH_SHOULDER, ArmPos.SCORE_CUBE_HIGH_WRIST, -1),
+        SUBSTATION_CUBE (ArmPos.PLAYER_CUBE_PICKUP_SHOULDER, ArmPos.PLAYER_CUBE_PICKUP_WRIST, 1),
+        SUBSTATION_CONE (ArmPos.PLAYER_CONE_PICKUP_SHOULDER, ArmPos.PLAYER_CONE_PICKUP_WRIST, 1),
+        SCORE_MID_CUBE (ArmPos.SCORE_CUBE_MID_SHOULDER, ArmPos.SCORE_CUBE_MID_WRIST, 1),
+        SCORE_MID_CONE (ArmPos.SCORE_CONE_MID_SHOULDER, ArmPos.SCORE_CONE_MID_WRIST, 1),
+        STOW (ArmPos.CARRY_SHOULDER, ArmPos.CARRY_WRIST, 1);//TODO: stow is wierd
+
+        public final double shoulderAngle;
+        public final double wristAngle;
+        public final int ConeIntakeDirection;
+        ArmPose(double shoulderAngle, double wristAngle, int ConeIntakeDirection) {
+            this.ConeIntakeDirection = ConeIntakeDirection;
+            this.shoulderAngle = shoulderAngle;
+            this.wristAngle = wristAngle;
+        }
+
+    }
+
     public class ArmPos
     {
 

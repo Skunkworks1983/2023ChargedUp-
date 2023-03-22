@@ -18,9 +18,9 @@ import frc.robot.subsystems.Drivebase;
 
 public class CubeHighAndBalance5 extends SequentialCommandGroup {
     public CubeHighAndBalance5() {
-        super(new SetArmRaceCommandGroup(Arm.ArmPosition.HIGH_CUBE, Arm.PostionPieceType.CUBE, 1.75),
+        super(new SetArmRaceCommandGroup(Constants.ArmPose.HIGH_CUBE, 1.75),
               new ParallelRaceGroup(new ExpelConeCommand(), new TimerCommand(.2)),
-              new SetArmRaceCommandGroup(Arm.ArmPosition.STOW, Arm.PostionPieceType.DOESNT_MATTER, .75),
+              new SetArmRaceCommandGroup(Constants.ArmPose.HIGH_CUBE.STOW, .75),
               new DriveDistanceCommand(Drivebase.GetDrivebase(), -.5),
               new RotateCommand(Drivebase.GetDrivebase(), 180),
               new DriveDistanceCommandGyro(Drivebase.GetDrivebase(), 11, Constants.Drivebase.DRIVEBASE_KF + .1),

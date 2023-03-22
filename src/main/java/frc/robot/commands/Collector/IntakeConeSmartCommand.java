@@ -31,20 +31,7 @@ public class IntakeConeSmartCommand extends CommandBase {
 
     @Override
     public void execute() {
-      switch (armInstance.getCurrentPosition()) {
-          case FLOOR:
-          case FLOOR_NORMAL:
-          case HIGH_CUBE:
-              collectorInstance.Setspeed(-Constants.Collector.INTAKE_MOTOR_SPEED);
-              break;
-          case FLOOR_WEIRD:
-          case SCORE_MID:
-          case SUBSTATION:
-              collectorInstance.Setspeed(Constants.Collector.INTAKE_MOTOR_SPEED);
-              break;
-
-
-           }
+        collectorInstance.Setspeed(armInstance.getCurrentPosition().ConeIntakeDirection *Constants.Collector.INTAKE_MOTOR_SPEED);
         if (collectorInstance.isHoldingCone()) {
             countConeHeld++;
         } else {

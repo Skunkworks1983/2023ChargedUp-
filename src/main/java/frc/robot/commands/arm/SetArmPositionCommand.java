@@ -1,6 +1,5 @@
 package frc.robot.commands.arm;
 
-import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.constants.Constants;
 import frc.robot.services.Oi;
@@ -13,15 +12,12 @@ public class SetArmPositionCommand extends CommandBase
     private final Oi oi;
     private double shoulderAngleSetpoint;
     private double wristAngleSetpoint;
-    private Arm.ArmPosition armPosition;
-    private Arm.PostionPieceType postionPieceType;
+    private Constants.ArmPose armPose;
     private boolean weirdAngle;
     private boolean isCubeTrue;
-    public SetArmPositionCommand(Arm.ArmPosition armPosition, Arm.PostionPieceType postionPieceType)
+    public SetArmPositionCommand(Constants.ArmPose armPose)
     {
-        this.armPosition = armPosition;
-        this.postionPieceType = postionPieceType;
-
+        this.armPose = armPose;
 
         oi = Oi.Instance;
         this.arm = Arm.getInstance();
@@ -35,72 +31,9 @@ public class SetArmPositionCommand extends CommandBase
     @Override
     public void initialize()
     {
-        double shoulderAngleSetpoint;
-        double wristAngleSetpoint;
-        arm.setCurrentPosition(armPosition);
-
-        if(postionPieceType == Arm.PostionPieceType.CONE) {
-            isCubeTrue = false;
-        }
-        if(postionPieceType == Arm.PostionPieceType.CUBE) {
-            isCubeTrue = true;
-        }
-        if(postionPieceType == Arm.PostionPieceType.CHECK_OI) {
-            isCubeTrue = oi.getCubeToggle();
-        }
-        if(postionPieceType == Arm.PostionPieceType.DOESNT_MATTER) {
-            isCubeTrue = true;
-        }
-        if(armPosition == Arm.ArmPosition.FLOOR) {
-            if(isCubeTrue) {
-                shoulderAngleSetpoint = Constants.ArmPos.FLOOR_CUBE_PICKUP_SHOULDER;
-                wristAngleSetpoint = Constants.ArmPos.FLOOR_CUBE_PICKUP_WRIST;
-            }
-            else {
-                shoulderAngleSetpoint = Constants.ArmPos.CONE_FLOOR_PICKUP_SHOULDER;
-                wristAngleSetpoint = Constants.ArmPos.CONE_FLOOR_PICKUP_WRIST;
-            }
-        }
-        else if(armPosition == Arm.ArmPosition.FLOOR_WEIRD) {
-            shoulderAngleSetpoint = Constants.ArmPos.SCORE_CONE_WEIRD_SHOULDER;
-            wristAngleSetpoint = Constants.ArmPos.SCORE_CONE_WEIRD_WRIST;
-        }
-        else if(armPosition == Arm.ArmPosition.SUBSTATION) {
-            if(isCubeTrue) {
-                shoulderAngleSetpoint = Constants.ArmPos.PLAYER_CUBE_PICKUP_SHOULDER;
-                wristAngleSetpoint = Constants.ArmPos.PLAYER_CUBE_PICKUP_WRIST;
-            }
-            else{
-                shoulderAngleSetpoint = Constants.ArmPos.PLAYER_CONE_PICKUP_SHOULDER;
-                wristAngleSetpoint = Constants.ArmPos.PLAYER_CONE_PICKUP_WRIST;
-            }
-
-        }
-        else if(armPosition == Arm.ArmPosition.HIGH_CUBE) {
-            shoulderAngleSetpoint = Constants.ArmPos.SCORE_CUBE_HIGH_SHOULDER;
-            wristAngleSetpoint = Constants.ArmPos.SCORE_CUBE_HIGH_WRIST;
-        }
-        else if(armPosition == Arm.ArmPosition.FLOOR_NORMAL) {
-            shoulderAngleSetpoint = Constants.ArmPos.FLOOR_NORMAL_SCORE_SHOULDER;
-            wristAngleSetpoint = Constants.ArmPos.FLOOR_NORMAL_SCORE_WRIST;
-        }
-        else if(armPosition == Arm.ArmPosition.SCORE_MID) {
-            if(isCubeTrue) {
-                shoulderAngleSetpoint = Constants.ArmPos.SCORE_CUBE_MID_SHOULDER;
-                wristAngleSetpoint = Constants.ArmPos.SCORE_CUBE_MID_WRIST;
-            }
-            else{
-                shoulderAngleSetpoint = Constants.ArmPos.SCORE_CONE_MID_SHOULDER;
-                wristAngleSetpoint = Constants.ArmPos.SCORE_CONE_MID_WRIST;
-            }
-        }
-        else {
-            shoulderAngleSetpoint = Constants.ArmPos.CARRY_SHOULDER;
-            wristAngleSetpoint = Constants.ArmPos.CARRY_WRIST;
-        }
-
-        this.shoulderAngleSetpoint = shoulderAngleSetpoint;
-        this.wristAngleSetpoint = wristAngleSetpoint;
+        arm.setCurrentPosition(armPose);
+        this.shoulderAngleSetpoint = arm.getCurrentPosition().shoulderAngle;
+        this.wristAngleSetpoint = arm.getCurrentPosition().wristAngle;
         if(Math.abs(arm.ShoulderMotor.getClosedLoopTarget() * Constants.Arm.SHOULDER_TICKS_TO_DEGREES - Constants.ArmPos.SCORE_CONE_WEIRD_SHOULDER) < 1)
         {
             weirdAngle = true;

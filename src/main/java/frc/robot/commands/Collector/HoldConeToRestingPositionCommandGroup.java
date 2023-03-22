@@ -9,7 +9,7 @@ import frc.robot.subsystems.Arm;
 
 public class HoldConeToRestingPositionCommandGroup extends ParallelCommandGroup {
     public static final Command HoldCone = new HoldConeCommand();
-    public static final Command ArmToCarry = new SetArmPositionCommand(Arm.ArmPosition.STOW, Arm.PostionPieceType.DOESNT_MATTER);
+    public static final Command ArmToCarry = new SetArmPositionCommand(Constants.ArmPose.STOW);
 
     public HoldConeToRestingPositionCommandGroup() {
         // TODO: Add your sequential commands in the super() call, e.g.
