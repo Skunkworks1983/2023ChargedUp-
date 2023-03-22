@@ -12,9 +12,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.Constants;
 
+
 public class Arm extends SubsystemBase
 {
-
+    private Constants.ArmPose currentPose;
     public TalonFX ShoulderMotor = new TalonFX(Constants.Arm.SHOULDER_MOTOR_ID);
     public TalonFX WristMotor = new TalonFX(Constants.Arm.WRIST_MOTOR_DEVICE_NUMBER);
     public double shoulderEncoderToAngleFactor = ((1.0 / Constants.Falcon500.TICKS_PER_REV) / Constants.Arm.SHOULDER_GEAR_RATIO) * 360;
@@ -41,6 +42,8 @@ public class Arm extends SubsystemBase
 
     private Arm()
     {
+        currentPose = Constants.ArmPose.STOW;
+
         //Shoulder config
         ShoulderMotor.selectProfileSlot(0, 0);
         ShoulderMotor.setNeutralMode(NeutralMode.Brake);
@@ -284,5 +287,13 @@ public class Arm extends SubsystemBase
             System.out.println("WRIST IS NOT IN GOOD POS, SENDING TO CARRY");
             setWristAnglePosition(Constants.ArmPos.CARRY_WRIST);
         }
+
     }
+    public Constants.ArmPose getCurrentPosition(){
+        return currentPose;
+    }
+    public void setCurrentPosition(Constants.ArmPose newPosition){
+        currentPose = newPosition;
+    }
+
 }

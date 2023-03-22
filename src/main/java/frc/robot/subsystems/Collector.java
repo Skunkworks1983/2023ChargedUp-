@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.Constants;
 
 public class Collector extends SubsystemBase {
+
     public TalonFX Motor;
 
     private DigitalInput cubeBreak1;
@@ -40,12 +41,12 @@ public class Collector extends SubsystemBase {
 
     public boolean isIntakingCube() {
 
-        if (cubeBreak1.get() == cubeBreak2.get()) {
-
-            return false;
-        } else {
+        if (cubeBreak1.get() ^ cubeBreak2.get()) {
 
             return true;
+        } else {
+
+            return false;
         }
     }
 

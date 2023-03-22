@@ -28,34 +28,17 @@ public class IntakeCubeSmartCommand extends CommandBase {
 
     @Override
     public void execute() {
-        if (armInstance.getShoulderAngle() < 0) {
-
             if (collectorInstance.isIntakingCube()) {
 
-                collectorInstance.SetSpeed(Constants.Collector.INTAKE_MOTOR_SPEED_SLOW);
-
+                collectorInstance.Setspeed(armInstance.getCurrentPosition().CubeIntake() *Constants.Collector.INTAKE_MOTOR_SPEED_SLOW);
             } else if (collectorInstance.isHoldingCube()) {
 
-                collectorInstance.SetSpeed(Constants.Collector.INTAKE_MOTOR_SPEED_VERY_SLOW);
+                collectorInstance.Setspeed(armInstance.getCurrentPosition().CubeIntake() *Constants.Collector.INTAKE_MOTOR_SPEED_VERY_SLOW);
+
 
             } else {
 
-                collectorInstance.SetSpeed(Constants.Collector.INTAKE_MOTOR_SPEED);
-            }
-
-        } else {
-
-            if (collectorInstance.isIntakingCube()) {
-
-                collectorInstance.SetSpeed(-Constants.Collector.INTAKE_MOTOR_SPEED_SLOW);
-
-            } else if (collectorInstance.isHoldingCube()) {
-
-                collectorInstance.SetSpeed(-Constants.Collector.INTAKE_MOTOR_SPEED_VERY_SLOW);
-
-            } else {
-
-                collectorInstance.SetSpeed(-Constants.Collector.INTAKE_MOTOR_SPEED);
+                collectorInstance.Setspeed(armInstance.getCurrentPosition().CubeIntake() *Constants.Collector.INTAKE_MOTOR_SPEED);
 
 
             }
@@ -72,7 +55,7 @@ public class IntakeCubeSmartCommand extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        collectorInstance.SetSpeed(0);
+        collectorInstance.Setspeed(0);
         if (interrupted) {
             System.out.println("Intake Cube Smart Command Ended, interrupted");
         } else {

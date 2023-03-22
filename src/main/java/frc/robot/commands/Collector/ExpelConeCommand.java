@@ -30,9 +30,6 @@ public class ExpelConeCommand extends CommandBase {
         }
 
 
-
-    }
-
     @Override
     public void execute()
     {

@@ -9,14 +9,15 @@ import frc.robot.commands.autos.SetArmRaceCommandGroup;
 import frc.robot.commands.autos.TimerCommand;
 import frc.robot.commands.drivebase.DriveDistanceCommandGyro;
 import frc.robot.constants.Constants;
+import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drivebase;
 
 public class ConeMidLeaveCommunity1_9 extends SequentialCommandGroup {
     public ConeMidLeaveCommunity1_9() {
         super(
-                new SetArmRaceCommandGroup(Constants.ArmPos.SCORE_CONE_MID_SHOULDER, Constants.ArmPos.SCORE_CONE_MID_WRIST, 2),
+                new SetArmRaceCommandGroup(Constants.ArmPose.SCORE_MID_CONE, 2),
                 new ParallelRaceGroup(new ExpelConeCommand(), new TimerCommand(.2)),
-                new ParallelRaceGroup(new DriveDistanceCommandGyro(Drivebase.GetDrivebase(), -12, Constants.Drivebase.DRIVEBASE_KF + .07), new SetArmPositionCommand(Constants.ArmPos.CARRY_SHOULDER, Constants.ArmPos.CARRY_WRIST)),
+                new ParallelRaceGroup(new DriveDistanceCommandGyro(Drivebase.GetDrivebase(), -12, Constants.Drivebase.DRIVEBASE_KF + .07), new SetArmPositionCommand(Constants.ArmPose.STOW)),
                 new ResetArm()
         );
     }
