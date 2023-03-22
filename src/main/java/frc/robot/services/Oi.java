@@ -123,6 +123,7 @@ public class Oi {
         scoreMid.and(cubeToggle).negate().whileTrue(new SetArmPositionCommand(Constants.ArmPose.SCORE_MID_CONE));
         floorPickup.and(cubeToggle).whileTrue(new SetArmPositionCommand(Constants.ArmPose.FLOOR_CUBE));
         floorPickup.and(cubeToggle).negate().whileTrue(new SetArmPositionCommand(Constants.ArmPose.FLOOR_CONE));
+
         (resetArm.negate()).whileTrue(new ResetArm());
         wristUp.whileTrue(new RotateWristByPowerCommand(Constants.Arm.WRIST_POWER));
         wristDown.whileTrue(new RotateWristByPowerCommand(-Constants.Arm.WRIST_POWER));
@@ -130,10 +131,12 @@ public class Oi {
         manualShoulderDown.whileTrue(new SetShoulderSpeed(Arm.getInstance(), Constants.Arm.SHOULDER_LIMIT_SWITCH_FRONT, -Constants.Arm.SHOULDER_MANUAL_SPEED));
         manualCollectorUp.whileTrue(new CollectorPercentOutputCommand(.1));
         manualCollectorDown.whileTrue(new CollectorPercentOutputCommand(-.1));
+
         lightSwitchCube.whileTrue(new SetLightsCommand(Constants.Lights.CUBE));
         lightSwitchCone.whileTrue(new SetLightsCommand(Constants.Lights.CONE));
         funSwitch1.whileTrue(new SetLightsCommand(Constants.Lights.CYLON));
         funSwitch1.whileTrue(new SetLightsCommand(Constants.Lights.PARTY));
+
         balanceButton.whileTrue(new SafeBalanceCommandGroup());
         //manualToggle.onTrue(new ChangeGyroStatus(false));
     }

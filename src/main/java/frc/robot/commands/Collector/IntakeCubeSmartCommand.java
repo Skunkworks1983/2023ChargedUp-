@@ -28,10 +28,6 @@ public class IntakeCubeSmartCommand extends CommandBase {
 
     @Override
     public void execute() {
-
-
-
-
             if (collectorInstance.isIntaking()) {
 
                 collectorInstance.Setspeed(armInstance.getCurrentPosition().ConeIntakeDirection *-1 *Constants.Collector.INTAKE_MOTOR_SPEED_SLOW);

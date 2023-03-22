@@ -7,8 +7,8 @@ import frc.robot.subsystems.Collector;
 
 
 public class IntakeConeSmartCommand extends CommandBase {
-    private Collector collectorInstance;
-    private Arm armInstance;
+    private final Collector collectorInstance;
+    private final Arm armInstance;
     private int countConeHeld;
     private int ticksElapsed;
 
@@ -31,7 +31,7 @@ public class IntakeConeSmartCommand extends CommandBase {
 
     @Override
     public void execute() {
-        collectorInstance.Setspeed(armInstance.getCurrentPosition().ConeIntakeDirection *Constants.Collector.INTAKE_MOTOR_SPEED);
+        collectorInstance.Setspeed(armInstance.getCurrentPosition().ConeIntakeDirection * Constants.Collector.INTAKE_MOTOR_SPEED);
         if (collectorInstance.isHoldingCone()) {
             countConeHeld++;
         } else {
