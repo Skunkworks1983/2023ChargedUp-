@@ -21,7 +21,7 @@ public class BalanceOnChargeStationCommand extends CommandBase {
     double integral=0;
     double lastError;
     NetworkTable table = NetworkTableInstance.getDefault().getTable("FMSInfo");
-
+    boolean isRedAlliance;
 
     double i;
     public BalanceOnChargeStationCommand(double p, double d, double i, double maxSpeed) {
@@ -40,7 +40,7 @@ public class BalanceOnChargeStationCommand extends CommandBase {
     @Override
     public void initialize()
     {
-
+        isRedAlliance = table.getEntry("IsRedAlliance").getBoolean(false);
         System.out.println("BalanceOnChargeStation started");
     }
 
@@ -57,7 +57,7 @@ public class BalanceOnChargeStationCommand extends CommandBase {
         if(Math.abs(error) < 5)
         {
             f = 0;
-            if(table.getEntry("IsRedAlliance").getBoolean(false))
+            if(isRedAlliance)
             {
                 Arm.getInstance().SetLightMode(Constants.Lights.RED_WITH_WHITE);
             }
