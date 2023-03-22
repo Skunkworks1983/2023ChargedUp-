@@ -84,6 +84,6 @@ public class DriveDistanceCommand extends CommandBase
     public void end(boolean interrupted)
     {
         drivebase.runMotor(0, 0);
-        //ystem.out.println("Ending Drive Distance Command");
+        System.out.println("Ending Drive Distance Command");
     }
 }

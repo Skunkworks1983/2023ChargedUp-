@@ -6,10 +6,11 @@ import frc.robot.commands.Collector.*;
 import frc.robot.commands.arm.ResetArm;
 import frc.robot.commands.arm.RotateWristByPowerCommand;
 import frc.robot.commands.arm.SetArmPositionCommand;
+import frc.robot.commands.arm.SetLightsCommand;
 import frc.robot.commands.arm.SetShoulderSpeed;
+import frc.robot.commands.autos.SafeBalanceCommandGroup;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
-
 
 public class Oi {
 
@@ -18,6 +19,8 @@ public class Oi {
     Joystick leftStick;
     Joystick rightStick;
     Joystick buttonStick;
+
+    JoystickButton slowMode;
 
     JoystickButton floorNormalScore;
 
@@ -50,8 +53,14 @@ public class Oi {
 
     JoystickButton resetArm;
 
+    JoystickButton lightSwitchCube;
+    JoystickButton lightSwitchCone;
+    JoystickButton funSwitch1;
+    JoystickButton funSwitch2;
 
-    public Oi() {
+    JoystickButton balanceButton;
+
+    private Oi() {
 
         System.out.println("oi init");
 
@@ -67,7 +76,7 @@ public class Oi {
         carry = new JoystickButton(buttonStick, Constants.OIButtons.STOW);
 
         scoreMid = new JoystickButton(buttonStick, Constants.OIButtons.SCORE_MID);
-
+        balanceButton = new JoystickButton(leftStick,3);//make constant later
         cubeToggle = new JoystickButton(buttonStick, Constants.OIButtons.CONE_TOGGLE);
 
         scoreWeird = new JoystickButton(buttonStick, Constants.OIButtons.SHOOT_CUBE);
@@ -91,13 +100,20 @@ public class Oi {
 
         resetArm = new JoystickButton(buttonStick, Constants.OIButtons.RESET_POSITION);
 
+        slowMode = new JoystickButton(rightStick, Constants.OIButtons.DRIVE_SLOW);
+
+        lightSwitchCube = new JoystickButton(buttonStick, 16);
+        lightSwitchCone = new JoystickButton(buttonStick, 9);
+        funSwitch1 = new JoystickButton(buttonStick, 19);
+        funSwitch2 = new JoystickButton(buttonStick, 20);
+
         //when held
         expelButton.and((cubeToggle).negate()).whileTrue(new ExpelConeCommand());
         expelButton.and(cubeToggle).whileTrue(new ExpelCubeCommand());
         intakeButton.and((cubeToggle).negate()).and(manualToggle).whileTrue(new IntakeConeManualCommand());
         intakeButton.and(cubeToggle).and(manualToggle).whileTrue(new IntakeCubeManualCommand());
-        intakeButton.and((cubeToggle).negate()).and(manualToggle.negate()).onTrue(new IntakeConeSmartCommand());
-        intakeButton.and(cubeToggle).and(manualToggle.negate()).onTrue(new IntakeCubeSmartCommand());
+        intakeButton.and((cubeToggle).negate()).and(manualToggle.negate()).whileTrue(new IntakeConeSmartCommand());
+        intakeButton.and(cubeToggle).and(manualToggle.negate()).whileTrue(new IntakeCubeSmartCommand());
 
         floorNormalScore.whileTrue(new SetArmPositionCommand(Constants.ArmPos.FLOOR_NORMAL_SCORE_SHOULDER, Constants.ArmPos.FLOOR_NORMAL_SCORE_WRIST));
         humanPlayerPickup.and(cubeToggle.negate()).whileTrue(new SetArmPositionCommand(Constants.ArmPos.PLAYER_CONE_PICKUP_SHOULDER, Constants.ArmPos.PLAYER_CONE_PICKUP_WRIST));
@@ -115,8 +131,13 @@ public class Oi {
         manualShoulderDown.whileTrue(new SetShoulderSpeed(Arm.getInstance(), Constants.Arm.SHOULDER_LIMIT_SWITCH_FRONT, -Constants.Arm.SHOULDER_MANUAL_SPEED));
         manualCollectorUp.whileTrue(new CollectorPercentOutputCommand(.1));
         manualCollectorDown.whileTrue(new CollectorPercentOutputCommand(-.1));
-
+        lightSwitchCube.whileTrue(new SetLightsCommand(Constants.Lights.CUBE));
+        lightSwitchCone.whileTrue(new SetLightsCommand(Constants.Lights.CONE));
+        funSwitch1.whileTrue(new SetLightsCommand(Constants.Lights.CYLON));
+        funSwitch1.whileTrue(new SetLightsCommand(Constants.Lights.PARTY));
+        balanceButton.whileTrue(new SafeBalanceCommandGroup());
         //manualToggle.onTrue(new ChangeGyroStatus(false));
+
 
         floorNormalScore.whileTrue(new SetArmPositionCommand(Constants.ArmPos.FLOOR_NORMAL_SCORE_SHOULDER, Constants.ArmPos.FLOOR_NORMAL_SCORE_WRIST));
         scoreWeird.and(cubeToggle).onTrue(new SetArmPositionCommand
@@ -140,5 +161,20 @@ public class Oi {
 
     public double getRightX() {
         return rightStick.getX();
+    }
+
+    public boolean isSlowMode () {
+
+        return slowMode.getAsBoolean();
+    }
+
+    public static Oi GetInstance() {
+
+        if (Instance == null) {
+            Instance = new Oi();
+        }
+
+        return Instance;
+
     }
 }

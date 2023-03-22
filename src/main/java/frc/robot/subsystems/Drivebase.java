@@ -4,17 +4,18 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.kauailabs.navx.frc.AHRS;
-import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.DigitalOutput;
-import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
+import frc.robot.commands.drivebase.ArcadeDrive;
 import frc.robot.constants.Constants;
+import frc.robot.services.Oi;
 
 import static java.lang.Double.NaN;
 
 public class Drivebase implements Subsystem {
 
+    public Command ArcadeDrive = new ArcadeDrive(this, Oi.Instance);
     private static Drivebase OGDrivebase;
     TalonFX leftMotor1 = new TalonFX(Constants.Wobbles.LEFT_MOTOR_1);
     TalonFX leftMotor2 = new TalonFX(Constants.Wobbles.LEFT_MOTOR_2);
@@ -59,18 +60,21 @@ public class Drivebase implements Subsystem {
         driveDirection = direction;
     }
 
-    private boolean isHeadingReliable = false;
+    private boolean isHeadingReliable;
 
     private final double TicksPerFoot =
             Constants.Wobbles.TICKS_PER_MOTOR_REV * Constants.Drivebase.GEAR_RATIO /
                     (Constants.Drivebase.WHEEL_DIAMETER * Math.PI);
 
-    AHRS gyro = new AHRS(SPI.Port.kMXP);
+    AHRS gyro = new AHRS(I2C.Port.kOnboard);
 
     Timer timer = new Timer();
 
     private Drivebase() {
+        setDefaultCommand(ArcadeDrive);
         gyro.calibrate();
+        isHeadingReliable = false;
+        System.out.println("drivebase is constructing");
     }
 
     public void runMotor(double turnSpeedLeft, double turnSpeedRight) {
@@ -150,7 +154,7 @@ public class Drivebase implements Subsystem {
 
     public void waitForHeadingReliable() {
 
-        System.out.println("waitForHeadingReliable method is called");
+        //System.out.println("waitForHeadingReliable method is called");
 
         timer.start();
 
@@ -178,26 +182,26 @@ public class Drivebase implements Subsystem {
     }
 
 
-    @Override
+    /*@Override
     public void periodic() {
         if (isHeadingReliable) {
             if (gyro.isCalibrating() || !gyro.isConnected()) {
 
                 isHeadingReliable = false;
 
-                System.out.println("GYRO CRASHED!!! - GYRO IS NOT CALIBRATED OR CONNECTED");
+                //System.out.println("GYRO CRASHED!!! - GYRO IS NOT CALIBRATED OR CONNECTED");
             }
 
             if (Math.abs(getHeading() - lastHeading) >= Constants.Drivebase.HEADING_TOO_BIG) {
 
                 isHeadingReliable = false;
 
-                System.out.println("THE GYROSCOPE HAS CRASHED!!! - HEADING IS TOO LARGE");
+                //System.out.println("THE GYROSCOPE HAS CRASHED!!! - HEADING IS TOO LARGE");
             }
 
             lastHeading = getHeading();
         }
-    }
+    }*/
 
     public DriveDirection getDriveDirection() {
         return driveDirection;

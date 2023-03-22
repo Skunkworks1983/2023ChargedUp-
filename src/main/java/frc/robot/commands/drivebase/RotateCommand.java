@@ -12,13 +12,14 @@ public class RotateCommand extends CommandBase
     private double startDegree;
     private double finishDegree;
     private int onTargetCount;
-   private PIDController pidController = new PIDController(Constants.Drivebase.ANGLE_KP, 0, Constants.Drivebase.ANGLE_KD,Constants.Drivebase.DRIVEBASE_KF);
+   private PIDController pidController = new PIDController(Constants.Drivebase.ANGLE_KP, 0.0032, Constants.Drivebase.ANGLE_KD,Constants.Drivebase.DRIVEBASE_KF);
 
     public RotateCommand(Drivebase drivebase, double degree)
     {
-        addRequirements();
+        addRequirements(drivebase);
         this.drivebase = drivebase;
         this.degree = degree;
+        pidController.setIntegratorRange(-0.2, 0.2);
     }
 
     @Override
@@ -32,10 +33,19 @@ public class RotateCommand extends CommandBase
     @Override
     public void execute()
     {
-
+        System.out.print("err: " + (finishDegree-drivebase.getHeading()));
         double speed = 0;
         speed = pidController.calculate(drivebase.getHeading(), finishDegree);
+        if(speed > 0.5)
+        {
+            speed =0.5;
+        }
+        else if(speed < -0.5)
+        {
+            speed = -0.5;
+        }
         drivebase.runMotor(speed, -speed);
+        System.out.println(" speed: " + speed);
     }
 
     @Override

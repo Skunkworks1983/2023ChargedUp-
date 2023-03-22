@@ -44,6 +44,9 @@ public class Constants extends CommandBase {
 
     public class OIButtons {
 
+        //slow mode driving
+        public static final int DRIVE_SLOW = 1;
+
         //top row
         public static final int ENABLE_MANUAL =8;
 
@@ -95,16 +98,19 @@ public class Constants extends CommandBase {
     }
 
     public class Drivebase {
+
+        public static final double SLOW_MODE_RATIO = .165;
         public static final double GEAR_RATIO = 10.71;
         public static final double WHEEL_DIAMETER = 0.5;
         public static final double DISTANCE_KP = 0.05;
         public static final double ROTATE_KP = 0.0026/* 16,17,18 */;
         public static final double ROTATE_KF = 0.04;
-        public static final double ANGLE_KP = 0.007;
-        public static final double ANGLE_KD = 0.002;
+        public static final double ANGLE_KP = 0.003;
+        public static final double ANGLE_KD = 0.005;
         public static final double DRIVEBASE_KF = 0.08;
-        public static final double THRESHOLD_ROTATE = .5;
+        public static final double THRESHOLD_ROTATE = 3;
         public static final int DRIVE_OUT_OF_COMMUNITY = -9;
+        public static final double TURN_THROTTLE_MULTIPLIER = 0.7;
         public static final double ARCADE_DRIVE_KP = 0.007;
         public static final double ARCADE_DRIVE_KD = 0;
         public static final double ARCADE_DRIVE_LEFTX_DEADBAND = 0.01;
@@ -175,7 +181,7 @@ public class Constants extends CommandBase {
     public class ArmPos
     {
 
-        public static final double PLAYER_CONE_PICKUP_SHOULDER = 39.56579;
+        public static final double PLAYER_CONE_PICKUP_SHOULDER = 40.56579;
         public static final double PLAYER_CONE_PICKUP_WRIST = 155.46118;
         public static final double SCORE_CONE_MID_SHOULDER = 44.56579;
         public static final double SCORE_CUBE_MID_SHOULDER = 56.56579;
@@ -190,20 +196,46 @@ public class Constants extends CommandBase {
         public static final double CARRY_SHOULDER = Arm.SHOULDER_RESTING_ANGLE;
         public static final double CARRY_WRIST = 15.531;
         public static final double CONE_FLOOR_PICKUP_SHOULDER = Arm.SHOULDER_RESTING_ANGLE;
-        public static final double CONE_FLOOR_PICKUP_WRIST = 102.05419;
+        public static final double CONE_FLOOR_PICKUP_WRIST = 105.05419;
         public static final int WRIST_GEAR_RATIO = 96;
-        public static final double SCORE_CUBE_HIGH_SHOULDER = 45;// scores high cube with wrist up.
-        public static final double SCORE_CUBE_HIGH_WRIST = 225; // scores high cube with wrist up.
+        //public static final double SCORE_CUBE_HIGH_SHOULDER = 45;// scores high cube with wrist up.
+        //public static final double SCORE_CUBE_HIGH_WRIST = 225; // scores high cube with wrist up.
 
         //The following two constants work well for scoring high with a cube with the wrist down.
-        //public static final double SCORE_CUBE_HIGH_SHOULDER = 39.57;
-        //public static final double SCORE_CUBE_HIGH_WRIST = 100;
+        public static final double SCORE_CUBE_HIGH_SHOULDER = 39.57;
+        public static final double SCORE_CUBE_HIGH_WRIST = 100;
         public static final double SCORE_CONE_HIGH_SHOULDER = 30;
         public static final double SCORE_CONE_HIGH_WRIST = 230;
         public static final double SCORE_CONE_WEIRD_SHOULDER = -90;
         public static final double SCORE_CODE_WEIRD_WRIST = 220;
     }
 
+    public class Lights
+    {
+        public static final int LIGHT_BIT_0 = 6;
+        public static final int LIGHT_BIT_1 = 7;
+        public static final int LIGHT_BIT_2 = 8;
+        public static final int LIGHT_BIT_3 = 9;
+
+        //colors
+        public static final int BLANK = 0;
+        public static final int CUBE = 1;
+        public static final int CONE = 2;
+        public static final int BLUE_RED = 3;
+        public static final int BLUE_WITH_WHITE = 4;
+        public static final int RED_WITH_WHITE = 5;
+        public static final int PARTY = 6;
+        public static final int HARD_RIGHT = 7;
+        public static final int MEDIUM_RIGHT = 8;
+        public static final int SLIGHT_RIGHT = 9;
+        public static final int CENTER = 10;
+        public static final int SLIGHT_LEFT = 11;
+        public static final int MEDIUM_LEFT = 12;
+        public static final int HARD_LEFT = 13;
+        public static final int CYLON = 14;
+        public static final int RAINBOW_CHASE = 15;
+
+    }
 
     public class Falcon500 {
         public static final int TICKS_PER_REV = 2048;
