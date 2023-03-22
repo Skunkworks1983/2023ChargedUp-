@@ -97,7 +97,6 @@ public class Collector extends SubsystemBase {
         {
             Motor.selectProfileSlot(1, 0);
             Motor.set(TalonFXControlMode.Position, Motor.getSelectedSensorPosition());
-            System.out.println("SPEED IS 0 IN COLLECTOR, GOIN TO POSITION CONTROOL");
         }
         else
         {
