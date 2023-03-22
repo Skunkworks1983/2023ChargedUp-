@@ -15,9 +15,9 @@ import frc.robot.subsystems.Drivebase;
 public class ConeMidLeaveCommunity1_9 extends SequentialCommandGroup {
     public ConeMidLeaveCommunity1_9() {
         super(
-                new SetArmRaceCommandGroup(Constants.ArmPos.SCORE_CONE_MID_SHOULDER, Constants.ArmPos.SCORE_CONE_MID_WRIST, 2),
+                new SetArmRaceCommandGroup(Arm.ArmPosition.SCORE_MID, Arm.PostionPieceType.CONE, 2),
                 new ParallelRaceGroup(new ExpelConeCommand(), new TimerCommand(.2)),
-                new ParallelRaceGroup(new DriveDistanceCommandGyro(Drivebase.GetDrivebase(), -12, Constants.Drivebase.DRIVEBASE_KF + .07), new SetArmPositionCommand(Arm.ArmPosition.STOW)),
+                new ParallelRaceGroup(new DriveDistanceCommandGyro(Drivebase.GetDrivebase(), -12, Constants.Drivebase.DRIVEBASE_KF + .07), new SetArmPositionCommand(Arm.ArmPosition.STOW, Arm.PostionPieceType.DOESNT_MATTER)),
                 new ResetArm()
         );
     }

@@ -14,18 +14,32 @@ public class SetArmPositionCommand extends CommandBase
     private final double shoulderAngleSetpoint;
     private final double wristAngleSetpoint;
     private boolean weirdAngle;
-
-    public SetArmPositionCommand(Arm.ArmPosition armPosition)
+    private boolean isCubeTrue;
+    public SetArmPositionCommand(Arm.ArmPosition armPosition, Arm.PostionPieceType postionPieceType)
     {
+
         oi = Oi.Instance;
+        isCubeTrue = oi.getCubeToggle();
         this.arm = Arm.getInstance();
 
         double shoulderAngleSetpoint;
         double wristAngleSetpoint;
         arm.setCurrentPosition(armPosition);
 
+        if(postionPieceType == Arm.PostionPieceType.CONE) {
+            isCubeTrue = false;
+        }
+        if(postionPieceType == Arm.PostionPieceType.CUBE) {
+            isCubeTrue = true;
+        }
+        if(postionPieceType == Arm.PostionPieceType.CHECK_OI) {
+            isCubeTrue = oi.getCubeToggle();
+        }
+        if(postionPieceType == Arm.PostionPieceType.DOESNT_MATTER) {
+            isCubeTrue = true;
+        }
         if(armPosition == Arm.ArmPosition.FLOOR) {
-          if(oi.getCubeToggle()) {
+          if(isCubeTrue) {
                 shoulderAngleSetpoint = Constants.ArmPos.FLOOR_CUBE_PICKUP_SHOULDER;
                 wristAngleSetpoint = Constants.ArmPos.FLOOR_CUBE_PICKUP_WRIST;
             }
@@ -39,7 +53,7 @@ public class SetArmPositionCommand extends CommandBase
             wristAngleSetpoint = Constants.ArmPos.SCORE_CONE_WEIRD_WRIST;
         }
         else if(armPosition == Arm.ArmPosition.SUBSTATION) {
-            if(oi.getCubeToggle()) {
+            if(isCubeTrue) {
                 shoulderAngleSetpoint = Constants.ArmPos.PLAYER_CUBE_PICKUP_SHOULDER;
                 wristAngleSetpoint = Constants.ArmPos.PLAYER_CUBE_PICKUP_WRIST;
             }
@@ -58,7 +72,7 @@ public class SetArmPositionCommand extends CommandBase
                 wristAngleSetpoint = Constants.ArmPos.FLOOR_NORMAL_SCORE_WRIST;
         }
         else if(armPosition == Arm.ArmPosition.SCORE_MID) {
-            if(oi.getCubeToggle()) {
+            if(isCubeTrue) {
                 shoulderAngleSetpoint = Constants.ArmPos.SCORE_CUBE_MID_SHOULDER;
                 wristAngleSetpoint = Constants.ArmPos.SCORE_CUBE_MID_WRIST;
             }

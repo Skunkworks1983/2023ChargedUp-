@@ -23,7 +23,14 @@ public class Arm extends SubsystemBase
         HIGH_CUBE,
         SUBSTATION,
         SCORE_MID,
-        STOW
+        STOW,
+    }
+    public enum PostionPieceType
+    {
+        CONE,
+        CUBE,
+        CHECK_OI,
+        DOESNT_MATTER
     }
     public TalonFX ShoulderMotor = new TalonFX(Constants.Arm.SHOULDER_MOTOR_ID);
     public TalonFX WristMotor = new TalonFX(Constants.Arm.WRIST_MOTOR_DEVICE_NUMBER);

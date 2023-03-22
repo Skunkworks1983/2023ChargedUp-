@@ -21,9 +21,9 @@ public class ConeMidAndBalance4_6 extends SequentialCommandGroup
 
     public ConeMidAndBalance4_6()
     {
-        super(new SetArmRaceCommandGroup(Constants.ArmPos.SCORE_CONE_MID_SHOULDER, Constants.ArmPos.SCORE_CONE_MID_WRIST, 1.75),
+        super(new SetArmRaceCommandGroup(Arm.ArmPosition.SCORE_MID, Arm.PostionPieceType.CONE, 1.75),
               new ParallelRaceGroup(new ExpelConeCommand(), new TimerCommand(.2)),
-              new SetArmRaceCommandGroup(Arm.ArmPosition.STOW,.75),
+              new SetArmRaceCommandGroup(Arm.ArmPosition.STOW, Arm.PostionPieceType.DOESNT_MATTER, .75),
               new DriveDistanceCommand(Drivebase.GetDrivebase(),-.5),
               new RotateCommand(Drivebase.GetDrivebase(),180),
               new DriveDistanceCommandGyro(Drivebase.GetDrivebase(), 10, Constants.Drivebase.DRIVEBASE_KF + .1),

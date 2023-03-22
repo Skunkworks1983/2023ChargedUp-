@@ -9,9 +9,9 @@ import frc.robot.subsystems.Arm;
 public class SetArmRaceCommandGroup extends ParallelRaceGroup
 {
 
-    public SetArmRaceCommandGroup(Arm.ArmPosition armPosition, double timerSecond)
+    public SetArmRaceCommandGroup(Arm.ArmPosition armPosition, Arm.PostionPieceType postionPieceType, double timerSecond)
     {
         // TODO: cube vs cone?
-        super((Command) new SetArmPositionCommand(armPosition), new TimerCommand(timerSecond));
+        super((Command) new SetArmPositionCommand(armPosition, postionPieceType), new TimerCommand(timerSecond));
     }
 }

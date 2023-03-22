@@ -114,12 +114,12 @@ public class Oi {
         intakeButton.and((cubeToggle).negate()).and(manualToggle.negate()).whileTrue(new IntakeConeSmartCommand());
         intakeButton.and(cubeToggle).and(manualToggle.negate()).whileTrue(new IntakeCubeSmartCommand());
 
-        floorNormalScore.whileTrue(new SetArmPositionCommand(Arm.ArmPosition.FLOOR_NORMAL));
-        scoreWeird.onTrue(new SetArmPositionCommand(Arm.ArmPosition.FLOOR_WEIRD));
-        humanPlayerPickup.whileTrue(new SetArmPositionCommand(Arm.ArmPosition.SUBSTATION));
-        carry.onTrue(new SetArmPositionCommand(Arm.ArmPosition.STOW));
-        scoreMid.whileTrue(new SetArmPositionCommand(Arm.ArmPosition.SCORE_MID));
-        floorPickup.onTrue(new SetArmPositionCommand(Arm.ArmPosition.FLOOR));
+        floorNormalScore.whileTrue(new SetArmPositionCommand(Arm.ArmPosition.FLOOR_NORMAL, Arm.PostionPieceType.CHECK_OI));
+        scoreWeird.onTrue(new SetArmPositionCommand(Arm.ArmPosition.FLOOR_WEIRD, Arm.PostionPieceType.CHECK_OI));
+        humanPlayerPickup.whileTrue(new SetArmPositionCommand(Arm.ArmPosition.SUBSTATION, Arm.PostionPieceType.CHECK_OI));
+        carry.onTrue(new SetArmPositionCommand(Arm.ArmPosition.STOW, Arm.PostionPieceType.CHECK_OI));
+        scoreMid.whileTrue(new SetArmPositionCommand(Arm.ArmPosition.SCORE_MID, Arm.PostionPieceType.CHECK_OI));
+        floorPickup.onTrue(new SetArmPositionCommand(Arm.ArmPosition.FLOOR, Arm.PostionPieceType.CHECK_OI));
         (resetArm.negate()).whileTrue(new ResetArm());
         wristUp.whileTrue(new RotateWristByPowerCommand(Constants.Arm.WRIST_POWER));
         wristDown.whileTrue(new RotateWristByPowerCommand(-Constants.Arm.WRIST_POWER));

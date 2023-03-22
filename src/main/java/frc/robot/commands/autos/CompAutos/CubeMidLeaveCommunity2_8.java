@@ -18,12 +18,12 @@ public class CubeMidLeaveCommunity2_8 extends SequentialCommandGroup
     {
         super
                 (
-                        new SetArmRaceCommandGroup(Constants.ArmPos.SCORE_CUBE_MID_SHOULDER, Constants.ArmPos.SCORE_CUBE_MID_WRIST, 2),
+                        new SetArmRaceCommandGroup(Arm.ArmPosition.SCORE_MID, Arm.PostionPieceType.CUBE, 2),
                         new ParallelRaceGroup(new ExpelCubeCommand(), new TimerCommand(.2)),
                         new ParallelRaceGroup
                                 (
                                         new DriveDistanceCommandGyro(Drivebase.GetDrivebase(), -12, Constants.Drivebase.DRIVEBASE_KF + .07),
-                                        new SetArmPositionCommand(Arm.ArmPosition.STOW)
+                                        new SetArmPositionCommand(Arm.ArmPosition.STOW, Arm.PostionPieceType.DOESNT_MATTER)
                                 ),
                         new ResetArm()
                 );
