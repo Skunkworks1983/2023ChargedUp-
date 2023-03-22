@@ -20,7 +20,7 @@ public class Collector extends SubsystemBase {
 
         this.Motor = new TalonFX(Constants.Collector.MOTOR_ID);
         Motor.config_kP(0, Constants.Collector.K_P);
-        Motor.config_kP(1, 0.001);
+        Motor.config_kP(1, 0.05);
         Motor.setNeutralMode(NeutralMode.Brake);
         Motor.setInverted(true);
     }
@@ -80,6 +80,7 @@ public class Collector extends SubsystemBase {
         {
             Motor.selectProfileSlot(1, 0);
             Motor.set(TalonFXControlMode.Position, Motor.getSelectedSensorPosition());
+            System.out.println("SPEED IS 0 IN COLLECTOR, GOIN TO POSITION CONTROOL");
         }
         else
         {
