@@ -33,10 +33,7 @@ public class ConeMidAndBalance4_6AndPickUp extends SequentialCommandGroup
              new ParallelRaceGroup(new DriveDistanceCommand(Drivebase.GetDrivebase(),-5),new IntakeConeSmartCommand()),
              new ParallelRaceGroup(new DriveDistanceCommand(Drivebase.GetDrivebase(),6.5),
                                    new SetArmPositionCommand(Constants.ArmPos.CARRY_SHOULDER,Constants.ArmPos.CARRY_WRIST)),
-              new ParallelCommandGroup(
-                      new SafeBalanceCommandGroup(),
-                      new ResetArm()
-                    )
+              new ParallelCommandGroup(new SafeBalanceCommandGroup(), new ResetArm())
                 );
     }
 }
