@@ -15,13 +15,13 @@ public class Constants extends CommandBase {
 
         public static final double CONE_COLLECT_AMP_THRESHOLD = 12;
         public static final double CONE_AMPS_HOLDING_THRESHOLD = 10;
+        
         public static final double INTAKE_SPEED = 10; //inches per second
         public static final double INTAKE_MOTOR_SPEED =
                 INTAKE_SPEED / WHEEL_CIRCUMFERENCE * WHEEL_REVS_PER_SEC_TO_VELOCITY;
+        public static final double INTAKE_MOTOR_SPEED_SLOW = INTAKE_MOTOR_SPEED/2;
+        public static final double INTAKE_MOTOR_SPEED_VERY_SLOW = INTAKE_MOTOR_SPEED/4;
 
-        public static final double INTAKE_SPEED_SLOW = (INTAKE_SPEED / 2);
-        public static final double INTAKE_MOTOR_SPEED_SLOW =
-                INTAKE_SPEED_SLOW / WHEEL_CIRCUMFERENCE * WHEEL_REVS_PER_SEC_TO_VELOCITY;
 
         public static final double EXPEL_SPEED = 10; // inches per second
         public static final double EXPEL_MOTOR_SPEED =
