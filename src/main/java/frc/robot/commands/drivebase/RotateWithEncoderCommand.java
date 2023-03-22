@@ -19,7 +19,7 @@ public class RotateWithEncoderCommand extends CommandBase {
 
     @Override
     public void initialize() {
-
+        //double test = (Constants.Drivebase.DISTANCE_BETWEEN_WHEELS / 2 * Math.PI) / (Constants.Drivebase.);
     }
 
     @Override

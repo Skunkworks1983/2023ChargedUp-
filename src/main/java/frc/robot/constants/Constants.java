@@ -95,6 +95,7 @@ public class Constants extends CommandBase {
     }
 
     public class Drivebase {
+        public static final double DISTANCE_BETWEEN_WHEELS = 14.875;
         public static final double GEAR_RATIO = 10.71;
         public static final double WHEEL_DIAMETER = 0.5;
         public static final double DISTANCE_KP = 0.05;
