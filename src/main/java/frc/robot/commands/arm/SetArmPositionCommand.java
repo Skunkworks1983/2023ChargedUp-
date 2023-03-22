@@ -11,17 +11,30 @@ public class SetArmPositionCommand extends CommandBase
 
     private final Arm arm;
     private final Oi oi;
-    private final double shoulderAngleSetpoint;
-    private final double wristAngleSetpoint;
+    private double shoulderAngleSetpoint;
+    private double wristAngleSetpoint;
+    private Arm.ArmPosition armPosition;
+    private Arm.PostionPieceType postionPieceType;
     private boolean weirdAngle;
     private boolean isCubeTrue;
     public SetArmPositionCommand(Arm.ArmPosition armPosition, Arm.PostionPieceType postionPieceType)
     {
+        this.armPosition = armPosition;
+        this.postionPieceType = postionPieceType;
+
 
         oi = Oi.Instance;
-        isCubeTrue = oi.getCubeToggle();
         this.arm = Arm.getInstance();
+        isCubeTrue = oi.getCubeToggle();
 
+
+        addRequirements(arm);
+        weirdAngle = false;
+    }
+
+    @Override
+    public void initialize()
+    {
         double shoulderAngleSetpoint;
         double wristAngleSetpoint;
         arm.setCurrentPosition(armPosition);
@@ -39,14 +52,14 @@ public class SetArmPositionCommand extends CommandBase
             isCubeTrue = true;
         }
         if(armPosition == Arm.ArmPosition.FLOOR) {
-          if(isCubeTrue) {
+            if(isCubeTrue) {
                 shoulderAngleSetpoint = Constants.ArmPos.FLOOR_CUBE_PICKUP_SHOULDER;
                 wristAngleSetpoint = Constants.ArmPos.FLOOR_CUBE_PICKUP_WRIST;
             }
-          else {
-              shoulderAngleSetpoint = Constants.ArmPos.CONE_FLOOR_PICKUP_SHOULDER;
-              wristAngleSetpoint = Constants.ArmPos.CONE_FLOOR_PICKUP_WRIST;
-          }
+            else {
+                shoulderAngleSetpoint = Constants.ArmPos.CONE_FLOOR_PICKUP_SHOULDER;
+                wristAngleSetpoint = Constants.ArmPos.CONE_FLOOR_PICKUP_WRIST;
+            }
         }
         else if(armPosition == Arm.ArmPosition.FLOOR_WEIRD) {
             shoulderAngleSetpoint = Constants.ArmPos.SCORE_CONE_WEIRD_SHOULDER;
@@ -64,12 +77,12 @@ public class SetArmPositionCommand extends CommandBase
 
         }
         else if(armPosition == Arm.ArmPosition.HIGH_CUBE) {
-                shoulderAngleSetpoint = Constants.ArmPos.SCORE_CUBE_HIGH_SHOULDER;
-                wristAngleSetpoint = Constants.ArmPos.SCORE_CUBE_HIGH_WRIST;
+            shoulderAngleSetpoint = Constants.ArmPos.SCORE_CUBE_HIGH_SHOULDER;
+            wristAngleSetpoint = Constants.ArmPos.SCORE_CUBE_HIGH_WRIST;
         }
         else if(armPosition == Arm.ArmPosition.FLOOR_NORMAL) {
-                shoulderAngleSetpoint = Constants.ArmPos.FLOOR_NORMAL_SCORE_SHOULDER;
-                wristAngleSetpoint = Constants.ArmPos.FLOOR_NORMAL_SCORE_WRIST;
+            shoulderAngleSetpoint = Constants.ArmPos.FLOOR_NORMAL_SCORE_SHOULDER;
+            wristAngleSetpoint = Constants.ArmPos.FLOOR_NORMAL_SCORE_WRIST;
         }
         else if(armPosition == Arm.ArmPosition.SCORE_MID) {
             if(isCubeTrue) {
@@ -82,19 +95,12 @@ public class SetArmPositionCommand extends CommandBase
             }
         }
         else {
-                shoulderAngleSetpoint = Constants.ArmPos.CARRY_SHOULDER;
-                wristAngleSetpoint = Constants.ArmPos.CARRY_WRIST;
+            shoulderAngleSetpoint = Constants.ArmPos.CARRY_SHOULDER;
+            wristAngleSetpoint = Constants.ArmPos.CARRY_WRIST;
         }
 
         this.shoulderAngleSetpoint = shoulderAngleSetpoint;
         this.wristAngleSetpoint = wristAngleSetpoint;
-        addRequirements(arm);
-        weirdAngle = false;
-    }
-
-    @Override
-    public void initialize()
-    {
         if(Math.abs(arm.ShoulderMotor.getClosedLoopTarget() * Constants.Arm.SHOULDER_TICKS_TO_DEGREES - Constants.ArmPos.SCORE_CONE_WEIRD_SHOULDER) < 1)
         {
             weirdAngle = true;

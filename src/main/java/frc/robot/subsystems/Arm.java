@@ -16,7 +16,7 @@ import frc.robot.constants.Constants;
 public class Arm extends SubsystemBase
 {
     private ArmPosition currentPosition;
-    public  enum ArmPosition{
+    public enum ArmPosition{
         FLOOR_WEIRD,
         FLOOR_NORMAL,
         FLOOR,
