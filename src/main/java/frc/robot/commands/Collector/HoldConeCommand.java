@@ -65,6 +65,6 @@ public class HoldConeCommand extends CommandBase {
 
 
 
-        collectorInstance.Setspeed(0);
+        collectorInstance.SetSpeed(0);
     }
 }
