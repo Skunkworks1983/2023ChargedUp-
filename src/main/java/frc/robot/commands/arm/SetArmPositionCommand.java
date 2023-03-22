@@ -14,14 +14,13 @@ public class SetArmPositionCommand extends CommandBase
     private double wristAngleSetpoint;
     private Constants.ArmPose armPose;
     private boolean weirdAngle;
-    private boolean isCubeTrue;
+
     public SetArmPositionCommand(Constants.ArmPose armPose)
     {
         this.armPose = armPose;
 
         oi = Oi.Instance;
         this.arm = Arm.getInstance();
-        isCubeTrue = oi.getCubeToggle();
 
 
         addRequirements(arm);

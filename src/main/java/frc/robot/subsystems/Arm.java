@@ -15,7 +15,7 @@ import frc.robot.constants.Constants;
 
 public class Arm extends SubsystemBase
 {
-    private Constants.ArmPose currentPosition;
+    private Constants.ArmPose currentPose;
     public TalonFX ShoulderMotor = new TalonFX(Constants.Arm.SHOULDER_MOTOR_ID);
     public TalonFX WristMotor = new TalonFX(Constants.Arm.WRIST_MOTOR_DEVICE_NUMBER);
     public double shoulderEncoderToAngleFactor = ((1.0 / Constants.Falcon500.TICKS_PER_REV) / Constants.Arm.SHOULDER_GEAR_RATIO) * 360;
@@ -42,7 +42,7 @@ public class Arm extends SubsystemBase
 
     private Arm()
     {
-        currentPosition = Constants.ArmPose.STOW;
+        currentPose = Constants.ArmPose.STOW;
 
         //Shoulder config
         ShoulderMotor.selectProfileSlot(0, 0);
@@ -290,10 +290,10 @@ public class Arm extends SubsystemBase
 
     }
     public Constants.ArmPose getCurrentPosition(){
-        return currentPosition;
+        return currentPose;
     }
     public void setCurrentPosition(Constants.ArmPose newPosition){
-        currentPosition = newPosition;
+        currentPose = newPosition;
     }
 
 }
