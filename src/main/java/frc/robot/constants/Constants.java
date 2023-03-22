@@ -170,7 +170,7 @@ public class Constants extends CommandBase {
         public static final double WRIST_GEAR_RATIO = 176;
         public static final double WRIST_RESTING_ANGLE = 0;
         public static final double WRIST_LIMIT_ANGLE = 0;
-        public static final double WRIST_PEAK_OUTPUT = 0.6;
+        public static final double WRIST_PEAK_OUTPUT = 1;
         public static final double WRIST_KP = 0.05;
         public static final double WRIST_KI = 0;
         public static final double WRIST_KD = 0;
