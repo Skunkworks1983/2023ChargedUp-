@@ -36,7 +36,7 @@ public class IntakeCubeSmartCommand extends CommandBase {
 
             } else if (collectorInstance.isHoldingCube()) {
 
-                collectorInstance.Setspeed(Constants.Collector.INTAKE_MOTOR_SPEED_VERY_SLOW);
+                collectorInstance.SetSpeed(Constants.Collector.INTAKE_MOTOR_SPEED_VERY_SLOW);
 
             } else {
 
@@ -51,7 +51,7 @@ public class IntakeCubeSmartCommand extends CommandBase {
 
             } else if (collectorInstance.isHoldingCube()) {
 
-                collectorInstance.Setspeed(-Constants.Collector.INTAKE_MOTOR_SPEED_VERY_SLOW);
+                collectorInstance.SetSpeed(-Constants.Collector.INTAKE_MOTOR_SPEED_VERY_SLOW);
 
             } else {
 

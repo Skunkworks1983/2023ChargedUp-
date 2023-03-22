@@ -38,7 +38,7 @@ public class Collector extends SubsystemBase {
 
     }
 
-    public boolean isIntakingCube () {
+    public boolean isIntakingCube() {
 
         if (cubeBreak1.get() == cubeBreak2.get()) {
 
