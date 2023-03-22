@@ -83,6 +83,6 @@ public class BalanceOnChargeStationCommand extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         System.out.println("BalanceOnChargeStation ended. interupted:" + interrupted);
-        Arm.getInstance().SetLightMode(Constants.Lights.BLANK);
+        arm.SetLightMode(Constants.Lights.BLANK);
     }
 }
