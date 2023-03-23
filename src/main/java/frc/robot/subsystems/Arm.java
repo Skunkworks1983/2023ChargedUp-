@@ -26,7 +26,6 @@ public class Arm extends SubsystemBase
     public DigitalOutput lightBit3 = new DigitalOutput(Constants.Lights.LIGHT_BIT_3);
 
 
-    public double peakOutput;
     public double lastAngle;
     public double setpoint;
     public double wristPos;
@@ -68,7 +67,7 @@ public class Arm extends SubsystemBase
         SmartDashboard.putNumber("should be", Constants.Arm.SHOULDER_RESTING_ANGLE / Constants.Arm.SHOULDER_TICKS_TO_DEGREES);
         //SmartDashboard.putNumber("constructor current", ShoulderMotor.getSelectedSensorPosition());
 
-        updateKf(Constants.Arm.SHOULDER_KF, Constants.Arm.SHOULDER_RESTING_ANGLE, peakOutput);
+        updateKf(Constants.Arm.SHOULDER_KF, Constants.Arm.SHOULDER_RESTING_ANGLE, Constants.Arm.SHOULDER_PEAK_OUTPUT);
         wristPos = getWristAngle();
         shoulderPos = getShoulderAngle();
     }
@@ -78,7 +77,7 @@ public class Arm extends SubsystemBase
         double pos = degrees / Constants.Arm.SHOULDER_TICKS_TO_DEGREES;
 
         setpoint = pos;
-        updateKf(Constants.Arm.SHOULDER_KF, degrees, peakOutput);
+        updateKf(Constants.Arm.SHOULDER_KF, degrees, Constants.Arm.SHOULDER_PEAK_OUTPUT);
 
         System.out.println("setting target shoulder: " + pos);
         ShoulderMotor.set(TalonFXControlMode.Position, pos);
@@ -249,39 +248,11 @@ public class Arm extends SubsystemBase
             shoulderPos = getShoulderAngle();
         }
 
-        //SmartDashboard.putNumber("shoulder position", shoulderPos);
-        //SmartDashboard.putNumber("Motor output: ", ShoulderMotor.getMotorOutputPercent());
         if(Math.abs(shoulderPos - lastAngle) > Constants.Arm.SHOULDER_ANGLE_UPDATE && periodicCounter == 2)
         {
-            double m = -(Constants.Arm.MIN_PEAK - Constants.Arm.MAX_PEAK)/(Constants.Arm.MAX_ANGLE - Constants.Arm.MIN_ANGLE);
-            double b = Constants.Arm.MIN_PEAK - (m * Constants.Arm.MAX_ANGLE);
-            peakOutput = (m * Math.abs(ShoulderMotor.getClosedLoopError()*Constants.Arm.SHOULDER_TICKS_TO_DEGREES) + b);
-            if(peakOutput > Constants.Arm.MAX_PEAK)
-            {
-                peakOutput = Constants.Arm.MAX_PEAK;
-            }
-            else if(peakOutput < Constants.Arm.MIN_PEAK)
-            {
-                peakOutput = Constants.Arm.MIN_PEAK;
-            }
             lastAngle = shoulderPos;
-            updateKf(Constants.Arm.SHOULDER_KF, shoulderPos, peakOutput);
+            updateKf(Constants.Arm.SHOULDER_KF, shoulderPos, Constants.Arm.SHOULDER_PEAK_OUTPUT);
         }
-
-        /*
-        if(WristMotor.getSensorCollection().isRevLimitSwitchClosed() == 1 && !isLimitSwitchTrue)
-        {
-            System.out.println("limit switch returning true");
-            isLimitSwitchTrue = true;
-        }
-        else if(WristMotor.getSensorCollection().isRevLimitSwitchClosed() == 0 && isLimitSwitchTrue)
-        {
-            System.out.println("limit switch returning false");
-            isLimitSwitchTrue = false;
-
-        }
-         */
-
         if(wristPos >= Constants.Arm.MAX_WRIST_ROTATION)
         {
             System.out.println("WRIST IS NOT IN GOOD POS, SENDING TO CARRY");

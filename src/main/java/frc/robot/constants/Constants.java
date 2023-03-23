@@ -147,10 +147,10 @@ public class Constants extends CommandBase {
 
         public static final double SHOULDER_TICKS_TO_DEGREES = ((1.0 / Falcon500.TICKS_PER_REV) / Arm.SHOULDER_GEAR_RATIO) * 360;
         public static final double WRIST_TICKS_TO_DEGREES = ((1.0 / Falcon500.TICKS_PER_REV) / Arm.WRIST_GEAR_RATIO) * 360;
-        public static final double SHOULDER_KP = 0.06; //0.064
+        public static final double SHOULDER_KP = 0.012; //0.064
         public static final double SHOULDER_KI = 0;
         public static final double SHOULDER_KF = -0.041;
-        public static final double SHOULDER_PEAK_OUTPUT = 0.45;
+        public static final double SHOULDER_PEAK_OUTPUT = 0.7;
         public static final double SHOULDER_TOLERANCE = 2;
         public static final double SHOULDER_GEAR_RATIO = 137.4;
         public static final int SHOULDER_SWAP_ANGLE = 0;
@@ -170,7 +170,7 @@ public class Constants extends CommandBase {
         public static final double WRIST_GEAR_RATIO = 176;
         public static final double WRIST_RESTING_ANGLE = 0;
         public static final double WRIST_LIMIT_ANGLE = 0;
-        public static final double WRIST_PEAK_OUTPUT = 0.6;
+        public static final double WRIST_PEAK_OUTPUT = 1;
         public static final double WRIST_KP = 0.05;
         public static final double WRIST_KI = 0;
         public static final double WRIST_KD = 0;
