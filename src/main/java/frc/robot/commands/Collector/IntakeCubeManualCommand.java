@@ -27,7 +27,7 @@ public class IntakeCubeManualCommand extends CommandBase {
     @Override
     public void execute() {
         collectorInstance.SetSpeed(
-                armInstance.getCurrentPosition().CubeIntake()
+                armInstance.getCurrentPose().CubeIntake()
                         * Constants.Collector.INTAKE_MOTOR_SPEED
                         * Constants.Collector.MANUAL_INTAKE_MULTIPLIER);
     }

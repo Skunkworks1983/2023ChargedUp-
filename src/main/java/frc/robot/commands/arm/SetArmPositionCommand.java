@@ -31,8 +31,8 @@ public class SetArmPositionCommand extends CommandBase
     public void initialize()
     {
         arm.setCurrentPosition(armPose);
-        this.shoulderAngleSetpoint = arm.getCurrentPosition().shoulderAngle;
-        this.wristAngleSetpoint = arm.getCurrentPosition().wristAngle;
+        this.shoulderAngleSetpoint = arm.getCurrentPose().shoulderAngle;
+        this.wristAngleSetpoint = arm.getCurrentPose().wristAngle;
         if(Math.abs(arm.ShoulderMotor.getClosedLoopTarget() * Constants.Arm.SHOULDER_TICKS_TO_DEGREES - Constants.ArmPos.SCORE_CONE_WEIRD_SHOULDER) < 1)
         {
             weirdAngle = true;
