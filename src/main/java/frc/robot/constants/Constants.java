@@ -108,7 +108,7 @@ public class Constants extends CommandBase {
         public static final double ANGLE_KP = 0.003;
         public static final double ANGLE_KD = 0.005;
         public static final double DRIVEBASE_KF = 0.08;
-        public static final double THRESHOLD_ROTATE = 3;
+        public static final double THRESHOLD_ROTATE = 2.5;
         public static final int DRIVE_OUT_OF_COMMUNITY = -9;
         public static final double TURN_THROTTLE_MULTIPLIER = 0.7;
         public static final double ARCADE_DRIVE_KP = 0.007;
@@ -147,7 +147,7 @@ public class Constants extends CommandBase {
 
         public static final double SHOULDER_TICKS_TO_DEGREES = ((1.0 / Falcon500.TICKS_PER_REV) / Arm.SHOULDER_GEAR_RATIO) * 360;
         public static final double WRIST_TICKS_TO_DEGREES = ((1.0 / Falcon500.TICKS_PER_REV) / Arm.WRIST_GEAR_RATIO) * 360;
-        public static final double SHOULDER_KP = 0.012; //0.064
+        public static final double SHOULDER_KP = 0.013; //0.064
         public static final double SHOULDER_KI = 0;
         public static final double SHOULDER_KF = -0.041;
         public static final double SHOULDER_PEAK_OUTPUT = 0.7;
@@ -182,7 +182,7 @@ public class Constants extends CommandBase {
         FLOOR_NORMAL  (-128.59537049672488, 100.70434, -1),
         FLOOR_CUBE ( -128.59537049672488, 112.75, -1),
         FLOOR_CONE ( -128.59537049672488, 106.05419, -1),
-        HIGH_CUBE (39.57, 100, -1),
+        HIGH_CUBE (41.57, 100, -1),
         SUBSTATION_CUBE ( 43.68152, 174.73779, 1),
         SUBSTATION_CONE ( 40.56579,  155.46118, 1),
         SCORE_MID_CUBE ( 56.56579, 160.46118, 1),
@@ -191,7 +191,7 @@ public class Constants extends CommandBase {
 
         public final double shoulderAngle;
         public final double wristAngle;
-        public final int ConeIntakeDirection;
+        public final double ConeIntakeDirection;
         public double ConeIntake() {
             return ConeIntakeDirection;
         }
@@ -204,7 +204,7 @@ public class Constants extends CommandBase {
         public double ConeExpel() {
             return -ConeIntakeDirection;
         }
-        ArmPose(double shoulderAngle, double wristAngle, int ConeIntakeDirection) {
+        ArmPose(double shoulderAngle, double wristAngle, double ConeIntakeDirection) {
             this.ConeIntakeDirection = ConeIntakeDirection;
             this.shoulderAngle = shoulderAngle;
             this.wristAngle = wristAngle;

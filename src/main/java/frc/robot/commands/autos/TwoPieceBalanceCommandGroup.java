@@ -20,16 +20,16 @@ public class TwoPieceBalanceCommandGroup extends SequentialCommandGroup
     {
         // TODO: Add your sequential commands in the super() call, e.g.
         //           super(new OpenClawCommand(), new MoveArmCommand());
-        super(new ParallelRaceGroup(new SetArmPositionCommand(Constants.ArmPose.HIGH_CUBE),new TimerCommand(1.25)),
+        super(new ParallelRaceGroup(new SetArmPositionCommand(Constants.ArmPose.HIGH_CUBE),new TimerCommand(1.5)),
               new ParallelRaceGroup(new ExpelCubeCommand(), new TimerCommand(.3)),
-              new ParallelRaceGroup(new SetArmPositionCommand(Constants.ArmPose.FLOOR_CONE),new TimerCommand(.2)),
-              new DriveDistanceCommandGyro(Drivebase.GetDrivebase(),-11,.4),
-              new ParallelRaceGroup(new DriveDistanceCommandGyro(Drivebase.GetDrivebase(),-3,.12),new IntakeConeSmartCommand()),
-              new ParallelCommandGroup(new ParallelRaceGroup(new IntakeConeSmartCommand(), new SetArmPositionCommand(Constants.ArmPose.STOW), new TimerCommand(3)), new RotateCommand(Drivebase.GetDrivebase(), 181)),
-              new ParallelRaceGroup(new DriveDistanceCommandGyro(Drivebase.GetDrivebase(),-13,.4), new SetArmPositionCommand(Constants.ArmPose.FLOOR_NORMAL)),
+              new ParallelRaceGroup(new SetArmPositionCommand(Constants.ArmPose.FLOOR_CONE),new TimerCommand(.3)),
+              new DriveDistanceCommandGyro(Drivebase.GetDrivebase(),-10.5,.525),
+              new ParallelRaceGroup(new DriveDistanceCommandGyro(Drivebase.GetDrivebase(),-2.5,.0775),new IntakeConeSmartCommand()),
+              new ParallelCommandGroup(new ParallelRaceGroup(new IntakeConeSmartCommand(), new SetArmPositionCommand(Constants.ArmPose.STOW), new TimerCommand(1.5)), new RotateCommand(Drivebase.GetDrivebase(), 180, false)),
+              new ParallelRaceGroup(new DriveDistanceCommandGyro(Drivebase.GetDrivebase(),-12.85,.565), new SetArmPositionCommand(Constants.ArmPose.FLOOR_NORMAL)),
               new ParallelRaceGroup(new ExpelConeCommand(), new TimerCommand(.2)),
-              new RotateCommand(Drivebase.GetDrivebase(), 45),
-              new ParallelRaceGroup(new DriveDistanceCommandGyro(Drivebase.GetDrivebase(), 7, .3), new SetArmPositionCommand(Constants.ArmPose.STOW)),
+              new ParallelRaceGroup(new RotateCommand(Drivebase.GetDrivebase(), 43), new SetArmPositionCommand(Constants.ArmPose.STOW)),
+              new ParallelRaceGroup(new DriveDistanceCommandGyro(Drivebase.GetDrivebase(), 6.95, .5), new SetArmPositionCommand(Constants.ArmPose.STOW)),
               new ParallelCommandGroup(new SafeBalanceCommandGroup(), new ResetArm())
              );
 
