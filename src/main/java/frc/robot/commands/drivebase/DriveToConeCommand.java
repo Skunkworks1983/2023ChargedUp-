@@ -5,15 +5,28 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Drivebase;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
+
+import java.util.ArrayList;
 
 
-public class DriveToConeCommand extends CommandBase
-{
+public class DriveToConeCommand extends CommandBase {
+    NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+    NetworkTableEntry tx = table.getEntry("tx");
+    NetworkTableEntry ty = table.getEntry("ty");
+    NetworkTableEntry ta = table.getEntry("ta");
     private final Drivebase drivebase;
-    private double PixelError = 0; //can be anywhere from -160 to 160
+    //double pixelError; //can be anywhere from -160 to 160
 
-    public DriveToConeCommand()
-    {
+    ArrayList<Double> listA = new ArrayList<>();
+    ArrayList<Double> listX = new ArrayList<>();
+
+    PIDController pidController = new PIDController(Constants.Drivebase.DRIVE_TO_CONE_KP, 0, 0);
+
+    public DriveToConeCommand() {
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
         drivebase = Drivebase.GetDrivebase();
@@ -21,27 +34,45 @@ public class DriveToConeCommand extends CommandBase
     }
 
     @Override
-    public void initialize()
-    {
+    public void initialize() {
+        //double limeLightX = tx.getDouble(0.0);
+//        double limeLightY = ty.getDouble(0.0);
+//        double limeLightA = ta.getDouble(0.0);
+
+//        SmartDashboard.putNumber("LimelightX", limeLightX);
+//        SmartDashboard.putNumber("LimelightY", limeLightY);
+//        SmartDashboard.putNumber("LimelightArea", limeLightA);
 
     }
 
     @Override
-    public void execute()
-    {
-        double leftSpeed;
-        double rightSpeed;
-        if(Math.abs(PixelError) == PixelError)
-        {
-            leftSpeed = Constants.Drivebase.BASE_DRIVE_TO_CONE_SPEED + (Math.abs(PixelError) * Constants.Drivebase.DRIVE_TO_CONE_KP); //up
-            rightSpeed = Constants.Drivebase.BASE_DRIVE_TO_CONE_SPEED - (Math.abs(PixelError) * Constants.Drivebase.DRIVE_TO_CONE_KP); //down
-        }
-        else
-        {
-            leftSpeed = Constants.Drivebase.BASE_DRIVE_TO_CONE_SPEED - (Math.abs(PixelError) * Constants.Drivebase.DRIVE_TO_CONE_KP); //down
-            rightSpeed = Constants.Drivebase.BASE_DRIVE_TO_CONE_SPEED + (Math.abs(PixelError) * Constants.Drivebase.DRIVE_TO_CONE_KP); //up
+    public void execute() {
+        double limeA = ta.getDouble(0.0);
+        listA.add(limeA);
+        if (listA.size() > 5) {
+            listA.remove(0);
         }
 
+        double limeX = tx.getDouble(0.0); //sets limeX to current x value
+        listX.add(limeX);
+        if (listX.size() > 5) {
+            listX.remove(0);
+        }
+
+        double sumX = 0;
+
+        for (double listItem : listX) {
+            sumX = sumX + listItem;
+        }
+
+        double averageX = sumX / listX.size();
+
+        double driveThrottle = Constants.Drivebase.BASE_DRIVE_TO_CONE_SPEED;
+        double turnThrottle = pidController.calculate(0,
+                averageX - (Constants.Drivebase.LIMELIGHT_CAMERA_PIXEL_WIDTH / 2));
+
+        double leftSpeed = driveThrottle + turnThrottle; //calculates leftSpeed and rightSpeed
+        double rightSpeed = driveThrottle - turnThrottle;
 
         leftSpeed = MathUtil.clamp(leftSpeed, -1, 1);
         rightSpeed = MathUtil.clamp(rightSpeed, -1, 1);
@@ -50,14 +81,21 @@ public class DriveToConeCommand extends CommandBase
     }
 
     @Override
-    public boolean isFinished()
-    {
-        return false;
+    public boolean isFinished() {
+        double sumA = 0;
+        for (double listItem : listA) {
+            sumA = sumA + listItem;
+        }
+        double averageA = sumA / listA.size();
+
+        return (averageA > Constants.Drivebase.LIMELIGHT_MAX_CONE_AREA);
     }
 
-    @Override
-    public void end(boolean interrupted)
-    {
 
+    @Override
+    public void end(boolean interrupted) {
+
+        drivebase.runMotor(0, 0);
+        drivebase.SetBrakeMode(true);
     }
 }
