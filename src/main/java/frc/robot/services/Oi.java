@@ -114,7 +114,7 @@ public class Oi {
         intakeButton.and(cubeToggle.negate()).and(manualToggle).whileTrue(new IntakeConeManualCommand());
         intakeButton.and(cubeToggle).and(manualToggle).whileTrue(new IntakeCubeManualCommand());
         intakeButton.and(cubeToggle.negate()).and(manualToggle.negate()).whileTrue(new IntakeConeAndStowCommand());
-        intakeButton.and(cubeToggle).and(manualToggle.negate()).whileTrue(new IntakeCubeSmartCommand());
+        intakeButton.and(cubeToggle).and(manualToggle.negate()).whileTrue(new IntakeCubeAndStowCommand());
 
         floorNormalScore.whileTrue(new SetArmPositionCommand(Constants.ArmPose.FLOOR_NORMAL));
         scoreWeird.and(cubeToggle).whileTrue(new SetArmPositionCommand(Constants.ArmPose.HIGH_CUBE));
