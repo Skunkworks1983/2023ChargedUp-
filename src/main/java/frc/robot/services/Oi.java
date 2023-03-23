@@ -12,7 +12,6 @@ import frc.robot.commands.autos.SafeBalanceCommandGroup;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
 
-
 public class Oi {
 
     public static Oi Instance;
@@ -20,6 +19,8 @@ public class Oi {
     Joystick leftStick;
     Joystick rightStick;
     Joystick buttonStick;
+
+    JoystickButton slowMode;
 
     JoystickButton floorNormalScore;
 
@@ -59,7 +60,8 @@ public class Oi {
 
     JoystickButton balanceButton;
 
-    public Oi() {
+    private Oi() {
+
 
         System.out.println("oi init");
 
@@ -99,28 +101,32 @@ public class Oi {
 
         resetArm = new JoystickButton(buttonStick, Constants.OIButtons.RESET_POSITION);
 
+        slowMode = new JoystickButton(rightStick, Constants.OIButtons.DRIVE_SLOW);
+
         lightSwitchCube = new JoystickButton(buttonStick, 16);
         lightSwitchCone = new JoystickButton(buttonStick, 9);
         funSwitch1 = new JoystickButton(buttonStick, 19);
         funSwitch2 = new JoystickButton(buttonStick, 20);
 
         //when held
-        expelButton.and((cubeToggle).negate()).whileTrue(new ExpelConeCommand());
+        expelButton.and(cubeToggle.negate()).whileTrue(new ExpelConeCommand());
         expelButton.and(cubeToggle).whileTrue(new ExpelCubeCommand());
-        intakeButton.and((cubeToggle).negate()).and(manualToggle).whileTrue(new IntakeConeManualCommand());
+        intakeButton.and(cubeToggle.negate()).and(manualToggle).whileTrue(new IntakeConeManualCommand());
         intakeButton.and(cubeToggle).and(manualToggle).whileTrue(new IntakeCubeManualCommand());
-        intakeButton.and((cubeToggle).negate()).and(manualToggle.negate()).whileTrue(new IntakeConeSmartCommand());
-        intakeButton.and(cubeToggle).and(manualToggle.negate()).whileTrue(new IntakeCubeSmartCommand());
+        intakeButton.and(cubeToggle.negate()).and(manualToggle.negate()).whileTrue(new IntakeConeAndStowCommand());
+        intakeButton.and(cubeToggle).and(manualToggle.negate()).whileTrue(new IntakeCubeAndStowCommand());
 
-        floorNormalScore.whileTrue(new SetArmPositionCommand(Constants.ArmPos.FLOOR_NORMAL_SCORE_SHOULDER, Constants.ArmPos.FLOOR_NORMAL_SCORE_WRIST));
-        humanPlayerPickup.and(cubeToggle.negate()).whileTrue(new SetArmPositionCommand(Constants.ArmPos.PLAYER_CONE_PICKUP_SHOULDER, Constants.ArmPos.PLAYER_CONE_PICKUP_WRIST));
-        humanPlayerPickup.and(cubeToggle).whileTrue(new SetArmPositionCommand(Constants.ArmPos.PLAYER_CUBE_PICKUP_SHOULDER, Constants.ArmPos.PLAYER_CUBE_PICKUP_WRIST));
+        floorNormalScore.whileTrue(new SetArmPositionCommand(Constants.ArmPose.FLOOR_NORMAL));
+        scoreWeird.and(cubeToggle).whileTrue(new SetArmPositionCommand(Constants.ArmPose.HIGH_CUBE));
+        scoreWeird.and(cubeToggle.negate()).whileTrue(new SetArmPositionCommand(Constants.ArmPose.FLOOR_WEIRD));
+        humanPlayerPickup.and(cubeToggle).whileTrue(new SetArmPositionCommand(Constants.ArmPose.SUBSTATION_CUBE));
+        humanPlayerPickup.and(cubeToggle.negate()).whileTrue(new SetArmPositionCommand(Constants.ArmPose.SUBSTATION_CONE));
+        carry.onTrue(new SetArmPositionCommand(Constants.ArmPose.STOW));
+        scoreMid.and(cubeToggle).whileTrue(new SetArmPositionCommand(Constants.ArmPose.SCORE_MID_CUBE));
+        scoreMid.and(cubeToggle.negate()).whileTrue(new SetArmPositionCommand(Constants.ArmPose.SCORE_MID_CONE));
+        floorPickup.and(cubeToggle).whileTrue(new SetArmPositionCommand(Constants.ArmPose.FLOOR_CUBE));
+        floorPickup.and(cubeToggle.negate()).whileTrue(new SetArmPositionCommand(Constants.ArmPose.FLOOR_CONE));
 
-        carry.onTrue(new SetArmPositionCommand(Constants.ArmPos.CARRY_SHOULDER, Constants.ArmPos.CARRY_WRIST));
-        scoreMid.and(cubeToggle.negate()).whileTrue(new SetArmPositionCommand(Constants.ArmPos.SCORE_CONE_MID_SHOULDER, Constants.ArmPos.SCORE_CONE_MID_WRIST));
-        scoreMid.and(cubeToggle).whileTrue(new SetArmPositionCommand(Constants.ArmPos.SCORE_CUBE_MID_SHOULDER, Constants.ArmPos.SCORE_CUBE_MID_WRIST));
-        floorPickup.and(cubeToggle).onTrue(new SetArmPositionCommand(Constants.ArmPos.FLOOR_CUBE_PICKUP_SHOULDER, Constants.ArmPos.FLOOR_CUBE_PICKUP_WRIST));
-        floorPickup.and(cubeToggle.negate()).onTrue(new SetArmPositionCommand(Constants.ArmPos.CONE_FLOOR_PICKUP_SHOULDER, Constants.ArmPos.CONE_FLOOR_PICKUP_WRIST));
         (resetArm.negate()).whileTrue(new ResetArm());
         wristUp.whileTrue(new RotateWristByPowerCommand(Constants.Arm.WRIST_POWER));
         wristDown.whileTrue(new RotateWristByPowerCommand(-Constants.Arm.WRIST_POWER));
@@ -128,19 +134,14 @@ public class Oi {
         manualShoulderDown.whileTrue(new SetShoulderSpeed(Arm.getInstance(), Constants.Arm.SHOULDER_LIMIT_SWITCH_FRONT, -Constants.Arm.SHOULDER_MANUAL_SPEED));
         manualCollectorUp.whileTrue(new CollectorPercentOutputCommand(.1));
         manualCollectorDown.whileTrue(new CollectorPercentOutputCommand(-.1));
+
         lightSwitchCube.whileTrue(new SetLightsCommand(Constants.Lights.CUBE));
         lightSwitchCone.whileTrue(new SetLightsCommand(Constants.Lights.CONE));
         funSwitch1.whileTrue(new SetLightsCommand(Constants.Lights.CYLON));
         funSwitch1.whileTrue(new SetLightsCommand(Constants.Lights.PARTY));
+
         balanceButton.whileTrue(new SafeBalanceCommandGroup());
         //manualToggle.onTrue(new ChangeGyroStatus(false));
-
-
-        floorNormalScore.whileTrue(new SetArmPositionCommand(Constants.ArmPos.FLOOR_NORMAL_SCORE_SHOULDER, Constants.ArmPos.FLOOR_NORMAL_SCORE_WRIST));
-        scoreWeird.and(cubeToggle).onTrue(new SetArmPositionCommand
-                (Constants.ArmPos.SCORE_CUBE_HIGH_SHOULDER, Constants.ArmPos.SCORE_CUBE_HIGH_WRIST));
-        scoreWeird.and(cubeToggle.negate()).onTrue(new SetArmPositionCommand
-                (Constants.ArmPos.SCORE_CONE_WEIRD_SHOULDER, Constants.ArmPos.SCORE_CODE_WEIRD_WRIST));
     }
 
 
@@ -158,5 +159,20 @@ public class Oi {
 
     public double getRightX() {
         return rightStick.getX();
+    }
+
+    public boolean isSlowMode () {
+
+        return slowMode.getAsBoolean();
+    }
+
+    public static Oi GetInstance() {
+
+        if (Instance == null) {
+            Instance = new Oi();
+        }
+
+        return Instance;
+
     }
 }

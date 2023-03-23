@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.Constants;
 
 public class Collector extends SubsystemBase {
+
     public TalonFX Motor;
 
     private DigitalInput cubeBreak1;
@@ -20,9 +21,35 @@ public class Collector extends SubsystemBase {
 
         this.Motor = new TalonFX(Constants.Collector.MOTOR_ID);
         Motor.config_kP(0, Constants.Collector.K_P);
+        Motor.config_kP(1, 0.05);
         Motor.setNeutralMode(NeutralMode.Brake);
         Motor.setInverted(true);
     }
+
+
+    public boolean isEmptyCube () {
+
+        if(cubeBreak1.get() == true && cubeBreak2.get() == true) {
+
+            return true;
+        }
+        else {
+            return false;
+        }
+
+    }
+
+    public boolean isIntakingCube() {
+
+        if (cubeBreak1.get() ^ cubeBreak2.get()) {
+
+            return true;
+        } else {
+
+            return false;
+        }
+    }
+
     public boolean isHoldingCube() {
 
         if(cubeBreak1.get() == false && cubeBreak2.get() == false) {
@@ -34,16 +61,7 @@ public class Collector extends SubsystemBase {
 
     }
 
-    public boolean isIntaking () {
 
-        if (cubeBreak1.get() == cubeBreak2.get()) {
-
-            return false;
-        } else {
-
-            return true;
-        }
-    }
 
     public double GetCollectorCurrent()
     {
@@ -73,8 +91,18 @@ public class Collector extends SubsystemBase {
         return instance;
     }
     private static Collector instance;
-    public void Setspeed(double speed) {
-        this.Motor.set(TalonFXControlMode.Velocity, speed);
+    public void SetSpeed(double speed)
+    {
+        if(speed == 0)
+        {
+            Motor.selectProfileSlot(1, 0);
+            Motor.set(TalonFXControlMode.Position, Motor.getSelectedSensorPosition());
+        }
+        else
+        {
+            Motor.selectProfileSlot(0, 0);
+            this.Motor.set(TalonFXControlMode.Velocity, speed);
+        }
     }
     public void SetPercentOutput(double speed) {
         this.Motor.set(TalonFXControlMode.PercentOutput, speed);

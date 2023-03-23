@@ -1,6 +1,5 @@
 package frc.robot.commands.Collector;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
@@ -22,16 +21,7 @@ public class ExpelCubeCommand extends CommandBase {
     @Override
     public void initialize() {
         System.out.println("Expel Cube Initialized");
-
-        if(armInstance.getShoulderAngle() < 0) {
-            collectorInstance.Setspeed(-Constants.Collector.EXPEL_MOTOR_SPEED);
-        }
-        else {
-            collectorInstance.Setspeed(Constants.Collector.EXPEL_MOTOR_SPEED);
-        }
-
-
-
+        collectorInstance.SetSpeed(armInstance.getCurrentPose().CubeExpel() *Constants.Collector.EXPEL_MOTOR_SPEED);
     }
 
     @Override
@@ -48,7 +38,7 @@ public class ExpelCubeCommand extends CommandBase {
     @Override
     public void end(boolean interrupted)
     {
-        collectorInstance.Setspeed(0);
+        collectorInstance.SetSpeed(0);
         if(interrupted)
         {
             System.out.println("Expel Cube Command Ended, interrupted");

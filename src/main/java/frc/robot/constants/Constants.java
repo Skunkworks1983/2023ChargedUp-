@@ -15,13 +15,13 @@ public class Constants extends CommandBase {
 
         public static final double CONE_COLLECT_AMP_THRESHOLD = 12;
         public static final double CONE_AMPS_HOLDING_THRESHOLD = 10;
+
         public static final double INTAKE_SPEED = 10; //inches per second
         public static final double INTAKE_MOTOR_SPEED =
                 INTAKE_SPEED / WHEEL_CIRCUMFERENCE * WHEEL_REVS_PER_SEC_TO_VELOCITY;
+        public static final double INTAKE_MOTOR_SPEED_SLOW = INTAKE_MOTOR_SPEED/2;
+        public static final double INTAKE_MOTOR_SPEED_VERY_SLOW = INTAKE_MOTOR_SPEED/4;
 
-        public static final double INTAKE_SPEED_SLOW = (INTAKE_SPEED / 2);
-        public static final double INTAKE_MOTOR_SPEED_SLOW =
-                INTAKE_SPEED_SLOW / WHEEL_CIRCUMFERENCE * WHEEL_REVS_PER_SEC_TO_VELOCITY;
 
         public static final double EXPEL_SPEED = 10; // inches per second
         public static final double EXPEL_MOTOR_SPEED =
@@ -43,6 +43,9 @@ public class Constants extends CommandBase {
     }
 
     public class OIButtons {
+
+        //slow mode driving
+        public static final int DRIVE_SLOW = 1;
 
         //top row
         public static final int ENABLE_MANUAL =8;
@@ -143,10 +146,10 @@ public class Constants extends CommandBase {
 
         public static final double SHOULDER_TICKS_TO_DEGREES = ((1.0 / Falcon500.TICKS_PER_REV) / Arm.SHOULDER_GEAR_RATIO) * 360;
         public static final double WRIST_TICKS_TO_DEGREES = ((1.0 / Falcon500.TICKS_PER_REV) / Arm.WRIST_GEAR_RATIO) * 360;
-        public static final double SHOULDER_KP = 0.06; //0.064
+        public static final double SHOULDER_KP = 0.012; //0.064
         public static final double SHOULDER_KI = 0;
         public static final double SHOULDER_KF = -0.041;
-        public static final double SHOULDER_PEAK_OUTPUT = 0.45;
+        public static final double SHOULDER_PEAK_OUTPUT = 0.7;
         public static final double SHOULDER_TOLERANCE = 2;
         public static final double SHOULDER_GEAR_RATIO = 137.4;
         public static final int SHOULDER_SWAP_ANGLE = 0;
@@ -157,8 +160,7 @@ public class Constants extends CommandBase {
         public static final int SHOULDER_LIMIT_SWITCH_FRONT = 0;
         public static final int SHOULDER_LIMIT_SWITCH_BACK = 1;
         public static final int WRIST_LIMIT_SWITCH = 2;
-        //once shoulder is passed this angle, wrist can go anywhere.
-        public static final double SHOULDER_SAFE_WRIST_ANGLE = SHOULDER_RESTING_ANGLE;
+
         public static final int MAX_WRIST_ROTATION = 235;
         public static final double WRIST_TOLERANCE = 2;
         public static final double WRIST_PARALLEL_WITH_SHOULDER = 164.05;
@@ -167,43 +169,55 @@ public class Constants extends CommandBase {
         public static final double WRIST_GEAR_RATIO = 176;
         public static final double WRIST_RESTING_ANGLE = 0;
         public static final double WRIST_LIMIT_ANGLE = 0;
-        public static final double WRIST_PEAK_OUTPUT = 0.6;
+        public static final double WRIST_PEAK_OUTPUT = 1;
         public static final double WRIST_KP = 0.05;
         public static final double WRIST_KI = 0;
         public static final double WRIST_KD = 0;
         public static final double WRIST_KF = 0;
     }
 
+    public enum ArmPose {
+        FLOOR_WEIRD (-90,220, .7, false),
+        FLOOR_NORMAL  (-128.59537049672488, 100.70434, -1, false),
+        FLOOR_CUBE ( -128.59537049672488, 112.75, -1, false),
+        FLOOR_CONE ( -128.59537049672488, 105.05419, -1, true),
+        HIGH_CUBE (39.57, 100, -1, false),
+        SUBSTATION_CUBE ( 43.68152, 174.73779, 1, false),
+        SUBSTATION_CONE ( 40.56579,  155.46118, 1, true),
+        SCORE_MID_CUBE ( 56.56579, 160.46118, 1, false),
+        SCORE_MID_CONE (44.56579,  150.46118, 1, false),
+        STOW (-128.59537049672488, 15.531, -1, false);//TODO: stow is wierd
+
+        public final double shoulderAngle;
+        public final double wristAngle;
+        public final double ConeIntakeDirection;
+        public final boolean shouldAutoStow;
+        public double ConeIntake() {
+            return ConeIntakeDirection;
+        }
+        public double CubeIntake() {
+            return -ConeIntakeDirection;
+        }
+        public double CubeExpel() {
+            return ConeIntakeDirection;
+        }
+        public double ConeExpel() {
+            return -ConeIntakeDirection;
+        }
+        ArmPose(double shoulderAngle, double wristAngle, double ConeIntakeDirection, boolean shouldAutoStow) {
+            this.shouldAutoStow = shouldAutoStow;
+            this.ConeIntakeDirection = ConeIntakeDirection;
+            this.shoulderAngle = shoulderAngle;
+            this.wristAngle = wristAngle;
+        }
+
+    }
+
     public class ArmPos
     {
-
-        public static final double PLAYER_CONE_PICKUP_SHOULDER = 40.56579;
-        public static final double PLAYER_CONE_PICKUP_WRIST = 155.46118;
-        public static final double SCORE_CONE_MID_SHOULDER = 44.56579;
-        public static final double SCORE_CUBE_MID_SHOULDER = 56.56579;
-        public static final double SCORE_CONE_MID_WRIST = 150.46118;
-        public static final double SCORE_CUBE_MID_WRIST = 160.46118;
-        public static final double PLAYER_CUBE_PICKUP_SHOULDER = 43.68152;
-        public static final double PLAYER_CUBE_PICKUP_WRIST = 174.73779;
-        public static final double FLOOR_CUBE_PICKUP_SHOULDER = Arm.SHOULDER_RESTING_ANGLE;
         public static final double FLOOR_CUBE_PICKUP_WRIST = 112.75;
-        public static final double FLOOR_NORMAL_SCORE_SHOULDER = Arm.SHOULDER_RESTING_ANGLE;
-        public static final double FLOOR_NORMAL_SCORE_WRIST = 100.70434;
-        public static final double CARRY_SHOULDER = Arm.SHOULDER_RESTING_ANGLE;
         public static final double CARRY_WRIST = 15.531;
-        public static final double CONE_FLOOR_PICKUP_SHOULDER = Arm.SHOULDER_RESTING_ANGLE;
-        public static final double CONE_FLOOR_PICKUP_WRIST = 105.05419;
-        public static final int WRIST_GEAR_RATIO = 96;
-        //public static final double SCORE_CUBE_HIGH_SHOULDER = 45;// scores high cube with wrist up.
-        //public static final double SCORE_CUBE_HIGH_WRIST = 225; // scores high cube with wrist up.
-
-        //The following two constants work well for scoring high with a cube with the wrist down.
-        public static final double SCORE_CUBE_HIGH_SHOULDER = 39.57;
-        public static final double SCORE_CUBE_HIGH_WRIST = 100;
-        public static final double SCORE_CONE_HIGH_SHOULDER = 30;
-        public static final double SCORE_CONE_HIGH_WRIST = 230;
         public static final double SCORE_CONE_WEIRD_SHOULDER = -90;
-        public static final double SCORE_CODE_WEIRD_WRIST = 220;
     }
 
     public class Lights
