@@ -79,6 +79,7 @@ public class DriveDistanceCommandGyro extends CommandBase
         double leftSpeed = speed + turnThrottle;
         double rightSpeed = speed - turnThrottle;
         drivebase.runMotor(leftSpeed, rightSpeed);
+        System.out.println("DriveGyro running, leftspeed: " + leftSpeed + " rightspeed: " + rightSpeed);
     }
 
     @Override

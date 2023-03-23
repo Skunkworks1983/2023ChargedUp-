@@ -238,7 +238,8 @@ public class Arm extends SubsystemBase
     @Override
     public void periodic()
     {
-        periodicCounter = (periodicCounter + 1)%3;
+        periodicCounter = (periodicCounter + 1)%5;
+
         if(periodicCounter == 0)
         {
             wristPos = getWristAngle();

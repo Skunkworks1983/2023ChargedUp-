@@ -156,7 +156,7 @@ public class Constants extends CommandBase {
         public static final int SHOULDER_SWAP_ANGLE = 0;
         public static final int SHOULDER_SWAP_ANGLE_ADDITION = 0;
         public static final double SHOULDER_RESTING_ANGLE = -128.59537049672488;
-        public static final double SHOULDER_ANGLE_UPDATE = 1.5;
+        public static final double SHOULDER_ANGLE_UPDATE = 5;
         public static final int SHOULDER_MOTOR_ID = 5;
         public static final int SHOULDER_LIMIT_SWITCH_FRONT = 0;
         public static final int SHOULDER_LIMIT_SWITCH_BACK = 1;
