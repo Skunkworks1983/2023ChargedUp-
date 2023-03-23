@@ -128,6 +128,10 @@ public class Drivebase implements Subsystem {
         return leftMotor1.getSelectedSensorPosition();
     }
 
+    public double getTicksRight() {
+        return rightMotor1.getSelectedSensorPosition();
+    }
+
     public void SetBrakeMode(boolean enable) {
         if (enable) {
 
@@ -180,6 +184,10 @@ public class Drivebase implements Subsystem {
 
     public void setGyroStatus(boolean status) {
         isHeadingReliable = status;
+    }
+
+    public boolean getGyroStatus() {
+        return isHeadingReliable;
     }
 
 

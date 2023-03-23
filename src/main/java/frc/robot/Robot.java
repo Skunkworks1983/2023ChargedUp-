@@ -11,38 +11,17 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.arm.SetArmPositionCommand;
-import frc.robot.commands.arm.SetLightsCommand;
-import frc.robot.commands.autos.BalanceOnChargeStationCommand;
-import frc.robot.commands.autos.Simple.CubeHighBalance;
-import frc.robot.commands.autos.Simple.CubeHighLeaveComunity;
-import frc.robot.commands.autos.Simple.LowScoreLeaveCommunityBalanceCommand;
-import frc.robot.commands.autos.Simple.SimpleAuto1_9;
-import frc.robot.commands.autos.Simple.SimpleAuto2_8;
-import frc.robot.commands.autos.Simple.SimpleAuto5;
-import frc.robot.commands.drivebase.DetectRangeSensorCommand;
-import frc.robot.commands.drivebase.DetectRangeSensorWithoutDrivebaseCommand;
-import frc.robot.commands.drivebase.TankDrive;
-import frc.robot.commands.autos.BalanceOnChargeStationCommand;
-import frc.robot.commands.drivebase.DetectRangeSensorCommand;
-import frc.robot.commands.drivebase.DetectRangeSensorWithoutDrivebaseCommand;
-import frc.robot.commands.arm.WaveCollectorCommandGroup;
-import frc.robot.commands.drivebase.TankDrive;
-import frc.robot.commands.autos.*;
 import frc.robot.commands.autos.DriveOnChargeStationAndBalanceP2ConeCommandGroup;
-import frc.robot.commands.autos.DriveOnChargeStationAndBalanceP2CubeCommandGroup;
-import frc.robot.commands.autos.E2ToGamePiece4;
-import frc.robot.commands.autos.LeaveCommunityP2E2;
-import frc.robot.commands.autos.ScoreAndDriveOutP3CommandGroup;
 import frc.robot.commands.autos.ScoreAndExitCommunityP1CommandGroup;
 import frc.robot.commands.autos.ScoreAndExitCommunityP2CommandGroup;
+import frc.robot.commands.autos.Simple.*;
 import frc.robot.commands.autos.SimpleAutoCommandGroup;
-import frc.robot.commands.drivebase.ArcadeDrive;
+import frc.robot.commands.drivebase.RotateWithEncoderCommand;
 import frc.robot.constants.Constants;
+import frc.robot.services.Oi;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Collector;
 import frc.robot.subsystems.Drivebase;
-import frc.robot.services.Oi;
 
 
 /**
@@ -51,8 +30,7 @@ import frc.robot.services.Oi;
  * the package after creating this project, you must also update the build.gradle file in the
  * project.
  */
-public class Robot extends TimedRobot
-{
+public class Robot extends TimedRobot {
     private boolean setBrakeModeOnDisable = true;
     private Oi oi = new Oi();
     private Command autonomousCommand;
@@ -68,34 +46,34 @@ public class Robot extends TimedRobot
     private Arm arm;
 
 
-
     /**
      * This method is run when the robot is first started up and should be used for any
      * initialization code.
      */
     @Override
-    public void robotInit()
-    {
+    public void robotInit() {
         arm = Arm.getInstance();
         arm.WristMotor.setNeutralMode(NeutralMode.Coast);
         autoChooser = new SendableChooser();
         autoChooser.addOption("ConeMidAndBalance4_6", new DriveOnChargeStationAndBalanceP2ConeCommandGroup());
-        autoChooser.addOption("CubeMidAndBalance5",new SimpleAuto5());
+        autoChooser.addOption("CubeMidAndBalance5", new SimpleAuto5());
         //autoChooser.addOption("ScoreAndExitCommunity5", new ScoreAndExitCommunityP2CommandGroup());
         //autoChooser.addOption("ScoreAndExitCommunity2_8", new ScoreAndExitCommunityP1CommandGroup());
         // autoChooser.addOption("E2toGamePiece4",new E2ToGamePiece4());
         //autoChooser.addOption("LeaveCommunity5",new LeaveCommunityP2E2());
         //autoChooser.addOption("ScoreAndDriveOut1_9",new ScoreAndDriveOutP3CommandGroup());
         //autoChooser.addOption("DriveOnChargeStationAndBalanceCubeP2", new DriveOnChargeStationAndBalanceP2CubeCommandGroup());
-        autoChooser.addOption("ConeMidLeaveCommunity1_9",new SimpleAuto1_9());
-        autoChooser.addOption("CubeMidLeaveCommunity2_8",new SimpleAuto2_8());
-        autoChooser.addOption("ConeLowAndBalance4_5_6",new LowScoreLeaveCommunityBalanceCommand());
-        autoChooser.addOption("CubeHighAndBalance5",new CubeHighBalance());
-        autoChooser.addOption("CubeHighLeaveCommunity2_8",new CubeHighLeaveComunity());
+        autoChooser.addOption("ConeMidLeaveCommunity1_9", new SimpleAuto1_9());
+        autoChooser.addOption("CubeMidLeaveCommunity2_8", new SimpleAuto2_8());
+        autoChooser.addOption("ConeLowAndBalance4_5_6", new LowScoreLeaveCommunityBalanceCommand());
+        autoChooser.addOption("CubeHighAndBalance5", new CubeHighBalance());
+        autoChooser.addOption("CubeHighLeaveCommunity2_8", new CubeHighLeaveComunity());
+
+        autoChooser.addOption("rotate with encoders 90 degrees", new RotateWithEncoderCommand(Drivebase.GetDrivebase(), 90));
 
 
         //autoChooser.addOption("oneBallAutosHigh", new OneBallAutosHighCommandGroup());
-       // autoChooser.addOption("oneBallAutosLow", new OneBallAutosLowCommandGroup());
+        // autoChooser.addOption("oneBallAutosLow", new OneBallAutosLowCommandGroup());
         SmartDashboard.putData("autoChooser", autoChooser);
 
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
@@ -130,12 +108,10 @@ public class Robot extends TimedRobot
      * This method is called once each time the robot enters Disabled mode.
      */
     @Override
-    public void disabledInit()
-    {
-        drivebase.runMotor(0,0);
+    public void disabledInit() {
+        drivebase.runMotor(0, 0);
         arm.WristMotor.setNeutralMode(NeutralMode.Coast);
-        if (setBrakeModeOnDisable)
-        {
+        if (setBrakeModeOnDisable) {
             drivebase.SetBrakeMode(true);
         }
         arm.SetLightMode(Constants.Lights.PARTY);
@@ -144,9 +120,8 @@ public class Robot extends TimedRobot
 
 
     @Override
-    public void disabledPeriodic()
-    {
-        SmartDashboard.putNumber("wrist angle: " , arm.getWristAngle());
+    public void disabledPeriodic() {
+        SmartDashboard.putNumber("wrist angle: ", arm.getWristAngle());
     }
 
 
@@ -154,25 +129,23 @@ public class Robot extends TimedRobot
      * This autonomous runs the autonomous command selected by your {@link RobotContainer} class.
      */
     @Override
-    public void autonomousInit()
-    {
+    public void autonomousInit() {
         arm.SetLightMode(Constants.Lights.BLANK);
         setBrakeModeOnDisable = true;
         arm.WristMotor.setNeutralMode(NeutralMode.Brake);
         CommandScheduler.getInstance().cancelAll();
         SendableChooser autoChooser = (SendableChooser) SmartDashboard.getData("autoChooser");
-        autonomousCommand = (Command)autoChooser.getSelected();
-        if (autonomousCommand != null)
-        {
+        autonomousCommand = (Command) autoChooser.getSelected();
+        if (autonomousCommand != null) {
             autonomousCommand.schedule();
         }
-       // autoChooser.addOption();
+        // autoChooser.addOption();
 
-     //  SendableChooser autoChooser = (SendableChooser) SmartDashboard.getData("autoChooser");
-     //   DriveOnChargeStationAndBalanceP2.schedule();
-     //   SimpleAuto.schedule();
-     //   ScoreAndExitCommunityP2.schedule();
-     //   ScoreAndExitCommunityP1.schedule();
+        //  SendableChooser autoChooser = (SendableChooser) SmartDashboard.getData("autoChooser");
+        //   DriveOnChargeStationAndBalanceP2.schedule();
+        //   SimpleAuto.schedule();
+        //   ScoreAndExitCommunityP2.schedule();
+        //   ScoreAndExitCommunityP1.schedule();
 
         drivebase.waitForHeadingReliable();
 
@@ -181,8 +154,7 @@ public class Robot extends TimedRobot
 
 
     @Override
-    public void teleopInit()
-    {
+    public void teleopInit() {
         arm.SetLightMode(Constants.Lights.BLANK);
         drivebase.setGyroStatus(false);
         setBrakeModeOnDisable = true;
@@ -190,16 +162,16 @@ public class Robot extends TimedRobot
     }
 
 
-    /** This method is called periodically during operator control. */
+    /**
+     * This method is called periodically during operator control.
+     */
     @Override
-    public void teleopPeriodic()
-{
-}
-    
-    
+    public void teleopPeriodic() {
+    }
+
+
     @Override
-    public void testInit()
-    {
+    public void testInit() {
         setBrakeModeOnDisable = false;
         drivebase.SetBrakeMode(false);
         // Cancels all running commands at the start of test mode.
@@ -210,19 +182,26 @@ public class Robot extends TimedRobot
     }
 
 
-    /** This method is called periodically during test mode. */
+    /**
+     * This method is called periodically during test mode.
+     */
     @Override
-    public void testPeriodic()
-    {
+    public void testPeriodic() {
     }
 
 
-    /** This method is called once when the robot is first started up. */
+    /**
+     * This method is called once when the robot is first started up.
+     */
     @Override
-    public void simulationInit() {}
+    public void simulationInit() {
+    }
 
 
-    /** This method is called periodically whilst in simulation. */
+    /**
+     * This method is called periodically whilst in simulation.
+     */
     @Override
-    public void simulationPeriodic() {}
+    public void simulationPeriodic() {
+    }
 }
