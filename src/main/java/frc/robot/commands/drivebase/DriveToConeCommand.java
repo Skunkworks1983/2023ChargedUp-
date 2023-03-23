@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class DriveToConeCommand extends CommandBase {
     NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
     NetworkTableEntry tx = table.getEntry("tx");
-    NetworkTableEntry ty = table.getEntry("ty");
+    //NetworkTableEntry ty = table.getEntry("ty");
     NetworkTableEntry ta = table.getEntry("ta");
     private final Drivebase drivebase;
     //double pixelError; //can be anywhere from -160 to 160
@@ -35,7 +35,8 @@ public class DriveToConeCommand extends CommandBase {
 
     @Override
     public void initialize() {
-        //double limeLightX = tx.getDouble(0.0);
+
+//        double limeLightX = tx.getDouble(0.0);
 //        double limeLightY = ty.getDouble(0.0);
 //        double limeLightA = ta.getDouble(0.0);
 
@@ -49,13 +50,13 @@ public class DriveToConeCommand extends CommandBase {
     public void execute() {
         double limeA = ta.getDouble(0.0);
         listA.add(limeA);
-        if (listA.size() > 5) {
+        if (listA.size() > Constants.Drivebase.ROLLING_AVERAGE_LENGTH) {
             listA.remove(0);
         }
 
         double limeX = tx.getDouble(0.0); //sets limeX to current x value
         listX.add(limeX);
-        if (listX.size() > 5) {
+        if (listX.size() > Constants.Drivebase.ROLLING_AVERAGE_LENGTH) {
             listX.remove(0);
         }
 
