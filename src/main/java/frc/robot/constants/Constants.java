@@ -150,7 +150,9 @@ public class Constants extends CommandBase {
         public static final double SHOULDER_KP = 0.013; //0.064
         public static final double SHOULDER_KI = 0;
         public static final double SHOULDER_KF = -0.041;
+        public static final double SHOULDER_KP_AUTO = 0.016;
         public static final double SHOULDER_PEAK_OUTPUT = 0.7;
+        public static final double SHOULDER_PEAK_OUTPUT_AUTO = 0.75;
         public static final double SHOULDER_TOLERANCE = 2;
         public static final double SHOULDER_GEAR_RATIO = 137.4;
         public static final int SHOULDER_SWAP_ANGLE = 0;

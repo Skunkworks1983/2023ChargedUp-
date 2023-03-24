@@ -20,7 +20,7 @@ public class TwoPieceBalanceCommandGroup extends SequentialCommandGroup
     {
         // TODO: Add your sequential commands in the super() call, e.g.
         //           super(new OpenClawCommand(), new MoveArmCommand());
-        super(new ParallelRaceGroup(new SetArmPositionCommand(Constants.ArmPose.HIGH_CUBE),new TimerCommand(1.5)),
+        super(new ParallelRaceGroup(new SetArmPositionCommand(Constants.ArmPose.HIGH_CUBE),new TimerCommand(1.25)),
               new ParallelRaceGroup(new ExpelCubeCommand(), new TimerCommand(.3)),
               new ParallelRaceGroup(new SetArmPositionCommand(Constants.ArmPose.FLOOR_CONE),new TimerCommand(.3)),
               new DriveDistanceCommandGyro(Drivebase.GetDrivebase(),-10.5,.525),

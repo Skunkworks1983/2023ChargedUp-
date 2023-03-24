@@ -8,6 +8,7 @@ import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.SlotConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.wpilibj.DigitalOutput;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.Constants;
@@ -127,13 +128,22 @@ public class Arm extends SubsystemBase
     public void configArmSlot(double kP, double kI, double kD, double kF, double peakOutput)
     {
         SlotConfiguration config = new SlotConfiguration();
-        config.kP = kP;
+
+        if(DriverStation.isAutonomous())
+        {
+            config.kP = Constants.Arm.SHOULDER_KP_AUTO;
+            config.closedLoopPeakOutput = Constants.Arm.SHOULDER_PEAK_OUTPUT_AUTO;
+        }
+        else
+        {
+            config.kP = kP;
+            config.closedLoopPeakOutput = peakOutput;
+        }
         config.kI = kI;
         config.kD = kD;
         config.kF = kF;
 
         // TODO: change back
-        config.closedLoopPeakOutput = peakOutput;
 
         ShoulderMotor.configureSlot(config);
     }
