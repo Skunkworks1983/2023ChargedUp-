@@ -189,7 +189,9 @@ public class Constants extends CommandBase {
         SUBSTATION_CONE ( 40.56579,  155.46118, 1),
         SCORE_MID_CUBE ( 56.56579, 160.46118, 1),
         SCORE_MID_CONE (44.56579,  150.46118, 1),
-        STOW (-128.59537049672488, 15.531, -1);//TODO: stow is wierd
+        STOW (-128.59537049672488, 15.531, -1),//TODO: stow is wierd
+        STOW_AUTO (-128.59537049672488, 15.531, -1.15),
+        HIGH_CUBE_AUTO (41.57, 96, -1.15);
 
         public final double shoulderAngle;
         public final double wristAngle;

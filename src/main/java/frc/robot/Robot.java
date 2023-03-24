@@ -21,7 +21,8 @@ import frc.robot.commands.autos.CompAutos.ConeMidAndBalance4_6;
 import frc.robot.commands.autos.ScoreAndExitCommunityP1CommandGroup;
 import frc.robot.commands.autos.ScoreAndExitCommunityP2CommandGroup;
 import frc.robot.commands.autos.SimpleAutoCommandGroup;
-import frc.robot.commands.autos.TwoPieceBalanceCommandGroup;
+import frc.robot.commands.autos.TwoPieceBalance8Blue2Red;
+import frc.robot.commands.autos.TwoPieceBalance8Red2Blue;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Collector;
@@ -70,8 +71,8 @@ public class Robot extends TimedRobot
         autoChooser.addOption("ConeLowAndBalance4_5_6",new ConeLowAndBalance4_5_6());
         autoChooser.addOption("CubeHighAndBalance5",new CubeHighAndBalance5());
         autoChooser.addOption("CubeHighLeaveCommunity2_8",new CubeHighLeaveCommunity2_8());
-        autoChooser.addOption("TwoPieceBalance8",new TwoPieceBalanceCommandGroup());
-
+        autoChooser.addOption("TwoPieceBalance8Red2Blue",new TwoPieceBalance8Red2Blue());
+        autoChooser.addOption("TwoPieceBalance8Blue2Red",new TwoPieceBalance8Blue2Red());
 
 
         //autoChooser.addOption("oneBallAutosHigh", new OneBallAutosHighCommandGroup());
