@@ -79,6 +79,12 @@ public class DriveToConeCommand extends CommandBase {
         rightSpeed = MathUtil.clamp(rightSpeed, -1, 1);
 
         drivebase.runMotor(leftSpeed, rightSpeed);
+
+        System.out.println("limeX " + limeX);
+        System.out.println("limeA " + limeA);
+        System.out.println("averageX " + averageX);
+        System.out.println("turnThrottle " + turnThrottle);
+        System.out.println("leftSpeed " + leftSpeed  + "rightSpeed " + rightSpeed);
     }
 
     @Override
@@ -97,6 +103,7 @@ public class DriveToConeCommand extends CommandBase {
     public void end(boolean interrupted) {
 
         drivebase.runMotor(0, 0);
+
         drivebase.SetBrakeMode(true);
     }
 }
