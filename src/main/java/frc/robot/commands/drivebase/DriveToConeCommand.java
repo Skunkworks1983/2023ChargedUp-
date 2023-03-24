@@ -44,6 +44,10 @@ public class DriveToConeCommand extends CommandBase {
 //        SmartDashboard.putNumber("LimelightY", limeLightY);
 //        SmartDashboard.putNumber("LimelightArea", limeLightA);
 
+        System.out.println("STARTING DRIVE TO CONE COMMAND NOW");
+
+        System.out.println("initial limelight X " + tx.getDouble(0.0));
+        System.out.println("initial limelight A " + ta.getDouble(0.0));
     }
 
     @Override
@@ -94,6 +98,8 @@ public class DriveToConeCommand extends CommandBase {
             sumA = sumA + listItem;
         }
         double averageA = sumA / listA.size();
+
+        System.out.println("averageA " + averageA);
 
         return (averageA > Constants.Drivebase.LIMELIGHT_MAX_CONE_AREA);
     }
