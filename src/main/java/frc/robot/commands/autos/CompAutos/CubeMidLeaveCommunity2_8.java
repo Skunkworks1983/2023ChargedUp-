@@ -18,7 +18,7 @@ public class CubeMidLeaveCommunity2_8 extends SequentialCommandGroup
     {
         super
                 (
-                        new SetArmRaceCommandGroup(Constants.ArmPose.SCORE_MID_CUBE, 2),
+                        new SetArmRaceCommandGroup(Constants.ArmPose.SCORE_MID_CUBE, 1.5),
                         new ParallelRaceGroup(new ExpelCubeCommand(), new TimerCommand(.2)),
                         new ParallelRaceGroup
                                 (

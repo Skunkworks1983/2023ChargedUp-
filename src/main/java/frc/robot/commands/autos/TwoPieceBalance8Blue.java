@@ -14,9 +14,9 @@ import frc.robot.commands.drivebase.RotateCommand;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Drivebase;
 
-public class TwoPieceBalance8Blue2Red extends SequentialCommandGroup
+public class TwoPieceBalance8Blue extends SequentialCommandGroup
 {
-    public TwoPieceBalance8Blue2Red()
+    public TwoPieceBalance8Blue()
     {
         // TODO: Add your sequential commands in the super() call, e.g.
         //           super(new OpenClawCommand(), new MoveArmCommand());

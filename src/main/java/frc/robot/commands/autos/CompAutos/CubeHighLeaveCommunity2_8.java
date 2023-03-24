@@ -3,6 +3,7 @@ package frc.robot.commands.autos.CompAutos;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.Collector.ExpelConeCommand;
+import frc.robot.commands.Collector.ExpelCubeCommand;
 import frc.robot.commands.arm.ResetArm;
 import frc.robot.commands.arm.SetArmPositionCommand;
 import frc.robot.commands.autos.SetArmRaceCommandGroup;
@@ -18,8 +19,8 @@ public class CubeHighLeaveCommunity2_8 extends SequentialCommandGroup
     {
         super
                 (
-                        new SetArmRaceCommandGroup(Constants.ArmPose.HIGH_CUBE, 2),
-                        new ParallelRaceGroup(new ExpelConeCommand(), new TimerCommand(.2)),
+                        new SetArmRaceCommandGroup(Constants.ArmPose.HIGH_CUBE_AUTO, 1.5),
+                        new ParallelRaceGroup(new ExpelCubeCommand(), new TimerCommand(.2)),
                         new ParallelRaceGroup
                                 (
                                         new DriveDistanceCommandGyro(Drivebase.GetDrivebase(), -12, Constants.Drivebase.DRIVEBASE_KF + .07),
