@@ -108,7 +108,7 @@ public class Constants extends CommandBase {
         public static final double ANGLE_KP = 0.003;
         public static final double ANGLE_KD = 0.005;
         public static final double DRIVEBASE_KF = 0.08;
-        public static final double THRESHOLD_ROTATE = 3;
+        public static final double THRESHOLD_ROTATE = 2.5;
         public static final int DRIVE_OUT_OF_COMMUNITY = -9;
         public static final double TURN_THROTTLE_MULTIPLIER = 0.7;
         public static final double ARCADE_DRIVE_KP = 0.007;
@@ -147,16 +147,18 @@ public class Constants extends CommandBase {
 
         public static final double SHOULDER_TICKS_TO_DEGREES = ((1.0 / Falcon500.TICKS_PER_REV) / Arm.SHOULDER_GEAR_RATIO) * 360;
         public static final double WRIST_TICKS_TO_DEGREES = ((1.0 / Falcon500.TICKS_PER_REV) / Arm.WRIST_GEAR_RATIO) * 360;
-        public static final double SHOULDER_KP = 0.012; //0.064
+        public static final double SHOULDER_KP = 0.013; //0.064
         public static final double SHOULDER_KI = 0;
         public static final double SHOULDER_KF = -0.041;
+        public static final double SHOULDER_KP_AUTO = 0.016;
         public static final double SHOULDER_PEAK_OUTPUT = 0.7;
+        public static final double SHOULDER_PEAK_OUTPUT_AUTO = 0.75;
         public static final double SHOULDER_TOLERANCE = 2;
         public static final double SHOULDER_GEAR_RATIO = 137.4;
         public static final int SHOULDER_SWAP_ANGLE = 0;
         public static final int SHOULDER_SWAP_ANGLE_ADDITION = 0;
         public static final double SHOULDER_RESTING_ANGLE = -128.59537049672488;
-        public static final double SHOULDER_ANGLE_UPDATE = 1.5;
+        public static final double SHOULDER_ANGLE_UPDATE = 5;
         public static final int SHOULDER_MOTOR_ID = 5;
         public static final int SHOULDER_LIMIT_SWITCH_FRONT = 0;
         public static final int SHOULDER_LIMIT_SWITCH_BACK = 1;
@@ -178,16 +180,18 @@ public class Constants extends CommandBase {
     }
 
     public enum ArmPose {
-        FLOOR_WEIRD (-90,220, .7, false),
+        FLOOR_WEIRD (-90,220, 1, false),
         FLOOR_NORMAL  (-128.59537049672488, 100.70434, -1, false),
         FLOOR_CUBE ( -128.59537049672488, 112.75, -1, false),
-        FLOOR_CONE ( -128.59537049672488, 105.05419, -1, true),
-        HIGH_CUBE (39.57, 100, -1, false),
+        FLOOR_CONE ( -128.59537049672488, 106.05419, -1, false),
+        HIGH_CUBE (41.57, 100, -1, false),
         SUBSTATION_CUBE ( 43.68152, 174.73779, 1, false),
         SUBSTATION_CONE ( 40.56579,  155.46118, 1, true),
-        SCORE_MID_CUBE ( 56.56579, 160.46118, 1, false),
-        SCORE_MID_CONE (44.56579,  150.46118, 1, false),
-        STOW (-128.59537049672488, 15.531, -1, false);//TODO: stow is wierd
+        SCORE_MID_CUBE ( 56.56579, 160.46118, 1,false),
+        SCORE_MID_CONE (44.56579,  150.46118, 1,false),
+        STOW (-128.59537049672488, 15.531, -1,false),//TODO: stow is wierd
+        STOW_AUTO (-128.59537049672488, 15.531, -1.15,false),
+        HIGH_CUBE_AUTO (41.57, 96, -1.15,false);
 
         public final double shoulderAngle;
         public final double wristAngle;

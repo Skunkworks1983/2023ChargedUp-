@@ -18,7 +18,7 @@ import frc.robot.subsystems.Drivebase;
 
 public class CubeMidAndBalance5 extends SequentialCommandGroup {
     public CubeMidAndBalance5() {
-        super(new SetArmRaceCommandGroup(Constants.ArmPose.SCORE_MID_CUBE, 1.75),
+        super(new SetArmRaceCommandGroup(Constants.ArmPose.SCORE_MID_CUBE, 1.5),
                 new ParallelRaceGroup(new ExpelCubeCommand(), new TimerCommand(.2)),
                 new SetArmRaceCommandGroup(Constants.ArmPose.STOW, .75),
                 new DriveDistanceCommand(Drivebase.GetDrivebase(), -.5),

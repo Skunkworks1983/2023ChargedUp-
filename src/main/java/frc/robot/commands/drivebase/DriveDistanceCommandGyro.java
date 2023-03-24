@@ -5,6 +5,8 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Drivebase;
 
+import static java.lang.Double.NaN;
+
 
 public class DriveDistanceCommandGyro extends CommandBase
 {
@@ -37,10 +39,13 @@ public class DriveDistanceCommandGyro extends CommandBase
     public void initialize()
     {
 
-        startDegree = drivebase.getHeading();
         startDistanceFT = drivebase.getPosLeft();
         finishDistanceFT = startDistanceFT+distanceFT;
         startDegree = drivebase.getHeading();
+        if(startDegree == NaN)
+        {
+            startDegree = 0;
+        }
         if(distanceFT > 0)
         {
             direction = 1;
