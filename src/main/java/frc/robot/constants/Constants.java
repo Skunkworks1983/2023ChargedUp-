@@ -196,6 +196,7 @@ public class Constants extends CommandBase {
         public final double shoulderAngle;
         public final double wristAngle;
         public final double ConeIntakeDirection;
+        public final boolean shouldAutoStow;
         public double ConeIntake() {
             return ConeIntakeDirection;
         }
@@ -208,7 +209,8 @@ public class Constants extends CommandBase {
         public double ConeExpel() {
             return -ConeIntakeDirection;
         }
-        ArmPose(double shoulderAngle, double wristAngle, double ConeIntakeDirection) {
+        ArmPose(double shoulderAngle, double wristAngle, double ConeIntakeDirection, boolean shouldAutoStow) {
+            this.shouldAutoStow = shouldAutoStow;
             this.ConeIntakeDirection = ConeIntakeDirection;
             this.shoulderAngle = shoulderAngle;
             this.wristAngle = wristAngle;

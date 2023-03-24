@@ -34,15 +34,15 @@ public class IntakeCubeSmartCommand extends CommandBase
     {
         if(collectorInstance.isIntakingCube())
         {
-            collectorInstance.SetSpeed(armInstance.getCurrentPosition().CubeIntake() * Constants.Collector.INTAKE_MOTOR_SPEED_SLOW);
+            collectorInstance.SetSpeed(armInstance.getCurrentPose().CubeIntake() * Constants.Collector.INTAKE_MOTOR_SPEED_SLOW);
         }
         else if(collectorInstance.isHoldingCube())
         {
-            collectorInstance.SetSpeed(armInstance.getCurrentPosition().CubeIntake() * Constants.Collector.INTAKE_MOTOR_SPEED_VERY_SLOW);
+            collectorInstance.SetSpeed(armInstance.getCurrentPose().CubeIntake() * Constants.Collector.INTAKE_MOTOR_SPEED_VERY_SLOW);
         }
         else
         {
-            collectorInstance.SetSpeed(armInstance.getCurrentPosition().CubeIntake() * Constants.Collector.INTAKE_MOTOR_SPEED);
+            collectorInstance.SetSpeed(armInstance.getCurrentPose().CubeIntake() * Constants.Collector.INTAKE_MOTOR_SPEED);
         }
         ticksElapsed++;
     }

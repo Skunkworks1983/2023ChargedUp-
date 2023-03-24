@@ -271,7 +271,7 @@ public class Arm extends SubsystemBase
         }
 
     }
-    public Constants.ArmPose getCurrentPosition(){
+    public Constants.ArmPose getCurrentPose(){
         return currentPose;
     }
     public void setCurrentPosition(Constants.ArmPose newPosition){

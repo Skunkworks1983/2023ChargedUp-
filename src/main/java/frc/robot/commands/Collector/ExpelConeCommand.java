@@ -23,7 +23,7 @@ public class ExpelConeCommand extends CommandBase {
     {
         System.out.println("Expel Cone Initialized");
 
-        collectorInstance.SetSpeed(armInstance.getCurrentPosition().ConeExpel() *Constants.Collector.EXPEL_MOTOR_SPEED);
+        collectorInstance.SetSpeed(armInstance.getCurrentPose().ConeExpel() *Constants.Collector.EXPEL_MOTOR_SPEED);
     }
 
     @Override
