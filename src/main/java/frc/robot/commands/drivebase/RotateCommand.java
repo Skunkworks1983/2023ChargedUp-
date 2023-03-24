@@ -1,6 +1,7 @@
 package frc.robot.commands.drivebase;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Drivebase;
@@ -33,6 +34,7 @@ public class RotateCommand extends CommandBase
     @Override
     public void execute()
     {
+        double startTime = Timer.getFPGATimestamp();
         System.out.print("err: " + (finishDegree-drivebase.getHeading()));
         double speed = 0;
         speed = pidController.calculate(drivebase.getHeading(), finishDegree);
@@ -46,6 +48,8 @@ public class RotateCommand extends CommandBase
         }
         drivebase.runMotor(speed, -speed);
         System.out.println(" speed: " + speed);
+        double endTime = Timer.getFPGATimestamp();
+        System.out.println(endTime-startTime);
     }
 
     @Override

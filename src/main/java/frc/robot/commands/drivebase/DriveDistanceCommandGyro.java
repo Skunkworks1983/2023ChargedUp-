@@ -1,6 +1,7 @@
 package frc.robot.commands.drivebase;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Drivebase;
@@ -56,6 +57,8 @@ public class DriveDistanceCommandGyro extends CommandBase
     @Override
     public void execute()
     {
+        double startTime = Timer.getFPGATimestamp();
+
         double headingError = startDegree - drivebase.getHeading();
         double error = finishDistanceFT - drivebase.getPosLeft();
         if(error < 0)
@@ -79,6 +82,8 @@ public class DriveDistanceCommandGyro extends CommandBase
         double leftSpeed = speed + turnThrottle;
         double rightSpeed = speed - turnThrottle;
         drivebase.runMotor(leftSpeed, rightSpeed);
+        double endTime = Timer.getFPGATimestamp();
+        System.out.println(endTime-startTime);
     }
 
     @Override
