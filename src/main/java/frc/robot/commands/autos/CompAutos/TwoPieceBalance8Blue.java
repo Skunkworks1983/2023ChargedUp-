@@ -1,4 +1,4 @@
-package frc.robot.commands.autos;
+package frc.robot.commands.autos.CompAutos;
 
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
@@ -9,6 +9,8 @@ import frc.robot.commands.Collector.ExpelCubeCommand;
 import frc.robot.commands.Collector.IntakeConeSmartCommand;
 import frc.robot.commands.arm.ResetArm;
 import frc.robot.commands.arm.SetArmPositionCommand;
+import frc.robot.commands.autos.SafeBalanceCommandGroup;
+import frc.robot.commands.autos.TimerCommand;
 import frc.robot.commands.drivebase.DriveDistanceCommandGyro;
 import frc.robot.commands.drivebase.RotateCommand;
 import frc.robot.constants.Constants;
@@ -48,7 +50,7 @@ public class TwoPieceBalance8Blue extends SequentialCommandGroup
                       new IntakeConeSmartCommand()
               ),
               new ParallelCommandGroup(
-                      new DriveDistanceCommandGyro(Drivebase.GetDrivebase(),11.8,.565),
+                      new DriveDistanceCommandGyro(Drivebase.GetDrivebase(),11.25,.565),
                       new ParallelRaceGroup(
                               new IntakeConeSmartCommand(),
                               new SetArmPositionCommand(Constants.ArmPose.STOW_AUTO),

@@ -182,11 +182,11 @@ public class Constants extends CommandBase {
     public enum ArmPose {
         FLOOR_WEIRD (-90,220, 1, false),
         FLOOR_NORMAL  (-128.59537049672488, 100.70434, -1, false),
-        FLOOR_CUBE ( -128.59537049672488, 112.75, -1, false),
-        FLOOR_CONE ( -128.59537049672488, 106.05419, -1, false),
+        FLOOR_CUBE ( -128.59537049672488, 115.25, -1, false),
+        FLOOR_CONE ( -128.59537049672488, 112.75, -1, false),
         HIGH_CUBE (41.57, 100, -1, false),
         SUBSTATION_CUBE ( 43.68152, 174.73779, 1, false),
-        SUBSTATION_CONE ( 40.56579,  155.46118, 1, true),
+        SUBSTATION_CONE ( 42.56579,  155.46118, 1, true),
         SCORE_MID_CUBE ( 56.56579, 160.46118, 1,false),
         SCORE_MID_CONE (44.56579,  150.46118, 1,false),
         STOW (-128.59537049672488, 15.531, -1,false),//TODO: stow is wierd
