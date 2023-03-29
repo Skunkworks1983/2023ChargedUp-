@@ -20,7 +20,8 @@ public class ArcadeDrive extends CommandBase {
 
     private double targetHeading;
 
-    private PIDController pidController = new PIDController(Constants.Drivebase.ARCADE_DRIVE_KP, 0, Constants.Drivebase.ARCADE_DRIVE_KD);
+    private PIDController drivePidController = new PIDController(Constants.Drivebase.ARCADE_DRIVE_KP, 0, Constants.Drivebase.ARCADE_DRIVE_KD);
+    private PIDController limeLightPidController = new PIDController(Constants.Drivebase.DRIVE_TO_CONE_KP, 0, 0);
 
     NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
     NetworkTableEntry tx = table.getEntry("tx");
@@ -84,7 +85,7 @@ public class ArcadeDrive extends CommandBase {
 
         if (oi.isCenterOnPiece()) {
 
-            turnThrottle = pidController.calculate
+            turnThrottle = limeLightPidController.calculate
                     (averageX, Constants.Drivebase.LIMELIGHT_CAMERA_PIXEL_WIDTH/2);
 
         } else {
@@ -92,7 +93,7 @@ public class ArcadeDrive extends CommandBase {
             turnThrottle = leftX * Constants.Drivebase.TURN_THROTTLE_MULTIPLIER;
         }
 
-        SmartDashboard.putNumber("arcade drive turn error", pidController.getPositionError());
+        SmartDashboard.putNumber("arcade drive lime light turn error", limeLightPidController.getPositionError());
         SmartDashboard.putNumber("arcade drive turn joystick value", leftX);
         SmartDashboard.putNumber("arcade drive throttle joystick value", rightY);
         SmartDashboard.putNumber("arcade drive turn throttle", turnThrottle);

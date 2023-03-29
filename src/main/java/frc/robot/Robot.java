@@ -21,6 +21,7 @@ import frc.robot.commands.autos.CompAutos.ConeMidAndBalance4_6;
 import frc.robot.commands.autos.ScoreAndExitCommunityP1CommandGroup;
 import frc.robot.commands.autos.ScoreAndExitCommunityP2CommandGroup;
 import frc.robot.commands.autos.SimpleAutoCommandGroup;
+import frc.robot.commands.drivebase.DriveToGamePieceCommand;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Collector;
@@ -69,7 +70,7 @@ public class Robot extends TimedRobot
         autoChooser.addOption("ConeLowAndBalance4_5_6",new ConeLowAndBalance4_5_6());
         autoChooser.addOption("CubeHighAndBalance5",new CubeHighAndBalance5());
         autoChooser.addOption("CubeHighLeaveCommunity2_8",new CubeHighLeaveCommunity2_8());
-
+        autoChooser.addOption("DriveToGamePieceCommand", new DriveToGamePieceCommand());
 
 
         //autoChooser.addOption("oneBallAutosHigh", new OneBallAutosHighCommandGroup());
@@ -151,6 +152,8 @@ public class Robot extends TimedRobot
      //   SimpleAuto.schedule();
      //   ScoreAndExitCommunityP2.schedule();
      //   ScoreAndExitCommunityP1.schedule();
+
+        //DriveToGamePieceCommand.schedule();
 
         drivebase.waitForHeadingReliable();
 
