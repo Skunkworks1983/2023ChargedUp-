@@ -5,7 +5,6 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Drivebase;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -13,9 +12,10 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import java.util.ArrayList;
 
 
-public class DriveToConeCommand extends CommandBase {
+public class DriveToGamePieceCommand extends CommandBase {
     NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
     NetworkTableEntry tx = table.getEntry("tx");
+
     //NetworkTableEntry ty = table.getEntry("ty");
     NetworkTableEntry ta = table.getEntry("ta");
     private final Drivebase drivebase;
@@ -26,11 +26,12 @@ public class DriveToConeCommand extends CommandBase {
 
     PIDController pidController = new PIDController(Constants.Drivebase.DRIVE_TO_CONE_KP, 0, 0);
 
-    public DriveToConeCommand() {
+    public DriveToGamePieceCommand() {
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
         drivebase = Drivebase.GetDrivebase();
         addRequirements(drivebase);
+        pidController.setSetpoint(Constants.Drivebase.LIMELIGHT_CAMERA_PIXEL_WIDTH/2);
     }
 
     @Override
@@ -44,7 +45,7 @@ public class DriveToConeCommand extends CommandBase {
 //        SmartDashboard.putNumber("LimelightY", limeLightY);
 //        SmartDashboard.putNumber("LimelightArea", limeLightA);
 
-        System.out.println("STARTING DRIVE TO CONE COMMAND NOW");
+        System.out.println("initializing drive to game piece command!!!");
 
         System.out.println("initial limelight X " + tx.getDouble(0.0));
         System.out.println("initial limelight A " + ta.getDouble(0.0));
@@ -52,7 +53,7 @@ public class DriveToConeCommand extends CommandBase {
 
     @Override
     public void execute() {
-        double limeA = ta.getDouble(0.0);
+        double limeA = ta.getDouble(0.0); //sets limeA to current area of rectangle
         listA.add(limeA);
         if (listA.size() > Constants.Drivebase.ROLLING_AVERAGE_LENGTH) {
             listA.remove(0);
@@ -73,8 +74,7 @@ public class DriveToConeCommand extends CommandBase {
         double averageX = sumX / listX.size();
 
         double driveThrottle = Constants.Drivebase.BASE_DRIVE_TO_CONE_SPEED;
-        double turnThrottle = pidController.calculate(0,
-                averageX - (Constants.Drivebase.LIMELIGHT_CAMERA_PIXEL_WIDTH / 2));
+        double turnThrottle = pidController.calculate(averageX);
 
         double leftSpeed = driveThrottle + turnThrottle; //calculates leftSpeed and rightSpeed
         double rightSpeed = driveThrottle - turnThrottle;

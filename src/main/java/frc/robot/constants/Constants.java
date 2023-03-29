@@ -47,6 +47,9 @@ public class Constants extends CommandBase {
         //slow mode driving
         public static final int DRIVE_SLOW = 1;
 
+        //center on game piece teleop assist
+        public static final int CENTER_ON_PIECE = 2;
+
         //top row
         public static final int ENABLE_MANUAL =8;
 
