@@ -31,7 +31,7 @@ public class DriveToGamePieceCommand extends CommandBase {
         // addRequirements() method (which takes a vararg of Subsystem)
         drivebase = Drivebase.GetDrivebase();
         addRequirements(drivebase);
-        pidController.setSetpoint(Constants.Drivebase.LIMELIGHT_CAMERA_PIXEL_WIDTH/2);
+        pidController.setSetpoint(0);
     }
 
     @Override
@@ -76,8 +76,8 @@ public class DriveToGamePieceCommand extends CommandBase {
         double driveThrottle = Constants.Drivebase.BASE_DRIVE_TO_CONE_SPEED;
         double turnThrottle = pidController.calculate(averageX);
 
-        double leftSpeed = driveThrottle + turnThrottle; //calculates leftSpeed and rightSpeed
-        double rightSpeed = driveThrottle - turnThrottle;
+        double leftSpeed = driveThrottle - turnThrottle; //calculates leftSpeed and rightSpeed
+        double rightSpeed = driveThrottle + turnThrottle;
 
         leftSpeed = MathUtil.clamp(leftSpeed, -1, 1);
         rightSpeed = MathUtil.clamp(rightSpeed, -1, 1);
