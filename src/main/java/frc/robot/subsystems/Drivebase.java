@@ -27,6 +27,7 @@ public class Drivebase implements Subsystem {
     double frontRangeVoltage;
 
     private double lastHeading;
+    public double currentMotorSpeed;
 
     public double getFrontRangeVoltage() {
         return frontRangeVoltage;
@@ -87,6 +88,8 @@ public class Drivebase implements Subsystem {
         else {
             driveDirection = DriveDirection.UNCLEAR;
         }
+
+        currentMotorSpeed = Math.abs(turnSpeedLeft);
     }
 
     public double getPosLeft() {

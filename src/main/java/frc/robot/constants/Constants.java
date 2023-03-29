@@ -34,6 +34,8 @@ public class Constants extends CommandBase {
 
         public static final double INTAKE_HOLDING = .025;
         public static final double INTAKE_HOLDING_SPEED = INTAKE_HOLDING / WHEEL_CIRCUMFERENCE * WHEEL_REVS_PER_SEC_TO_VELOCITY;
+
+        public static final double SCALE_BY_DRIVEBASE = 4;
     }
     public class JoystickPorts {
 

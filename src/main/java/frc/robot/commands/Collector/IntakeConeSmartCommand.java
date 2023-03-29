@@ -4,13 +4,17 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Collector;
+import frc.robot.subsystems.Drivebase;
 
 
 public class IntakeConeSmartCommand extends CommandBase {
     private final Collector collectorInstance;
+    private final Drivebase drivebaseInstance = Drivebase.GetDrivebase();
     private final Arm armInstance;
     private int countConeHeld;
     private int ticksElapsed;
+
+
 
     public IntakeConeSmartCommand() {
         armInstance = Arm.getInstance();
@@ -23,15 +27,23 @@ public class IntakeConeSmartCommand extends CommandBase {
 
     @Override
     public void initialize() {
+
         System.out.println("Intake Cone Smart Command Initialize");
         countConeHeld = 0;
         ticksElapsed = 0;
+
     }
 
 
     @Override
     public void execute() {
-        collectorInstance.SetSpeed(armInstance.getCurrentPose().ConeIntake() * Constants.Collector.INTAKE_MOTOR_SPEED);
+        double Speed = Constants.Collector.INTAKE_MOTOR_SPEED * drivebaseInstance.currentMotorSpeed
+                + Constants.Collector.INTAKE_MOTOR_SPEED * Constants.Collector.SCALE_BY_DRIVEBASE * (
+                        drivebaseInstance.currentMotorSpeed - 1);
+        //Collector Velocity=M(Vd-0) + MK(Vd-1) this is the formula
+        collectorInstance.SetSpeed(armInstance.getCurrentPose().ConeIntake() * Speed);
+
+
         if (collectorInstance.isHoldingCone()) {
             countConeHeld++;
         } else {
