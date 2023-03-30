@@ -1,4 +1,4 @@
-package frc.robot.commands.autos;
+package frc.robot.commands.autos.CompAutos;
 
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
@@ -9,14 +9,16 @@ import frc.robot.commands.Collector.ExpelCubeCommand;
 import frc.robot.commands.Collector.IntakeConeSmartCommand;
 import frc.robot.commands.arm.ResetArm;
 import frc.robot.commands.arm.SetArmPositionCommand;
+import frc.robot.commands.autos.SafeBalanceCommandGroup;
+import frc.robot.commands.autos.TimerCommand;
 import frc.robot.commands.drivebase.DriveDistanceCommandGyro;
 import frc.robot.commands.drivebase.RotateCommand;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Drivebase;
 
-public class TwoPieceBalance8Red extends SequentialCommandGroup
+public class TwoPieceBalance8Blue extends SequentialCommandGroup
 {
-    public TwoPieceBalance8Red()
+    public TwoPieceBalance8Blue()
     {
         // TODO: Add your sequential commands in the super() call, e.g.
         //           super(new OpenClawCommand(), new MoveArmCommand());
@@ -31,7 +33,7 @@ public class TwoPieceBalance8Red extends SequentialCommandGroup
               new ParallelRaceGroup(
                       new SetArmPositionCommand(Constants.ArmPose.STOW),
                       new TimerCommand(.3),
-                      new RotateCommand(Drivebase.GetDrivebase(), -12, false)
+                      new RotateCommand(Drivebase.GetDrivebase(), 12, false)
               ),
               new ParallelCommandGroup(
                       new DriveDistanceCommandGyro(Drivebase.GetDrivebase(),-10.5,.525),
@@ -48,14 +50,14 @@ public class TwoPieceBalance8Red extends SequentialCommandGroup
                       new IntakeConeSmartCommand()
               ),
               new ParallelCommandGroup(
-                      new DriveDistanceCommandGyro(Drivebase.GetDrivebase(),11.8,.565),
+                      new DriveDistanceCommandGyro(Drivebase.GetDrivebase(),11.25,.565),
                       new ParallelRaceGroup(
                               new IntakeConeSmartCommand(),
                               new SetArmPositionCommand(Constants.ArmPose.STOW_AUTO),
                               new TimerCommand(1.5)
                       )
               ),
-              new RotateCommand(Drivebase.GetDrivebase(), -140, false),
+              new RotateCommand(Drivebase.GetDrivebase(), 140, false),
               new ParallelRaceGroup(
                       new ExpelConeCommand(),
                       new TimerCommand(.2)
