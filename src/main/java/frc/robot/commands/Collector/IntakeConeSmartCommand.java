@@ -1,5 +1,6 @@
 package frc.robot.commands.Collector;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
@@ -37,10 +38,12 @@ public class IntakeConeSmartCommand extends CommandBase {
 
     @Override
     public void execute() {
-        double Speed = Constants.Collector.INTAKE_MOTOR_SPEED * drivebaseInstance.currentMotorSpeed
-                + Constants.Collector.INTAKE_MOTOR_SPEED * Constants.Collector.SCALE_BY_DRIVEBASE * (
-                        drivebaseInstance.currentMotorSpeed - 1);
-        //Collector Velocity=M(Vd-0) + MK(Vd-1) this is the formula
+
+        double Speed =
+                Constants.Collector.SCALE_BY_DRIVEBASE * drivebaseInstance.currentMotorSpeed * Constants.Collector.INTAKE_MOTOR_SPEED
+                        + Constants.Collector.INTAKE_MOTOR_SPEED;
+        SmartDashboard.putNumber("collector speed", Speed);
+        //Collector Velocity=Y = Mx + B
         collectorInstance.SetSpeed(armInstance.getCurrentPose().ConeIntake() * Speed);
 
 

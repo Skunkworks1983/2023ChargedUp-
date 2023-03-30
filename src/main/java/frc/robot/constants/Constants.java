@@ -13,7 +13,7 @@ public class Constants extends CommandBase {
         public static final int CUBE_BREAK_1_PORT = 2;
         public static final int CUBE_BREAK_2_PORT = 3;
 
-        public static final double CONE_COLLECT_AMP_THRESHOLD = 12;
+        public static final double CONE_COLLECT_AMP_THRESHOLD = 20;
         public static final double CONE_AMPS_HOLDING_THRESHOLD = 10;
         
         public static final double INTAKE_SPEED = 10; //inches per second
