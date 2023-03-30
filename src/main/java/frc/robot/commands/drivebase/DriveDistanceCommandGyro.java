@@ -17,6 +17,7 @@ public class DriveDistanceCommandGyro extends CommandBase
     private int direction;
     private double startDegree;
     private double baseSpeed;
+    private int periodicCounter;
     private PIDController pidController = new PIDController(Constants.Drivebase.ARCADE_DRIVE_KP, 0, Constants.Drivebase.ARCADE_DRIVE_KD);
 
     /**
@@ -56,11 +57,13 @@ public class DriveDistanceCommandGyro extends CommandBase
         }
         drivebase.SetBrakeMode(true);
         System.out.println("moving from " +startDistanceFT + " to " + finishDistanceFT);
+        periodicCounter = 0;
     }
 
     @Override
     public void execute()
     {
+        periodicCounter = (periodicCounter + 1) % 25;
         double headingError = startDegree - drivebase.getHeading();
         double error = finishDistanceFT - drivebase.getPosLeft();
         if(error < 0)
@@ -84,6 +87,10 @@ public class DriveDistanceCommandGyro extends CommandBase
         double leftSpeed = speed + turnThrottle;
         double rightSpeed = speed - turnThrottle;
         drivebase.runMotor(leftSpeed, rightSpeed);
+        if(periodicCounter == 0)
+        {
+            System.out.println("DriveDistanceGyro left speed: " + leftSpeed + " right speed: " + rightSpeed);
+        }
     }
 
     @Override
