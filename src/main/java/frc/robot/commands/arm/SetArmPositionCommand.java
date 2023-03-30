@@ -31,12 +31,15 @@ public class SetArmPositionCommand extends CommandBase
     public void initialize()
     {
         arm.setCurrentPosition(armPose);
-        this.shoulderAngleSetpoint = arm.getCurrentPose().shoulderAngle;
-        this.wristAngleSetpoint = arm.getCurrentPose().wristAngle;
+        Constants.ArmPose pos = arm.getCurrentPose();
+
+        this.shoulderAngleSetpoint = pos.shoulderAngle;
+        this.wristAngleSetpoint = pos.wristAngle;
         if(Math.abs(arm.ShoulderMotor.getClosedLoopTarget() * Constants.Arm.SHOULDER_TICKS_TO_DEGREES - Constants.ArmPos.SCORE_CONE_WEIRD_SHOULDER) < 1)
         {
             weirdAngle = true;
             arm.setWristAnglePosition(wristAngleSetpoint);
+            System.out.println("Weird angle is true");
         }
         else
         {
@@ -54,6 +57,7 @@ public class SetArmPositionCommand extends CommandBase
         {
             arm.setShoulderAnglePosition(shoulderAngleSetpoint);
             weirdAngle = false;
+            System.out.println("weird angle is no longer true, arm running");
         }
     }
 

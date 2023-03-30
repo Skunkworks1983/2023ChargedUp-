@@ -1,4 +1,4 @@
-package frc.robot.commands.autos;
+package frc.robot.commands.autos.CompAutos;
 
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
@@ -9,14 +9,16 @@ import frc.robot.commands.Collector.ExpelCubeCommand;
 import frc.robot.commands.Collector.IntakeConeSmartCommand;
 import frc.robot.commands.arm.ResetArm;
 import frc.robot.commands.arm.SetArmPositionCommand;
+import frc.robot.commands.autos.SafeBalanceCommandGroup;
+import frc.robot.commands.autos.TimerCommand;
 import frc.robot.commands.drivebase.DriveDistanceCommandGyro;
 import frc.robot.commands.drivebase.RotateCommand;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Drivebase;
 
-public class TwoPieceBalance2Blue extends SequentialCommandGroup
+public class TwoPiece2Blue extends SequentialCommandGroup
 {
-    public TwoPieceBalance2Blue()
+    public TwoPiece2Blue()
     {
         // TODO: Add your sequential commands in the super() call, e.g.
         //           super(new OpenClawCommand(), new MoveArmCommand());
@@ -55,18 +57,12 @@ public class TwoPieceBalance2Blue extends SequentialCommandGroup
                               new TimerCommand(1.5)
                       )
               ),
-              new RotateCommand(Drivebase.GetDrivebase(), -135.5, false),
+              new RotateCommand(Drivebase.GetDrivebase(), -180, false),
               new ParallelRaceGroup(
                       new ExpelConeCommand(),
                       new TimerCommand(.2)
               ),
-              new ParallelRaceGroup(
-                      new DriveDistanceCommandGyro(Drivebase.GetDrivebase(), 7.45, .5),
-                      new SetArmPositionCommand(Constants.ArmPose.STOW)
-              ),
-              new ParallelCommandGroup(
-                      new SafeBalanceCommandGroup(), new ResetArm()
-              )
+              new ResetArm()
              );
 
     }

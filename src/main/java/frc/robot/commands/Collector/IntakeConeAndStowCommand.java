@@ -21,7 +21,9 @@ public class IntakeConeAndStowCommand extends CommandBase {
     }
 
     @Override
-    public void initialize() {
+    public void initialize()
+    {
+        System.out.println("Intake and stow Initialized");
         IntakeCone.schedule();
     }
 
@@ -36,12 +38,14 @@ public class IntakeConeAndStowCommand extends CommandBase {
     @Override
     public boolean isFinished() {
         // TODO: Make this return true when this Command no longer needs to run execute()
-        return IntakeCone.isFinished() && StowCommand.isFinished();
+        return IntakeCone.isFinished();
     }
 
     @Override
-    public void end(boolean interrupted) {
-        IntakeCone.end(interrupted);
-        StowCommand.end(interrupted);
+    public void end(boolean interrupted)
+    {
+        System.out.println("Intake and stow End");
+        IntakeCone.cancel();
+        StowCommand.cancel();
     }
 }
