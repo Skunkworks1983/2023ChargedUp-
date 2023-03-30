@@ -6,13 +6,6 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.TrajectoryGenerator;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -20,7 +13,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.autos.CompAutos.CubeHighAndBalance5;
 import frc.robot.commands.autos.CompAutos.CubeHighLeaveCommunity2_8;
-import frc.robot.commands.autos.CompAutos.ConeLowAndBalance4_5_6;
+import frc.robot.commands.autos. CompAutos.ConeLowAndBalance4_5_6;
 import frc.robot.commands.autos.CompAutos.ConeMidLeaveCommunity1_9;
 import frc.robot.commands.autos.CompAutos.CubeMidLeaveCommunity2_8;
 import frc.robot.commands.autos.CompAutos.CubeMidAndBalance5;
@@ -33,20 +26,11 @@ import frc.robot.commands.autos.TwoPieceBalance2Blue;
 import frc.robot.commands.autos.TwoPieceBalance2Red;
 import frc.robot.commands.autos.TwoPieceBalance8Blue;
 import frc.robot.commands.autos.TwoPieceBalance8Red;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.arm.WaveCollectorCommandGroup;
-import frc.robot.commands.autos.SmartDriveCommand;
-import frc.robot.commands.autos.TestAutoTwoCommandGroup;
-import frc.robot.commands.autos.TestVolocityModeCommand;
-import frc.robot.commands.drivebase.TankDrive;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Collector;
 import frc.robot.subsystems.Drivebase;
 import frc.robot.services.Oi;
-
-import java.util.List;
-
 
 /**
  * The VM is configured to automatically run this class, and to call the methods corresponding to

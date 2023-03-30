@@ -20,7 +20,6 @@ import edu.wpi.first.math.trajectory.constraint.MaxVelocityConstraint;
 import edu.wpi.first.math.trajectory.constraint.TrajectoryConstraint;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalOutput;
-import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -28,7 +27,6 @@ import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.commands.drivebase.ArcadeDrive;
-import frc.robot.commands.autos.SmartDriveCommand;
 import frc.robot.constants.Constants;
 import frc.robot.services.Oi;
 
@@ -73,14 +71,6 @@ public class Drivebase implements Subsystem {
         backRangeVoltage = voltage;
     }
 
-    DigitalOutput frontRangeSensorTrigger = new DigitalOutput(Constants.Drivebase.FRONT_RANGE_SENSOR_OUTPUT_CHANNEL);
-
-    DigitalOutput backRangeSensorTrigger = new DigitalOutput(Constants.Drivebase.BACK_RANGE_SENSOR_OUTPUT_CHANNEL);
-
-    AnalogInput frontRangeSensorValue = new AnalogInput(Constants.Drivebase.FRONT_RANGE_SENSOR_INPUT_CHANNEL);
-
-    AnalogInput backRangeSensorValue = new AnalogInput(Constants.Drivebase.BACK_RANGE_SENSOR_INPUT_CHANNEL);
-
     public enum DriveDirection {FORWARD, BACKWARD, MOTIONLESS, UNCLEAR}
 
     DriveDirection driveDirection = DriveDirection.FORWARD;
@@ -109,12 +99,11 @@ public class Drivebase implements Subsystem {
 
     AHRS gyro = new AHRS(I2C.Port.kOnboard);
 
-    public enum DriveDirection {FORWARD,BACKWARD,MOTIONLESS}
-    DriveDirection driveDirection = DriveDirection.FORWARD;
 
     public final TrajectoryConstraint autoVoltageConstraint= new MaxVelocityConstraint(Constants.Drivebase.kMaxSpeedMetersPerSecond);
     public DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(Constants.Drivebase.kTrackwidthMeters);
 
+    private Timer timer = new Timer();
     public final TrajectoryConfig config =
             new TrajectoryConfig(
                     Constants.Drivebase.kMaxSpeedMetersPerSecond,
@@ -135,9 +124,6 @@ public Field2d getField(){
     private Drivebase()
     {
         SmartDashboard.putData("field",field);
-    Timer timer = new Timer();
-
-    private Drivebase() {
         setDefaultCommand(ArcadeDrive);
         gyro.calibrate();
         isHeadingReliable = false;
@@ -358,29 +344,6 @@ var d =.00;
 
     }
 
-    public DriveDirection getDriveDirection(){return driveDirection;}
-
-    public int getFrontRangeSensor(){
-        return frontRangeSensorValue.getValue();
-    }
-    public int getBackRangeSensor(){
-        return backRangeSensorValue.getValue();
-    }
-    public int getDirectionRangeSensor(){
-        if(driveDirection==DriveDirection.FORWARD)return getFrontRangeSensor();
-        if(driveDirection==DriveDirection.BACKWARD)return getBackRangeSensor();
-        return 0;
-    }
-
-    public void setDirectionRangeSensor(boolean value){
-        if(driveDirection==DriveDirection.FORWARD)setFrontRangeSensor(value);
-        if(driveDirection==DriveDirection.BACKWARD)setBackRangeSensor(value);
-    }
-
-    public void setBackRangeSensor(boolean value){backRangeSensorTrigger.set(value);}
-
-    public void setFrontRangeSensor(boolean value){frontRangeSensorTrigger.set(value);}
-
     @Override
     public void periodic() {
         // Update the odometry in the periodic block
@@ -407,11 +370,6 @@ var d =.00;
         odometry.update(
                 gyro.getRotation2d(), ticksToMeters((int)leftMotor1.getSelectedSensorPosition()), ticksToMeters((int)rightMotor1.getSelectedSensorPosition()));
 
-    }
-
-    public double getPitch()
-    {
-        return gyro.getPitch();
     }
 
     public void setRightMeters(double meters){
