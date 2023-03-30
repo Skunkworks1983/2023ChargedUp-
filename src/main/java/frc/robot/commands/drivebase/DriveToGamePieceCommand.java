@@ -8,22 +8,13 @@ import frc.robot.subsystems.Drivebase;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-
-import java.util.ArrayList;
+import frc.robot.subsystems.LimeLight;
 
 
 public class DriveToGamePieceCommand extends CommandBase {
-    NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
-    NetworkTableEntry tx = table.getEntry("tx");
 
-    //NetworkTableEntry ty = table.getEntry("ty");
-    NetworkTableEntry ta = table.getEntry("ta");
     private final Drivebase drivebase;
-    //double pixelError; //can be anywhere from -160 to 160
-
-    ArrayList<Double> listA = new ArrayList<>();
-    ArrayList<Double> listX = new ArrayList<>();
-
+    private final LimeLight limeLight;
     PIDController pidController = new PIDController
             (Constants.Drivebase.DRIVE_TO_CONE_KP, 0, Constants.Drivebase.DRIVE_TO_CONE_KD);
 
@@ -31,6 +22,7 @@ public class DriveToGamePieceCommand extends CommandBase {
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
         drivebase = Drivebase.GetDrivebase();
+        limeLight = LimeLight.getInstance();
         addRequirements(drivebase);
         pidController.setSetpoint(0);
     }
@@ -47,35 +39,14 @@ public class DriveToGamePieceCommand extends CommandBase {
 //        SmartDashboard.putNumber("LimelightArea", limeLightA);
 
         System.out.println("initializing drive to game piece command!!!");
-
-        System.out.println("initial limelight X " + tx.getDouble(0.0));
-        System.out.println("initial limelight A " + ta.getDouble(0.0));
     }
 
     @Override
     public void execute() {
-        double limeA = ta.getDouble(0.0); //sets limeA to current area of rectangle
-        listA.add(limeA);
-        if (listA.size() > Constants.Drivebase.ROLLING_AVERAGE_LENGTH) {
-            listA.remove(0);
-        }
 
-        double limeX = tx.getDouble(0.0); //sets limeX to current x value
-        listX.add(limeX);
-        if (listX.size() > Constants.Drivebase.ROLLING_AVERAGE_LENGTH) {
-            listX.remove(0);
-        }
-
-        double sumX = 0;
-
-        for (double listItem : listX) {
-            sumX = sumX + listItem;
-        }
-
-        double averageX = sumX / listX.size();
 
         double driveThrottle = Constants.Drivebase.BASE_DRIVE_TO_CONE_SPEED;
-        double turnThrottle = pidController.calculate(averageX);
+        double turnThrottle = pidController.calculate(limeLight.getLimeX());
 
         double leftSpeed = driveThrottle - turnThrottle; //calculates leftSpeed and rightSpeed
         double rightSpeed = driveThrottle + turnThrottle;
@@ -85,24 +56,14 @@ public class DriveToGamePieceCommand extends CommandBase {
 
         drivebase.runMotor(leftSpeed, rightSpeed);
 
-        System.out.println("limeX " + limeX);
-        System.out.println("limeA " + limeA);
-        System.out.println("averageX " + averageX);
         System.out.println("turnThrottle " + turnThrottle);
         System.out.println("leftSpeed " + leftSpeed  + "rightSpeed " + rightSpeed);
     }
 
     @Override
     public boolean isFinished() {
-        double sumA = 0;
-        for (double listItem : listA) {
-            sumA = sumA + listItem;
-        }
-        double averageA = sumA / listA.size();
 
-        System.out.println("averageA " + averageA);
-
-        return (averageA > Constants.Drivebase.LIMELIGHT_MAX_CONE_AREA);
+        return (limeLight.getLimeA() > Constants.Drivebase.LIMELIGHT_MAX_CONE_AREA);
     }
 
 

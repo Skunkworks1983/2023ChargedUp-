@@ -2,35 +2,31 @@ package frc.robot.commands.drivebase;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.constants.Constants;
 import frc.robot.services.Oi;
 import frc.robot.subsystems.Drivebase;
+import frc.robot.subsystems.LimeLight;
 
-import java.util.ArrayList;
 
 public class ArcadeDrive extends CommandBase {
     private final Drivebase drivebase;
     private final Oi oi;
+    private final LimeLight limeLight;
 
     private double targetHeading;
 
     private PIDController drivePidController = new PIDController(Constants.Drivebase.ARCADE_DRIVE_KP, 0, Constants.Drivebase.ARCADE_DRIVE_KD);
     private PIDController limeLightPidController = new PIDController(Constants.Drivebase.DRIVE_TO_CONE_KP, 0, 0);
 
-    NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
-    NetworkTableEntry tx = table.getEntry("tx");
-    ArrayList<Double> listX = new ArrayList<>();
-
-    public ArcadeDrive(Drivebase drivebase, Oi oi) {
+    public ArcadeDrive(Drivebase drivebase, Oi oi, LimeLight limeLight) {
 
         this.drivebase = drivebase;
         this.oi = oi;
+        this.limeLight = limeLight;
+
         addRequirements(drivebase);
     }
 
@@ -40,27 +36,10 @@ public class ArcadeDrive extends CommandBase {
         System.out.println("Arcadedrive beginning");
 
         System.out.println("turning to game piece init!!!");
-
-        System.out.println("initial limelight X " + tx.getDouble(0.0));
     }
 
     @Override
     public void execute() {
-
-        double limeX = tx.getDouble(0.0); //sets limeX to current x value
-        listX.add(limeX);
-        if (listX.size() > Constants.Drivebase.ROLLING_AVERAGE_LENGTH) {
-            listX.remove(0);
-        }
-
-        double sumX = 0;
-
-        for (double listItem : listX) {
-            sumX = sumX + listItem;
-        }
-
-        double averageX = sumX / listX.size();
-
 
         double leftX = oi.getLeftX();
         double rightY = -oi.getRightY();
@@ -85,8 +64,7 @@ public class ArcadeDrive extends CommandBase {
 
         if (oi.isCenterOnPiece()) {
 
-            turnThrottle = limeLightPidController.calculate
-                    (averageX, Constants.Drivebase.LIMELIGHT_CAMERA_PIXEL_WIDTH/2);
+            turnThrottle = limeLight.getLimeX();
 
         } else {
 
@@ -98,8 +76,8 @@ public class ArcadeDrive extends CommandBase {
         SmartDashboard.putNumber("arcade drive throttle joystick value", rightY);
         SmartDashboard.putNumber("arcade drive turn throttle", turnThrottle);
 
-        double leftSpeed = rightY + turnThrottle;
-        double rightSpeed = rightY - turnThrottle;
+        double leftSpeed = rightY - turnThrottle;
+        double rightSpeed = rightY + turnThrottle;
 
         leftSpeed = MathUtil.clamp(leftSpeed, -1, 1);
         rightSpeed = MathUtil.clamp(rightSpeed, -1, 1);
@@ -122,6 +100,6 @@ public class ArcadeDrive extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        System.out.println("Arcadedrive end Inturr " +interrupted );
+        System.out.println("Arcade drive end Interrupted " + interrupted );
     }
 }
