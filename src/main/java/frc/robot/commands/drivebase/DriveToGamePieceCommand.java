@@ -58,6 +58,7 @@ public class DriveToGamePieceCommand extends CommandBase {
 
         System.out.println("turnThrottle " + turnThrottle);
         System.out.println("leftSpeed " + leftSpeed  + "rightSpeed " + rightSpeed);
+        System.out.println("TX: " + limeLight.getLimeX() + " TY: " + limeLight.getLimeY());
     }
 
     @Override

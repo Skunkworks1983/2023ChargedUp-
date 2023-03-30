@@ -27,6 +27,7 @@ import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Collector;
 import frc.robot.subsystems.Drivebase;
 import frc.robot.services.Oi;
+import frc.robot.subsystems.LimeLight;
 
 
 /**
@@ -145,6 +146,7 @@ public class Robot extends TimedRobot
         {
             autonomousCommand.schedule();
         }
+        LimeLight.getInstance().setEnable(true);
        // autoChooser.addOption();
 
      //  SendableChooser autoChooser = (SendableChooser) SmartDashboard.getData("autoChooser");

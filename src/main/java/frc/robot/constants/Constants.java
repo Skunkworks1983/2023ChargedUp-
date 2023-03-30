@@ -139,7 +139,7 @@ public class Constants extends CommandBase {
         public static final double HEADING_TOO_BIG = 20;
         public static final double MAX_DRIVE_DISTANCE_SPEED = 0.3;
 
-        public static final double BASE_DRIVE_TO_CONE_SPEED = -0.60;
+        public static final double BASE_DRIVE_TO_CONE_SPEED = -0.6;
         public static final double DRIVE_TO_CONE_KP = 0.004;
         public static final double DRIVE_TO_CONE_KD = 0.0005;
 
