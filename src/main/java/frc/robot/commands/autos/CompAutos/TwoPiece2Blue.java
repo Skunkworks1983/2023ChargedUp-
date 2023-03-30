@@ -57,7 +57,7 @@ public class TwoPiece2Blue extends SequentialCommandGroup
                               new TimerCommand(1.5)
                       )
               ),
-              new RotateCommand(Drivebase.GetDrivebase(), -135.5, false),
+              new RotateCommand(Drivebase.GetDrivebase(), -180, false),
               new ParallelRaceGroup(
                       new ExpelConeCommand(),
                       new TimerCommand(.2)
