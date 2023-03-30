@@ -2,6 +2,7 @@ package frc.robot.commands.autos;
 
 //import com.ctre.phoenix.motorcontrol.can.SlotConfiguration;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.commands.drivebase.DetectRangeSensorCommand;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Drivebase;
 
@@ -18,41 +19,39 @@ public class BalanceOnChargeStationCommand extends CommandBase {
     double lastError;
 
     double i;
-    DetectRangeSensorCommand rangeSensor;
-    public BalanceOnChargeStationCommand(double p, double d, double i, double maxSpeed, DetectRangeSensorCommand rangeSensor) {
+    public BalanceOnChargeStationCommand(double p, double d, double i, double maxSpeed) {
 
         this.p = p;
         this.d=d;
         this.maxSpeed = maxSpeed;
         this.i=i;
-        this.rangeSensor=rangeSensor;
+
         //defaults //p=.022//d=0//max=.085
 
-        addRequirements();
+        addRequirements(Drivebase.GetDrivebase());
     }
 
 
     @Override
     public void initialize() {
+        System.out.println("BalanceOnChargeStation started");
     }
 
     @Override
     public void execute() {
 
-
         error= Drivebase.GetDrivebase().getPitch();
-        //System.out.println(error);
         double derivative = (error-lastError)*50;
         integral+=(error/50);
         double f =(error*p)+(derivative*d)+ (integral*i);
         if(f>maxSpeed)f=maxSpeed;
         if(f<-maxSpeed)f=-maxSpeed;
-        if(f>0)rangeSensor.setCurrentDirection(Drivebase.DriveDirection.FORWARD);
-        if(f<0)rangeSensor.setCurrentDirection(Drivebase.DriveDirection.BACKWARD);
-        if(f==0)rangeSensor.setCurrentDirection(Drivebase.DriveDirection.MOTIONLESS);
-        if(f>0&&rangeSensor.getFrontVoltage()> Constants.Drivebase.MAXIMUM_BALANCE_DISTANCE_FROM_GROUND_FRONT){f=0;System.out.println("front voltage too high");}
-        if(f<0&&rangeSensor.getBackVoltage()> Constants.Drivebase.MAXIMUM_BALANCE_DISTANCE_FROM_GROUND_BACK){f=0;System.out.println("back voltage too high");}
-
+        if(f>0&&Drivebase.GetDrivebase().getFrontRangeVoltage()> Constants.Drivebase.MAXIMUM_BALANCE_DISTANCE_FROM_GROUND_FRONT){f=0;}
+        if(f<0&&Drivebase.GetDrivebase().getBackRangeVoltage()> Constants.Drivebase.MAXIMUM_BALANCE_DISTANCE_FROM_GROUND_BACK){f=0;}
+        if(Math.abs(error) < 5)
+        {
+            f = 0;
+        }
         Drivebase.GetDrivebase().runMotor(f,f);
         lastError=error;
 
@@ -64,6 +63,6 @@ public class BalanceOnChargeStationCommand extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-
+        System.out.println("BalanceOnChargeStation ended. interupted:" + interrupted);
     }
 }

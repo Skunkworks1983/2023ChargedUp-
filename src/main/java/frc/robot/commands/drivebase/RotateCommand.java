@@ -1,5 +1,6 @@
 package frc.robot.commands.drivebase;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Drivebase;
@@ -11,46 +12,58 @@ public class RotateCommand extends CommandBase
     private double startDegree;
     private double finishDegree;
     private int onTargetCount;
+    private boolean absolute;
+   private PIDController pidController = new PIDController(Constants.Drivebase.ANGLE_KP, 0.0032, Constants.Drivebase.ANGLE_KD,Constants.Drivebase.DRIVEBASE_KF);
 
     public RotateCommand(Drivebase drivebase, double degree)
     {
-        addRequirements();
+       this(drivebase, degree, false);
+    }
+    public RotateCommand(Drivebase drivebase, double degree, boolean absolute){
+
+        addRequirements(drivebase);
         this.drivebase = drivebase;
         this.degree = degree;
+        pidController.setIntegratorRange(-0.2, 0.2);
+        this.absolute = absolute;
+
     }
 
     @Override
     public void initialize()
     {
+
         startDegree = drivebase.getHeading();
-        finishDegree = startDegree + degree;
-        System.out.println("turning to: " + (finishDegree));
-        System.out.println("starting speed is: " + (Constants.Drivebase.ROTATE_KP * (finishDegree - drivebase.getHeading())) + ", starting degree is: " + startDegree);
+        if(absolute) {
+            finishDegree = degree;
+        } else{
+            finishDegree = startDegree + degree;
+        }
+        System.out.println("starting RotateCommand");
     }
 
     @Override
     public void execute()
     {
-        double error = finishDegree - drivebase.getHeading();
-
-        System.out.println("error: "+error+" heading "+drivebase.getHeading());
-        double speed = (Constants.Drivebase.ANGLE_KP * error) + Math.copySign(Constants.Drivebase.ROTATE_KF, error);
-        if (speed > 0.5)
+        System.out.print("err: " + (finishDegree-drivebase.getHeading()));
+        double speed = 0;
+        speed = pidController.calculate(drivebase.getHeading(), finishDegree);
+        if(speed > 0.5)
         {
-            speed = 0.5;
+            speed =0.5;
         }
-        if(speed < -0.5)
+        else if(speed < -0.5)
         {
             speed = -0.5;
         }
         drivebase.runMotor(speed, -speed);
-        //SmartDashboard.putNumber("angle", drivebase.getHeading());
+        System.out.println(" speed: " + speed);
     }
 
     @Override
     public boolean isFinished()
     {
-        if(Math.abs(drivebase.getHeading() - finishDegree)< 0.8)
+        if(Math.abs(drivebase.getHeading() - finishDegree)< Constants.Drivebase.THRESHOLD_ROTATE)
         {
             onTargetCount++;
         }
@@ -58,7 +71,7 @@ public class RotateCommand extends CommandBase
         {
             onTargetCount = 0;
         }
-        return onTargetCount >= Constants.Drivebase.THRESHOLD_ROTATE;
+        return onTargetCount >= 3;
 //        if(degree > 0)
 //        {
 //            return drivebase.getHeading() > finishDegree;
@@ -73,6 +86,6 @@ public class RotateCommand extends CommandBase
     public void end(boolean interrupted)
     {
         drivebase.runMotor(0, 0);
-        System.out.println("ending, final degree: " + drivebase.getHeading());
+        System.out.println("ending RotateCommand");
     }
 }

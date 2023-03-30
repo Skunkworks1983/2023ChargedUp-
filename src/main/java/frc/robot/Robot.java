@@ -14,8 +14,25 @@ import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.autos.CompAutos.CubeHighAndBalance5;
+import frc.robot.commands.autos.CompAutos.CubeHighLeaveCommunity2_8;
+import frc.robot.commands.autos.CompAutos.ConeLowAndBalance4_5_6;
+import frc.robot.commands.autos.CompAutos.ConeMidLeaveCommunity1_9;
+import frc.robot.commands.autos.CompAutos.CubeMidLeaveCommunity2_8;
+import frc.robot.commands.autos.CompAutos.CubeMidAndBalance5;
+import frc.robot.commands.autos.CompAutos.ConeMidAndBalance4_6;
+import frc.robot.commands.autos.CompAutos.DoNothing;
+import frc.robot.commands.autos.ScoreAndExitCommunityP1CommandGroup;
+import frc.robot.commands.autos.ScoreAndExitCommunityP2CommandGroup;
+import frc.robot.commands.autos.SimpleAutoCommandGroup;
+import frc.robot.commands.autos.TwoPieceBalance2Blue;
+import frc.robot.commands.autos.TwoPieceBalance2Red;
+import frc.robot.commands.autos.TwoPieceBalance8Blue;
+import frc.robot.commands.autos.TwoPieceBalance8Red;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.arm.WaveCollectorCommandGroup;
 import frc.robot.commands.autos.SmartDriveCommand;
@@ -24,8 +41,9 @@ import frc.robot.commands.autos.TestVolocityModeCommand;
 import frc.robot.commands.drivebase.TankDrive;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
-import frc.robot.services.Oi;
+import frc.robot.subsystems.Collector;
 import frc.robot.subsystems.Drivebase;
+import frc.robot.services.Oi;
 
 import java.util.List;
 
@@ -38,18 +56,22 @@ import java.util.List;
  */
 public class Robot extends TimedRobot
 {
-    private Drivebase drivebase = Drivebase.GetDrivebase();
-    private Oi oi = new Oi(drivebase);
-
-
+    private boolean setBrakeModeOnDisable = true;
+    private Oi oi = Oi.GetInstance();
     private Command autonomousCommand;
-
+    private SendableChooser autoChooser;
+    private Drivebase drivebase = Drivebase.GetDrivebase();
+    private Collector collector = Collector.getInstance();
+    Command DriveOnChargeStationAndBalanceP2 = new ConeMidAndBalance4_6();
+    Command SimpleAuto = new SimpleAutoCommandGroup();
+    Command ScoreAndExitCommunityP2 = new ScoreAndExitCommunityP2CommandGroup();
+    Command ScoreAndExitCommunityP1 = new ScoreAndExitCommunityP1CommandGroup();
     private RobotContainer robotContainer;
-
 
     private Arm arm;
 
-    
+
+
     /**
      * This method is run when the robot is first started up and should be used for any
      * initialization code.
@@ -57,15 +79,42 @@ public class Robot extends TimedRobot
     @Override
     public void robotInit()
     {
-        // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
-        // autonomous chooser on the dashboard.
         arm = Arm.getInstance();
+        arm.WristMotor.setNeutralMode(NeutralMode.Coast);
+        autoChooser = new SendableChooser();
+        autoChooser.addOption("ConeMidAndBalance4_6", new ConeMidAndBalance4_6());
+        autoChooser.addOption("CubeMidAndBalance5",new CubeMidAndBalance5());
+        autoChooser.addOption("ConeMidLeaveCommunity1_9",new ConeMidLeaveCommunity1_9());
+        autoChooser.addOption("CubeMidLeaveCommunity2_8",new CubeMidLeaveCommunity2_8());
+        autoChooser.addOption("ConeLowAndBalance4_5_6",new ConeLowAndBalance4_5_6());
+        autoChooser.addOption("CubeHighAndBalance5",new CubeHighAndBalance5());
+        autoChooser.addOption("CubeHighLeaveCommunity2_8",new CubeHighLeaveCommunity2_8());
+        autoChooser.addOption("DoNothing", new DoNothing());
+        autoChooser.addOption("TwoPieceBalance8Red",new TwoPieceBalance8Red());
+        autoChooser.addOption("TwoPieceBalance8Blue",new TwoPieceBalance8Blue());
+        autoChooser.addOption("TwoPieceBalance2Red",new TwoPieceBalance2Red());
+        autoChooser.addOption("TwoPieceBalance2Blue",new TwoPieceBalance2Blue());
+
+
+        //autoChooser.addOption("oneBallAutosHigh", new OneBallAutosHighCommandGroup());
+       // autoChooser.addOption("oneBallAutosLow", new OneBallAutosLowCommandGroup());
+        SmartDashboard.putData("autoChooser", autoChooser);
+
+        // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
+        // autonomous chooser on the dashboard.\
+
         robotContainer = new RobotContainer();
+
+        drivebase.waitForHeadingReliable();
+
+        SmartDashboard.putNumber("floor cube pickup", Constants.ArmPos.FLOOR_CUBE_PICKUP_WRIST);
     }
 
 
+
     
-    
+
+
     /**
      * This method is called every 20 ms, no matter the mode. Use this for items like diagnostics
      * that you want ran during disabled, autonomous, teleoperated and test.
@@ -87,13 +136,23 @@ public class Robot extends TimedRobot
      * This method is called once each time the robot enters Disabled mode.
      */
     @Override
-    public void disabledInit() {
-
+    public void disabledInit()
+    {
+        drivebase.runMotor(0,0);
+        arm.WristMotor.setNeutralMode(NeutralMode.Coast);
+        if (setBrakeModeOnDisable)
+        {
+            drivebase.SetBrakeMode(true);
+        }
+        arm.SetLightMode(Constants.Lights.PARTY);
+        System.out.println("compete");
     }
-    
-    
+
+
     @Override
-    public void disabledPeriodic() {
+    public void disabledPeriodic()
+    {
+        SmartDashboard.putNumber("wrist angle: " , arm.getWristAngle());
     }
 
 
@@ -101,120 +160,65 @@ public class Robot extends TimedRobot
      * This autonomous runs the autonomous command selected by your {@link RobotContainer} class.
      */
     @Override
-
-    public void autonomousInit() {
-        Drivebase.GetDrivebase().SetBrakeMode(true);
-        //new TestAutoTwoCommandGroup().schedule();
-
-        Drivebase.GetDrivebase().setPose(new Pose2d(Units.feetToMeters(6.33),Units.feetToMeters(23),  new Rotation2d(Math.PI)));
-
-
-        new SmartDriveCommand(Constants.Autos.FirstAuto.trajectoryOne).schedule();
-/*
-        double distance=3;
-        Trajectory exampleTrajectoryInMeters =
-                TrajectoryGenerator.generateTrajectory(
-                        // Start at the origin facing the +X direction
-                        new Pose2d(0, 0, new Rotation2d(0)),
-                        // Pass through these two interior waypoints, making an 's' curve path
-                        List.of(new Translation2d(distance, 0),new Translation2d(distance, -distance)
-                        ,new Translation2d(0, -distance)),
-                        // End 3 meters straight ahead of where we started, facing forward
-                        new Pose2d(0, 0, new Rotation2d(Math.PI/2)),
-                        // Pass config
-                        Drivebase.GetDrivebase().config);
-
-        new SmartDriveCommand(exampleTrajectoryInMeters).schedule();
-
-        Trajectory tOne=TrajectoryGenerator.generateTrajectory(
-                // Start at the origin facing the +X direction
-                new Pose2d(0, 0, new Rotation2d(0)),
-                // Pass through these two interior waypoints, making an 's' curve path
-                List.of(new Translation2d(.5, 0)),
-                // End 3 meters straight ahead of where we started, facing forward
-                new Pose2d(0, 0, new Rotation2d(0)),
-                // Pass config
-                Drivebase.GetDrivebase().config);
-        for (int i=0; i<4; i++){
-            Trajectory a = TrajectoryGenerator.generateTrajectory(
-                    // Start at the origin facing the +X direction
-                    new Pose2d(0, -i, new Rotation2d(0)),
-                    // Pass through these two interior waypoints, making an 's' curve path
-                    List.of(new Translation2d(3, -i),new Translation2d(3, -i-1)
-                            ,new Translation2d(0, -distance)),
-                    // End 3 meters straight ahead of where we started, facing forward
-                    new Pose2d(0, -i-1, new Rotation2d(Math.PI/2)),
-                    // Pass config
-                    Drivebase.GetDrivebase().config);
-            tOne=tOne.concatenate(a);}
-
-
-        /*Trajectory exampleTrajectoryInMetersTwo =
-                TrajectoryGenerator.generateTrajectory(
-                        // Start at the origin facing the +X direction
-                        new Pose2d(4, 0, new Rotation2d(Math.PI)),
-                        // Pass through these two interior waypoints, making an 's' curve path
-                        List.of(new Translation2d(2, 0.05)),
-                        // End 3 meters straight ahead of where we started, facing forward
-                        new Pose2d(0, 0, new Rotation2d(0)),
-                        // Pass config
-                        Drivebase.GetDrivebase().config);
-
-*/
-
-
+    public void autonomousInit()
+    {
+        Collector.getInstance().SetSpeed(0);
+        arm.SetLightMode(Constants.Lights.BLANK);
+        setBrakeModeOnDisable = true;
+        arm.WristMotor.setNeutralMode(NeutralMode.Brake);
+        CommandScheduler.getInstance().cancelAll();
+        SendableChooser autoChooser = (SendableChooser) SmartDashboard.getData("autoChooser");
+        autonomousCommand = (Command)autoChooser.getSelected();
+        if (autonomousCommand != null)
+        {
+            autonomousCommand.schedule();
+        }
+       // autoChooser.addOption();
     }
 
 
     @Override
     public void teleopInit()
     {
-        arm = Arm.getInstance();
-        arm.ShoulderMotor.set(TalonFXControlMode.PercentOutput, 0);
-        arm.ShoulderMotor.setNeutralMode(NeutralMode.Brake);
-
-        //double rotateTo = 15;
-        Command TankDrive = new TankDrive(drivebase, oi);
-
-        TankDrive.schedule();
-
-        /* if (autonomousCommand != null)
-        {
-            autonomousCommand.cancel();
-        } */
+        arm.SetLightMode(Constants.Lights.BLANK);
+        drivebase.setGyroStatus(false);
+        setBrakeModeOnDisable = true;
+        drivebase.SetBrakeMode(true);
     }
-    
-    
+
+
     /** This method is called periodically during operator control. */
     @Override
-    public void teleopPeriodic() {}
+    public void teleopPeriodic()
+{
+}
     
     
     @Override
     public void testInit()
     {
-        Drivebase.GetDrivebase().SetBrakeMode(false);
+        setBrakeModeOnDisable = false;
+        drivebase.SetBrakeMode(false);
         // Cancels all running commands at the start of test mode.
         CommandScheduler.getInstance().cancelAll();
+        arm = Arm.getInstance();
+        arm.SetBrakeMode(false, arm.ShoulderMotor);
+        arm.SetBrakeMode(false, arm.WristMotor);
     }
-    
-    
+
+
     /** This method is called periodically during test mode. */
     @Override
     public void testPeriodic()
     {
-        arm = Arm.getInstance();
-
-        System.out.println("Limit switch front: " + arm.limitSwitchOutput(Constants.Arm.SHOULDER_LIMIT_SWITCH_FRONT));
-        System.out.println("Limit switch back: " + arm.limitSwitchOutput(Constants.Arm.SHOULDER_LIMIT_SWITCH_BACK));
     }
-    
-    
+
+
     /** This method is called once when the robot is first started up. */
     @Override
     public void simulationInit() {}
-    
-    
+
+
     /** This method is called periodically whilst in simulation. */
     @Override
     public void simulationPeriodic() {}

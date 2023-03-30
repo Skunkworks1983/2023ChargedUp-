@@ -15,25 +15,19 @@ public class ExpelCubeCommand extends CommandBase {
         collectorInstance = Collector.getInstance();
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
-        addRequirements();
+        addRequirements(collectorInstance);
     }
 
     @Override
     public void initialize() {
-
-        if(armInstance.getShoulderAngle() < 0) {
-            collectorInstance.Setspeed(-Constants.Collector.EXPEL_MOTOR_SPEED);
-        }
-        else {
-            collectorInstance.Setspeed(Constants.Collector.EXPEL_MOTOR_SPEED);
-        }
-
-
-
+        System.out.println("Expel Cube Initialized");
+        collectorInstance.SetSpeed(armInstance.getCurrentPose().CubeExpel() *Constants.Collector.EXPEL_MOTOR_SPEED);
     }
 
     @Override
-    public void execute() {
+    public void execute()
+    {
+        
     }
 
     @Override
@@ -42,7 +36,16 @@ public class ExpelCubeCommand extends CommandBase {
     }
 
     @Override
-    public void end(boolean interrupted) {
-        collectorInstance.Setspeed(0);
+    public void end(boolean interrupted)
+    {
+        collectorInstance.SetSpeed(0);
+        if(interrupted)
+        {
+            System.out.println("Expel Cube Command Ended, interrupted");
+        }
+        else
+        {
+            System.out.println("Expel Cube Command Ended");
+        }
     }
-    }
+}

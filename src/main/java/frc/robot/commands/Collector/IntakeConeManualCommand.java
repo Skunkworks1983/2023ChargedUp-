@@ -1,6 +1,5 @@
 package frc.robot.commands.Collector;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
@@ -16,26 +15,18 @@ public class IntakeConeManualCommand extends CommandBase {
         collectorInstance = Collector.getInstance();
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
-        addRequirements();
+        addRequirements(collectorInstance);
     }
 
     @Override
     public void initialize() {
-
-        if(armInstance.getShoulderAngle() < 0) {
-            collectorInstance.Setspeed(-Constants.Collector.INTAKE_MOTOR_SPEED * Constants.Collector.MANUAL_INTAKE_MULTIPLIER);
-        }
-        else {
-            collectorInstance.Setspeed(Constants.Collector.INTAKE_MOTOR_SPEED * Constants.Collector.MANUAL_INTAKE_MULTIPLIER);
-        }
-
-
-
+        System.out.println("Intake cone manual initialize");
     }
 
     @Override
     public void execute() {
-        SmartDashboard.putNumber("Colletor current", collectorInstance.GetCollectorCurrent());
+        collectorInstance.SetSpeed(armInstance.getCurrentPose().ConeIntake()
+                * Constants.Collector.INTAKE_MOTOR_SPEED + Constants.Collector.MANUAL_INTAKE_MULTIPLIER);
     }
 
     @Override
@@ -44,7 +35,16 @@ public class IntakeConeManualCommand extends CommandBase {
     }
 
     @Override
-    public void end(boolean interrupted) {
-        collectorInstance.Setspeed(0);
+    public void end(boolean interrupted)
+    {
+        collectorInstance.SetSpeed(0);
+        if(interrupted)
+        {
+            System.out.println("Intake Cone Manual Command Ended, interrupted");
+        }
+        else
+        {
+            System.out.println("Intake Cone Manual Command Ended");
+        }
     }
 }

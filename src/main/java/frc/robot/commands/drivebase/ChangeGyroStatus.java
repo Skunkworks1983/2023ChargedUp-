@@ -1,15 +1,16 @@
-package frc.robot.subsystems;
+package frc.robot.commands.drivebase;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.Drivebase;
 
 
-public class TimerCommand extends CommandBase {
-    double seconds;
-    Timer timer = new Timer();
+public class ChangeGyroStatus extends CommandBase {
 
-    public TimerCommand(double seconds) {
-        this.seconds = seconds;
+    private boolean gyroSet = false;
+    private boolean status;
+
+    public ChangeGyroStatus(boolean status) {
+        this.status = status;
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
         addRequirements();
@@ -17,18 +18,21 @@ public class TimerCommand extends CommandBase {
 
     @Override
     public void initialize() {
-        timer.start();
+        System.out.println("Setting gyro to " + status);
+
+        Drivebase.GetDrivebase().setGyroStatus(status);
+
+        gyroSet = true;
     }
 
     @Override
     public void execute() {
+
     }
 
     @Override
     public boolean isFinished() {
-        // TODO: Make this return true when this Command no longer needs to run execute()
-
-        return timer.get() >= seconds;
+        return gyroSet;
     }
 
     @Override
