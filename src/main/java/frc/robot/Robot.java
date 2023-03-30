@@ -175,6 +175,7 @@ public class Robot extends TimedRobot
     @Override
     public void teleopPeriodic()
 {
+    //System.out.println("averageA " + averageA);
 }
     
     

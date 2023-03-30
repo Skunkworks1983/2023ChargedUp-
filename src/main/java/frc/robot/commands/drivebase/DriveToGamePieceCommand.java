@@ -24,7 +24,8 @@ public class DriveToGamePieceCommand extends CommandBase {
     ArrayList<Double> listA = new ArrayList<>();
     ArrayList<Double> listX = new ArrayList<>();
 
-    PIDController pidController = new PIDController(Constants.Drivebase.DRIVE_TO_CONE_KP, 0, 0);
+    PIDController pidController = new PIDController
+            (Constants.Drivebase.DRIVE_TO_CONE_KP, 0, Constants.Drivebase.DRIVE_TO_CONE_KD);
 
     public DriveToGamePieceCommand() {
         // each subsystem used by the command must be passed into the
