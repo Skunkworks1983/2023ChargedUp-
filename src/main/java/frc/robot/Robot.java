@@ -12,11 +12,14 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.arm.WaveCollectorCommandGroup;
 import frc.robot.commands.autos.SmartDriveCommand;
+import frc.robot.commands.autos.TestAutoTwoCommandGroup;
 import frc.robot.commands.autos.TestVolocityModeCommand;
 import frc.robot.commands.drivebase.TankDrive;
 import frc.robot.constants.Constants;
@@ -101,20 +104,64 @@ public class Robot extends TimedRobot
 
     public void autonomousInit() {
         Drivebase.GetDrivebase().SetBrakeMode(true);
+        //new TestAutoTwoCommandGroup().schedule();
+
+        Drivebase.GetDrivebase().setPose(new Pose2d(Units.feetToMeters(6.33),Units.feetToMeters(23),  new Rotation2d(Math.PI)));
+
+
+        new SmartDriveCommand(Constants.Autos.FirstAuto.trajectoryOne).schedule();
+/*
+        double distance=3;
         Trajectory exampleTrajectoryInMeters =
                 TrajectoryGenerator.generateTrajectory(
                         // Start at the origin facing the +X direction
                         new Pose2d(0, 0, new Rotation2d(0)),
                         // Pass through these two interior waypoints, making an 's' curve path
-                        List.of(new Translation2d(2, 0)),
+                        List.of(new Translation2d(distance, 0),new Translation2d(distance, -distance)
+                        ,new Translation2d(0, -distance)),
                         // End 3 meters straight ahead of where we started, facing forward
-                        new Pose2d(2, 1, new Rotation2d(0)),
+                        new Pose2d(0, 0, new Rotation2d(Math.PI/2)),
                         // Pass config
                         Drivebase.GetDrivebase().config);
 
-        SmartDriveCommand drive = new SmartDriveCommand(exampleTrajectoryInMeters);
+        new SmartDriveCommand(exampleTrajectoryInMeters).schedule();
 
-        drive.schedule();
+        Trajectory tOne=TrajectoryGenerator.generateTrajectory(
+                // Start at the origin facing the +X direction
+                new Pose2d(0, 0, new Rotation2d(0)),
+                // Pass through these two interior waypoints, making an 's' curve path
+                List.of(new Translation2d(.5, 0)),
+                // End 3 meters straight ahead of where we started, facing forward
+                new Pose2d(0, 0, new Rotation2d(0)),
+                // Pass config
+                Drivebase.GetDrivebase().config);
+        for (int i=0; i<4; i++){
+            Trajectory a = TrajectoryGenerator.generateTrajectory(
+                    // Start at the origin facing the +X direction
+                    new Pose2d(0, -i, new Rotation2d(0)),
+                    // Pass through these two interior waypoints, making an 's' curve path
+                    List.of(new Translation2d(3, -i),new Translation2d(3, -i-1)
+                            ,new Translation2d(0, -distance)),
+                    // End 3 meters straight ahead of where we started, facing forward
+                    new Pose2d(0, -i-1, new Rotation2d(Math.PI/2)),
+                    // Pass config
+                    Drivebase.GetDrivebase().config);
+            tOne=tOne.concatenate(a);}
+
+
+        /*Trajectory exampleTrajectoryInMetersTwo =
+                TrajectoryGenerator.generateTrajectory(
+                        // Start at the origin facing the +X direction
+                        new Pose2d(4, 0, new Rotation2d(Math.PI)),
+                        // Pass through these two interior waypoints, making an 's' curve path
+                        List.of(new Translation2d(2, 0.05)),
+                        // End 3 meters straight ahead of where we started, facing forward
+                        new Pose2d(0, 0, new Rotation2d(0)),
+                        // Pass config
+                        Drivebase.GetDrivebase().config);
+
+*/
+
 
     }
 
@@ -127,9 +174,9 @@ public class Robot extends TimedRobot
         arm.ShoulderMotor.setNeutralMode(NeutralMode.Brake);
 
         //double rotateTo = 15;
-        //Command TankDrive = new TankDrive(drivebase, oi);
+        Command TankDrive = new TankDrive(drivebase, oi);
 
-        //TankDrive.schedule();
+        TankDrive.schedule();
 
         /* if (autonomousCommand != null)
         {

@@ -1,9 +1,19 @@
 package frc.robot.constants;
 
+import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.trajectory.constraint.MaxVelocityConstraint;
 import edu.wpi.first.math.trajectory.constraint.TrajectoryConstraint;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.Drivebase;
+
+import java.util.List;
 
 
 public class Constants extends CommandBase {
@@ -52,9 +62,33 @@ public class Constants extends CommandBase {
 
     }
 
+    public static class Autos{
+
+        public static class FirstAuto{
+            public static Trajectory trajectoryOne= TrajectoryGenerator.generateTrajectory(
+                    new Pose2d(Units.feetToMeters(6.33), Units.feetToMeters(23), new Rotation2d(Math.PI)),
+                    List.of(new Translation2d(Units.feetToMeters(6.33+3),Units.feetToMeters(23.25))),
+                    new Pose2d(Units.feetToMeters(6.33+10.5), Units.feetToMeters(23.25), new Rotation2d(Math.PI)),
+                    frc.robot.subsystems.Drivebase.GetDrivebase().config);
+
+            //pickup
+            public static Trajectory trajectoryTwo= TrajectoryGenerator.generateTrajectory(
+                    new Pose2d(Units.feetToMeters(6.33+10.5), 23.25, new Rotation2d(Math.PI)), List.of(new Translation2d(Units.feetToMeters(6.33+3),Units.feetToMeters(23.25))),
+                    new Pose2d(Units.feetToMeters(6.33), Units.feetToMeters(23), new Rotation2d(0)), frc.robot.subsystems.Drivebase.GetDrivebase().config);
+
+            //place second peice
+            public static Trajectory trajectoryThree= TrajectoryGenerator.generateTrajectory(
+                    new Pose2d(Units.feetToMeters(6.33), Units.feetToMeters(23), new Rotation2d(0)), List.of(new Translation2d(Units.feetToMeters(7),Units.feetToMeters(26.6-7.33))),
+                    new Pose2d(Units.feetToMeters(13), Units.feetToMeters(26.6-9.33), new Rotation2d(-Math.PI/2)), frc.robot.subsystems.Drivebase.GetDrivebase().config);
+
+        }
+
+    }
+
+
     public class Drivebase {
 
-        public static final double kMaxSpeedMetersPerSecond=1;//was 3.47472
+        public static final double kMaxSpeedMetersPerSecond=.25;//was 3.47472
         public static final double kMaxAccelerationMetersPerSecondSquared=2.0792;//was 24.0792
 
         public static final int FRONT_RANGE_SENSOR_OUTPUT_CHANNEL=4;
@@ -81,6 +115,12 @@ public class Constants extends CommandBase {
         public static final double DRIVEBASE_KF = 0.08;
         public static final int THRESHOLD_ROTATE = 3;
         public static final int DRIVE_OUT_OF_COMMUINITY = -9;
+
+        public static final double FEEDFORWARD_KS=.0015;
+
+        public static final double FEEDFORWARD_KV=.238;
+
+        public static final double FEEDFORWARD_KA=0.00;
     }
 
     public class Arm {

@@ -1,11 +1,13 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.math.controller.RamseteController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -19,6 +21,7 @@ import edu.wpi.first.math.trajectory.constraint.TrajectoryConstraint;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Subsystem;
@@ -40,6 +43,8 @@ public class Drivebase implements Subsystem {
     TalonFX leftMotor2 = new TalonFX(Constants.Wobbles.LEFT_MOTOR_2);
     TalonFX rightMotor1 = new TalonFX(Constants.Wobbles.RIGHT_MOTOR_1);
     TalonFX rightMotor2 = new TalonFX(Constants.Wobbles.RIGHT_MOTOR_2);
+
+    private SimpleMotorFeedforward feedforward;
 
     int i=0;
 
@@ -74,28 +79,46 @@ public class Drivebase implements Subsystem {
                     .addConstraint(autoVoltageConstraint);
 
 
+private final Field2d field= new Field2d();
+public Field2d getField(){
+    return field;
+}
 
+//private final edu.wpi.first.wpilibj.smartdashboard.FieldObject2d
 
     private Drivebase()
     {
+        SmartDashboard.putData("field",field);
         gyro.calibrate();
         rightMotor1.setInverted(true);
         rightMotor2.setInverted(true);
         rightMotor2.follow(rightMotor1);
         leftMotor2.follow(leftMotor1);
 
+        feedforward = new SimpleMotorFeedforward(Constants.Drivebase.FEEDFORWARD_KS, Constants.Drivebase.FEEDFORWARD_KV, Constants.Drivebase.FEEDFORWARD_KA);
+
         rightMotor1.setSelectedSensorPosition(0);
         leftMotor1.setSelectedSensorPosition(0);
 
-        var a=.040;
+        var a=.012;
         leftMotor1.config_kP(0,a);
         leftMotor2.config_kP(0,a);
 
         rightMotor1.config_kP(0,a);
         rightMotor2.config_kP(0,a);
+var d =.00;
+        leftMotor1.config_kD(0,d);
+        leftMotor2.config_kD(0,d);
+
+        rightMotor1.config_kD(0,d);
+        rightMotor2.config_kD(0,d);
+
+        rightMotor1.setSelectedSensorPosition(0);
+        leftMotor1.setSelectedSensorPosition(0);
 
         kinematics = new DifferentialDriveKinematics(Constants.Drivebase.kTrackwidthMeters);
         ramseteController = new RamseteController();
+        ramseteController.setTolerance(new Pose2d(.05,.05,new Rotation2d(Math.PI/20)));
         odometry =
                 new DifferentialDriveOdometry(
                         gyro.getRotation2d(), leftMotor1.getSelectedSensorPosition(), rightMotor1.getSelectedSensorPosition());
@@ -111,10 +134,12 @@ public class Drivebase implements Subsystem {
     {
         leftMotor1.set(TalonFXControlMode.PercentOutput, turnSpeedLeft);
         rightMotor1.set(TalonFXControlMode.PercentOutput, turnSpeedRight);
+        System.out.println(turnSpeedLeft + "," + turnSpeedRight);
     }
 
     public Pose2d GetCurrentPose(){return odometry.getPoseMeters();}
 
+    public void SetPose(Pose2d pose){poseEstimator.resetPosition(new Rotation2d(0),0,0,pose);}
         public double getPosLeft()
     {
         return leftMotor1.getSelectedSensorPosition()/TicksPerFoot;
@@ -134,6 +159,11 @@ public class Drivebase implements Subsystem {
 
     public Pose2d getPose() {
         return odometry.getPoseMeters();
+    }
+
+    public void setPose(Pose2d pose){
+    poseEstimator.resetPosition(new Rotation2d(0),0,0,pose);
+    //leftPositonMeters and rightPositionMeters posibly should not be 0. Not sure.
     }
 
         public boolean isCalibrating()
@@ -213,10 +243,13 @@ public class Drivebase implements Subsystem {
     public void periodic() {
         // Update the odometry in the periodic block
         updateOdometry();//update odometry is just backup
-        poseEstimator.update(gyro.getRotation2d(),ticksToMeters((int)leftMotor1.getSelectedSensorPosition()), ticksToMeters((int)rightMotor1.getSelectedSensorPosition()));
-        SmartDashboard.putNumber("x",poseEstimator.getEstimatedPosition().getX());
-        SmartDashboard.putNumber("y",poseEstimator.getEstimatedPosition().getY());
-        SmartDashboard.putNumber("meters",ticksToMeters((int)leftMotor1.getSelectedSensorPosition()));
+        poseEstimator.update(gyro.getRotation2d(),
+                ticksToMeters((int)leftMotor1.getSelectedSensorPosition()),
+                ticksToMeters((int)rightMotor1.getSelectedSensorPosition()));
+
+        field.setRobotPose(poseEstimator.getEstimatedPosition());
+
+
             //SmartDashboard.putNumber("x",odometry.getPoseMeters().getX());
             //SmartDashboard.putNumber("y",odometry.getPoseMeters().getY());
                 //SmartDashboard.putNumber("x",leftMotor1.getSelectedSensorPosition());
@@ -246,15 +279,27 @@ public class Drivebase implements Subsystem {
         leftMotor1.set(ControlMode.Velocity,meters);
     }
 
+    public void setRightMeters(double meters,double feedForward){
+        rightMotor1.set(ControlMode.Velocity, meters,DemandType.ArbitraryFeedForward,feedForward);
+    }
+    public void setLeftMeters(double meters,double feedForward){
+        leftMotor1.set(ControlMode.Velocity, meters,DemandType.ArbitraryFeedForward,feedForward);
+    }
 
-    public void setSpeedChassis(ChassisSpeeds chassisSpeeds){
+    public SimpleMotorFeedforward getFeedforward(){return feedforward;}
+
+    public void setSpeedChassis(ChassisSpeeds chassisSpeeds,double feedForwardLeft,double feedForwardRight){
 
         DifferentialDriveWheelSpeeds wheelSpeeds = kinematics.toWheelSpeeds(chassisSpeeds);
         //System.out.println(wheelSpeeds.leftMetersPerSecond+" , "+wheelSpeeds.rightMetersPerSecond);
         SmartDashboard.putNumber("leftMPS",wheelSpeeds.leftMetersPerSecond);
         SmartDashboard.putNumber("rightMPS",wheelSpeeds.leftMetersPerSecond);
-        setLeftMeters(metersToTicks(wheelSpeeds.leftMetersPerSecond));
-        setRightMeters(metersToTicks(wheelSpeeds.rightMetersPerSecond));
+double a =1;
+        runMotor(feedForwardLeft/a,feedForwardRight/a);
+
+
+        //setLeftMeters(metersToTicks(wheelSpeeds.leftMetersPerSecond),feedForwardLeft);
+        //setRightMeters(metersToTicks(wheelSpeeds.rightMetersPerSecond),feedForwardRight);
 
     }
 

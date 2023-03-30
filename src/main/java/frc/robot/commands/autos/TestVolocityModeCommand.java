@@ -9,7 +9,9 @@ public class TestVolocityModeCommand extends CommandBase {
 
     int time=0;
 
-    double acc=.01;
+    double acc=.004;
+
+
     int switchTime = 100;
 
     public TestVolocityModeCommand() {

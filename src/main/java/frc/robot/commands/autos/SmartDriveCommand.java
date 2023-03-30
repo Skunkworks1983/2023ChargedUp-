@@ -13,6 +13,8 @@ import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.FieldObject2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -30,19 +32,46 @@ public class SmartDriveCommand extends CommandBase {
     BiConsumer<Double, Double> metersPerSecond;
     Trajectory trajectory;
     RamseteCommand ramseteCommand;
-    double prevTime;
-    Timer timer;
-    public SmartDriveCommand(Trajectory trajectory) {
 
+    String poseDifString;
+
+    double prevTime=0;
+    private DifferentialDriveWheelSpeeds prevSpeeds=new DifferentialDriveWheelSpeeds(0,0);
+    Timer timer;
+
+    public SmartDriveCommand(Trajectory trajectory) {
         timer = new Timer();
         timer.start();
-
+        double curTime = timer.get();
+        double dt = curTime - prevTime;
+        SmartDashboard.putData("should be",Drivebase.GetDrivebase().getField());
+        Drivebase.GetDrivebase().getField().getObject("traj").setTrajectory(trajectory);
         this.metersPerSecond=(leftSpeedSetpoint, rightSpeedSetpoint) -> {
+            System.out.println(leftSpeedSetpoint+","+rightSpeedSetpoint);
+            Drivebase.GetDrivebase().setLeftMeters(Drivebase.GetDrivebase().metersToTicks(leftSpeedSetpoint));
+            Drivebase.GetDrivebase().setRightMeters(Drivebase.GetDrivebase().metersToTicks(rightSpeedSetpoint));
+            /*
 
-            var desiredPose = trajectory.sample(timer.get());
-            System.out.println(desiredPose.poseMeters.getX()+","+desiredPose.poseMeters.getY()+","+desiredPose.poseMeters.getRotation());
+
+//set to 0 for test purposes
+            double leftFeedforward = Drivebase.GetDrivebase().getFeedforward().calculate(leftSpeedSetpoint, (leftSpeedSetpoint - prevSpeeds.leftMetersPerSecond) / dt);
+            double rightFeedforward = Drivebase.GetDrivebase().getFeedforward().calculate(rightSpeedSetpoint,(rightSpeedSetpoint - prevSpeeds.rightMetersPerSecond) / dt);
+
+            //System.out.println(leftFeedforward+","+rightFeedforward);
+
+            Trajectory.State desiredPose = trajectory.sample(timer.get());
+            //System.out.println(desiredPose.poseMeters.getX()+","+desiredPose.poseMeters.getY()+","+desiredPose.poseMeters.getRotation());
             ChassisSpeeds refChassisSpeeds = Drivebase.GetDrivebase().ramseteController.calculate(Drivebase.GetDrivebase().getPose(), desiredPose);
-            Drivebase.GetDrivebase().setSpeedChassis(refChassisSpeeds);//(refChassisSpeeds.vxMetersPerSecond, refChassisSpeeds.omegaRadiansPerSecond);
+            Drivebase.GetDrivebase().setSpeedChassis(refChassisSpeeds,leftFeedforward,rightFeedforward);//(refChassisSpeeds.vxMetersPerSecond, refChassisSpeeds.omegaRadiansPerSecond);
+            //Drivebase.GetDrivebase().runMotor(leftSpeedSetpoint,rightSpeedSetpoint);
+            prevTime = curTime;
+            prevSpeeds = Drivebase.GetDrivebase().kDriveKinematics.toWheelSpeeds(refChassisSpeeds);
+            //poseDifString="pose dif:"+(Drivebase.GetDrivebase().getPose().getX()-desiredPose.poseMeters.getX())+","+(Drivebase.GetDrivebase().getPose().getY()-desiredPose.poseMeters.getY())+","+(Drivebase.GetDrivebase().getPose().getRotation().getDegrees()-desiredPose.poseMeters.getRotation().getDegrees());
+            poseDifString="pose dif" + Drivebase.GetDrivebase().getPose().relativeTo(desiredPose.poseMeters);
+
+
+            //Drivebase.GetDrivebase().getField().setRobotPose(desiredPose.poseMeters);
+*/
         };
         this.trajectory=trajectory;
         addRequirements();
@@ -73,10 +102,12 @@ public class SmartDriveCommand extends CommandBase {
         // TODO: Make this return true when this Command no longer needs to run execute()
         return ramseteCommand.isFinished();
 
+
     }
 
     @Override
     public void end(boolean interrupted) {
-
+Drivebase.GetDrivebase().runMotor(0,0);
+        System.out.println(poseDifString);
     }
 }
