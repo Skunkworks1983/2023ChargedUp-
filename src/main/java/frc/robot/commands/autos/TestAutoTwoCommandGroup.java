@@ -13,9 +13,7 @@ public class TestAutoTwoCommandGroup extends SequentialCommandGroup {
         // TODO: Add your sequential commands in the super() call, e.g.
         //           super(new OpenClawCommand(), new MoveArmCommand());
 
-        super(new SmartDriveCommand(Constants.Autos.FirstAuto.trajectoryOne),//would it be .scedual
-                new SmartDriveCommand(Constants.Autos.FirstAuto.trajectoryTwo),
-                new SmartDriveCommand(Constants.Autos.FirstAuto.trajectoryThree));
+        super(new SmartDriveCommand(Constants.Autos.testAuto.trajectoryOne));
 
     }
 }

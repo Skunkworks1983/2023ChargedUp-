@@ -30,6 +30,7 @@ import frc.robot.commands.autos.CompAutos.TwoPieceBalance2Blue;
 import frc.robot.commands.autos.CompAutos.TwoPieceBalance2Red;
 import frc.robot.commands.autos.CompAutos.TwoPieceBalance8Blue;
 import frc.robot.commands.autos.CompAutos.TwoPieceBalance8Red;
+import frc.robot.commands.autos.TestAutoTwoCommandGroup;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Collector;
@@ -95,6 +96,7 @@ public class Robot extends TimedRobot
         robotContainer = new RobotContainer();
 
         drivebase.waitForHeadingReliable();
+        drivebase.resetGyro();
 
         SmartDashboard.putNumber("floor cube pickup", Constants.ArmPos.FLOOR_CUBE_PICKUP_WRIST);
     }
@@ -157,7 +159,8 @@ public class Robot extends TimedRobot
         arm.WristMotor.setNeutralMode(NeutralMode.Brake);
         CommandScheduler.getInstance().cancelAll();
         SendableChooser autoChooser = (SendableChooser) SmartDashboard.getData("autoChooser");
-        autonomousCommand = (Command)autoChooser.getSelected();
+        //autonomousCommand = (Command)autoChooser.getSelected();
+        autonomousCommand = new TestAutoTwoCommandGroup();
         if (autonomousCommand != null)
         {
             autonomousCommand.schedule();
@@ -180,6 +183,7 @@ public class Robot extends TimedRobot
     @Override
     public void teleopPeriodic()
 {
+    SmartDashboard.putData("field" , drivebase.getField());
 }
     
     

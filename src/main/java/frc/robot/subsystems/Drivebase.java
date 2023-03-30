@@ -97,7 +97,7 @@ public class Drivebase implements Subsystem {
             Constants.Wobbles.TICKS_PER_MOTOR_REV * Constants.Drivebase.GEAR_RATIO /
                     (Constants.Drivebase.WHEEL_DIAMETER * Math.PI);
 
-    AHRS gyro = new AHRS(I2C.Port.kOnboard);
+    AHRS gyro = new AHRS(I2C.Port.kMXP);
 
 
     public final TrajectoryConstraint autoVoltageConstraint= new MaxVelocityConstraint(Constants.Drivebase.kMaxSpeedMetersPerSecond);
@@ -161,7 +161,7 @@ var d =.00;
                 new DifferentialDriveOdometry(
                         gyro.getRotation2d(), leftMotor1.getSelectedSensorPosition(), rightMotor1.getSelectedSensorPosition());
 
-        poseEstimator = new DifferentialDrivePoseEstimator(kinematics,gyro.getRotation2d(), ticksToMeters(leftMotor1.getSelectedSensorPosition()), ticksToMeters(rightMotor1.getSelectedSensorPosition()), new Pose2d(0,0,new Rotation2d(Math.PI /2)));
+        poseEstimator = new DifferentialDrivePoseEstimator(kinematics,gyro.getRotation2d(), ticksToMeters(leftMotor1.getSelectedSensorPosition()), ticksToMeters(rightMotor1.getSelectedSensorPosition()), new Pose2d(0,0,new Rotation2d(Math.PI/2)));
 
         CommandScheduler.getInstance().registerSubsystem(this);
 
@@ -342,6 +342,11 @@ var d =.00;
 
         return OGDrivebase;
 
+    }
+
+    public void resetGyro()
+    {
+        gyro.reset();
     }
 
     @Override
