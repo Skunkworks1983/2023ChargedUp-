@@ -117,8 +117,8 @@ public class Constants extends CommandBase {
         public static class FirstAuto{
             public static Trajectory trajectoryOne= TrajectoryGenerator.generateTrajectory(
                     new Pose2d(Units.feetToMeters(6.33), Units.feetToMeters(23), new Rotation2d(Math.PI)),
-                    List.of(new Translation2d(Units.feetToMeters(6.33+3),Units.feetToMeters(23.25))),
-                    new Pose2d(Units.feetToMeters(6.33+10.5), Units.feetToMeters(23.25), new Rotation2d(Math.PI)),
+                    List.of(new Translation2d(Units.feetToMeters(6.33-3),Units.feetToMeters(23-.25))),
+                    new Pose2d(Units.feetToMeters(6.33-10.5), Units.feetToMeters(23-.25), new Rotation2d(Math.PI)),
                     frc.robot.subsystems.Drivebase.GetDrivebase().config);
 
             //pickup
