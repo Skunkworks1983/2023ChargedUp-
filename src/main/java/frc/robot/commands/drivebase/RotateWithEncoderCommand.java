@@ -23,9 +23,13 @@ public class RotateWithEncoderCommand extends CommandBase {
         this.targetDegree = targetDegree * Math.PI / 180;
         addRequirements(drivebase);
 
-        rotateDistance = ((Constants.Falcon500.TICKS_PER_REV * Constants.Drivebase.GEAR_RATIO) *
-                (Constants.Drivebase.DISTANCE_BETWEEN_WHEELS / 12) * this.targetDegree) /
-                (2 * Constants.Drivebase.WHEEL_DIAMETER * Math.PI);
+//        rotateDistance = ((Constants.Falcon500.TICKS_PER_REV * Constants.Drivebase.GEAR_RATIO) *
+//                (Constants.Drivebase.DISTANCE_BETWEEN_WHEELS / 12) * this.targetDegree) /
+//                (2 * Constants.Drivebase.WHEEL_DIAMETER * Math.PI);
+
+        rotateDistance = ((Constants.Wobbles.TICKS_PER_MOTOR_REV * Constants.Wobbles.GEAR_RATIO) *
+                (Constants.Wobbles.DISTANCE_BETWEEN_WHEELS / 12) * this.targetDegree) /
+                (2 * Constants.Wobbles.WHEEL_DIAMETER * Math.PI);
 
         System.out.println("rotateDistance: " + rotateDistance);
         System.out.println("targetDegree: " + this.targetDegree);
@@ -48,7 +52,7 @@ public class RotateWithEncoderCommand extends CommandBase {
 
         System.out.println("speed: " + speed + " error: " + pidController.getPositionError());
 
-        drivebase.runMotor(speed, -speed);
+        //drivebase.runMotor(speed, -speed);
     }
 
     @Override

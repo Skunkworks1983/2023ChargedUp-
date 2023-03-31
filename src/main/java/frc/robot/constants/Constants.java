@@ -308,10 +308,11 @@ public class Constants extends CommandBase {
             public static final int RIGHT_DIRECTION = -1;
 
             //Encoders
-            public static final double GEAR_RATIO = 10.71;
+            public static final double GEAR_RATIO = 12.76;
             public static final double WHEEL_DIAMETER = .5; //feet
             public static final int TICKS_PER_MOTOR_REV = 2048;
             public static final double TICKS_PER_FOOT =
                     (TICKS_PER_MOTOR_REV * GEAR_RATIO) / (WHEEL_DIAMETER * Math.PI);
+            public static final double DISTANCE_BETWEEN_WHEELS = 15;
         }
     }

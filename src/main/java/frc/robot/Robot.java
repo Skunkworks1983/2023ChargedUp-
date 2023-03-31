@@ -124,15 +124,18 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousInit() {
-        arm.SetLightMode(Constants.Lights.BLANK);
-        setBrakeModeOnDisable = true;
-        arm.WristMotor.setNeutralMode(NeutralMode.Brake);
+//        arm.SetLightMode(Constants.Lights.BLANK);
+//        setBrakeModeOnDisable = true;
+//        arm.WristMotor.setNeutralMode(NeutralMode.Brake);
         CommandScheduler.getInstance().cancelAll();
-        SendableChooser autoChooser = (SendableChooser) SmartDashboard.getData("autoChooser");
-        autonomousCommand = (Command) autoChooser.getSelected();
-        if (autonomousCommand != null) {
-            autonomousCommand.schedule();
-        }
+
+        RotateWithEncoderCommand rotate = new RotateWithEncoderCommand(Drivebase.GetDrivebase(), 90);
+        rotate.schedule();
+//        SendableChooser autoChooser = (SendableChooser) SmartDashboard.getData("autoChooser");
+//        autonomousCommand = (Command) autoChooser.getSelected();
+//        if (autonomousCommand != null) {
+//            autonomousCommand.schedule();
+//        }
         // autoChooser.addOption();
 
         //  SendableChooser autoChooser = (SendableChooser) SmartDashboard.getData("autoChooser");
