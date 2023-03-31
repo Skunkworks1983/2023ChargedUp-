@@ -157,7 +157,7 @@ public class Robot extends TimedRobot
     @Override
     public void autonomousInit()
     {
-        Drivebase.GetDrivebase().setPose(new Pose2d(Units.feetToMeters(6.33), Units.feetToMeters(23), new Rotation2d(Math.PI)));
+        Drivebase.GetDrivebase().setPose(new Pose2d(Units.feetToMeters(6.33), Units.feetToMeters(23), new Rotation2d(Math.PI/2)));
 
         Collector.getInstance().SetSpeed(0);
         arm.SetLightMode(Constants.Lights.BLANK);
