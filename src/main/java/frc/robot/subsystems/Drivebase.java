@@ -34,7 +34,8 @@ import static java.lang.Double.NaN;
 
 public class Drivebase implements Subsystem {
 
-    public Command ArcadeDrive = new ArcadeDrive(this, Oi.Instance);
+    public Command ArcadeDrive = new ArcadeDrive(this, Oi.Instance, LimeLight.getInstance());
+
     private static Drivebase OGDrivebase;
 
     DigitalOutput frontRangeSensorTrigger = new DigitalOutput(Constants.Drivebase.FRONT_RANGE_SENSOR_OUTPUT_CHANNEL);

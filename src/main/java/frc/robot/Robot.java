@@ -26,6 +26,7 @@ import frc.robot.commands.autos.CompAutos.TwoPiece8Red;
 import frc.robot.commands.autos.ScoreAndExitCommunityP1CommandGroup;
 import frc.robot.commands.autos.ScoreAndExitCommunityP2CommandGroup;
 import frc.robot.commands.autos.SimpleAutoCommandGroup;
+import frc.robot.commands.drivebase.DriveToGamePieceCommand;
 import frc.robot.commands.autos.CompAutos.TwoPieceBalance2Blue;
 import frc.robot.commands.autos.CompAutos.TwoPieceBalance2Red;
 import frc.robot.commands.autos.CompAutos.TwoPieceBalance8Blue;
@@ -36,6 +37,7 @@ import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Collector;
 import frc.robot.subsystems.Drivebase;
 import frc.robot.services.Oi;
+import frc.robot.subsystems.LimeLight;
 
 /**
  * The VM is configured to automatically run this class, and to call the methods corresponding to
@@ -103,7 +105,7 @@ public class Robot extends TimedRobot
 
 
 
-    
+
 
 
     /**
@@ -165,7 +167,20 @@ public class Robot extends TimedRobot
         {
             autonomousCommand.schedule();
         }
+        LimeLight.getInstance().setEnable(true);
        // autoChooser.addOption();
+
+     //  SendableChooser autoChooser = (SendableChooser) SmartDashboard.getData("autoChooser");
+     //   DriveOnChargeStationAndBalanceP2.schedule();
+     //   SimpleAuto.schedule();
+     //   ScoreAndExitCommunityP2.schedule();
+     //   ScoreAndExitCommunityP1.schedule();
+
+        //DriveToGamePieceCommand.schedule();
+
+        drivebase.waitForHeadingReliable();
+
+        drivebase.SetBrakeMode(true);
     }
 
 

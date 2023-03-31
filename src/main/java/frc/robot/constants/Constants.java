@@ -62,6 +62,9 @@ public class Constants extends CommandBase {
         //slow mode driving
         public static final int DRIVE_SLOW = 1;
 
+        //center on game piece teleop assist
+        public static final int CENTER_ON_PIECE = 2;
+
         //top row
         public static final int ENABLE_MANUAL =8;
 
@@ -197,6 +200,17 @@ public class Constants extends CommandBase {
         public static final double FEEDFORWARD_KV=.238;
 
         public static final double FEEDFORWARD_KA=0.00;
+
+        public static final double BASE_DRIVE_TO_CONE_SPEED = -0.6;
+        public static final double DRIVE_TO_CONE_KP = 0.004;
+        public static final double DRIVE_TO_CONE_KD = 0.0005;
+
+        public static final double LIMELIGHT_MAX_CONE_AREA = .9; //figure this out
+
+        public static final double LIMELIGHT_CAMERA_PIXEL_WIDTH = 320;
+        public static final double LIMELIGHT_CAMERA_PIXEL_HEIGHT = 240;
+        public static final int ROLLING_AVERAGE_LENGTH = 15;
+
     }
 
     public class Arm {

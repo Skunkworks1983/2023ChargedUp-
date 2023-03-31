@@ -22,6 +22,8 @@ public class Oi {
 
     JoystickButton slowMode;
 
+    JoystickButton centerOnPiece;
+
     JoystickButton floorNormalScore;
 
     JoystickButton humanPlayerPickup;
@@ -103,6 +105,8 @@ public class Oi {
 
         slowMode = new JoystickButton(rightStick, Constants.OIButtons.DRIVE_SLOW);
 
+        centerOnPiece = new JoystickButton(leftStick, Constants.OIButtons.CENTER_ON_PIECE);
+
         lightSwitchCube = new JoystickButton(buttonStick, 16);
         lightSwitchCone = new JoystickButton(buttonStick, 9);
         funSwitch1 = new JoystickButton(buttonStick, 19);
@@ -164,6 +168,11 @@ public class Oi {
     public boolean isSlowMode () {
 
         return slowMode.getAsBoolean();
+    }
+
+    public boolean isCenterOnPiece () {
+
+        return centerOnPiece.getAsBoolean();
     }
 
     public static Oi GetInstance() {
