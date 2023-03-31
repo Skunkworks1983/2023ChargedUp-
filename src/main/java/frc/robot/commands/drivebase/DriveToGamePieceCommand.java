@@ -15,8 +15,13 @@ public class DriveToGamePieceCommand extends CommandBase {
 
     private final Drivebase drivebase;
     private final LimeLight limeLight;
-    PIDController pidController = new PIDController
+    PIDController turnPidController = new PIDController
             (Constants.Drivebase.DRIVE_TO_CONE_KP, 0, Constants.Drivebase.DRIVE_TO_CONE_KD);
+
+    PIDController drivePidController = new PIDController
+            (Constants.Drivebase.SLOW_DOWN_TO_CONE_KP, 0, 0);
+
+
 
     public DriveToGamePieceCommand() {
         // each subsystem used by the command must be passed into the
@@ -24,7 +29,8 @@ public class DriveToGamePieceCommand extends CommandBase {
         drivebase = Drivebase.GetDrivebase();
         limeLight = LimeLight.getInstance();
         addRequirements(drivebase);
-        pidController.setSetpoint(0);
+        turnPidController.setSetpoint(0);
+        drivePidController.setSetpoint(Constants.Drivebase.LIMELIGHT_MAX_CONE_AREA);
     }
 
     @Override
@@ -44,9 +50,8 @@ public class DriveToGamePieceCommand extends CommandBase {
     @Override
     public void execute() {
 
-
         double driveThrottle = Constants.Drivebase.BASE_DRIVE_TO_CONE_SPEED;
-        double turnThrottle = pidController.calculate(limeLight.getLimeX());
+        double turnThrottle = turnPidController.calculate(limeLight.getLimeX());
 
         double leftSpeed = driveThrottle - turnThrottle; //calculates leftSpeed and rightSpeed
         double rightSpeed = driveThrottle + turnThrottle;
@@ -54,7 +59,20 @@ public class DriveToGamePieceCommand extends CommandBase {
         leftSpeed = MathUtil.clamp(leftSpeed, -1, 1);
         rightSpeed = MathUtil.clamp(rightSpeed, -1, 1);
 
-        drivebase.runMotor(leftSpeed, rightSpeed);
+
+
+        double limeA = limeLight.getLimeA();
+
+        if (limeA > Constants.Drivebase.LIMELIGHT_SLOW_DOWN_AREA) {
+
+            double ratio = drivePidController.calculate(limeA);
+
+            drivebase.runMotor
+                    (ratio*leftSpeed, ratio*rightSpeed);
+        } else {
+
+            drivebase.runMotor(leftSpeed, rightSpeed);
+        }
 
         System.out.println("turnThrottle " + turnThrottle);
         System.out.println("leftSpeed " + leftSpeed  + "rightSpeed " + rightSpeed);
