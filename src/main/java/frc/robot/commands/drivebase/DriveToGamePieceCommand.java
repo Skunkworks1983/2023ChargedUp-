@@ -60,19 +60,27 @@ public class DriveToGamePieceCommand extends CommandBase {
         rightSpeed = MathUtil.clamp(rightSpeed, -1, 1);
 
 
-
         double limeA = limeLight.getLimeA();
 
-        if (limeA > Constants.Drivebase.LIMELIGHT_SLOW_DOWN_AREA) {
+//        if (limeA >= Constants.Drivebase.LIMELIGHT_SLOW_DOWN_AREA) {
 
             double ratio = drivePidController.calculate(limeA);
 
-            drivebase.runMotor
-                    (ratio*leftSpeed, ratio*rightSpeed);
-        } else {
+            double newLeftSpeed = ratio*1000*leftSpeed;
+            double newRightSpeed = ratio*1000*rightSpeed;
 
-            drivebase.runMotor(leftSpeed, rightSpeed);
-        }
+            newLeftSpeed = MathUtil.clamp(newLeftSpeed, -.5, .5);
+            newRightSpeed = MathUtil.clamp(newRightSpeed, -.5, .5);
+
+            drivebase.runMotor
+                    (ratio*newLeftSpeed, ratio*newRightSpeed);
+
+//        } else {
+//
+//            drivebase.runMotor(leftSpeed, rightSpeed);
+//        }
+
+
 
         System.out.println("turnThrottle " + turnThrottle);
         System.out.println("leftSpeed " + leftSpeed  + "rightSpeed " + rightSpeed);

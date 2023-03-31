@@ -142,7 +142,7 @@ public class Constants extends CommandBase {
         public static final double BASE_DRIVE_TO_CONE_SPEED = -0.6;
         public static final double DRIVE_TO_CONE_KP = 0.004;
         public static final double DRIVE_TO_CONE_KD = 0.0005;
-        public static final double SLOW_DOWN_TO_CONE_KP = .002;
+        public static final double SLOW_DOWN_TO_CONE_KP = .2;
         //public static final double SLOW_DOWN_TO_CONE_KD = 0.000
 
         public static final double LIMELIGHT_SLOW_DOWN_AREA = .5;
