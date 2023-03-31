@@ -3,8 +3,10 @@ package frc.robot.constants;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 
-public class Constants extends CommandBase {
-    public static class Collector {
+public class Constants extends CommandBase
+{
+    public static class Collector
+    {
         public static final int MOTOR_ID = 7;
 
         public static final double  GEAR_RATIO = 2;
@@ -13,10 +15,10 @@ public class Constants extends CommandBase {
         public static final int CUBE_BREAK_1_PORT = 2;
         public static final int CUBE_BREAK_2_PORT = 3;
 
-        public static final double CONE_COLLECT_AMP_THRESHOLD = 12;
+        public static final double CONE_COLLECT_AMP_THRESHOLD = 25;
         public static final double CONE_AMPS_HOLDING_THRESHOLD = 10;
         
-        public static final double INTAKE_SPEED = 10; //inches per second
+        public static final double INTAKE_SPEED = 30; //inches per second
         public static final double INTAKE_MOTOR_SPEED =
                 INTAKE_SPEED / WHEEL_CIRCUMFERENCE * WHEEL_REVS_PER_SEC_TO_VELOCITY;
         public static final double INTAKE_MOTOR_SPEED_SLOW = INTAKE_MOTOR_SPEED/2;
@@ -99,7 +101,7 @@ public class Constants extends CommandBase {
 
     public class Drivebase {
 
-        public static final double SLOW_MODE_RATIO = .165;
+        public static final double SLOW_MODE_RATIO = .25;
         public static final double GEAR_RATIO = 10.71;
         public static final double WHEEL_DIAMETER = 0.5;
         public static final double DISTANCE_KP = 0.05;
