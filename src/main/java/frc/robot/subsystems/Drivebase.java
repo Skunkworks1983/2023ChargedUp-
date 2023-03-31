@@ -124,7 +124,7 @@ public Field2d getField(){
     private Drivebase()
     {
         SmartDashboard.putData("field",field);
-        setDefaultCommand(ArcadeDrive);
+        //setDefaultCommand(ArcadeDrive);
         gyro.calibrate();
         isHeadingReliable = false;
         System.out.println("drivebase is constructing");
@@ -161,7 +161,13 @@ var d =.00;
                 new DifferentialDriveOdometry(
                         gyro.getRotation2d(), leftMotor1.getSelectedSensorPosition(), rightMotor1.getSelectedSensorPosition());
 
-        poseEstimator = new DifferentialDrivePoseEstimator(kinematics,gyro.getRotation2d(), ticksToMeters(leftMotor1.getSelectedSensorPosition()), ticksToMeters(rightMotor1.getSelectedSensorPosition()), new Pose2d(0,0,new Rotation2d(Math.PI/2)));
+        poseEstimator = new DifferentialDrivePoseEstimator(
+                kinematics,
+                gyro.getRotation2d(),
+                ticksToMeters(leftMotor1.getSelectedSensorPosition()),
+                ticksToMeters(rightMotor1.getSelectedSensorPosition()),
+                new Pose2d(0,0,new Rotation2d(0))
+        );
 
         CommandScheduler.getInstance().registerSubsystem(this);
 
@@ -169,6 +175,7 @@ var d =.00;
     }
 
     public void runMotor(double turnSpeedLeft, double turnSpeedRight) {
+    System.out.println("runmotor called");
         leftMotor1.set(TalonFXControlMode.PercentOutput, turnSpeedLeft);
         rightMotor1.set(TalonFXControlMode.PercentOutput, turnSpeedRight);
         if (turnSpeedLeft > 0 && turnSpeedRight > 0) driveDirection = DriveDirection.FORWARD;
@@ -179,7 +186,7 @@ var d =.00;
         System.out.println(turnSpeedLeft + "," + turnSpeedRight);
     }
 
-    public Pose2d GetCurrentPose(){return odometry.getPoseMeters();}
+    public Pose2d GetCurrentPose(){return poseEstimator.getEstimatedPosition();}
         public void SetPose(Pose2d pose){poseEstimator.resetPosition(new Rotation2d(0),0,0,pose);}
     public double getPosLeft() {
         return leftMotor1.getSelectedSensorPosition() / TicksPerFoot;
@@ -193,6 +200,8 @@ var d =.00;
 
     public double getHeading() {
 
+        return gyro.getAngle();//for testing
+    /*
         if (isHeadingReliable) {
 
             return gyro.getAngle();
@@ -201,7 +210,7 @@ var d =.00;
 
             return NaN;
 
-        }
+        }*/
     }
 
     public Pose2d getPose() {
@@ -352,13 +361,13 @@ var d =.00;
     @Override
     public void periodic() {
         // Update the odometry in the periodic block
-        updateOdometry();//update odometry is just backup
+        //updateOdometry();//update odometry is just backup
         poseEstimator.update(gyro.getRotation2d(),
                 ticksToMeters((int)leftMotor1.getSelectedSensorPosition()),
                 ticksToMeters((int)rightMotor1.getSelectedSensorPosition()));
 
         field.setRobotPose(poseEstimator.getEstimatedPosition());
-
+        SmartDashboard.putData("field",field);
 
             //SmartDashboard.putNumber("x",odometry.getPoseMeters().getX());
             //SmartDashboard.putNumber("y",odometry.getPoseMeters().getY());

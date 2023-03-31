@@ -74,7 +74,7 @@ public class SmartDriveCommand extends CommandBase {
 */
         };
         this.trajectory=trajectory;
-        addRequirements();
+        addRequirements(Drivebase.GetDrivebase());
     }
 
     @Override

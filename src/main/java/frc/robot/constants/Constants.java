@@ -136,11 +136,10 @@ public class Constants extends CommandBase {
         public static class testAuto
         {
             public static Trajectory trajectoryOne= TrajectoryGenerator.generateTrajectory(
-                    new Pose2d(Units.feetToMeters(0), Units.feetToMeters(0), new Rotation2d(Math.PI/2)),
-                    List.of(new Translation2d(Units.feetToMeters(0), Units.feetToMeters(5))),
-                    new Pose2d(Units.feetToMeters(0), Units.feetToMeters(10), new Rotation2d(Math.PI/2)),
-                    frc.robot.subsystems.Drivebase.GetDrivebase().config
-                                                                                          );
+                    new Pose2d(Units.feetToMeters(0), Units.feetToMeters(0), new Rotation2d(0/2)),
+                    List.of(new Translation2d(Units.feetToMeters(5), Units.feetToMeters(0))),
+                    new Pose2d(Units.feetToMeters(10), Units.feetToMeters(0), new Rotation2d(0/2)),
+                    frc.robot.subsystems.Drivebase.GetDrivebase().config);
         }
 
     }
