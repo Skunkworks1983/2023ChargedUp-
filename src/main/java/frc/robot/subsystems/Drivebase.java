@@ -179,8 +179,11 @@ var d =.00;
         System.out.println(turnSpeedLeft + "," + turnSpeedRight);
     }
 
-    public Pose2d GetCurrentPose(){return odometry.getPoseMeters();}
-        public void SetPose(Pose2d pose){poseEstimator.resetPosition(new Rotation2d(0),0,0,pose);}
+    public Pose2d GetCurrentPose()
+    {
+        return odometry.getPoseMeters();
+    }
+    public void SetPose(Pose2d pose){poseEstimator.resetPosition(new Rotation2d(0),0,0,pose);}
     public double getPosLeft() {
         return leftMotor1.getSelectedSensorPosition() / TicksPerFoot;
     }
@@ -203,6 +206,12 @@ var d =.00;
 
         }
     }
+
+    public void updatePoseLimelight()
+    {
+        //poseEstimator.addVisionMeasurement(Timer.getFPGATimestamp() - (tl/1000.0) - (cl/1000.0));
+    }
+
 
     public Pose2d getPose() {
         return odometry.getPoseMeters();
