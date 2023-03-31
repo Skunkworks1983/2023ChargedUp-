@@ -46,7 +46,8 @@ public class SmartDriveCommand extends CommandBase {
         double dt = curTime - prevTime;
         SmartDashboard.putData("should be",Drivebase.GetDrivebase().getField());
         Drivebase.GetDrivebase().getField().getObject("traj").setTrajectory(trajectory);
-        this.metersPerSecond=(leftSpeedSetpoint, rightSpeedSetpoint) -> {
+
+        this.metersPerSecond = (leftSpeedSetpoint, rightSpeedSetpoint) -> {
             System.out.println(leftSpeedSetpoint+","+rightSpeedSetpoint);
             Drivebase.GetDrivebase().setLeftMeters(Drivebase.GetDrivebase().metersToTicks(leftSpeedSetpoint));
             Drivebase.GetDrivebase().setRightMeters(Drivebase.GetDrivebase().metersToTicks(rightSpeedSetpoint));

@@ -97,7 +97,7 @@ public class Drivebase implements Subsystem {
             Constants.Wobbles.TICKS_PER_MOTOR_REV * Constants.Drivebase.GEAR_RATIO /
                     (Constants.Drivebase.WHEEL_DIAMETER * Math.PI);
 
-    AHRS gyro = new AHRS(I2C.Port.kMXP);
+    AHRS gyro = new AHRS(I2C.Port.kOnboard);
 
 
     public final TrajectoryConstraint autoVoltageConstraint= new MaxVelocityConstraint(Constants.Drivebase.kMaxSpeedMetersPerSecond);
@@ -218,7 +218,7 @@ var d =.00;
     }
 
     public void setPose(Pose2d pose){
-    poseEstimator.resetPosition(new Rotation2d(0),0,0,pose);
+    poseEstimator.resetPosition(new Rotation2d(gyro.getYaw()),0,0,pose);
     //leftPositonMeters and rightPositionMeters posibly should not be 0. Not sure.
     }
 

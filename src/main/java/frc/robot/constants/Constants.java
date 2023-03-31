@@ -116,9 +116,9 @@ public class Constants extends CommandBase {
 
         public static class FirstAuto{
             public static Trajectory trajectoryOne= TrajectoryGenerator.generateTrajectory(
-                    new Pose2d(Units.feetToMeters(6.33), Units.feetToMeters(23), new Rotation2d(Math.PI)),
-                    List.of(new Translation2d(Units.feetToMeters(6.33-3),Units.feetToMeters(23-.25))),
-                    new Pose2d(Units.feetToMeters(6.33-10.5), Units.feetToMeters(23-.25), new Rotation2d(Math.PI)),
+                    new Pose2d(Units.feetToMeters(6.33), Units.feetToMeters(23), new Rotation2d(Math.PI/2)),
+                    List.of(new Translation2d(Units.feetToMeters(6.33),Units.feetToMeters(23+6))),
+                    new Pose2d(Units.feetToMeters(6.33), Units.feetToMeters(23+21), new Rotation2d(Math.PI/2)),
                     frc.robot.subsystems.Drivebase.GetDrivebase().config);
 
             //pickup
@@ -137,8 +137,11 @@ public class Constants extends CommandBase {
         {
             public static Trajectory trajectoryOne= TrajectoryGenerator.generateTrajectory(
                     new Pose2d(Units.feetToMeters(0), Units.feetToMeters(0), new Rotation2d(0/2)),
+
                     List.of(new Translation2d(Units.feetToMeters(5), Units.feetToMeters(0))),
+
                     new Pose2d(Units.feetToMeters(10), Units.feetToMeters(0), new Rotation2d(0/2)),
+
                     frc.robot.subsystems.Drivebase.GetDrivebase().config);
         }
 
@@ -147,11 +150,11 @@ public class Constants extends CommandBase {
 
     public class Drivebase {
 
-        public static final double kMaxSpeedMetersPerSecond=.25;//was 3.47472
-        public static final double kMaxAccelerationMetersPerSecondSquared=2.0792;//was 24.0792
+        public static final double kMaxSpeedMetersPerSecond = 0.5;//was 3.47472
+        public static final double kMaxAccelerationMetersPerSecondSquared = .25;//was 24.0792
 
         public static final double SLOW_MODE_RATIO = .165;
-        public static final double GEAR_RATIO = 10.71;
+        public static final double GEAR_RATIO = 8.4586;
 
         public static final double kTrackwidthMeters=.38;
         public static final double FEET_PER_METER=3.28084;
