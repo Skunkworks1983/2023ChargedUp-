@@ -263,8 +263,6 @@ var d =.00;
 
     public void waitForHeadingReliable() {
 
-        //System.out.println("waitForHeadingReliable method is called");
-
         timer.start();
 
         while (gyro.isCalibrating()) {
@@ -290,27 +288,6 @@ var d =.00;
         isHeadingReliable = status;
     }
 
-
-    /*@Override
-    public void periodic() {
-        if (isHeadingReliable) {
-            if (gyro.isCalibrating() || !gyro.isConnected()) {
-
-                isHeadingReliable = false;
-
-                //System.out.println("GYRO CRASHED!!! - GYRO IS NOT CALIBRATED OR CONNECTED");
-            }
-
-            if (Math.abs(getHeading() - lastHeading) >= Constants.Drivebase.HEADING_TOO_BIG) {
-
-                isHeadingReliable = false;
-
-                //System.out.println("THE GYROSCOPE HAS CRASHED!!! - HEADING IS TOO LARGE");
-            }
-
-            lastHeading = getHeading();
-        }
-    }*/
 
     public DriveDirection getDriveDirection() {
         return driveDirection;
@@ -369,13 +346,7 @@ var d =.00;
         field.setRobotPose(poseEstimator.getEstimatedPosition());
         SmartDashboard.putData("field",field);
 
-            //SmartDashboard.putNumber("x",odometry.getPoseMeters().getX());
-            //SmartDashboard.putNumber("y",odometry.getPoseMeters().getY());
-                //SmartDashboard.putNumber("x",leftMotor1.getSelectedSensorPosition());
-                //SmartDashboard.putNumber("y",rightMotor1.getSelectedSensorPosition());
-                //System.out.println(leftMotor1.getSelectedSensorPosition()+","+(rightMotor1.getSelectedSensorPosition());
-        //System.out.println(odometry.getPoseMeters().getX()+","+odometry.getPoseMeters().getY());
-        //TODO: if we have an april tag in view, call addVisionMeasurement();
+//TODO: if we have an april tag in view, call addVisionMeasurement();
 
     }
 
@@ -411,17 +382,12 @@ var d =.00;
 double a =1;
         runMotor(feedForwardLeft/a,feedForwardRight/a);
 
-
-        //setLeftMeters(metersToTicks(wheelSpeeds.leftMetersPerSecond),feedForwardLeft);
-        //setRightMeters(metersToTicks(wheelSpeeds.rightMetersPerSecond),feedForwardRight);
-
     }
 
     double ticksToMeters(double ticks){return ticksToFeet(ticks)/Constants.Drivebase.FEET_PER_METER;}
 
     double ticksToFeet(double ticks){
 
-        //ticks to feet ticks/ticks_per_rotation*gearratio*wheeldiamater=feet
         return ticks/Constants.Drivebase.TICKS_PER_ROTATION
                 /Constants.Drivebase.GEAR_RATIO*Constants.Drivebase.WHEEL_DIAMETER*Math.PI;
 
