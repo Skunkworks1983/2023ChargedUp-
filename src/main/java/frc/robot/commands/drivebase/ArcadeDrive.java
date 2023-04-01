@@ -74,16 +74,16 @@ public class ArcadeDrive extends CommandBase {
 //        SmartDashboard.putNumber("arcade drive throttle joystick value", rightY);
 //        SmartDashboard.putNumber("arcade drive turn throttle", turnThrottle);
 
-        double leftSpeed = rightY - turnThrottle;
-        double rightSpeed = rightY + turnThrottle;
+        double leftSpeed = rightY + turnThrottle;
+        double rightSpeed = rightY - turnThrottle;
 
         leftSpeed = MathUtil.clamp(leftSpeed, -1, 1);
         rightSpeed = MathUtil.clamp(rightSpeed, -1, 1);
 
         if (Oi.GetInstance().isSlowMode()) {
 
-        drivebase.runMotor(leftSpeed*Constants.Drivebase.SLOW_MODE_RATIO,
-                rightSpeed*Constants.Drivebase.SLOW_MODE_RATIO);
+            drivebase.runMotor(leftSpeed * Constants.Drivebase.SLOW_MODE_RATIO,
+                    rightSpeed * Constants.Drivebase.SLOW_MODE_RATIO);
 
         } else {
 
