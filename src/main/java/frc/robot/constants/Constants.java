@@ -13,7 +13,7 @@ public class Constants extends CommandBase {
         public static final int CUBE_BREAK_1_PORT = 2;
         public static final int CUBE_BREAK_2_PORT = 3;
 
-        public static final double CONE_COLLECT_AMP_THRESHOLD = 12;
+        public static final double CONE_COLLECT_AMP_THRESHOLD = 20;
         public static final double CONE_AMPS_HOLDING_THRESHOLD = 10;
         
         public static final double INTAKE_SPEED = 10; //inches per second
@@ -28,7 +28,7 @@ public class Constants extends CommandBase {
                 EXPEL_SPEED / WHEEL_CIRCUMFERENCE * WHEEL_REVS_PER_SEC_TO_VELOCITY;
         public static final double K_P = 0.03;
         public static final double MANUAL_INTAKE_MULTIPLIER = 0.4;
-        public static final int CONE_COLLECTED_VALUE = 5;
+        public static final int CONE_COLLECTED_VALUE = 10;
         public static final int TICKS_BEFORE_FINISHED = 3;
         public static final int CONE_HOLDING_AMPS = 8;
 
@@ -139,14 +139,14 @@ public class Constants extends CommandBase {
         public static final double HEADING_TOO_BIG = 20;
         public static final double MAX_DRIVE_DISTANCE_SPEED = 0.3;
 
-        public static final double BASE_DRIVE_TO_CONE_SPEED = -0.6;
+        public static final double BASE_DRIVE_TO_CONE_SPEED = -0.3;
         public static final double DRIVE_TO_CONE_KP = 0.004;
         public static final double DRIVE_TO_CONE_KD = 0.0005;
         public static final double SLOW_DOWN_TO_CONE_KP = .2;
         //public static final double SLOW_DOWN_TO_CONE_KD = 0.000
 
         public static final double LIMELIGHT_SLOW_DOWN_AREA = .5;
-        public static final double LIMELIGHT_MAX_CONE_AREA = .9; //figure this out
+        public static final double LIMELIGHT_MAX_CONE_AREA = 0.8; //figure this out
 
         public static final double LIMELIGHT_CAMERA_PIXEL_WIDTH = 320;
         public static final double LIMELIGHT_CAMERA_PIXEL_HEIGHT = 240;
@@ -197,18 +197,18 @@ public class Constants extends CommandBase {
     }
 
     public enum ArmPose {
-        FLOOR_WEIRD (-90,220, 1, false),
-        FLOOR_NORMAL  (-128.59537049672488, 100.70434, -1, false),
-        FLOOR_CUBE ( -128.59537049672488, 115.25, -1, false),
-        FLOOR_CONE ( -128.59537049672488, 112.75, -1, false),
-        HIGH_CUBE (41.57, 100, -1, false),
-        SUBSTATION_CUBE ( 43.68152, 174.73779, 1, false),
-        SUBSTATION_CONE ( 42.56579,  155.46118, 1, true),
-        SCORE_MID_CUBE ( 56.56579, 160.46118, 1,false),
-        SCORE_MID_CONE (44.56579,  150.46118, 1,false),
-        STOW (-128.59537049672488, 15.531, -1,false),//TODO: stow is wierd
-        STOW_AUTO (-128.59537049672488, 15.531, -1.15,false),
-        HIGH_CUBE_AUTO (41.57, 96, -1.15,false);
+        FLOOR_WEIRD(-90, 220, 1, false),
+        FLOOR_NORMAL(-128.59537049672488, 100.70434, -1, false),
+        FLOOR_CUBE(-128.59537049672488, 115.25, -1, false),
+        FLOOR_CONE(-128.59537049672488, 112.75, -3, false),
+        HIGH_CUBE(41.57, 100, -1, false),
+        SUBSTATION_CUBE(43.68152, 174.73779, 1, false),
+        SUBSTATION_CONE(42.56579, 155.46118, 1, true),
+        SCORE_MID_CUBE(56.56579, 160.46118, 1, false),
+        SCORE_MID_CONE(44.56579, 150.46118, 1, false),
+        STOW(-128.59537049672488, 15.531, -1, false),//TODO: stow is wierd
+        STOW_AUTO(-128.59537049672488, 15.531, -1.15, false),
+        HIGH_CUBE_AUTO(41.57, 96, -1.15, false);
 
         public final double shoulderAngle;
         public final double wristAngle;

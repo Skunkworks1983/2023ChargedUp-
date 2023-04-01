@@ -15,10 +15,15 @@ public class DriveToGamePieceCommand extends CommandBase {
     PIDController pidController = new PIDController
             (Constants.Drivebase.DRIVE_TO_CONE_KP, 0, Constants.Drivebase.DRIVE_TO_CONE_KD);
 
+    private double speed;
+    private double areaThreshold;
 
-    public DriveToGamePieceCommand() {
+
+    public DriveToGamePieceCommand(double speed, double areaThreshold) {
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
+        this.speed = speed;
+        this.areaThreshold = areaThreshold;
         drivebase = Drivebase.GetDrivebase();
         limeLight = LimeLight.getInstance();
         addRequirements(drivebase);
@@ -35,6 +40,7 @@ public class DriveToGamePieceCommand extends CommandBase {
 //        SmartDashboard.putNumber("LimelightX", limeLightX);
 //        SmartDashboard.putNumber("LimelightY", limeLightY);
 //        SmartDashboard.putNumber("LimelightArea", limeLightA);
+        limeLight.setEnable(true);
 
         System.out.println("initializing drive to game piece command!!!");
     }
@@ -42,7 +48,7 @@ public class DriveToGamePieceCommand extends CommandBase {
     @Override
     public void execute() {
 
-        double driveThrottle = Constants.Drivebase.BASE_DRIVE_TO_CONE_SPEED;
+        double driveThrottle = speed;
         double turnThrottle = pidController.calculate(limeLight.getLimeX());
 
         double leftSpeed = driveThrottle - turnThrottle; //calculates leftSpeed and rightSpeed
@@ -61,7 +67,7 @@ public class DriveToGamePieceCommand extends CommandBase {
     @Override
     public boolean isFinished() {
 
-        return (limeLight.getLimeA() > Constants.Drivebase.LIMELIGHT_MAX_CONE_AREA);
+        return (limeLight.getLimeA() >= areaThreshold);
     }
 
 
