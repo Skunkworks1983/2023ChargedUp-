@@ -16,12 +16,16 @@ import java.util.ArrayList;
 
 public class LimeLight extends SubsystemBase
 {
-    NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+    NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight-front");
 
     NetworkTableEntry tx = table.getEntry("tx");
     NetworkTableEntry ty = table.getEntry("ty");
     NetworkTableEntry ta = table.getEntry("ta");
-
+    NetworkTableEntry tl = table.getEntry("tl");
+    NetworkTableEntry cl = table.getEntry("cl");
+    NetworkTableEntry tv = table.getEntry("tv");
+    NetworkTableEntry botpose_wpiblue = table.getEntry("botpose_wpiblue");
+    NetworkTableEntry botpose_wpired = table.getEntry("botpose_wpired");
 
     ArrayList<Double> listA = new ArrayList<>();
     ArrayList<Double> listX = new ArrayList<>();
@@ -35,7 +39,8 @@ public class LimeLight extends SubsystemBase
 
     boolean enable;
 
-    public LimeLight() {
+    public LimeLight()
+    {
 
     }
 
@@ -43,36 +48,42 @@ public class LimeLight extends SubsystemBase
     @Override
     public void periodic()
     {
-        if (!enable) return;
+        if(!enable)
+        {
+            return;
+        }
         //x rolling average
 
         double limeX = tx.getDouble(0.0); //sets limeX to current x value
         listX.add(limeX);
-        if (listX.size() > Constants.Drivebase.ROLLING_AVERAGE_LENGTH) {
+        if(listX.size() > Constants.Drivebase.ROLLING_AVERAGE_LENGTH)
+        {
             listX.remove(0);
         }
 
         double sumX = 0;
 
-        for (double listItem : listX) {
+        for(double listItem : listX)
+        {
             sumX = sumX + listItem;
         }
 
         averageX = sumX / listX.size();
 
 
-
         //y rolling average
 
         double limeY = ty.getDouble(0.0); //sets limeY to current y value
         listY.add(limeY);
-        if (listY.size() > Constants.Drivebase.ROLLING_AVERAGE_LENGTH) {
+        if(listY.size() > Constants.Drivebase.ROLLING_AVERAGE_LENGTH)
+        {
             listY.remove(0);
         }
 
         double sumY = 0;
 
-        for (double listItem : listY) {
+        for(double listItem : listY)
+        {
             sumY = sumY + listItem;
         }
 
@@ -83,62 +94,79 @@ public class LimeLight extends SubsystemBase
 
         double limeA = ta.getDouble(0.0); //sets limeA to current a value
         listA.add(limeA);
-        if (listA.size() > Constants.Drivebase.ROLLING_AVERAGE_LENGTH) {
+        if(listA.size() > Constants.Drivebase.ROLLING_AVERAGE_LENGTH)
+        {
             listA.remove(0);
         }
 
         double sumA = 0;
 
-        for (double listItem : listA) {
+        for(double listItem : listA)
+        {
             sumA = sumA + listItem;
         }
 
         averageA = sumA / listA.size();
     }
 
-    public void setEnable (boolean enable) {
+    public void setEnable(boolean enable)
+    {
         this.enable = enable;
     }
 
-    public double getLimeX() {
+    public double getLimeX()
+    {
 
-        if(enable) {
+        if(enable)
+        {
 
-        return averageX;
+            return averageX;
 
-        } else {
+        }
+        else
+        {
 
             return 0;
         }
     }
 
-    public double getLimeY() {
+    public double getLimeY()
+    {
 
-        if(enable) {
+        if(enable)
+        {
 
             return averageY;
-        } else {
+        }
+        else
+        {
 
             return 0;
         }
     }
 
 
-    public double getLimeA() {
+    public double getLimeA()
+    {
 
-        if(enable) {
+        if(enable)
+        {
 
             return averageA;
-        } else {
+        }
+        else
+        {
 
             return 0;
         }
-}
+    }
 
 
-    public static LimeLight getInstance() {
+    public static LimeLight getInstance()
+    {
 
-        if (limeLightInstance == null) {
+        if(limeLightInstance == null)
+        {
             limeLightInstance = new LimeLight();
         }
 

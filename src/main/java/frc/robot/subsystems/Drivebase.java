@@ -30,6 +30,8 @@ import frc.robot.commands.drivebase.ArcadeDrive;
 import frc.robot.constants.Constants;
 import frc.robot.services.Oi;
 
+import java.util.Arrays;
+
 import static java.lang.Double.NaN;
 
 public class Drivebase implements Subsystem {
@@ -98,6 +100,9 @@ public class Drivebase implements Subsystem {
             Constants.Wobbles.TICKS_PER_MOTOR_REV * Constants.Drivebase.GEAR_RATIO /
                     (Constants.Drivebase.WHEEL_DIAMETER * Math.PI);
 
+
+    boolean isRedAlliance;
+
     AHRS gyro = new AHRS(I2C.Port.kMXP);
 
 
@@ -128,6 +133,7 @@ public Field2d getField(){
         setDefaultCommand(ArcadeDrive);
         gyro.calibrate();
         isHeadingReliable = false;
+        isRedAlliance = DriverStation.getAlliance() == DriverStation.Alliance.Red;
         System.out.println("drivebase is constructing");
         rightMotor1.setInverted(true);
         rightMotor2.setInverted(true);
@@ -210,7 +216,28 @@ var d =.00;
 
     public void updatePoseLimelight()
     {
-        //poseEstimator.addVisionMeasurement(Timer.getFPGATimestamp() - (tl/1000.0) - (cl/1000.0));
+        LimeLight limelight = LimeLight.getInstance();
+        if(limelight.tv.getInteger(0) == 1)
+        {
+            double[] botpose;
+            if(isRedAlliance)
+            {
+                botpose = limelight.botpose_wpired.getDoubleArray(new double[]{0, 0, 0, 0, 0, 0, 0});
+            }
+            else
+            {
+                botpose = limelight.botpose_wpiblue.getDoubleArray(new double[]{0, 0, 0, 0, 0, 0, 0});
+            }
+
+            Pose2d currentPose = new Pose2d(botpose[0], botpose[1], new Rotation2d(botpose[5]));
+            poseEstimator.addVisionMeasurement(
+                    currentPose,
+                    Timer.getFPGATimestamp()
+                            - (limelight.tl.getDouble(0) / 1000.0)
+                            - (limelight.cl.getDouble(0) / 1000.0)
+            );
+            System.out.println("updatePoseLimelight, array: " + Arrays.toString(botpose) + " tl: " + limelight.tl.getDouble(0) + " cl: " + limelight.cl.getDouble(0));
+        }
     }
 
 
@@ -380,11 +407,11 @@ var d =.00;
 
     }
 
-    public void updateOdometry() {
-
+    public void updateOdometry()
+    {
+        updatePoseLimelight();
         odometry.update(
                 gyro.getRotation2d(), ticksToMeters((int)leftMotor1.getSelectedSensorPosition()), ticksToMeters((int)rightMotor1.getSelectedSensorPosition()));
-
     }
 
     public void setRightMeters(double meters){
