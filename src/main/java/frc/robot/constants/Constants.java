@@ -1,10 +1,19 @@
 package frc.robot.constants;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
+import java.util.List;
 
-public class Constants extends CommandBase {
-    public static class Collector {
+public class Constants extends CommandBase
+{
+    public static class Collector
+    {
         public static final int MOTOR_ID = 7;
 
         public static final double GEAR_RATIO = 2;
@@ -100,10 +109,51 @@ public class Constants extends CommandBase {
 
     }
 
+    public static class Autos{
+
+        public static class twoPeiceBalanceAuto {
+            public static Trajectory driveToObject = TrajectoryGenerator.generateTrajectory(
+                    new Pose2d(Units.feetToMeters(5.9166), Units.feetToMeters(25.125), new Rotation2d(Math.PI)),
+                    List.of(new Translation2d(Units.feetToMeters(5.9166+6),Units.feetToMeters(25.125+.75))),
+                    new Pose2d(Units.feetToMeters(5.9166+11.5), Units.feetToMeters(25.125+.75), new Rotation2d(Math.PI)),
+                    frc.robot.subsystems.Drivebase.GetDrivebase().config.setReversed(true));
+
+            //pickup
+            public static Trajectory driveToGrid = TrajectoryGenerator.generateTrajectory(
+                    new Pose2d(Units.feetToMeters(6.33+.25), Units.feetToMeters(23-21), new Rotation2d(Math.PI)),
+                    List.of(new Translation2d(Units.feetToMeters(6.33+.2),Units.feetToMeters(23.25))),
+                    new Pose2d(Units.feetToMeters(6.33), Units.feetToMeters(23), new Rotation2d(0)), frc.robot.subsystems.Drivebase.GetDrivebase().config);
+
+            //place second peice
+            public static Trajectory turnToBalance = TrajectoryGenerator.generateTrajectory(//need to do this
+                    new Pose2d(Units.feetToMeters(6.33), Units.feetToMeters(23), new Rotation2d(0)), List.of(new Translation2d(Units.feetToMeters(7),Units.feetToMeters(26.6-7.33))),
+                    new Pose2d(Units.feetToMeters(13), Units.feetToMeters(26.6-9.33), new Rotation2d(-Math.PI/2)), frc.robot.subsystems.Drivebase.GetDrivebase().config.setReversed(true));
+
+            public static Trajectory driveToBalance = TrajectoryGenerator.generateTrajectory(//need to do this
+                    new Pose2d(Units.feetToMeters(6.33), Units.feetToMeters(23), new Rotation2d(0)), List.of(new Translation2d(Units.feetToMeters(7),Units.feetToMeters(26.6-7.33))),
+                    new Pose2d(Units.feetToMeters(13), Units.feetToMeters(26.6-9.33), new Rotation2d(-Math.PI/2)), frc.robot.subsystems.Drivebase.GetDrivebase().config);
+
+
+        }
+
+    }
+
+
     public class Drivebase {
 
+        public static final double kMaxSpeedMetersPerSecond = 3;//was 3.47472
+        public static final double kMaxAccelerationMetersPerSecondSquared = 3;//was 24.0792
+
+        public static final double AUTO_KP =.02;
+
+        public static final double AUTO_KD= .001;
+
         public static final double SLOW_MODE_RATIO = .225;
-        public static final double GEAR_RATIO = 10.71;
+        public static final double GEAR_RATIO = 8.4586;
+
+        public static final double kTrackwidthMeters=.38;
+        public static final double FEET_PER_METER=3.28084;
+        public static final int TICKS_PER_ROTATION=2048;
         public static final double WHEEL_DIAMETER = 0.5;
         public static final double DISTANCE_KP = 0.05;
         public static final double ROTATE_KP = 0.0026/* 16,17,18 */;

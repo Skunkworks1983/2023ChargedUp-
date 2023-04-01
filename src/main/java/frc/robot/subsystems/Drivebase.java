@@ -1,9 +1,25 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.math.controller.RamseteController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.constraint.MaxVelocityConstraint;
+import edu.wpi.first.math.trajectory.constraint.TrajectoryConstraint;
+import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.DigitalOutput;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
@@ -18,6 +34,14 @@ public class Drivebase implements Subsystem {
     public Command ArcadeDrive = new ArcadeDrive(this, Oi.Instance, LimeLight.getInstance());
 
     private static Drivebase OGDrivebase;
+
+    DigitalOutput frontRangeSensorTrigger = new DigitalOutput(Constants.Drivebase.FRONT_RANGE_SENSOR_OUTPUT_CHANNEL);
+
+    DigitalOutput backRangeSensorTrigger = new DigitalOutput(Constants.Drivebase.BACK_RANGE_SENSOR_OUTPUT_CHANNEL);
+
+    AnalogInput frontRangeSensorValue = new AnalogInput(Constants.Drivebase.FRONT_RANGE_SENSOR_INPUT_CHANNEL);
+
+    AnalogInput backRangeSensorValue = new AnalogInput(Constants.Drivebase.BACK_RANGE_SENSOR_INPUT_CHANNEL);
     TalonFX leftMotor1 = new TalonFX(Constants.Wobbles.LEFT_MOTOR_1);
     TalonFX leftMotor2 = new TalonFX(Constants.Wobbles.LEFT_MOTOR_2);
     TalonFX rightMotor1 = new TalonFX(Constants.Wobbles.RIGHT_MOTOR_1);
@@ -26,8 +50,6 @@ public class Drivebase implements Subsystem {
     double backRangeVoltage;
 
     double frontRangeVoltage;
-
-    private double lastHeading;
 
     public double getFrontRangeVoltage() {
         return frontRangeVoltage;
@@ -45,23 +67,24 @@ public class Drivebase implements Subsystem {
         backRangeVoltage = voltage;
     }
 
-    DigitalOutput frontRangeSensorTrigger = new DigitalOutput(Constants.Drivebase.FRONT_RANGE_SENSOR_OUTPUT_CHANNEL);
-
-    DigitalOutput backRangeSensorTrigger = new DigitalOutput(Constants.Drivebase.BACK_RANGE_SENSOR_OUTPUT_CHANNEL);
-
-    AnalogInput frontRangeSensorValue = new AnalogInput(Constants.Drivebase.FRONT_RANGE_SENSOR_INPUT_CHANNEL);
-
-    AnalogInput backRangeSensorValue = new AnalogInput(Constants.Drivebase.BACK_RANGE_SENSOR_INPUT_CHANNEL);
-
     public enum DriveDirection {FORWARD, BACKWARD, MOTIONLESS, UNCLEAR}
 
     DriveDirection driveDirection = DriveDirection.FORWARD;
 
-    public void setCurrentDirection(Drivebase.DriveDirection direction) {
-        driveDirection = direction;
-    }
 
     private boolean isHeadingReliable;
+
+    private SimpleMotorFeedforward feedforward;
+
+    int i=0;
+
+    DifferentialDriveKinematics kinematics;
+
+    public RamseteController ramseteController;
+
+    private DifferentialDriveOdometry odometry;
+
+    private DifferentialDrivePoseEstimator poseEstimator;
 
     private final double TicksPerFoot =
             Constants.Wobbles.TICKS_PER_MOTOR_REV * Constants.Drivebase.GEAR_RATIO /
@@ -69,27 +92,105 @@ public class Drivebase implements Subsystem {
 
     AHRS gyro = new AHRS(I2C.Port.kOnboard);
 
-    Timer timer = new Timer();
 
-    private Drivebase() {
-        setDefaultCommand(ArcadeDrive);
+    public final TrajectoryConstraint autoVoltageConstraint= new MaxVelocityConstraint(Constants.Drivebase.kMaxSpeedMetersPerSecond);
+    public DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(Constants.Drivebase.kTrackwidthMeters);
+
+    private Timer timer = new Timer();
+    public final TrajectoryConfig config =
+            new TrajectoryConfig(
+                    Constants.Drivebase.kMaxSpeedMetersPerSecond,
+                    Constants.Drivebase.kMaxAccelerationMetersPerSecondSquared)
+                    // Add kinematics to ensure max speed is actually obeyed
+                    .setKinematics(kDriveKinematics)
+                    // Apply the voltage constraint
+                    .addConstraint(autoVoltageConstraint);
+
+
+private final Field2d field= new Field2d();
+public Field2d getField(){
+    return field;
+}
+
+    private Drivebase()
+    {
+        SmartDashboard.putData("field",field);
+        //setDefaultCommand(ArcadeDrive);
         gyro.calibrate();
         isHeadingReliable = false;
         System.out.println("drivebase is constructing");
+        rightMotor1.setInverted(true);
+        rightMotor2.setInverted(true);
+        rightMotor2.follow(rightMotor1);
+        leftMotor2.follow(leftMotor1);
+
+        rightMotor1.setSelectedSensorPosition(0);
+        leftMotor1.setSelectedSensorPosition(0);
+
+        leftMotor1.config_kP(0,Constants.Drivebase.AUTO_KP);
+        leftMotor2.config_kP(0,Constants.Drivebase.AUTO_KP);
+
+        rightMotor1.config_kP(0,Constants.Drivebase.AUTO_KP);
+        rightMotor2.config_kP(0,Constants.Drivebase.AUTO_KP);
+        leftMotor1.config_kD(0,Constants.Drivebase.AUTO_KD);
+        leftMotor2.config_kD(0,Constants.Drivebase.AUTO_KD);
+
+        rightMotor1.config_kD(0,Constants.Drivebase.AUTO_KD);
+        rightMotor2.config_kD(0,Constants.Drivebase.AUTO_KD);
+
+        leftMotor1.configOpenloopRamp(0,0);
+
+        rightMotor1.configOpenloopRamp(0,0);
+
+        leftMotor2.configOpenloopRamp(0,0);
+
+        rightMotor2.configOpenloopRamp(0,0);
+
+        leftMotor1.config_kF(0,0);
+
+        rightMotor1.config_kF(0,0);
+
+        leftMotor2.config_kF(0,0);
+
+        rightMotor2.config_kF(0,0);
+
+        rightMotor1.setSelectedSensorPosition(0);
+        leftMotor1.setSelectedSensorPosition(0);
+
+        kinematics = new DifferentialDriveKinematics(Constants.Drivebase.kTrackwidthMeters);
+        ramseteController = new RamseteController();
+        ramseteController.setTolerance(new Pose2d(.05,.05,new Rotation2d(Math.PI/20)));
+        odometry =
+                new DifferentialDriveOdometry(
+                        gyro.getRotation2d(), leftMotor1.getSelectedSensorPosition(), rightMotor1.getSelectedSensorPosition());
+
+        poseEstimator = new DifferentialDrivePoseEstimator(
+                kinematics,
+                gyro.getRotation2d(),
+                ticksToMeters(leftMotor1.getSelectedSensorPosition()),
+                ticksToMeters(rightMotor1.getSelectedSensorPosition()),
+                new Pose2d(0,0,new Rotation2d(0))
+        );
+
+        CommandScheduler.getInstance().registerSubsystem(this);
+
+
     }
 
     public void runMotor(double turnSpeedLeft, double turnSpeedRight) {
+    System.out.println("runmotor called");
         leftMotor1.set(TalonFXControlMode.PercentOutput, turnSpeedLeft);
-        leftMotor2.set(TalonFXControlMode.PercentOutput, turnSpeedLeft);
-        rightMotor1.set(TalonFXControlMode.PercentOutput, -turnSpeedRight);
-        rightMotor2.set(TalonFXControlMode.PercentOutput, -turnSpeedRight);
+        rightMotor1.set(TalonFXControlMode.PercentOutput, turnSpeedRight);
         if (turnSpeedLeft > 0 && turnSpeedRight > 0) driveDirection = DriveDirection.FORWARD;
         else if (turnSpeedLeft < 0 && turnSpeedRight < 0) driveDirection = DriveDirection.BACKWARD;
         else {
             driveDirection = DriveDirection.UNCLEAR;
         }
+        System.out.println(turnSpeedLeft + "," + turnSpeedRight);
     }
 
+    public Pose2d GetCurrentPose(){return poseEstimator.getEstimatedPosition();}
+        public void SetPose(Pose2d pose){poseEstimator.resetPosition(new Rotation2d(0),0,0,pose);}
     public double getPosLeft() {
         return leftMotor1.getSelectedSensorPosition() / TicksPerFoot;
     }
@@ -113,18 +214,17 @@ public class Drivebase implements Subsystem {
         }
     }
 
+    public Pose2d getPose() {
+        return odometry.getPoseMeters();
+    }
+
+    public void setPose(Pose2d pose){
+    poseEstimator.resetPosition(new Rotation2d(gyro.getYaw()),0,0,pose);
+    //leftPositonMeters and rightPositionMeters posibly should not be 0. Not sure.
+    }
 
     public double getPitch() {
         return gyro.getPitch();
-    }
-
-    public boolean isCalibrating() {
-        return gyro.isCalibrating();
-    }
-
-
-    public double getTicksLeft() {
-        return leftMotor1.getSelectedSensorPosition();
     }
 
     public void SetBrakeMode(boolean enable) {
@@ -144,18 +244,7 @@ public class Drivebase implements Subsystem {
         }
     }
 
-
-    public double getSpeedLeft() {
-        return leftMotor1.getSelectedSensorVelocity();
-    }
-
-    public double getSpeedRight() {
-        return (-rightMotor1.getSelectedSensorVelocity());
-    }
-
     public void waitForHeadingReliable() {
-
-        //System.out.println("waitForHeadingReliable method is called");
 
         timer.start();
 
@@ -183,27 +272,6 @@ public class Drivebase implements Subsystem {
     }
 
 
-    /*@Override
-    public void periodic() {
-        if (isHeadingReliable) {
-            if (gyro.isCalibrating() || !gyro.isConnected()) {
-
-                isHeadingReliable = false;
-
-                //System.out.println("GYRO CRASHED!!! - GYRO IS NOT CALIBRATED OR CONNECTED");
-            }
-
-            if (Math.abs(getHeading() - lastHeading) >= Constants.Drivebase.HEADING_TOO_BIG) {
-
-                isHeadingReliable = false;
-
-                //System.out.println("THE GYROSCOPE HAS CRASHED!!! - HEADING IS TOO LARGE");
-            }
-
-            lastHeading = getHeading();
-        }
-    }*/
-
     public DriveDirection getDriveDirection() {
         return driveDirection;
     }
@@ -222,10 +290,7 @@ public class Drivebase implements Subsystem {
         return 0;
     }
 
-    public void setDirectionRangeSensor(boolean value) {
-        if (driveDirection == DriveDirection.FORWARD) setFrontRangeSensor(value);
-        if (driveDirection == DriveDirection.BACKWARD) setBackRangeSensor(value);
-    }
+
 
     public void setBackRangeSensor(boolean value) {
         backRangeSensorTrigger.set(value);
@@ -244,4 +309,50 @@ public class Drivebase implements Subsystem {
         return OGDrivebase;
 
     }
+
+    public void resetGyro()
+    {
+        gyro.reset();
+    }
+
+    @Override
+    public void periodic() {
+        // Update the odometry in the periodic block
+        //updateOdometry();//update odometry is just backup
+        poseEstimator.update(gyro.getRotation2d(),
+                ticksToMeters((int)leftMotor1.getSelectedSensorPosition()),
+                ticksToMeters((int)rightMotor1.getSelectedSensorPosition()));
+
+        field.setRobotPose(poseEstimator.getEstimatedPosition());
+        SmartDashboard.putData("field",field);
+
+//TODO: if we have an april tag in view, call addVisionMeasurement();
+
+    }
+
+
+    public void setRightMeters(double meters){
+        rightMotor1.set(ControlMode.Velocity,meters);
+    }
+    public void setLeftMeters(double meters){
+        leftMotor1.set(ControlMode.Velocity,meters);//actualy ticks should be fixed.
+    }
+    double ticksToMeters(double ticks){return ticksToFeet(ticks)/Constants.Drivebase.FEET_PER_METER;}
+
+    double ticksToFeet(double ticks){
+
+        return ticks/Constants.Drivebase.TICKS_PER_ROTATION
+                /Constants.Drivebase.GEAR_RATIO*Constants.Drivebase.WHEEL_DIAMETER*Math.PI;
+
+    }
+    double feetToTicks(double feet){
+
+        //ticks to feet ticks/ticks_per_rotation*gearratio*wheeldiamater=feet
+        return feet*Constants.Drivebase.TICKS_PER_ROTATION
+                *Constants.Drivebase.GEAR_RATIO/Constants.Drivebase.WHEEL_DIAMETER/Math.PI;
+
+    }
+
+    public double metersToTicks(double meters){return feetToTicks(meters)*Constants.Drivebase.FEET_PER_METER;}
+
 }
