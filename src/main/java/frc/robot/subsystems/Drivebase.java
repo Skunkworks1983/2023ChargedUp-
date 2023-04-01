@@ -1,7 +1,6 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
@@ -11,10 +10,8 @@ import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
-import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.constraint.MaxVelocityConstraint;
 import edu.wpi.first.math.trajectory.constraint.TrajectoryConstraint;
@@ -131,11 +128,11 @@ public Field2d getField(){
         rightMotor1.setSelectedSensorPosition(0);
         leftMotor1.setSelectedSensorPosition(0);
 
-        leftMotor1.config_kP(0,Constants.Drivebase.AUTO_KA);
-        leftMotor2.config_kP(0,Constants.Drivebase.AUTO_KA);
+        leftMotor1.config_kP(0,Constants.Drivebase.AUTO_KP);
+        leftMotor2.config_kP(0,Constants.Drivebase.AUTO_KP);
 
-        rightMotor1.config_kP(0,Constants.Drivebase.AUTO_KA);
-        rightMotor2.config_kP(0,Constants.Drivebase.AUTO_KA);
+        rightMotor1.config_kP(0,Constants.Drivebase.AUTO_KP);
+        rightMotor2.config_kP(0,Constants.Drivebase.AUTO_KP);
         leftMotor1.config_kD(0,Constants.Drivebase.AUTO_KD);
         leftMotor2.config_kD(0,Constants.Drivebase.AUTO_KD);
 

@@ -140,7 +140,7 @@ public class Constants extends CommandBase {
         public static final double kMaxSpeedMetersPerSecond = 3;//was 3.47472
         public static final double kMaxAccelerationMetersPerSecondSquared = 3;//was 24.0792
 
-        public static final double AUTO_KA=.02;
+        public static final double AUTO_KP =.02;
 
         public static final double AUTO_KD= .001;
 
