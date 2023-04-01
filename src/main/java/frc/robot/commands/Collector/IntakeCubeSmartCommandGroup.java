@@ -15,11 +15,12 @@ public class IntakeCubeSmartCommandGroup extends SequentialCommandGroup {
         //           super(new OpenClawCommand(), new MoveArmCommand());
         super(
                 new IntakeCubeSmartCommand(),
+                new SetCollectorHoldCommand(),
                 new ParallelRaceGroup(
                         new ConditionalStowCommand(),
                         new TimerCommand(.5)
-                ),
-                new SetCollectorHoldCommand()
+                )
+
         );
 
     }

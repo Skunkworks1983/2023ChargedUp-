@@ -16,11 +16,12 @@ public class IntakeConeSmartCommandGroup extends SequentialCommandGroup {
         //           super(new OpenClawCommand(), new MoveArmCommand());
         super(
             new IntakeConeSmartCommand(),
+                new SetCollectorHoldCommand(),
             new ParallelRaceGroup(
                     new ConditionalStowCommand(),
                     new TimerCommand(.5)
-            ),
-            new SetCollectorHoldCommand()
+            )
+
         );
     }
 }
