@@ -162,6 +162,11 @@ public class Robot extends TimedRobot
         arm.WristMotor.setNeutralMode(NeutralMode.Brake);//auto volocit kp /kd
         CommandScheduler.getInstance().cancelAll();
         SendableChooser autoChooser = (SendableChooser) SmartDashboard.getData("autoChooser");
+        autonomousCommand = (Command)autoChooser.getSelected();
+        if (autonomousCommand != null)
+        {
+            autonomousCommand.schedule();
+        }
 
     }
 

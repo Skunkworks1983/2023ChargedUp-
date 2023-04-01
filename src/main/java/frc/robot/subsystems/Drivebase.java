@@ -207,8 +207,6 @@ public Field2d getField(){
 
     public double getHeading() {
 
-        return gyro.getAngle();//for testing
-    /*
         if (isHeadingReliable) {
 
             return gyro.getAngle();
@@ -217,7 +215,7 @@ public Field2d getField(){
 
             return NaN;
 
-        }*/
+        }
     }
 
     public Pose2d getPose() {

@@ -1,17 +1,12 @@
 package frc.robot.constants;
 
-import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
-import edu.wpi.first.math.trajectory.constraint.MaxVelocityConstraint;
-import edu.wpi.first.math.trajectory.constraint.TrajectoryConstraint;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Drivebase;
 
 import java.util.List;
 
@@ -112,41 +107,29 @@ public class Constants extends CommandBase {
 
     public static class Autos{
 
-        public static class FirstAuto{
-            public static Trajectory trajectoryOne= TrajectoryGenerator.generateTrajectory(
+        public static class twoPeiceBalanceAuto {
+            public static Trajectory driveToObject = TrajectoryGenerator.generateTrajectory(
                     new Pose2d(Units.feetToMeters(5.9166), Units.feetToMeters(25.125), new Rotation2d(Math.PI)),
                     List.of(new Translation2d(Units.feetToMeters(5.9166+6),Units.feetToMeters(25.125+.75))),
                     new Pose2d(Units.feetToMeters(5.9166+11.5), Units.feetToMeters(25.125+.75), new Rotation2d(Math.PI)),
                     frc.robot.subsystems.Drivebase.GetDrivebase().config.setReversed(true));
 
             //pickup
-            public static Trajectory trajectoryTwo= TrajectoryGenerator.generateTrajectory(
+            public static Trajectory driveToGrid = TrajectoryGenerator.generateTrajectory(
                     new Pose2d(Units.feetToMeters(6.33+.25), Units.feetToMeters(23-21), new Rotation2d(Math.PI)),
                     List.of(new Translation2d(Units.feetToMeters(6.33+.2),Units.feetToMeters(23.25))),
                     new Pose2d(Units.feetToMeters(6.33), Units.feetToMeters(23), new Rotation2d(0)), frc.robot.subsystems.Drivebase.GetDrivebase().config);
 
             //place second peice
-            public static Trajectory trajectoryThree= TrajectoryGenerator.generateTrajectory(//need to do this
+            public static Trajectory turnToBalance = TrajectoryGenerator.generateTrajectory(//need to do this
                     new Pose2d(Units.feetToMeters(6.33), Units.feetToMeters(23), new Rotation2d(0)), List.of(new Translation2d(Units.feetToMeters(7),Units.feetToMeters(26.6-7.33))),
                     new Pose2d(Units.feetToMeters(13), Units.feetToMeters(26.6-9.33), new Rotation2d(-Math.PI/2)), frc.robot.subsystems.Drivebase.GetDrivebase().config.setReversed(true));
 
-            public static Trajectory trajectoryFour= TrajectoryGenerator.generateTrajectory(//need to do this
+            public static Trajectory driveToBalance = TrajectoryGenerator.generateTrajectory(//need to do this
                     new Pose2d(Units.feetToMeters(6.33), Units.feetToMeters(23), new Rotation2d(0)), List.of(new Translation2d(Units.feetToMeters(7),Units.feetToMeters(26.6-7.33))),
                     new Pose2d(Units.feetToMeters(13), Units.feetToMeters(26.6-9.33), new Rotation2d(-Math.PI/2)), frc.robot.subsystems.Drivebase.GetDrivebase().config);
 
 
-        }
-
-        public static class testAuto
-        {
-            public static Trajectory trajectoryOne= TrajectoryGenerator.generateTrajectory(
-                    new Pose2d(Units.feetToMeters(0), Units.feetToMeters(0), new Rotation2d(0/2)),
-
-                    List.of(new Translation2d(Units.feetToMeters(5), Units.feetToMeters(0))),
-
-                    new Pose2d(Units.feetToMeters(10), Units.feetToMeters(0), new Rotation2d(0/2)),
-
-                    frc.robot.subsystems.Drivebase.GetDrivebase().config);
         }
 
     }

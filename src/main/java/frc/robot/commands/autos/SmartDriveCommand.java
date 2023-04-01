@@ -87,6 +87,7 @@ public class SmartDriveCommand extends CommandBase {
                         new DifferentialDriveKinematics(Constants.Drivebase.kTrackwidthMeters),
                         metersPerSecond);
         CommandScheduler.getInstance().schedule(ramseteCommand);
+    System.out.println("initialized SmartDriveCommand");
     }
 
 
@@ -106,6 +107,7 @@ public class SmartDriveCommand extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
+        System.out.println("ended SmartDriveCommand, interrupted:"+interrupted);
 Drivebase.GetDrivebase().runMotor(0,0);
     }
 }
