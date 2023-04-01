@@ -116,20 +116,26 @@ public class Constants extends CommandBase {
 
         public static class FirstAuto{
             public static Trajectory trajectoryOne= TrajectoryGenerator.generateTrajectory(
-                    new Pose2d(Units.feetToMeters(6.33), Units.feetToMeters(23), new Rotation2d(Math.PI/2)),
-                    List.of(new Translation2d(Units.feetToMeters(6.33),Units.feetToMeters(23+6))),
-                    new Pose2d(Units.feetToMeters(6.33), Units.feetToMeters(23+21), new Rotation2d(Math.PI/2)),
-                    frc.robot.subsystems.Drivebase.GetDrivebase().config);
+                    new Pose2d(Units.feetToMeters(5.9166), Units.feetToMeters(25.125), new Rotation2d(Math.PI)),
+                    List.of(new Translation2d(Units.feetToMeters(5.9166+6),Units.feetToMeters(25.125+.75))),
+                    new Pose2d(Units.feetToMeters(5.9166+11.5), Units.feetToMeters(25.125+.75), new Rotation2d(Math.PI)),
+                    frc.robot.subsystems.Drivebase.GetDrivebase().config.setReversed(true));
 
             //pickup
             public static Trajectory trajectoryTwo= TrajectoryGenerator.generateTrajectory(
-                    new Pose2d(Units.feetToMeters(6.33+10.5), 23.25, new Rotation2d(Math.PI)), List.of(new Translation2d(Units.feetToMeters(6.33+3),Units.feetToMeters(23.25))),
+                    new Pose2d(Units.feetToMeters(6.33+.25), Units.feetToMeters(23-21), new Rotation2d(Math.PI)),
+                    List.of(new Translation2d(Units.feetToMeters(6.33+.2),Units.feetToMeters(23.25))),
                     new Pose2d(Units.feetToMeters(6.33), Units.feetToMeters(23), new Rotation2d(0)), frc.robot.subsystems.Drivebase.GetDrivebase().config);
 
             //place second peice
-            public static Trajectory trajectoryThree= TrajectoryGenerator.generateTrajectory(
+            public static Trajectory trajectoryThree= TrajectoryGenerator.generateTrajectory(//need to do this
+                    new Pose2d(Units.feetToMeters(6.33), Units.feetToMeters(23), new Rotation2d(0)), List.of(new Translation2d(Units.feetToMeters(7),Units.feetToMeters(26.6-7.33))),
+                    new Pose2d(Units.feetToMeters(13), Units.feetToMeters(26.6-9.33), new Rotation2d(-Math.PI/2)), frc.robot.subsystems.Drivebase.GetDrivebase().config.setReversed(true));
+
+            public static Trajectory trajectoryFour= TrajectoryGenerator.generateTrajectory(//need to do this
                     new Pose2d(Units.feetToMeters(6.33), Units.feetToMeters(23), new Rotation2d(0)), List.of(new Translation2d(Units.feetToMeters(7),Units.feetToMeters(26.6-7.33))),
                     new Pose2d(Units.feetToMeters(13), Units.feetToMeters(26.6-9.33), new Rotation2d(-Math.PI/2)), frc.robot.subsystems.Drivebase.GetDrivebase().config);
+
 
         }
 
@@ -150,8 +156,12 @@ public class Constants extends CommandBase {
 
     public class Drivebase {
 
-        public static final double kMaxSpeedMetersPerSecond = 0.5;//was 3.47472
-        public static final double kMaxAccelerationMetersPerSecondSquared = .25;//was 24.0792
+        public static final double kMaxSpeedMetersPerSecond = 3;//was 3.47472
+        public static final double kMaxAccelerationMetersPerSecondSquared = 3;//was 24.0792
+
+        public static final double AUTO_KA=.02;
+
+        public static final double AUTO_KD= .001;
 
         public static final double SLOW_MODE_RATIO = .165;
         public static final double GEAR_RATIO = 8.4586;

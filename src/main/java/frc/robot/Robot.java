@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.autos.*;
 import frc.robot.commands.autos.CompAutos.CubeHighAndBalance5;
 import frc.robot.commands.autos.CompAutos.CubeHighLeaveCommunity2_8;
 import frc.robot.commands.autos. CompAutos.ConeLowAndBalance4_5_6;
@@ -26,14 +27,10 @@ import frc.robot.commands.autos.CompAutos.TwoPiece2Blue;
 import frc.robot.commands.autos.CompAutos.TwoPiece2Red;
 import frc.robot.commands.autos.CompAutos.TwoPiece8Blue;
 import frc.robot.commands.autos.CompAutos.TwoPiece8Red;
-import frc.robot.commands.autos.ScoreAndExitCommunityP1CommandGroup;
-import frc.robot.commands.autos.ScoreAndExitCommunityP2CommandGroup;
-import frc.robot.commands.autos.SimpleAutoCommandGroup;
 import frc.robot.commands.autos.CompAutos.TwoPieceBalance2Blue;
 import frc.robot.commands.autos.CompAutos.TwoPieceBalance2Red;
 import frc.robot.commands.autos.CompAutos.TwoPieceBalance8Blue;
 import frc.robot.commands.autos.CompAutos.TwoPieceBalance8Red;
-import frc.robot.commands.autos.TestAutoTwoCommandGroup;
 import frc.robot.commands.drivebase.ArcadeDrive;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
@@ -157,20 +154,16 @@ public class Robot extends TimedRobot
     @Override
     public void autonomousInit()
     {
-        Drivebase.GetDrivebase().setPose(new Pose2d(Units.feetToMeters(6.33), Units.feetToMeters(23), new Rotation2d(Math.PI/2)));
+        Drivebase.GetDrivebase().setPose(new Pose2d(Units.feetToMeters(5.9166), Units.feetToMeters(25.125), new Rotation2d(Math.PI)));
 
         Collector.getInstance().SetSpeed(0);
         arm.SetLightMode(Constants.Lights.BLANK);
         setBrakeModeOnDisable = true;
-        arm.WristMotor.setNeutralMode(NeutralMode.Brake);
+        arm.WristMotor.setNeutralMode(NeutralMode.Brake);//auto volocit kp /kd
         CommandScheduler.getInstance().cancelAll();
         SendableChooser autoChooser = (SendableChooser) SmartDashboard.getData("autoChooser");
         //autonomousCommand = (Command)autoChooser.getSelected();
-        autonomousCommand = new TestAutoTwoCommandGroup();
-        if (autonomousCommand != null)
-        {
-            autonomousCommand.schedule();
-        }
+        new SmartDriveCommand(Constants.Autos.FirstAuto.trajectoryOne).schedule();
        // autoChooser.addOption();
     }
 
