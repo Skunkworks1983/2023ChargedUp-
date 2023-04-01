@@ -15,7 +15,8 @@ import static java.lang.Double.NaN;
 
 public class Drivebase implements Subsystem {
 
-    public Command ArcadeDrive = new ArcadeDrive(this, Oi.Instance);
+    public Command ArcadeDrive = new ArcadeDrive(this, Oi.Instance, LimeLight.getInstance());
+
     private static Drivebase OGDrivebase;
     TalonFX leftMotor1 = new TalonFX(Constants.Wobbles.LEFT_MOTOR_1);
     TalonFX leftMotor2 = new TalonFX(Constants.Wobbles.LEFT_MOTOR_2);
