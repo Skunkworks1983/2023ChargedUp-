@@ -58,7 +58,7 @@ public class ArcadeDrive extends CommandBase {
             turnThrottle = pidController.calculate(heading, targetHeading);
         } else {*/
 
-    //}
+        //}
 
         if (oi.isCenterOnPiece()) {
 
@@ -98,6 +98,6 @@ public class ArcadeDrive extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        System.out.println("Arcade drive end Interrupted " + interrupted );
+        System.out.println("Arcade drive end Interrupted " + interrupted);
     }
 }
