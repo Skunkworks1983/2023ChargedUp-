@@ -12,21 +12,33 @@ public class RotateCommand extends CommandBase
     private double startDegree;
     private double finishDegree;
     private int onTargetCount;
+    private boolean absolute;
    private PIDController pidController = new PIDController(Constants.Drivebase.ANGLE_KP, 0.0032, Constants.Drivebase.ANGLE_KD,Constants.Drivebase.DRIVEBASE_KF);
 
     public RotateCommand(Drivebase drivebase, double degree)
     {
+       this(drivebase, degree, false);
+    }
+    public RotateCommand(Drivebase drivebase, double degree, boolean absolute){
+
         addRequirements(drivebase);
         this.drivebase = drivebase;
         this.degree = degree;
         pidController.setIntegratorRange(-0.2, 0.2);
+        this.absolute = absolute;
+
     }
 
     @Override
     public void initialize()
     {
+
         startDegree = drivebase.getHeading();
-        finishDegree = startDegree + degree;
+        if(absolute) {
+            finishDegree = degree;
+        } else{
+            finishDegree = startDegree + degree;
+        }
         System.out.println("starting RotateCommand");
     }
 

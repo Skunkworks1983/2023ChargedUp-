@@ -13,6 +13,7 @@ import frc.robot.commands.drivebase.DriveDistanceCommand;
 import frc.robot.commands.drivebase.DriveDistanceCommandGyro;
 import frc.robot.commands.drivebase.RotateCommand;
 import frc.robot.constants.Constants;
+import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drivebase;
 
 public class ConeMidAndBalance4_6 extends SequentialCommandGroup
@@ -20,9 +21,9 @@ public class ConeMidAndBalance4_6 extends SequentialCommandGroup
 
     public ConeMidAndBalance4_6()
     {
-        super(new SetArmRaceCommandGroup(Constants.ArmPos.SCORE_CONE_MID_SHOULDER, Constants.ArmPos.SCORE_CONE_MID_WRIST, 1.75),
+        super(new SetArmRaceCommandGroup(Constants.ArmPose.SCORE_MID_CONE, 1.5),
               new ParallelRaceGroup(new ExpelConeCommand(), new TimerCommand(.2)),
-              new SetArmRaceCommandGroup(Constants.ArmPos.CARRY_SHOULDER,Constants.ArmPos.CARRY_WRIST,.75),
+              new SetArmRaceCommandGroup(Constants.ArmPose.STOW, .75),
               new DriveDistanceCommand(Drivebase.GetDrivebase(),-.5),
               new RotateCommand(Drivebase.GetDrivebase(),180),
               new DriveDistanceCommandGyro(Drivebase.GetDrivebase(), 10, Constants.Drivebase.DRIVEBASE_KF + .1),

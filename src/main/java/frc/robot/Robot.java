@@ -18,10 +18,19 @@ import frc.robot.commands.autos.CompAutos.ConeMidLeaveCommunity1_9;
 import frc.robot.commands.autos.CompAutos.CubeMidLeaveCommunity2_8;
 import frc.robot.commands.autos.CompAutos.CubeMidAndBalance5;
 import frc.robot.commands.autos.CompAutos.ConeMidAndBalance4_6;
+import frc.robot.commands.autos.CompAutos.DoNothing;
+import frc.robot.commands.autos.CompAutos.TwoPiece2Blue;
+import frc.robot.commands.autos.CompAutos.TwoPiece2Red;
+import frc.robot.commands.autos.CompAutos.TwoPiece8Blue;
+import frc.robot.commands.autos.CompAutos.TwoPiece8Red;
 import frc.robot.commands.autos.ScoreAndExitCommunityP1CommandGroup;
 import frc.robot.commands.autos.ScoreAndExitCommunityP2CommandGroup;
 import frc.robot.commands.autos.SimpleAutoCommandGroup;
 import frc.robot.commands.drivebase.DriveToGamePieceCommand;
+import frc.robot.commands.autos.CompAutos.TwoPieceBalance2Blue;
+import frc.robot.commands.autos.CompAutos.TwoPieceBalance2Red;
+import frc.robot.commands.autos.CompAutos.TwoPieceBalance8Blue;
+import frc.robot.commands.autos.CompAutos.TwoPieceBalance8Red;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Collector;
@@ -71,11 +80,17 @@ public class Robot extends TimedRobot
         autoChooser.addOption("ConeLowAndBalance4_5_6",new ConeLowAndBalance4_5_6());
         autoChooser.addOption("CubeHighAndBalance5",new CubeHighAndBalance5());
         autoChooser.addOption("CubeHighLeaveCommunity2_8",new CubeHighLeaveCommunity2_8());
+        autoChooser.addOption("DoNothing", new DoNothing());
+        autoChooser.addOption("TwoPieceBalance8Red",new TwoPieceBalance8Red());
+        autoChooser.addOption("TwoPieceBalance8Blue",new TwoPieceBalance8Blue());
+        autoChooser.addOption("TwoPieceBalance2Red",new TwoPieceBalance2Red());
+        autoChooser.addOption("TwoPieceBalance2Blue",new TwoPieceBalance2Blue());
+        autoChooser.addOption("TwoPiece8Red",new TwoPiece8Red());
+        autoChooser.addOption("TwoPiece8Blue",new TwoPiece8Blue());
+        autoChooser.addOption("TwoPiece2Red",new TwoPiece2Red());
+        autoChooser.addOption("TwoPiece2Blue",new TwoPiece2Blue());
         autoChooser.addOption("DriveToGamePieceCommand", new DriveToGamePieceCommand());
 
-
-        //autoChooser.addOption("oneBallAutosHigh", new OneBallAutosHighCommandGroup());
-       // autoChooser.addOption("oneBallAutosLow", new OneBallAutosLowCommandGroup());
         SmartDashboard.putData("autoChooser", autoChooser);
 
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
@@ -136,6 +151,7 @@ public class Robot extends TimedRobot
     @Override
     public void autonomousInit()
     {
+        Collector.getInstance().SetSpeed(0);
         arm.SetLightMode(Constants.Lights.BLANK);
         setBrakeModeOnDisable = true;
         arm.WristMotor.setNeutralMode(NeutralMode.Brake);

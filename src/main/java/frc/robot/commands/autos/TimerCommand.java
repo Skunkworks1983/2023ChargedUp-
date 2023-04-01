@@ -17,6 +17,7 @@ public class TimerCommand extends CommandBase {
 
     @Override
     public void initialize() {
+        timer.reset();
         timer.start();
     }
 
