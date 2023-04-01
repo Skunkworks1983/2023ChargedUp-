@@ -60,8 +60,8 @@ public class SmartDriveCommand extends CommandBase {
         addRequirements(Drivebase.GetDrivebase());
     }
 
-    public SmartDriveCommand(List <Translation2d> goThrough,Pose2d finalPose) {
-        trajectory = TrajectoryGenerator.generateTrajectory(Drivebase.GetDrivebase().GetCurrentPose(),goThrough,finalPose, Drivebase.GetDrivebase().config.setReversed(true));
+    public SmartDriveCommand(List <Translation2d> goThrough,Pose2d finalPose,boolean reversed) {
+        trajectory = TrajectoryGenerator.generateTrajectory(Drivebase.GetDrivebase().GetCurrentPose(),goThrough,finalPose, Drivebase.GetDrivebase().config.setReversed(reversed));
         timer = new Timer();
         timer.start();
         double curTime = timer.get();
