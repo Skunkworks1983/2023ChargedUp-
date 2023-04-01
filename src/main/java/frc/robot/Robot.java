@@ -184,10 +184,7 @@ public class Robot extends TimedRobot
 
     /** This method is called periodically during operator control. */
     @Override
-    public void teleopPeriodic()
-{
-    SmartDashboard.putData("field" , drivebase.getField());
-}
+    public void teleopPeriodic() {}
     
     
     @Override
