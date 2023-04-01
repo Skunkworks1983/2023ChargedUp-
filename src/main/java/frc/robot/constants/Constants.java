@@ -16,7 +16,7 @@ public class Constants extends CommandBase {
         public static final double CONE_COLLECT_AMP_THRESHOLD = 50;
         public static final double CONE_AMPS_HOLDING_THRESHOLD = 10;
 
-        public static final double INTAKE_SPEED = 40; //inches per second
+        public static final double INTAKE_SPEED = 10; //inches per second
         public static final double INTAKE_MOTOR_SPEED =
                 INTAKE_SPEED / WHEEL_CIRCUMFERENCE * WHEEL_REVS_PER_SEC_TO_VELOCITY;
         public static final double INTAKE_MOTOR_SPEED_SLOW = INTAKE_MOTOR_SPEED / 2;
@@ -202,7 +202,7 @@ public class Constants extends CommandBase {
         FLOOR_CUBE(-128.59537049672488, 115.25, -1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
         FLOOR_CONE(-128.59537049672488, 112.75, -0.5, false, 20),
         HIGH_CUBE(41.57, 100, -1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
-        SUBSTATION_CUBE(43.68152, 174.73779, 1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
+        SUBSTATION_CUBE(43.68152, 174.73779, 4, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
         SUBSTATION_CONE(42.56579, 156.46118, 1, true, Collector.CONE_COLLECT_AMP_THRESHOLD),
         SCORE_MID_CUBE(56.56579, 160.46118, 1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
         SCORE_MID_CONE(44.56579, 150.46118, 1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
