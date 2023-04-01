@@ -26,8 +26,6 @@ public class IntakeConeSmartCommand extends CommandBase {
     @Override
     public void initialize()
     {
-        System.out.println("Shoulder" + Arm.getInstance().getShoulderAngle());
-        System.out.println("Wrist" + Arm.getInstance().getWristAngle());
         System.out.println("Intake Cone Smart Command Initialize");
         countConeHeld = 0;
         ticksElapsed = 0;

@@ -124,8 +124,6 @@ public class Robot extends TimedRobot
     @Override
     public void disabledInit()
     {
-        System.out.println("Shoulder" + Arm.getInstance().getShoulderAngle());
-        System.out.println("Wrist" + Arm.getInstance().getWristAngle());
         drivebase.runMotor(0,0);
         arm.WristMotor.setNeutralMode(NeutralMode.Coast);
         if (setBrakeModeOnDisable)
@@ -150,8 +148,6 @@ public class Robot extends TimedRobot
     @Override
     public void autonomousInit()
     {
-        System.out.println("Shoulder" + Arm.getInstance().getShoulderAngle());
-        System.out.println("Wrist" + Arm.getInstance().getWristAngle());
         Collector.getInstance().SetSpeed(0);
         arm.SetLightMode(Constants.Lights.BLANK);
         setBrakeModeOnDisable = true;
@@ -180,8 +176,6 @@ public class Robot extends TimedRobot
     @Override
     public void teleopInit()
     {
-        System.out.println("Shoulder" + Arm.getInstance().getShoulderAngle());
-        System.out.println("Wrist" + Arm.getInstance().getWristAngle());
         arm.SetLightMode(Constants.Lights.BLANK);
         drivebase.setGyroStatus(false);
         setBrakeModeOnDisable = true;
