@@ -124,8 +124,6 @@ public Field2d getField(){
         rightMotor2.follow(rightMotor1);
         leftMotor2.follow(leftMotor1);
 
-        feedforward = new SimpleMotorFeedforward(Constants.Drivebase.FEEDFORWARD_KS, Constants.Drivebase.FEEDFORWARD_KV, Constants.Drivebase.FEEDFORWARD_KA);
-
         rightMotor1.setSelectedSensorPosition(0);
         leftMotor1.setSelectedSensorPosition(0);
 
