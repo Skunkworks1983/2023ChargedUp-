@@ -15,7 +15,7 @@ public class FindAndCollectCone extends SequentialCommandGroup {
                         new TimerCommand(0.25)
                 ),
                 new ParallelRaceGroup(
-                        new DriveToGamePieceCommand(-0.175, 10),
+                        new DriveToGamePieceCommand(-0.15, 10),
                         new IntakeConeSmartCommand()
                 ),
                 new ParallelRaceGroup(
