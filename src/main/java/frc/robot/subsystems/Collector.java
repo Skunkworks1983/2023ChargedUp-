@@ -93,7 +93,7 @@ public class Collector extends SubsystemBase {
     private static Collector instance;
     public void SetSpeed(double speed)
     {
-        if(speed == 0) // not used
+        if(speed == 0)
         {
             Motor.selectProfileSlot(1, 0);
             //Motor.set(TalonFXControlMode.Position, Motor.getSelectedSensorPosition());
