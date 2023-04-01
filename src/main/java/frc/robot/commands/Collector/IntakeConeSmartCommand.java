@@ -1,5 +1,6 @@
 package frc.robot.commands.Collector;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
@@ -12,7 +13,8 @@ public class IntakeConeSmartCommand extends CommandBase {
     private int countConeHeld;
     private int ticksElapsed;
 
-    public IntakeConeSmartCommand() {
+    public IntakeConeSmartCommand()
+    {
         armInstance = Arm.getInstance();
         collectorInstance = Collector.getInstance();
 
@@ -22,7 +24,8 @@ public class IntakeConeSmartCommand extends CommandBase {
     }
 
     @Override
-    public void initialize() {
+    public void initialize()
+    {
         System.out.println("Intake Cone Smart Command Initialize");
         countConeHeld = 0;
         ticksElapsed = 0;
