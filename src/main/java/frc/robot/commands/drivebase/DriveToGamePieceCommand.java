@@ -58,10 +58,6 @@ public class DriveToGamePieceCommand extends CommandBase {
         rightSpeed = MathUtil.clamp(rightSpeed, -1, 1);
 
         drivebase.runMotor(leftSpeed, rightSpeed);
-
-        System.out.println("turnThrottle " + turnThrottle);
-        System.out.println("leftSpeed " + leftSpeed + "rightSpeed " + rightSpeed);
-        System.out.println("TX: " + limeLight.getLimeX() + " TY: " + limeLight.getLimeY());
     }
 
     @Override
@@ -73,6 +69,7 @@ public class DriveToGamePieceCommand extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
+        System.out.println("drive to game piece command ended, interrupted: " + interrupted);
 
         drivebase.runMotor(0, 0);
 

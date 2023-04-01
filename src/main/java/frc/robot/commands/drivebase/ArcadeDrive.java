@@ -2,8 +2,6 @@ package frc.robot.commands.drivebase;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.constants.Constants;
 import frc.robot.services.Oi;
@@ -71,10 +69,10 @@ public class ArcadeDrive extends CommandBase {
             turnThrottle = leftX * Constants.Drivebase.TURN_THROTTLE_MULTIPLIER;
         }
 
-        SmartDashboard.putNumber("arcade drive lime light turn error", limeLightPidController.getPositionError());
-        SmartDashboard.putNumber("arcade drive turn joystick value", leftX);
-        SmartDashboard.putNumber("arcade drive throttle joystick value", rightY);
-        SmartDashboard.putNumber("arcade drive turn throttle", turnThrottle);
+//        SmartDashboard.putNumber("arcade drive lime light turn error", limeLightPidController.getPositionError());
+//        SmartDashboard.putNumber("arcade drive turn joystick value", leftX);
+//        SmartDashboard.putNumber("arcade drive throttle joystick value", rightY);
+//        SmartDashboard.putNumber("arcade drive turn throttle", turnThrottle);
 
         double leftSpeed = rightY - turnThrottle;
         double rightSpeed = rightY + turnThrottle;
@@ -82,8 +80,7 @@ public class ArcadeDrive extends CommandBase {
         leftSpeed = MathUtil.clamp(leftSpeed, -1, 1);
         rightSpeed = MathUtil.clamp(rightSpeed, -1, 1);
 
-        if (Oi.GetInstance().isSlowMode())
-        {
+        if (Oi.GetInstance().isSlowMode()) {
 
         drivebase.runMotor(leftSpeed*Constants.Drivebase.SLOW_MODE_RATIO,
                 rightSpeed*Constants.Drivebase.SLOW_MODE_RATIO);

@@ -79,7 +79,6 @@ public class Collector extends SubsystemBase {
         }
     }
     public boolean isHoldingCone() {
-        System.out.println("collector current: " + Motor.getSupplyCurrent());
         return Motor.getSupplyCurrent() >= Constants.Collector.CONE_COLLECT_AMP_THRESHOLD;
     }
     public boolean coneCurrentHolding() {
