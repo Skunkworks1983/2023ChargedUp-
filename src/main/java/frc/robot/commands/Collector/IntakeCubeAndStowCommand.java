@@ -41,7 +41,7 @@ public class IntakeCubeAndStowCommand extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        IntakeCube.end(interrupted);
-        StowCommand.end(interrupted);
+        IntakeCube.cancel();
+        StowCommand.cancel();
     }
 }
