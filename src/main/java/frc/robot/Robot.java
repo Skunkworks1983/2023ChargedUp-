@@ -93,7 +93,7 @@ public class Robot extends TimedRobot {
         autoChooser.addOption("TwoPiece2Red", new TwoPiece2Red());
         autoChooser.addOption("TwoPiece2Blue", new TwoPiece2Blue());
 
-        autoChooser.addOption("FindAndCollectCone", new FindAndCollectCone());
+        autoChooser.addOption("TrajectoryTwoPieceBalanceAuto", new TrajectoryTwoPieceBalanceAuto());
 
         SmartDashboard.putData("autoChooser", autoChooser);
 
@@ -103,7 +103,7 @@ public class Robot extends TimedRobot {
         robotContainer = new RobotContainer();
 
         drivebase.waitForHeadingReliable();
-
+        drivebase.resetGyro();
         SmartDashboard.putNumber("floor cube pickup", Constants.ArmPos.FLOOR_CUBE_PICKUP_WRIST);
     }
 
@@ -151,8 +151,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousInit() {
-
-        Drivebase.GetDrivebase().setPose(new Pose2d(Units.feetToMeters(5.9166), Units.feetToMeters(25.125), new Rotation2d(Math.PI)));
+        //Drivebase.GetDrivebase().setPose(new Pose2d(Units.feetToMeters(5.9166), Units.feetToMeters(25.125), new Rotation2d(Math.PI)));
 
         Collector.getInstance().SetSpeed(0);
         arm.SetLightMode(Constants.Lights.BLANK);
@@ -165,9 +164,7 @@ public class Robot extends TimedRobot {
             autonomousCommand.schedule();
         }
         LimeLight.getInstance().setEnable(true);
-
-        drivebase.waitForHeadingReliable();
-
+        //drivebase.waitForHeadingReliable();
         drivebase.SetBrakeMode(true);
     }
 
@@ -175,9 +172,11 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopInit()
     {
+        Drivebase.GetDrivebase().setPose(new Pose2d(Units.feetToMeters(5.9166), Units.feetToMeters(25.125), new Rotation2d(Math.PI)));
         new ArcadeDrive(Drivebase.GetDrivebase(), Oi.GetInstance(),LimeLight.getInstance()).schedule();
         arm.SetLightMode(Constants.Lights.BLANK);
-        drivebase.setGyroStatus(false);
+        //drivebase.resetGyroTo(180);
+       //drivebase.setGyroStatus(false);
         setBrakeModeOnDisable = true;
         drivebase.SetBrakeMode(true);
     }

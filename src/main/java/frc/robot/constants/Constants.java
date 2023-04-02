@@ -7,6 +7,7 @@ import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.Drivebase;
 
 import java.util.List;
 
@@ -112,26 +113,35 @@ public class Constants extends CommandBase
     public static class Autos{
 
         public static class twoPeiceBalanceAuto {
+
+            public static Pose2d startPose = new Pose2d(Units.feetToMeters(5.9166), Units.feetToMeters(23), new Rotation2d(Math.PI));
+
+
             public static Trajectory driveToObject = TrajectoryGenerator.generateTrajectory(
-                    new Pose2d(Units.feetToMeters(5.9166), Units.feetToMeters(25.125), new Rotation2d(Math.PI)),
-                    List.of(new Translation2d(Units.feetToMeters(5.9166+6),Units.feetToMeters(25.125+.75))),
-                    new Pose2d(Units.feetToMeters(5.9166+11.5), Units.feetToMeters(25.125+.75), new Rotation2d(Math.PI)),
-                    frc.robot.subsystems.Drivebase.GetDrivebase().config.setReversed(true));
+                    startPose,
+                    List.of(new Translation2d(Units.feetToMeters(5.9166 + 6),Units.feetToMeters(23 + .75))),
+                    new Pose2d(Units.feetToMeters(5.9166 + 11.5), Units.feetToMeters(23 + .75), new Rotation2d(Math.PI)),
+                    frc.robot.subsystems.Drivebase.GetDrivebase().reversedConfig);
 
             //pickup
-            public static Trajectory driveToGrid = TrajectoryGenerator.generateTrajectory(
-                    new Pose2d(Units.feetToMeters(6.33+.25), Units.feetToMeters(23-21), new Rotation2d(Math.PI)),
-                    List.of(new Translation2d(Units.feetToMeters(6.33+.2),Units.feetToMeters(23.25))),
-                    new Pose2d(Units.feetToMeters(6.33), Units.feetToMeters(23), new Rotation2d(0)), frc.robot.subsystems.Drivebase.GetDrivebase().config);
+            public static List<Translation2d> driveToGridWaypoints = List.of(
+                    new Translation2d(Units.feetToMeters(5.9166 + 11.5), Units.feetToMeters(23 + .75)),
+                    new Translation2d(Units.feetToMeters(5.9166 + 6),Units.feetToMeters(23 + .75)),
+                    new Translation2d(Units.feetToMeters(5.9166 + 2), Units.feetToMeters(23)),
+                    new Translation2d(Units.feetToMeters(5.9166 + 2), Units.feetToMeters(222.25 / 12))
+            );
+            public static Pose2d driveToGridEnd = new Pose2d(Units.feetToMeters(5.9166 + 2), Units.feetToMeters(222.25 / 12), new Rotation2d(Math.PI/2));
 
             //place second peice
             public static Trajectory turnToBalance = TrajectoryGenerator.generateTrajectory(//need to do this
                     new Pose2d(Units.feetToMeters(6.33), Units.feetToMeters(23), new Rotation2d(0)), List.of(new Translation2d(Units.feetToMeters(7),Units.feetToMeters(26.6-7.33))),
-                    new Pose2d(Units.feetToMeters(13), Units.feetToMeters(26.6-9.33), new Rotation2d(-Math.PI/2)), frc.robot.subsystems.Drivebase.GetDrivebase().config.setReversed(true));
+                    new Pose2d(Units.feetToMeters(13), Units.feetToMeters(26.6-9.33), new Rotation2d(-Math.PI/2)),
+                    frc.robot.subsystems.Drivebase.GetDrivebase().reversedConfig);
 
             public static Trajectory driveToBalance = TrajectoryGenerator.generateTrajectory(//need to do this
                     new Pose2d(Units.feetToMeters(6.33), Units.feetToMeters(23), new Rotation2d(0)), List.of(new Translation2d(Units.feetToMeters(7),Units.feetToMeters(26.6-7.33))),
-                    new Pose2d(Units.feetToMeters(13), Units.feetToMeters(26.6-9.33), new Rotation2d(-Math.PI/2)), frc.robot.subsystems.Drivebase.GetDrivebase().config);
+                    new Pose2d(Units.feetToMeters(13), Units.feetToMeters(26.6-9.33), new Rotation2d(-Math.PI/2)),
+                    frc.robot.subsystems.Drivebase.GetDrivebase().config);
 
 
         }
@@ -141,8 +151,8 @@ public class Constants extends CommandBase
 
     public class Drivebase {
 
-        public static final double kMaxSpeedMetersPerSecond = 3;//was 3.47472
-        public static final double kMaxAccelerationMetersPerSecondSquared = 3;//was 24.0792
+        public static final double kMaxSpeedMetersPerSecond = 2;//was 3.47472
+        public static final double kMaxAccelerationMetersPerSecondSquared = 2;//was 24.0792
 
         public static final double AUTO_KP =.02;
 
@@ -250,7 +260,7 @@ public class Constants extends CommandBase
         FLOOR_WEIRD(-90, 220, 1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
         FLOOR_NORMAL(-128.59537049672488, 100.70434, -1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
         FLOOR_CUBE(-128.59537049672488, 115.25, -1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
-        FLOOR_CONE(-128.59537049672488, 112.75, -0.5, false, 20),
+        FLOOR_CONE(-128.59537049672488, 112.75, -2, false, 15),
         HIGH_CUBE(41.57, 100, -1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
         SUBSTATION_CUBE(43.68152, 174.73779, 1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
         SUBSTATION_CONE(42.56579, 156.46118, 3, true, Collector.CONE_COLLECT_AMP_THRESHOLD),

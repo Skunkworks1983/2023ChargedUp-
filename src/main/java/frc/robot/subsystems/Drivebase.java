@@ -90,7 +90,7 @@ public class Drivebase implements Subsystem {
             Constants.Wobbles.TICKS_PER_MOTOR_REV * Constants.Drivebase.GEAR_RATIO /
                     (Constants.Drivebase.WHEEL_DIAMETER * Math.PI);
 
-    AHRS gyro = new AHRS(I2C.Port.kOnboard);
+    public AHRS gyro = new AHRS(I2C.Port.kOnboard);
 
 
     public final TrajectoryConstraint autoVoltageConstraint= new MaxVelocityConstraint(Constants.Drivebase.kMaxSpeedMetersPerSecond);
@@ -104,8 +104,16 @@ public class Drivebase implements Subsystem {
                     // Add kinematics to ensure max speed is actually obeyed
                     .setKinematics(kDriveKinematics)
                     // Apply the voltage constraint
-                    .addConstraint(autoVoltageConstraint);
+                    .addConstraint(autoVoltageConstraint).setReversed(false);
 
+    public final TrajectoryConfig reversedConfig =
+            new TrajectoryConfig(
+                    Constants.Drivebase.kMaxSpeedMetersPerSecond,
+                    Constants.Drivebase.kMaxAccelerationMetersPerSecondSquared)
+                    // Add kinematics to ensure max speed is actually obeyed
+                    .setKinematics(kDriveKinematics)
+                    // Apply the voltage constraint
+                    .addConstraint(autoVoltageConstraint).setReversed(true);
 
 private final Field2d field= new Field2d();
 public Field2d getField(){
@@ -171,14 +179,12 @@ public Field2d getField(){
                 ticksToMeters(rightMotor1.getSelectedSensorPosition()),
                 new Pose2d(0,0,new Rotation2d(0))
         );
-
         CommandScheduler.getInstance().registerSubsystem(this);
 
 
     }
 
     public void runMotor(double turnSpeedLeft, double turnSpeedRight) {
-    System.out.println("runmotor called");
         leftMotor1.set(TalonFXControlMode.PercentOutput, turnSpeedLeft);
         rightMotor1.set(TalonFXControlMode.PercentOutput, turnSpeedRight);
         if (turnSpeedLeft > 0 && turnSpeedRight > 0) driveDirection = DriveDirection.FORWARD;
@@ -186,7 +192,6 @@ public Field2d getField(){
         else {
             driveDirection = DriveDirection.UNCLEAR;
         }
-        System.out.println(turnSpeedLeft + "," + turnSpeedRight);
     }
 
     public Pose2d GetCurrentPose(){return poseEstimator.getEstimatedPosition();}
@@ -313,6 +318,10 @@ public Field2d getField(){
     public void resetGyro()
     {
         gyro.reset();
+    }
+    public void resetGyroTo(double angle){
+        gyro.reset();
+        gyro.setAngleAdjustment(angle);
     }
 
     @Override
