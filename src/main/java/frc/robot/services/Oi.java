@@ -28,6 +28,7 @@ public class Oi {
 
     JoystickButton humanPlayerPickup;
     JoystickButton carry;
+    JoystickButton SingleSubstation;
 
     JoystickButton scoreMid;
 
@@ -76,6 +77,7 @@ public class Oi {
         manualToggle = new JoystickButton(buttonStick, Constants.OIButtons.ENABLE_MANUAL);
 
         humanPlayerPickup = new JoystickButton(buttonStick, Constants.OIButtons.COLLECT_SHELF);
+        SingleSubstation = new JoystickButton(buttonStick, Constants.OIButtons.SINGLE_SUBSTATION);
         carry = new JoystickButton(buttonStick, Constants.OIButtons.STOW);
 
         scoreMid = new JoystickButton(buttonStick, Constants.OIButtons.SCORE_MID);
@@ -127,9 +129,10 @@ public class Oi {
         humanPlayerPickup.and(cubeToggle.negate()).whileTrue(new SetArmPositionCommand(Constants.ArmPose.SUBSTATION_CONE));
         carry.onTrue(new SetArmPositionCommand(Constants.ArmPose.STOW));
         scoreMid.and(cubeToggle).whileTrue(new SetArmPositionCommand(Constants.ArmPose.SCORE_MID_CUBE));
-        scoreMid.and(cubeToggle.negate()).whileTrue(new SetArmPositionCommand(Constants.ArmPose.SINGLE_SUBSTATION_CONE));
+        scoreMid.and(cubeToggle.negate()).whileTrue(new SetArmPositionCommand(Constants.ArmPose.SCORE_MID_CONE));
         floorPickup.and(cubeToggle).whileTrue(new SetArmPositionCommand(Constants.ArmPose.FLOOR_CUBE));
         floorPickup.and(cubeToggle.negate()).whileTrue(new SetArmPositionCommand(Constants.ArmPose.FLOOR_CONE));
+        SingleSubstation.whileTrue(new SetArmPositionCommand(Constants.ArmPose.SINGLE_SUBSTATION_CONE));
 
         (resetArm.negate()).whileTrue(new ResetArm());
         wristUp.whileTrue(new RotateWristByPowerCommand(Constants.Arm.WRIST_POWER));

@@ -94,6 +94,8 @@ public class Constants extends CommandBase
 
         public static final int COLLECT_SHELF = 11;
 
+        public static final int SINGLE_SUBSTATION = 15;
+
         public static final int INTAKE = 23;
 
         public static final int EXPEL = 22;
@@ -105,7 +107,6 @@ public class Constants extends CommandBase
         public static final int LIGHTS_UP = 9;
 
         public static final int LIGHTS_DOWN = 16;
-
 
     }
 
