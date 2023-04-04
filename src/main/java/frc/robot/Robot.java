@@ -162,6 +162,11 @@ public class Robot extends TimedRobot {
         autonomousCommand = (Command) autoChooser.getSelected();
         if (autonomousCommand != null) {
             autonomousCommand.schedule();
+            System.out.println("ENABLING AUTO");
+        }
+        else
+        {
+            System.out.println("auto is null");
         }
         LimeLight.getInstance().setEnable(true);
         //drivebase.waitForHeadingReliable();

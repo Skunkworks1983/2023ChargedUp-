@@ -121,7 +121,7 @@ public class Constants extends CommandBase
             public static Trajectory driveToObject = TrajectoryGenerator.generateTrajectory(
                     startPose,
                     List.of(new Translation2d(Units.feetToMeters(5.9166 + 6),Units.feetToMeters(23 + .75))),
-                    new Pose2d(Units.feetToMeters(5.9166 + 11.5), Units.feetToMeters(23 + .75), new Rotation2d(Math.PI)),
+                    new Pose2d(Units.feetToMeters(5.9166 + 12), Units.feetToMeters(23 + .75), new Rotation2d(Units.degreesToRadians(170))),
                     frc.robot.subsystems.Drivebase.GetDrivebase().reversedConfig);
 
             //pickup
@@ -137,12 +137,15 @@ public class Constants extends CommandBase
                     new Pose2d(Units.feetToMeters(13), Units.feetToMeters(26.6-9.33), new Rotation2d(-Math.PI/2)),
                     frc.robot.subsystems.Drivebase.GetDrivebase().reversedConfig);
             //move x positive 7 feet
-            public static Trajectory driveToBalance = TrajectoryGenerator.generateTrajectory(//need to do this
-                    new Pose2d(Units.feetToMeters(13), Units.feetToMeters(26.6-9.33), new Rotation2d(-Math.PI/2)), List.of(new Translation2d(Units.feetToMeters(13), Units.feetToMeters(26.6-4.33))),
-                    new Pose2d(Units.feetToMeters(13), Units.feetToMeters(26.6-2.33), new Rotation2d(-Math.PI/2)),
+            public static Trajectory driveToBalance = TrajectoryGenerator.generateTrajectory(
+                    new Pose2d(Units.feetToMeters(13), Units.feetToMeters(26.6-9.33), new Rotation2d(0)),
+                    List.of(
+                    new Translation2d(Units.feetToMeters(13), Units.feetToMeters(26.6-9.33))),
+                    new Pose2d(Units.feetToMeters(13+6), Units.feetToMeters(26.6-9.33), new Rotation2d(0)),
                     frc.robot.subsystems.Drivebase.GetDrivebase().config);
-
-
+            //public static UnconstructedTrajectory driveToBalance = new UnconstructedTrajectory(List.of(
+            //        new Translation2d(Units.feetToMeters(13), Units.feetToMeters(26.6-9.33))),
+            //        new Pose2d(Units.feetToMeters(13+6), Units.feetToMeters(26.6-9.33), new Rotation2d(0)),false);
         }
 
     }
@@ -259,7 +262,7 @@ public class Constants extends CommandBase
         FLOOR_WEIRD(-90, 220, 1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
         FLOOR_NORMAL(-128.59537049672488, 100.70434, -1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
         FLOOR_CUBE(-128.59537049672488, 115.25, -1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
-        FLOOR_CONE(-128.59537049672488, 112.75, -2, false, 15),
+        FLOOR_CONE(-128.59537049672488, 112.75, -2, false, 12),
         HIGH_CUBE(41.57, 100, -1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
         SUBSTATION_CUBE(43.68152, 174.73779, 1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
         SUBSTATION_CONE(42.56579, 156.46118, 3, true, Collector.CONE_COLLECT_AMP_THRESHOLD),

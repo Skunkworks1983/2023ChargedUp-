@@ -19,7 +19,8 @@ public class TrajectoryTwoPieceBalanceAuto/*two peice auto*/ extends SequentialC
     public TrajectoryTwoPieceBalanceAuto() {
 
         super(
-                new ResetPoseCommand(Constants.Autos.twoPeiceBalanceAuto.startPose),
+                new ResetPoseCommand(new Pose2d(Units.feetToMeters(13), Units.feetToMeters(26.6-9.33), new Rotation2d(0))),
+                /*
                 new ParallelRaceGroup(
                     new SetArmPositionCommand(Constants.ArmPose.HIGH_CUBE_AUTO),
                     new TimerCommand(1.5)
@@ -32,40 +33,29 @@ public class TrajectoryTwoPieceBalanceAuto/*two peice auto*/ extends SequentialC
 
                 new ParallelRaceGroup(
                         new SetArmPositionCommand(Constants.ArmPose.STOW),
-                        new TimerCommand(1)
+                        new TimerCommand(.75)
                 ),
                 new ParallelRaceGroup(
                     new SmartDriveCommand(Constants.Autos.twoPeiceBalanceAuto.driveToObject),
-                    new SequentialCommandGroup(new TimerCommand(4),new SetArmPositionCommand(Constants.ArmPose.FLOOR_CONE))
+                    new SequentialCommandGroup(new TimerCommand(1.75),new SetArmPositionCommand(Constants.ArmPose.FLOOR_CONE))
                 ),
                 new FindAndCollectCone(),
                 new SmartDriveCommand(Constants.Autos.twoPeiceBalanceAuto.driveToGrid),
                 new ParallelRaceGroup(
                         new ExpelConeCommand(),
-                        new TimerCommand(1)
+                        new TimerCommand(0.2)
                 ),
+                */
                 new ParallelRaceGroup(
                         new SmartDriveCommand(Constants.Autos.twoPeiceBalanceAuto.driveToBalance),
                         new TimerCommand(4)
-                ),
+                )
+                /*
+                ,
                 new ParallelCommandGroup(
                         new SafeBalanceCommandGroup(),
                         new ResetArm()
                 )
-
-/*
-                new SetArmRaceCommandGroup(Constants.ArmPose.SCORE_MID_CONE, 1.5),
-                new ParallelRaceGroup(new ExpelConeCommand(), new TimerCommand(.2)),
-
-
-                new SmartDriveCommand(Constants.Autos.twoPeiceBalanceAuto.turnToBalance),
-
-                new SmartDriveCommand(Constants.Autos.twoPeiceBalanceAuto.driveToBalance),
-
-                new ParallelCommandGroup(
-                        new SafeBalanceCommandGroup(), new ResetArm()
-                )
-
                  */
 
         );
