@@ -210,7 +210,7 @@ public class Robot extends TimedRobot {
     @Override
     public void testPeriodic()
     {
-        System.out.println("shoulder pos: " + arm.getShoulderAngle() + " wrist pos: " + arm.getWristAngle());
+
     }
 
 
