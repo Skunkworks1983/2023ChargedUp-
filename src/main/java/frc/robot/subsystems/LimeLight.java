@@ -16,17 +16,17 @@ import java.util.ArrayList;
 
 public class LimeLight extends SubsystemBase
 {
-    NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight-front");
-    NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight-piece");
+    NetworkTable tableFront = NetworkTableInstance.getDefault().getTable("limelight-front");
+    NetworkTable tablePiece = NetworkTableInstance.getDefault().getTable("limelight-piece");
 
-    NetworkTableEntry tx = table.getEntry("tx");
-    NetworkTableEntry ty = table.getEntry("ty");
-    NetworkTableEntry ta = table.getEntry("ta");
-    NetworkTableEntry tl = table.getEntry("tl");
-    NetworkTableEntry cl = table.getEntry("cl");
-    NetworkTableEntry tv = table.getEntry("tv");
-    NetworkTableEntry botpose_wpiblue = table.getEntry("botpose_wpiblue");
-    NetworkTableEntry botpose_wpired = table.getEntry("botpose_wpired");
+    NetworkTableEntry tx = tablePiece.getEntry("tx");
+    NetworkTableEntry ty = tablePiece.getEntry("ty");
+    NetworkTableEntry ta = tablePiece.getEntry("ta");
+    NetworkTableEntry tl = tableFront.getEntry("tl");
+    NetworkTableEntry cl = tableFront.getEntry("cl");
+    NetworkTableEntry tv = tableFront.getEntry("tv");
+    NetworkTableEntry botpose_wpiblue = tableFront.getEntry("botpose_wpiblue");
+    NetworkTableEntry botpose_wpired = tableFront.getEntry("botpose_wpired");
 
     ArrayList<Double> listA = new ArrayList<>();
     ArrayList<Double> listX = new ArrayList<>();
