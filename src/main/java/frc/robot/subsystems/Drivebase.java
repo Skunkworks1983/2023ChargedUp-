@@ -1,7 +1,6 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
@@ -11,10 +10,8 @@ import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
-import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.constraint.MaxVelocityConstraint;
 import edu.wpi.first.math.trajectory.constraint.TrajectoryConstraint;
@@ -56,8 +53,6 @@ public class Drivebase implements Subsystem {
 
     double frontRangeVoltage;
 
-    private double lastHeading;
-
     public double getFrontRangeVoltage() {
         return frontRangeVoltage;
     }
@@ -78,9 +73,6 @@ public class Drivebase implements Subsystem {
 
     DriveDirection driveDirection = DriveDirection.FORWARD;
 
-    public void setCurrentDirection(Drivebase.DriveDirection direction) {
-        driveDirection = direction;
-    }
 
     private boolean isHeadingReliable;
 
@@ -103,7 +95,7 @@ public class Drivebase implements Subsystem {
 
     boolean isRedAlliance;
 
-    AHRS gyro = new AHRS(I2C.Port.kMXP);
+    AHRS gyro = new AHRS(I2C.Port.kOnboard);
 
 
     public final TrajectoryConstraint autoVoltageConstraint= new MaxVelocityConstraint(Constants.Drivebase.kMaxSpeedMetersPerSecond);
@@ -130,7 +122,7 @@ public Field2d getField(){
     private Drivebase()
     {
         SmartDashboard.putData("field",field);
-        setDefaultCommand(ArcadeDrive);
+        //setDefaultCommand(ArcadeDrive);
         gyro.calibrate();
         isHeadingReliable = false;
         isRedAlliance = DriverStation.getAlliance() == DriverStation.Alliance.Red;
@@ -140,23 +132,35 @@ public Field2d getField(){
         rightMotor2.follow(rightMotor1);
         leftMotor2.follow(leftMotor1);
 
-        feedforward = new SimpleMotorFeedforward(Constants.Drivebase.FEEDFORWARD_KS, Constants.Drivebase.FEEDFORWARD_KV, Constants.Drivebase.FEEDFORWARD_KA);
-
         rightMotor1.setSelectedSensorPosition(0);
         leftMotor1.setSelectedSensorPosition(0);
 
-        var a=.012;
-        leftMotor1.config_kP(0,a);
-        leftMotor2.config_kP(0,a);
+        leftMotor1.config_kP(0,Constants.Drivebase.AUTO_KP);
+        leftMotor2.config_kP(0,Constants.Drivebase.AUTO_KP);
 
-        rightMotor1.config_kP(0,a);
-        rightMotor2.config_kP(0,a);
-var d =.00;
-        leftMotor1.config_kD(0,d);
-        leftMotor2.config_kD(0,d);
+        rightMotor1.config_kP(0,Constants.Drivebase.AUTO_KP);
+        rightMotor2.config_kP(0,Constants.Drivebase.AUTO_KP);
+        leftMotor1.config_kD(0,Constants.Drivebase.AUTO_KD);
+        leftMotor2.config_kD(0,Constants.Drivebase.AUTO_KD);
 
-        rightMotor1.config_kD(0,d);
-        rightMotor2.config_kD(0,d);
+        rightMotor1.config_kD(0,Constants.Drivebase.AUTO_KD);
+        rightMotor2.config_kD(0,Constants.Drivebase.AUTO_KD);
+
+        leftMotor1.configOpenloopRamp(0,0);
+
+        rightMotor1.configOpenloopRamp(0,0);
+
+        leftMotor2.configOpenloopRamp(0,0);
+
+        rightMotor2.configOpenloopRamp(0,0);
+
+        leftMotor1.config_kF(0,0);
+
+        rightMotor1.config_kF(0,0);
+
+        leftMotor2.config_kF(0,0);
+
+        rightMotor2.config_kF(0,0);
 
         rightMotor1.setSelectedSensorPosition(0);
         leftMotor1.setSelectedSensorPosition(0);
@@ -168,7 +172,13 @@ var d =.00;
                 new DifferentialDriveOdometry(
                         gyro.getRotation2d(), leftMotor1.getSelectedSensorPosition(), rightMotor1.getSelectedSensorPosition());
 
-        poseEstimator = new DifferentialDrivePoseEstimator(kinematics,gyro.getRotation2d(), ticksToMeters(leftMotor1.getSelectedSensorPosition()), ticksToMeters(rightMotor1.getSelectedSensorPosition()), new Pose2d(0,0,new Rotation2d(Math.PI/2)));
+        poseEstimator = new DifferentialDrivePoseEstimator(
+                kinematics,
+                gyro.getRotation2d(),
+                ticksToMeters(leftMotor1.getSelectedSensorPosition()),
+                ticksToMeters(rightMotor1.getSelectedSensorPosition()),
+                new Pose2d(0,0,new Rotation2d(0))
+        );
 
         CommandScheduler.getInstance().registerSubsystem(this);
 
@@ -176,6 +186,7 @@ var d =.00;
     }
 
     public void runMotor(double turnSpeedLeft, double turnSpeedRight) {
+    System.out.println("runmotor called");
         leftMotor1.set(TalonFXControlMode.PercentOutput, turnSpeedLeft);
         rightMotor1.set(TalonFXControlMode.PercentOutput, turnSpeedRight);
         if (turnSpeedLeft > 0 && turnSpeedRight > 0) driveDirection = DriveDirection.FORWARD;
@@ -186,11 +197,8 @@ var d =.00;
         System.out.println(turnSpeedLeft + "," + turnSpeedRight);
     }
 
-    public Pose2d GetCurrentPose()
-    {
-        return odometry.getPoseMeters();
-    }
-    public void SetPose(Pose2d pose){poseEstimator.resetPosition(new Rotation2d(0),0,0,pose);}
+    public Pose2d GetCurrentPose(){return poseEstimator.getEstimatedPosition();}
+        public void SetPose(Pose2d pose){poseEstimator.resetPosition(new Rotation2d(0),0,0,pose);}
     public double getPosLeft() {
         return leftMotor1.getSelectedSensorPosition() / TicksPerFoot;
     }
@@ -246,21 +254,12 @@ var d =.00;
     }
 
     public void setPose(Pose2d pose){
-    poseEstimator.resetPosition(new Rotation2d(0),0,0,pose);
+    poseEstimator.resetPosition(new Rotation2d(gyro.getYaw()),0,0,pose);
     //leftPositonMeters and rightPositionMeters posibly should not be 0. Not sure.
     }
 
     public double getPitch() {
         return gyro.getPitch();
-    }
-
-    public boolean isCalibrating() {
-        return gyro.isCalibrating();
-    }
-
-
-    public double getTicksLeft() {
-        return leftMotor1.getSelectedSensorPosition();
     }
 
     public void SetBrakeMode(boolean enable) {
@@ -280,18 +279,7 @@ var d =.00;
         }
     }
 
-
-    public double getSpeedLeft() {
-        return leftMotor1.getSelectedSensorVelocity();
-    }
-
-    public double getSpeedRight() {
-        return (-rightMotor1.getSelectedSensorVelocity());
-    }
-
     public void waitForHeadingReliable() {
-
-        //System.out.println("waitForHeadingReliable method is called");
 
         timer.start();
 
@@ -319,27 +307,6 @@ var d =.00;
     }
 
 
-    /*@Override
-    public void periodic() {
-        if (isHeadingReliable) {
-            if (gyro.isCalibrating() || !gyro.isConnected()) {
-
-                isHeadingReliable = false;
-
-                //System.out.println("GYRO CRASHED!!! - GYRO IS NOT CALIBRATED OR CONNECTED");
-            }
-
-            if (Math.abs(getHeading() - lastHeading) >= Constants.Drivebase.HEADING_TOO_BIG) {
-
-                isHeadingReliable = false;
-
-                //System.out.println("THE GYROSCOPE HAS CRASHED!!! - HEADING IS TOO LARGE");
-            }
-
-            lastHeading = getHeading();
-        }
-    }*/
-
     public DriveDirection getDriveDirection() {
         return driveDirection;
     }
@@ -358,10 +325,7 @@ var d =.00;
         return 0;
     }
 
-    public void setDirectionRangeSensor(boolean value) {
-        if (driveDirection == DriveDirection.FORWARD) setFrontRangeSensor(value);
-        if (driveDirection == DriveDirection.BACKWARD) setBackRangeSensor(value);
-    }
+
 
     public void setBackRangeSensor(boolean value) {
         backRangeSensorTrigger.set(value);
@@ -389,67 +353,28 @@ var d =.00;
     @Override
     public void periodic() {
         // Update the odometry in the periodic block
-        updateOdometry();//update odometry is just backup
+        //updateOdometry();//update odometry is just backup
         poseEstimator.update(gyro.getRotation2d(),
                 ticksToMeters((int)leftMotor1.getSelectedSensorPosition()),
                 ticksToMeters((int)rightMotor1.getSelectedSensorPosition()));
 
         field.setRobotPose(poseEstimator.getEstimatedPosition());
+        SmartDashboard.putData("field",field);
 
+//TODO: if we have an april tag in view, call addVisionMeasurement();
 
-            //SmartDashboard.putNumber("x",odometry.getPoseMeters().getX());
-            //SmartDashboard.putNumber("y",odometry.getPoseMeters().getY());
-                //SmartDashboard.putNumber("x",leftMotor1.getSelectedSensorPosition());
-                //SmartDashboard.putNumber("y",rightMotor1.getSelectedSensorPosition());
-                //System.out.println(leftMotor1.getSelectedSensorPosition()+","+(rightMotor1.getSelectedSensorPosition());
-        //System.out.println(odometry.getPoseMeters().getX()+","+odometry.getPoseMeters().getY());
-        //TODO: if we have an april tag in view, call addVisionMeasurement();
-
-    }
-
-    public void updateOdometry()
-    {
-        updatePoseLimelight();
-        odometry.update(
-                gyro.getRotation2d(), ticksToMeters((int)leftMotor1.getSelectedSensorPosition()), ticksToMeters((int)rightMotor1.getSelectedSensorPosition()));
     }
 
     public void setRightMeters(double meters){
         rightMotor1.set(ControlMode.Velocity,meters);
     }
     public void setLeftMeters(double meters){
-        leftMotor1.set(ControlMode.Velocity,meters);
+        leftMotor1.set(ControlMode.Velocity,meters);//actualy ticks should be fixed.
     }
-
-    public void setRightMeters(double meters,double feedForward){
-        rightMotor1.set(ControlMode.Velocity, meters,DemandType.ArbitraryFeedForward,feedForward);
-    }
-    public void setLeftMeters(double meters,double feedForward){
-        leftMotor1.set(ControlMode.Velocity, meters,DemandType.ArbitraryFeedForward,feedForward);
-    }
-
-    public SimpleMotorFeedforward getFeedforward(){return feedforward;}
-
-    public void setSpeedChassis(ChassisSpeeds chassisSpeeds,double feedForwardLeft,double feedForwardRight){
-
-        DifferentialDriveWheelSpeeds wheelSpeeds = kinematics.toWheelSpeeds(chassisSpeeds);
-        //System.out.println(wheelSpeeds.leftMetersPerSecond+" , "+wheelSpeeds.rightMetersPerSecond);
-        SmartDashboard.putNumber("leftMPS",wheelSpeeds.leftMetersPerSecond);
-        SmartDashboard.putNumber("rightMPS",wheelSpeeds.leftMetersPerSecond);
-double a =1;
-        runMotor(feedForwardLeft/a,feedForwardRight/a);
-
-
-        //setLeftMeters(metersToTicks(wheelSpeeds.leftMetersPerSecond),feedForwardLeft);
-        //setRightMeters(metersToTicks(wheelSpeeds.rightMetersPerSecond),feedForwardRight);
-
-    }
-
     double ticksToMeters(double ticks){return ticksToFeet(ticks)/Constants.Drivebase.FEET_PER_METER;}
 
     double ticksToFeet(double ticks){
 
-        //ticks to feet ticks/ticks_per_rotation*gearratio*wheeldiamater=feet
         return ticks/Constants.Drivebase.TICKS_PER_ROTATION
                 /Constants.Drivebase.GEAR_RATIO*Constants.Drivebase.WHEEL_DIAMETER*Math.PI;
 

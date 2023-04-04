@@ -5,6 +5,7 @@ import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
@@ -40,41 +41,36 @@ public class SmartDriveCommand extends CommandBase {
     Timer timer;
 
     public SmartDriveCommand(Trajectory trajectory) {
-        timer = new Timer();
-        timer.start();
-        double curTime = timer.get();
-        double dt = curTime - prevTime;
         SmartDashboard.putData("should be",Drivebase.GetDrivebase().getField());
         Drivebase.GetDrivebase().getField().getObject("traj").setTrajectory(trajectory);
-        this.metersPerSecond=(leftSpeedSetpoint, rightSpeedSetpoint) -> {
-            System.out.println(leftSpeedSetpoint+","+rightSpeedSetpoint);
+
+        this.metersPerSecond = (leftSpeedSetpoint, rightSpeedSetpoint) -> {
             Drivebase.GetDrivebase().setLeftMeters(Drivebase.GetDrivebase().metersToTicks(leftSpeedSetpoint));
             Drivebase.GetDrivebase().setRightMeters(Drivebase.GetDrivebase().metersToTicks(rightSpeedSetpoint));
-            /*
-
-
-//set to 0 for test purposes
-            double leftFeedforward = Drivebase.GetDrivebase().getFeedforward().calculate(leftSpeedSetpoint, (leftSpeedSetpoint - prevSpeeds.leftMetersPerSecond) / dt);
-            double rightFeedforward = Drivebase.GetDrivebase().getFeedforward().calculate(rightSpeedSetpoint,(rightSpeedSetpoint - prevSpeeds.rightMetersPerSecond) / dt);
-
-            //System.out.println(leftFeedforward+","+rightFeedforward);
-
-            Trajectory.State desiredPose = trajectory.sample(timer.get());
-            //System.out.println(desiredPose.poseMeters.getX()+","+desiredPose.poseMeters.getY()+","+desiredPose.poseMeters.getRotation());
-            ChassisSpeeds refChassisSpeeds = Drivebase.GetDrivebase().ramseteController.calculate(Drivebase.GetDrivebase().getPose(), desiredPose);
-            Drivebase.GetDrivebase().setSpeedChassis(refChassisSpeeds,leftFeedforward,rightFeedforward);//(refChassisSpeeds.vxMetersPerSecond, refChassisSpeeds.omegaRadiansPerSecond);
-            //Drivebase.GetDrivebase().runMotor(leftSpeedSetpoint,rightSpeedSetpoint);
-            prevTime = curTime;
-            prevSpeeds = Drivebase.GetDrivebase().kDriveKinematics.toWheelSpeeds(refChassisSpeeds);
-            //poseDifString="pose dif:"+(Drivebase.GetDrivebase().getPose().getX()-desiredPose.poseMeters.getX())+","+(Drivebase.GetDrivebase().getPose().getY()-desiredPose.poseMeters.getY())+","+(Drivebase.GetDrivebase().getPose().getRotation().getDegrees()-desiredPose.poseMeters.getRotation().getDegrees());
-            poseDifString="pose dif" + Drivebase.GetDrivebase().getPose().relativeTo(desiredPose.poseMeters);
-
-
-            //Drivebase.GetDrivebase().getField().setRobotPose(desiredPose.poseMeters);
-*/
         };
+
         this.trajectory=trajectory;
-        addRequirements();
+        addRequirements(Drivebase.GetDrivebase());
+    }
+
+    public SmartDriveCommand(List <Translation2d> goThrough,Pose2d finalPose,boolean reversed) {
+        trajectory = TrajectoryGenerator.generateTrajectory(
+                Drivebase.GetDrivebase().GetCurrentPose(),
+                goThrough,
+                finalPose,
+                Drivebase.GetDrivebase().config.setReversed(reversed)
+        );
+
+        SmartDashboard.putData("should be",Drivebase.GetDrivebase().getField());
+        Drivebase.GetDrivebase().getField().getObject("traj").setTrajectory(trajectory);
+
+        this.metersPerSecond = (leftSpeedSetpoint, rightSpeedSetpoint) -> {
+            Drivebase.GetDrivebase().setLeftMeters(Drivebase.GetDrivebase().metersToTicks(leftSpeedSetpoint));
+            Drivebase.GetDrivebase().setRightMeters(Drivebase.GetDrivebase().metersToTicks(rightSpeedSetpoint));
+        };
+
+        this.trajectory=trajectory;
+        addRequirements(Drivebase.GetDrivebase());
     }
 
     @Override
@@ -88,7 +84,7 @@ public class SmartDriveCommand extends CommandBase {
                         new DifferentialDriveKinematics(Constants.Drivebase.kTrackwidthMeters),
                         metersPerSecond);
         CommandScheduler.getInstance().schedule(ramseteCommand);
-
+    System.out.println("initialized SmartDriveCommand");
     }
 
 
@@ -108,7 +104,7 @@ public class SmartDriveCommand extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
+        System.out.println("ended SmartDriveCommand, interrupted:"+interrupted);
 Drivebase.GetDrivebase().runMotor(0,0);
-        System.out.println(poseDifString);
     }
 }

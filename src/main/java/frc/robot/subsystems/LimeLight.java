@@ -17,6 +17,7 @@ import java.util.ArrayList;
 public class LimeLight extends SubsystemBase
 {
     NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight-front");
+    NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight-piece");
 
     NetworkTableEntry tx = table.getEntry("tx");
     NetworkTableEntry ty = table.getEntry("ty");

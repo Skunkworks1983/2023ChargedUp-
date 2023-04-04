@@ -5,9 +5,6 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Drivebase;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import frc.robot.subsystems.LimeLight;
 
 
@@ -18,9 +15,15 @@ public class DriveToGamePieceCommand extends CommandBase {
     PIDController pidController = new PIDController
             (Constants.Drivebase.DRIVE_TO_CONE_KP, 0, Constants.Drivebase.DRIVE_TO_CONE_KD);
 
-    public DriveToGamePieceCommand() {
+    private double speed;
+    private double areaThreshold;
+
+
+    public DriveToGamePieceCommand(double speed, double areaThreshold) {
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
+        this.speed = speed;
+        this.areaThreshold = areaThreshold;
         drivebase = Drivebase.GetDrivebase();
         limeLight = LimeLight.getInstance();
         addRequirements(drivebase);
@@ -37,6 +40,7 @@ public class DriveToGamePieceCommand extends CommandBase {
 //        SmartDashboard.putNumber("LimelightX", limeLightX);
 //        SmartDashboard.putNumber("LimelightY", limeLightY);
 //        SmartDashboard.putNumber("LimelightArea", limeLightA);
+        limeLight.setEnable(true);
 
         System.out.println("initializing drive to game piece command!!!");
     }
@@ -44,8 +48,7 @@ public class DriveToGamePieceCommand extends CommandBase {
     @Override
     public void execute() {
 
-
-        double driveThrottle = Constants.Drivebase.BASE_DRIVE_TO_CONE_SPEED;
+        double driveThrottle = speed;
         double turnThrottle = pidController.calculate(limeLight.getLimeX());
 
         double leftSpeed = driveThrottle - turnThrottle; //calculates leftSpeed and rightSpeed
@@ -55,21 +58,18 @@ public class DriveToGamePieceCommand extends CommandBase {
         rightSpeed = MathUtil.clamp(rightSpeed, -1, 1);
 
         drivebase.runMotor(leftSpeed, rightSpeed);
-
-        System.out.println("turnThrottle " + turnThrottle);
-        System.out.println("leftSpeed " + leftSpeed  + "rightSpeed " + rightSpeed);
-        System.out.println("TX: " + limeLight.getLimeX() + " TY: " + limeLight.getLimeY());
     }
 
     @Override
     public boolean isFinished() {
 
-        return (limeLight.getLimeA() > Constants.Drivebase.LIMELIGHT_MAX_CONE_AREA);
+        return (limeLight.getLimeA() >= areaThreshold);
     }
 
 
     @Override
     public void end(boolean interrupted) {
+        System.out.println("drive to game piece command ended, interrupted: " + interrupted);
 
         drivebase.runMotor(0, 0);
 

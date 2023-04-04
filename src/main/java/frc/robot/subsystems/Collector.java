@@ -79,7 +79,7 @@ public class Collector extends SubsystemBase {
         }
     }
     public boolean isHoldingCone() {
-        return Motor.getSupplyCurrent() >= Constants.Collector.CONE_COLLECT_AMP_THRESHOLD;
+        return Motor.getSupplyCurrent() >= Arm.getInstance().getCurrentPose().ampThreshold;
     }
     public boolean coneCurrentHolding() {
         return Motor.getSupplyCurrent() >= Constants.Collector.CONE_HOLDING_AMPS;
@@ -96,7 +96,8 @@ public class Collector extends SubsystemBase {
         if(speed == 0)
         {
             Motor.selectProfileSlot(1, 0);
-            Motor.set(TalonFXControlMode.Position, Motor.getSelectedSensorPosition());
+            //Motor.set(TalonFXControlMode.Position, Motor.getSelectedSensorPosition());
+            Motor.set(TalonFXControlMode.PercentOutput, 0);
         }
         else
         {
