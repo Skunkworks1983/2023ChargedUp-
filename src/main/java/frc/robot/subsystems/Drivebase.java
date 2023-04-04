@@ -15,6 +15,7 @@ import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.constraint.MaxVelocityConstraint;
 import edu.wpi.first.math.trajectory.constraint.TrajectoryConstraint;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
@@ -230,20 +231,23 @@ public Field2d getField(){
             double[] botpose;
             if(isRedAlliance)
             {
-                botpose = limelight.botpose_wpired.getDoubleArray(new double[]{0, 0, 0, 0, 0, 0, 0});
+                botpose = limelight.botpose_wpired.getDoubleArray(LimeLight.defaultpose);
             }
             else
             {
-                botpose = limelight.botpose_wpiblue.getDoubleArray(new double[]{0, 0, 0, 0, 0, 0, 0});
+                botpose = limelight.botpose_wpiblue.getDoubleArray(LimeLight.defaultpose);
             }
 
-            Pose2d currentPose = new Pose2d(botpose[0], botpose[1], new Rotation2d(botpose[5]));
-            poseEstimator.addVisionMeasurement(
+            Pose2d currentPose = new Pose2d(botpose[0], botpose[1], new Rotation2d(Units.degreesToRadians(botpose[5])));
+            if(currentPose.getTranslation().getNorm() > 0.25)
+            {
+                poseEstimator.addVisionMeasurement(
                     currentPose,
                     Timer.getFPGATimestamp()
                             - (limelight.tl.getDouble(0) / 1000.0)
                             - (limelight.cl.getDouble(0) / 1000.0)
-            );
+                );
+            }
             System.out.println("updatePoseLimelight, array: " + Arrays.toString(botpose) + " tl: " + limelight.tl.getDouble(0) + " cl: " + limelight.cl.getDouble(0));
         }
     }

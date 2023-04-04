@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class LimeLight extends SubsystemBase
 {
     NetworkTable tableFront = NetworkTableInstance.getDefault().getTable("limelight-front");
-    NetworkTable tablePiece = NetworkTableInstance.getDefault().getTable("limelight-piece");
+    NetworkTable tablePiece = NetworkTableInstance.getDefault().getTable("limelight");
 
     NetworkTableEntry tx = tablePiece.getEntry("tx");
     NetworkTableEntry ty = tablePiece.getEntry("ty");
@@ -39,6 +39,7 @@ public class LimeLight extends SubsystemBase
     double averageA;
 
     boolean enable;
+    public static double[] defaultpose = new double[]{0, 0, 0, 0, 0, 0, 0};
 
     public LimeLight()
     {
@@ -161,7 +162,6 @@ public class LimeLight extends SubsystemBase
             return 0;
         }
     }
-
 
     public static LimeLight getInstance()
     {
