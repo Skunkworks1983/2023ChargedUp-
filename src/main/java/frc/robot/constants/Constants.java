@@ -120,8 +120,8 @@ public class Constants extends CommandBase
 
             public static Trajectory driveToObject = TrajectoryGenerator.generateTrajectory(
                     startPose,
-                    List.of(new Translation2d(Units.feetToMeters(5.9166 + 6),Units.feetToMeters(23 + .75))),
-                    new Pose2d(Units.feetToMeters(5.9166 + 12), Units.feetToMeters(23 + .75), new Rotation2d(Units.degreesToRadians(170))),
+                    List.of(new Translation2d(Units.feetToMeters(5.9166 + 6),Units.feetToMeters(23 + .5))),
+                    new Pose2d(Units.feetToMeters(5.9166 + 12), Units.feetToMeters(23 + .5), new Rotation2d(Units.degreesToRadians(175))),
                     frc.robot.subsystems.Drivebase.GetDrivebase().reversedConfig);
 
             //pickup
@@ -153,7 +153,7 @@ public class Constants extends CommandBase
 
     public class Drivebase {
 
-        public static final double kMaxSpeedMetersPerSecond = 2;//was 3.47472
+        public static final double kMaxSpeedMetersPerSecond = 2.75;//was 3.47472
         public static final double kMaxAccelerationMetersPerSecondSquared = 2;//was 24.0792
 
         public static final double AUTO_KP =.023;
