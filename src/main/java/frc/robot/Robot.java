@@ -208,7 +208,9 @@ public class Robot extends TimedRobot {
      * This method is called periodically during test mode.
      */
     @Override
-    public void testPeriodic() {
+    public void testPeriodic()
+    {
+        System.out.println("shoulder pos: " + arm.getShoulderAngle() + " wrist pos: " + arm.getWristAngle());
     }
 
 

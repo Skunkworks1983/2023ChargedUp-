@@ -231,7 +231,7 @@ public class Constants extends CommandBase
         public static final int SHOULDER_LIMIT_SWITCH_BACK = 1;
         public static final int WRIST_LIMIT_SWITCH = 2;
 
-        public static final int MAX_WRIST_ROTATION = 235;
+        public static final int MAX_WRIST_ROTATION = 286;
         public static final double WRIST_TOLERANCE = 2;
         public static final double WRIST_PARALLEL_WITH_SHOULDER = 164.05;
         public static final double WRIST_POWER = .15;
@@ -258,7 +258,8 @@ public class Constants extends CommandBase
         SCORE_MID_CONE(44.56579, 150.46118, 1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
         STOW(-128.59537049672488, 15.531, -1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),//TODO: stow is wierd
         STOW_AUTO(-128.59537049672488, 15.531, -1.15, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
-        HIGH_CUBE_AUTO(41.57, 96, -1.15, false, Collector.CONE_COLLECT_AMP_THRESHOLD);
+        HIGH_CUBE_AUTO(41.57, 96, -1.15, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
+        SINGLE_SUBSTATION_CONE(-32.59757, 281.99207, 2, false, 20);
 
         public final double shoulderAngle;
         public final double wristAngle;
@@ -300,6 +301,7 @@ public class Constants extends CommandBase
         public static final double FLOOR_CUBE_PICKUP_WRIST = 112.75;
         public static final double CARRY_WRIST = 15.531;
         public static final double SCORE_CONE_WEIRD_SHOULDER = -90;
+        public static final double SINGLE_SUBSTATION_CONE = -32.59757;
     }
 
     public class Lights {

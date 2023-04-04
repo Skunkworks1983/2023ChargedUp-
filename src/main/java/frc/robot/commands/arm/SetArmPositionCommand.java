@@ -35,7 +35,9 @@ public class SetArmPositionCommand extends CommandBase
 
         this.shoulderAngleSetpoint = pos.shoulderAngle;
         this.wristAngleSetpoint = pos.wristAngle;
-        if(Math.abs(arm.ShoulderMotor.getClosedLoopTarget() * Constants.Arm.SHOULDER_TICKS_TO_DEGREES - Constants.ArmPos.SCORE_CONE_WEIRD_SHOULDER) < 1)
+        double target = arm.ShoulderMotor.getClosedLoopTarget();
+        if(Math.abs(target * Constants.Arm.SHOULDER_TICKS_TO_DEGREES - Constants.ArmPos.SCORE_CONE_WEIRD_SHOULDER) < 1 ||
+                Math.abs(target * Constants.Arm.SHOULDER_TICKS_TO_DEGREES - Constants.ArmPos.SINGLE_SUBSTATION_CONE) < 1)
         {
             weirdAngle = true;
             arm.setWristAnglePosition(wristAngleSetpoint);
@@ -57,7 +59,7 @@ public class SetArmPositionCommand extends CommandBase
         {
             arm.setShoulderAnglePosition(shoulderAngleSetpoint);
             weirdAngle = false;
-            System.out.println("weird angle is no longer true, arm running");
+            System.out.println("weird/single substation angle is no longer true, arm running");
         }
     }
 
