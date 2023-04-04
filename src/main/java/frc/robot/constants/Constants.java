@@ -15,7 +15,6 @@ public class Constants extends CommandBase
     public static class Collector
     {
         public static final int MOTOR_ID = 7;
-
         public static final double GEAR_RATIO = 2;
         public static final double WHEEL_CIRCUMFERENCE = Math.PI * 2;
         public static final double WHEEL_REVS_PER_SEC_TO_VELOCITY = 8050;
@@ -150,8 +149,8 @@ public class Constants extends CommandBase
 
         public static final double SLOW_MODE_RATIO = .225;
         public static final double GEAR_RATIO = 8.4586;
-
-        public static final double kTrackwidthMeters=.38;
+        public static final double OLD_GEAR_RATIO = 10.71;
+        public static final double kTrackwidthMeters = .38;
         public static final double FEET_PER_METER=3.28084;
         public static final int TICKS_PER_ROTATION=2048;
         public static final double WHEEL_DIAMETER = 0.5;
