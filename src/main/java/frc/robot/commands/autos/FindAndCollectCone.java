@@ -10,10 +10,7 @@ import frc.robot.constants.Constants;
 public class FindAndCollectCone extends SequentialCommandGroup {
     public FindAndCollectCone() {
         super(
-                new ParallelRaceGroup(
-                        new SetArmPositionCommand(Constants.ArmPose.FLOOR_CONE),
-                        new TimerCommand(0.25)
-                ),
+
                 new ParallelRaceGroup(
                         new DriveToGamePieceCommand(-0.15, 10),
                         new IntakeConeSmartCommand()

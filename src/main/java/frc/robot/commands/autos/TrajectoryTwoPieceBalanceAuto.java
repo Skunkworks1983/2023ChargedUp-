@@ -13,6 +13,7 @@ import frc.robot.commands.arm.ResetArm;
 import frc.robot.commands.arm.SetArmPositionCommand;
 import frc.robot.commands.drivebase.ResetPoseCommand;
 import frc.robot.constants.Constants;
+import pabeles.concurrency.ConcurrencyOps;
 
 public class TrajectoryTwoPieceBalanceAuto/*two peice auto*/ extends SequentialCommandGroup {
     public TrajectoryTwoPieceBalanceAuto() {
@@ -33,10 +34,24 @@ public class TrajectoryTwoPieceBalanceAuto/*two peice auto*/ extends SequentialC
                         new SetArmPositionCommand(Constants.ArmPose.STOW),
                         new TimerCommand(1)
                 ),
-
-                new SmartDriveCommand(Constants.Autos.twoPeiceBalanceAuto.driveToObject),
+                new ParallelRaceGroup(
+                    new SmartDriveCommand(Constants.Autos.twoPeiceBalanceAuto.driveToObject),
+                    new SequentialCommandGroup(new TimerCommand(4),new SetArmPositionCommand(Constants.ArmPose.FLOOR_CONE))
+                ),
                 new FindAndCollectCone(),
-                new SmartDriveCommand(Constants.Autos.twoPeiceBalanceAuto.driveToGridWaypoints, Constants.Autos.twoPeiceBalanceAuto.driveToGridEnd, false)
+                new SmartDriveCommand(Constants.Autos.twoPeiceBalanceAuto.driveToGrid),
+                new ParallelRaceGroup(
+                        new ExpelConeCommand(),
+                        new TimerCommand(1)
+                ),
+                new ParallelRaceGroup(
+                        new SmartDriveCommand(Constants.Autos.twoPeiceBalanceAuto.driveToBalance),
+                        new TimerCommand(4)
+                ),
+                new ParallelCommandGroup(
+                        new SafeBalanceCommandGroup(),
+                        new ResetArm()
+                )
 
 /*
                 new SetArmRaceCommandGroup(Constants.ArmPose.SCORE_MID_CONE, 1.5),
