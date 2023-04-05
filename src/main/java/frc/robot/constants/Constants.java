@@ -27,7 +27,7 @@ public class Constants extends CommandBase
         public static final double INTAKE_SPEED = 10; //inches per second
         public static final double INTAKE_MOTOR_SPEED =
                 INTAKE_SPEED / WHEEL_CIRCUMFERENCE * WHEEL_REVS_PER_SEC_TO_VELOCITY;
-        public static final double INTAKE_MOTOR_SPEED_SLOW = INTAKE_MOTOR_SPEED / 4;
+        public static final double INTAKE_MOTOR_SPEED_SLOW = INTAKE_MOTOR_SPEED / 2;
         public static final double INTAKE_MOTOR_SPEED_VERY_SLOW = INTAKE_MOTOR_SPEED / 10;
 
 
