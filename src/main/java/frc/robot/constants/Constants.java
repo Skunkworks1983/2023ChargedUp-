@@ -31,7 +31,7 @@ public class Constants extends CommandBase
         public static final double INTAKE_MOTOR_SPEED =
                 INTAKE_SPEED / WHEEL_CIRCUMFERENCE * WHEEL_REVS_PER_SEC_TO_VELOCITY;
         public static final double INTAKE_MOTOR_SPEED_SLOW = INTAKE_MOTOR_SPEED / 2;
-        public static final double INTAKE_MOTOR_SPEED_VERY_SLOW = INTAKE_MOTOR_SPEED / 4;
+        public static final double INTAKE_MOTOR_SPEED_VERY_SLOW = INTAKE_MOTOR_SPEED / 6;
 
 
         public static final double EXPEL_SPEED = 10; // inches per second
@@ -152,18 +152,17 @@ public class Constants extends CommandBase
 
     public class Drivebase {
 
-        public static final double kMaxSpeedMetersPerSecond = 2.75;//was 3.47472
-        public static final double kMaxAccelerationMetersPerSecondSquared = 2;//was 24.0792
+        public static final double kMaxSpeedMetersPerSecond = 3;//was 3.47472
+        public static final double kMaxAccelerationMetersPerSecondSquared = 3;//was 24.0792
 
-        public static final double OLD_GEAR_RATIO = 10.71;
-        public static final double AUTO_KP =.023;
+        public static final double AUTO_KP =.02;
 
-        public static final double AUTO_KD= .006;
+        public static final double AUTO_KD= .001;
 
         public static final double SLOW_MODE_RATIO = .225;
         public static final double GEAR_RATIO = 8.4586;
-
-        public static final double kTrackwidthMeters=.38;
+        public static final double OLD_GEAR_RATIO = 10.71;
+        public static final double kTrackwidthMeters = .38;
         public static final double FEET_PER_METER=3.28084;
         public static final int TICKS_PER_ROTATION=2048;
         public static final double WHEEL_DIAMETER = 0.5;
@@ -261,13 +260,13 @@ public class Constants extends CommandBase
     public enum ArmPose {
         FLOOR_WEIRD(-90, 220, 1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
         FLOOR_NORMAL(-128.59537049672488, 100.70434, -1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
-        FLOOR_CUBE(-128.59537049672488, 115.25, -1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
-        FLOOR_CONE(-128.59537049672488, 112.75, -2, false, 12),
-        HIGH_CUBE(41.57, 100, -1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
+        FLOOR_CUBE(-128.59537049672488, 115.25, -1.5, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
+        FLOOR_CONE(-128.59537049672488, 112.75, -1.5, false, 20),
+        HIGH_CUBE(43.57, 101, -2, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
         SUBSTATION_CUBE(43.68152, 174.73779, 1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
-        SUBSTATION_CONE(42.56579, 156.46118, 3, true, Collector.CONE_COLLECT_AMP_THRESHOLD),
+        SUBSTATION_CONE(44.56579, 156.46118, 3, false,20),
         SCORE_MID_CUBE(56.56579, 160.46118, 1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
-        SCORE_MID_CONE(44.56579, 150.46118, 1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
+        SCORE_MID_CONE(46.56579, 150.46118, 1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
         STOW(-128.59537049672488, 15.531, -1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),//TODO: stow is wierd
         STOW_AUTO(-128.59537049672488, 15.531, -1.15, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
         HIGH_CUBE_AUTO(41.57, 96, -1.15, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
