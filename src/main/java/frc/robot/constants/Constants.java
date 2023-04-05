@@ -120,11 +120,10 @@ public class Constants extends CommandBase
             public static Pose2d startPose = new Pose2d(Units.feetToMeters(5.9166), Units.feetToMeters(23), new Rotation2d(Math.PI));
 
 
-            public static Trajectory driveToObject = TrajectoryGenerator.generateTrajectory(
-                    startPose,
+            public static UnconstructedTrajectory driveToObject = new UnconstructedTrajectory(
                     List.of(new Translation2d(Units.feetToMeters(5.9166 + 6),Units.feetToMeters(23 + .5))),
                     new Pose2d(Units.feetToMeters(5.9166 + 15.5), Units.feetToMeters(23 + .5), new Rotation2d(Units.degreesToRadians(183))),
-                    frc.robot.subsystems.Drivebase.GetDrivebase().reversedConfig);
+                    true);
 
             //pickup
 
