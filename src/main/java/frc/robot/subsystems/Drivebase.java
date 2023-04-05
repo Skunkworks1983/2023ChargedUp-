@@ -222,9 +222,12 @@ public Field2d getField(){
     }
 
     public void setPose(Pose2d pose){
-    poseEstimator.resetPosition
-            (new Rotation2d(gyro.getYaw()),ticksToMeters((int)leftMotor1.getSelectedSensorPosition()),
-            ticksToMeters((int)rightMotor1.getSelectedSensorPosition()),pose);
+    poseEstimator.resetPosition(
+            gyro.getRotation2d(),
+            ticksToMeters((int)leftMotor1.getSelectedSensorPosition()),
+            ticksToMeters((int)rightMotor1.getSelectedSensorPosition()),
+            pose
+                               );
     //leftPositonMeters and rightPositionMeters posibly should not be 0. Not sure.
     }
 

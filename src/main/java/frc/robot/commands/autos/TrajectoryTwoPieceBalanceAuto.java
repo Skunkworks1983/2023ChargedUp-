@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.Collector.ExpelConeCommand;
 import frc.robot.commands.Collector.ExpelCubeCommand;
+import frc.robot.commands.Collector.IntakeConeSmartCommand;
 import frc.robot.commands.arm.ResetArm;
 import frc.robot.commands.arm.SetArmPositionCommand;
 import frc.robot.commands.drivebase.DriveDistanceCommand;
@@ -23,6 +24,7 @@ public class TrajectoryTwoPieceBalanceAuto/*two peice auto*/ extends SequentialC
 
         super(
                 new ResetPoseCommand(Constants.Autos.twoPeiceBalanceAuto.startPose),
+                /*
                 new ParallelRaceGroup(
                     new SetArmPositionCommand(Constants.ArmPose.HIGH_CUBE_AUTO),
                     new TimerCommand(1.5)
@@ -37,10 +39,20 @@ public class TrajectoryTwoPieceBalanceAuto/*two peice auto*/ extends SequentialC
                         new SetArmPositionCommand(Constants.ArmPose.STOW),
                         new TimerCommand(.75)
                 ),
+
+                 */
                 new ParallelRaceGroup(
                     new SmartDriveCommand(Constants.Autos.twoPeiceBalanceAuto.driveToObject),
-                    new SequentialCommandGroup(new TimerCommand(1.75),new SetArmPositionCommand(Constants.ArmPose.FLOOR_CONE))
-                ),
+                    new SequentialCommandGroup(
+                            new TimerCommand(1.75),
+                            new ParallelRaceGroup(
+                                    new SetArmPositionCommand(Constants.ArmPose.FLOOR_CONE),
+                                    new TimerCommand(0.5)
+                            ),
+                            new IntakeConeSmartCommand()
+                    )
+                )
+                /*
                 new FindAndCollectCone(),
                 new SmartDriveCommand(Constants.Autos.twoPeiceBalanceAuto.driveToGrid),
                 new ParallelRaceGroup(
@@ -57,6 +69,7 @@ public class TrajectoryTwoPieceBalanceAuto/*two peice auto*/ extends SequentialC
                         new SafeBalanceCommandGroup(),
                         new ResetArm()
                 )
+                 */
 
         );
 

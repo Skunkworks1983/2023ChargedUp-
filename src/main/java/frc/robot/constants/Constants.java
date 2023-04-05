@@ -121,7 +121,7 @@ public class Constants extends CommandBase
             public static Trajectory driveToObject = TrajectoryGenerator.generateTrajectory(
                     startPose,
                     List.of(new Translation2d(Units.feetToMeters(5.9166 + 6),Units.feetToMeters(23 + .5))),
-                    new Pose2d(Units.feetToMeters(5.9166 + 12), Units.feetToMeters(23 + .5), new Rotation2d(Units.degreesToRadians(175))),
+                    new Pose2d(Units.feetToMeters(5.9166 + 15.5), Units.feetToMeters(23 + .5), new Rotation2d(Units.degreesToRadians(183))),
                     frc.robot.subsystems.Drivebase.GetDrivebase().reversedConfig);
 
             //pickup
@@ -158,7 +158,7 @@ public class Constants extends CommandBase
 
         public static final double AUTO_KP =.023;
 
-        public static final double AUTO_KD= .003;
+        public static final double AUTO_KD= .006;
 
         public static final double SLOW_MODE_RATIO = .225;
         public static final double GEAR_RATIO = 8.4586;
