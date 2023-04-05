@@ -94,7 +94,7 @@ public class Constants extends CommandBase
 
         public static final int COLLECT_SHELF = 11;
 
-        public static final int SINGLE_SUBSTATION = 15;
+        public static final int UNBOUND = 15;
 
         public static final int INTAKE = 23;
 
