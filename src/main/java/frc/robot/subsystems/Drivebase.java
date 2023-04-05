@@ -15,6 +15,7 @@ import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.constraint.MaxVelocityConstraint;
 import edu.wpi.first.math.trajectory.constraint.TrajectoryConstraint;
+import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.I2C;
@@ -91,7 +92,7 @@ public class Drivebase implements Subsystem {
             Constants.Wobbles.TICKS_PER_MOTOR_REV * Constants.Drivebase.OLD_GEAR_RATIO /
                     (Constants.Drivebase.WHEEL_DIAMETER * Math.PI);
 
-    AHRS gyro = new AHRS(I2C.Port.kOnboard);
+    private AHRS gyro = new AHRS(I2C.Port.kOnboard);
 
 
     public final TrajectoryConstraint autoVoltageConstraint= new MaxVelocityConstraint(Constants.Drivebase.kMaxSpeedMetersPerSecond);
@@ -105,8 +106,16 @@ public class Drivebase implements Subsystem {
                     // Add kinematics to ensure max speed is actually obeyed
                     .setKinematics(kDriveKinematics)
                     // Apply the voltage constraint
-                    .addConstraint(autoVoltageConstraint);
+                    .addConstraint(autoVoltageConstraint).setReversed(false);
 
+    public final TrajectoryConfig reversedConfig =
+            new TrajectoryConfig(
+                    Constants.Drivebase.kMaxSpeedMetersPerSecond,
+                    Constants.Drivebase.kMaxAccelerationMetersPerSecondSquared)
+                    // Add kinematics to ensure max speed is actually obeyed
+                    .setKinematics(kDriveKinematics)
+                    // Apply the voltage constraint
+                    .addConstraint(autoVoltageConstraint).setReversed(true);
 
 private final Field2d field= new Field2d();
 public Field2d getField(){
@@ -172,26 +181,15 @@ public Field2d getField(){
                 ticksToMeters(rightMotor1.getSelectedSensorPosition()),
                 new Pose2d(0,0,new Rotation2d(0))
         );
-
         CommandScheduler.getInstance().registerSubsystem(this);
 
 
     }
 
-    public void runMotor(double turnSpeedLeft, double turnSpeedRight) {
-    System.out.println("runmotor called");
-        leftMotor1.set(TalonFXControlMode.PercentOutput, turnSpeedLeft);
-        rightMotor1.set(TalonFXControlMode.PercentOutput, turnSpeedRight);
-        if (turnSpeedLeft > 0 && turnSpeedRight > 0) driveDirection = DriveDirection.FORWARD;
-        else if (turnSpeedLeft < 0 && turnSpeedRight < 0) driveDirection = DriveDirection.BACKWARD;
-        else {
-            driveDirection = DriveDirection.UNCLEAR;
-        }
-        System.out.println(turnSpeedLeft + "," + turnSpeedRight);
-    }
+
 
     public Pose2d GetCurrentPose(){return poseEstimator.getEstimatedPosition();}
-        public void SetPose(Pose2d pose){poseEstimator.resetPosition(new Rotation2d(0),0,0,pose);}
+
     public double getPosLeft() {
         return leftMotor1.getSelectedSensorPosition() / TicksPerFoot;
     }
@@ -215,12 +213,13 @@ public Field2d getField(){
         }
     }
 
-    public Pose2d getPose() {
-        return odometry.getPoseMeters();
-    }
-
     public void setPose(Pose2d pose){
-    poseEstimator.resetPosition(new Rotation2d(gyro.getYaw()),0,0,pose);
+    poseEstimator.resetPosition(
+            gyro.getRotation2d(),
+            ticksToMeters((int)leftMotor1.getSelectedSensorPosition()),
+            ticksToMeters((int)rightMotor1.getSelectedSensorPosition()),
+            pose
+                               );
     //leftPositonMeters and rightPositionMeters posibly should not be 0. Not sure.
     }
 
@@ -272,11 +271,6 @@ public Field2d getField(){
         isHeadingReliable = status;
     }
 
-
-    public DriveDirection getDriveDirection() {
-        return driveDirection;
-    }
-
     public int getFrontRangeSensor() {
         return frontRangeSensorValue.getValue();
     }
@@ -315,6 +309,10 @@ public Field2d getField(){
     {
         gyro.reset();
     }
+    public void resetGyroTo(double angle){
+        gyro.reset();
+        gyro.setAngleAdjustment(angle);
+    }
 
     @Override
     public void periodic() {
@@ -323,7 +321,7 @@ public Field2d getField(){
         poseEstimator.update(gyro.getRotation2d(),
                 ticksToMeters((int)leftMotor1.getSelectedSensorPosition()),
                 ticksToMeters((int)rightMotor1.getSelectedSensorPosition()));
-
+        SmartDashboard.putNumber("Pose angle: ", gyro.getRotation2d().getDegrees());
         field.setRobotPose(poseEstimator.getEstimatedPosition());
         SmartDashboard.putData("field",field);
 
@@ -338,6 +336,20 @@ public Field2d getField(){
     public void setLeftMeters(double meters){
         leftMotor1.set(ControlMode.Velocity,meters);//actualy ticks should be fixed.
     }
+
+
+    public void runMotor(double turnSpeedLeft, double turnSpeedRight) {
+        leftMotor1.set(TalonFXControlMode.PercentOutput, turnSpeedLeft);
+        rightMotor1.set(TalonFXControlMode.PercentOutput, turnSpeedRight);
+        if (turnSpeedLeft > 0 && turnSpeedRight > 0) driveDirection = DriveDirection.FORWARD;
+        else if (turnSpeedLeft < 0 && turnSpeedRight < 0) driveDirection = DriveDirection.BACKWARD;
+        else {
+            driveDirection = DriveDirection.UNCLEAR;
+        }
+    }
+
+
+
     double ticksToMeters(double ticks){return ticksToFeet(ticks)/Constants.Drivebase.FEET_PER_METER;}
 
     double ticksToFeet(double ticks){

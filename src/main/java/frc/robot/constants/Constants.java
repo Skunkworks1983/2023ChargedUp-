@@ -7,6 +7,8 @@ import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.UnconstructedTrajectory;
+import frc.robot.subsystems.Drivebase;
 
 import java.util.List;
 
@@ -15,6 +17,7 @@ public class Constants extends CommandBase
     public static class Collector
     {
         public static final int MOTOR_ID = 7;
+
         public static final double GEAR_RATIO = 2;
         public static final double WHEEL_CIRCUMFERENCE = Math.PI * 2;
         public static final double WHEEL_REVS_PER_SEC_TO_VELOCITY = 8050;
@@ -107,33 +110,41 @@ public class Constants extends CommandBase
 
         public static final int LIGHTS_DOWN = 16;
 
+
     }
 
     public static class Autos{
 
         public static class twoPeiceBalanceAuto {
-            public static Trajectory driveToObject = TrajectoryGenerator.generateTrajectory(
-                    new Pose2d(Units.feetToMeters(5.9166), Units.feetToMeters(25.125), new Rotation2d(Math.PI)),
-                    List.of(new Translation2d(Units.feetToMeters(5.9166+6),Units.feetToMeters(25.125+.75))),
-                    new Pose2d(Units.feetToMeters(5.9166+11.5), Units.feetToMeters(25.125+.75), new Rotation2d(Math.PI)),
-                    frc.robot.subsystems.Drivebase.GetDrivebase().config.setReversed(true));
+
+            public static Pose2d startPose = new Pose2d(Units.feetToMeters(5.9166), Units.feetToMeters(23), new Rotation2d(Math.PI));
+
+
+            public static UnconstructedTrajectory driveToObject = new UnconstructedTrajectory(
+                    List.of(new Translation2d(Units.feetToMeters(5.9166 + 6),Units.feetToMeters(23 + .5))),
+                    new Pose2d(Units.feetToMeters(5.9166 + 15.5), Units.feetToMeters(23 + .5), new Rotation2d(Units.degreesToRadians(183))),
+                    true);
 
             //pickup
-            public static Trajectory driveToGrid = TrajectoryGenerator.generateTrajectory(
-                    new Pose2d(Units.feetToMeters(6.33+.25), Units.feetToMeters(23-21), new Rotation2d(Math.PI)),
-                    List.of(new Translation2d(Units.feetToMeters(6.33+.2),Units.feetToMeters(23.25))),
-                    new Pose2d(Units.feetToMeters(6.33), Units.feetToMeters(23), new Rotation2d(0)), frc.robot.subsystems.Drivebase.GetDrivebase().config);
 
+            public static UnconstructedTrajectory driveToGrid= new UnconstructedTrajectory(List.of(
+                    new Translation2d(Units.feetToMeters(5.9166 + 11.5), Units.feetToMeters(23 + .75)),
+                    new Translation2d(Units.feetToMeters(5.9166 + 6),Units.feetToMeters(23 + .75)),
+                    new Translation2d(Units.feetToMeters(5.9166 + 1.5), Units.feetToMeters(23))
+            ),new Pose2d(Units.feetToMeters(5.9166 + .5), Units.feetToMeters(254 / 12), new Rotation2d(Math.PI*3/2)),false);
             //place second peice
-            public static Trajectory turnToBalance = TrajectoryGenerator.generateTrajectory(//need to do this
-                    new Pose2d(Units.feetToMeters(6.33), Units.feetToMeters(23), new Rotation2d(0)), List.of(new Translation2d(Units.feetToMeters(7),Units.feetToMeters(26.6-7.33))),
-                    new Pose2d(Units.feetToMeters(13), Units.feetToMeters(26.6-9.33), new Rotation2d(-Math.PI/2)), frc.robot.subsystems.Drivebase.GetDrivebase().config.setReversed(true));
-
-            public static Trajectory driveToBalance = TrajectoryGenerator.generateTrajectory(//need to do this
-                    new Pose2d(Units.feetToMeters(6.33), Units.feetToMeters(23), new Rotation2d(0)), List.of(new Translation2d(Units.feetToMeters(7),Units.feetToMeters(26.6-7.33))),
-                    new Pose2d(Units.feetToMeters(13), Units.feetToMeters(26.6-9.33), new Rotation2d(-Math.PI/2)), frc.robot.subsystems.Drivebase.GetDrivebase().config);
-
-
+            public static UnconstructedTrajectory turnToBalance = new UnconstructedTrajectory(
+                    List.of(new Translation2d(Units.feetToMeters(7),Units.feetToMeters(26.6-7.33))),
+                    new Pose2d(Units.feetToMeters(13), Units.feetToMeters(26.6-9.33), new Rotation2d(-Math.PI/2)),true);
+            //move x positive 7 feet
+            public static UnconstructedTrajectory driveToBalance =new UnconstructedTrajectory(
+                    List.of(
+                    new Translation2d(Units.feetToMeters(13), Units.feetToMeters(26.6-9.33))),
+                    new Pose2d(Units.feetToMeters(13+6), Units.feetToMeters(26.6-9.33), new Rotation2d(0)),
+                    false);
+            //public static UnconstructedTrajectory driveToBalance = new UnconstructedTrajectory(List.of(
+            //        new Translation2d(Units.feetToMeters(13), Units.feetToMeters(26.6-9.33))),
+            //        new Pose2d(Units.feetToMeters(13+6), Units.feetToMeters(26.6-9.33), new Rotation2d(0)),false);
         }
 
     }
@@ -395,5 +406,12 @@ public class Constants extends CommandBase
         public static final int TICKS_PER_MOTOR_REV = 2048;
         public static final double TICKS_PER_FOOT =
                 (TICKS_PER_MOTOR_REV * GEAR_RATIO) / (WHEEL_DIAMETER * Math.PI);
+    }
+
+    public class FieldMeasurements{
+        public static final double FieldYFeetTotal = 26.583333;
+
+        public static final double FieldXFeetTotal = 54.083333;
+
     }
 }
