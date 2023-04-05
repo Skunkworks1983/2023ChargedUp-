@@ -96,8 +96,6 @@ public class Constants extends CommandBase
 
         public static final int COLLECT_SHELF = 11;
 
-        public static final int UNBOUND = 15;
-
         public static final int INTAKE = 23;
 
         public static final int EXPEL = 22;
@@ -120,9 +118,11 @@ public class Constants extends CommandBase
             public static Pose2d startPose = new Pose2d(Units.feetToMeters(5.9166), Units.feetToMeters(23), new Rotation2d(Math.PI));
 
 
-            public static UnconstructedTrajectory driveToObject = new UnconstructedTrajectory(
-                    List.of(new Translation2d(Units.feetToMeters(5.9166 + 6),Units.feetToMeters(23 + .75))),
-                    new Pose2d(Units.feetToMeters(5.9166 + 11.5), Units.feetToMeters(23 + .75), new Rotation2d(Math.PI)),false);
+            public static Trajectory driveToObject = TrajectoryGenerator.generateTrajectory(
+                    startPose,
+                    List.of(new Translation2d(Units.feetToMeters(5.9166 + 6),Units.feetToMeters(23 + .5))),
+                    new Pose2d(Units.feetToMeters(5.9166 + 12), Units.feetToMeters(23 + .5), new Rotation2d(Units.degreesToRadians(175))),
+                    frc.robot.subsystems.Drivebase.GetDrivebase().reversedConfig);
 
             //pickup
 
@@ -131,37 +131,21 @@ public class Constants extends CommandBase
                     new Translation2d(Units.feetToMeters(5.9166 + 6),Units.feetToMeters(23 + .75)),
                     new Translation2d(Units.feetToMeters(5.9166 + 1.5), Units.feetToMeters(23))
             ),new Pose2d(Units.feetToMeters(5.9166 + .5), Units.feetToMeters(254 / 12), new Rotation2d(Math.PI*3/2)),false);
-
-            public static UnconstructedTrajectory turnToBalance = new UnconstructedTrajectory(
-                    List.of(new Translation2d(Units.feetToMeters(7),Units.feetToMeters(26.6-7.33))),
-                    new Pose2d(Units.feetToMeters(13), Units.feetToMeters(26.6-9.33), new Rotation2d(-Math.PI/2)),false);
-
-
-            public static UnconstructedTrajectory driveToBalance = new UnconstructedTrajectory(
-                    List.of(new Translation2d(Units.feetToMeters(13), Units.feetToMeters(26.6-4.33))),
-                    new Pose2d(Units.feetToMeters(13), Units.feetToMeters(26.6-2.33), new Rotation2d(-Math.PI/2)),false);
-
-
-            //use unconstructed trajectory, not normal trajectory now. saved incase we should revert
-            /*public static Trajectory driveToBalance = TrajectoryGenerator.generateTrajectory(//need to do this
-                    new Pose2d(Units.feetToMeters(13), Units.feetToMeters(26.6-9.33), new Rotation2d(-Math.PI/2)), List.of(new Translation2d(Units.feetToMeters(13), Units.feetToMeters(26.6-4.33))),
-                    new Pose2d(Units.feetToMeters(13), Units.feetToMeters(26.6-2.33), new Rotation2d(-Math.PI/2)),
-                    frc.robot.subsystems.Drivebase.GetDrivebase().config);
-
-
+            //place second peice
             public static Trajectory turnToBalance = TrajectoryGenerator.generateTrajectory(//need to do this
                     new Pose2d(Units.feetToMeters(6.33), Units.feetToMeters(23), new Rotation2d(0)), List.of(new Translation2d(Units.feetToMeters(7),Units.feetToMeters(26.6-7.33))),
                     new Pose2d(Units.feetToMeters(13), Units.feetToMeters(26.6-9.33), new Rotation2d(-Math.PI/2)),
                     frc.robot.subsystems.Drivebase.GetDrivebase().reversedConfig);
-
-            public static Trajectory driveToObject = TrajectoryGenerator.generateTrajectory(
-                    startPose,
-                    List.of(new Translation2d(Units.feetToMeters(5.9166 + 6),Units.feetToMeters(23 + .75))),
-                    new Pose2d(Units.feetToMeters(5.9166 + 11.5), Units.feetToMeters(23 + .75), new Rotation2d(Math.PI)),
-                    frc.robot.subsystems.Drivebase.GetDrivebase().reversedConfig);
-
-
-*/
+            //move x positive 7 feet
+            public static Trajectory driveToBalance = TrajectoryGenerator.generateTrajectory(
+                    new Pose2d(Units.feetToMeters(13), Units.feetToMeters(26.6-9.33), new Rotation2d(0)),
+                    List.of(
+                    new Translation2d(Units.feetToMeters(13), Units.feetToMeters(26.6-9.33))),
+                    new Pose2d(Units.feetToMeters(13+6), Units.feetToMeters(26.6-9.33), new Rotation2d(0)),
+                    frc.robot.subsystems.Drivebase.GetDrivebase().config);
+            //public static UnconstructedTrajectory driveToBalance = new UnconstructedTrajectory(List.of(
+            //        new Translation2d(Units.feetToMeters(13), Units.feetToMeters(26.6-9.33))),
+            //        new Pose2d(Units.feetToMeters(13+6), Units.feetToMeters(26.6-9.33), new Rotation2d(0)),false);
         }
 
     }
@@ -169,17 +153,17 @@ public class Constants extends CommandBase
 
     public class Drivebase {
 
-        public static final double kMaxSpeedMetersPerSecond = 3;//was 3.47472
-        public static final double kMaxAccelerationMetersPerSecondSquared = 3;//was 24.0792
+        public static final double kMaxSpeedMetersPerSecond = 2.75;//was 3.47472
+        public static final double kMaxAccelerationMetersPerSecondSquared = 2;//was 24.0792
 
-        public static final double AUTO_KP =.02;
+        public static final double AUTO_KP =.023;
 
-        public static final double AUTO_KD= .001;
+        public static final double AUTO_KD= .003;
 
         public static final double SLOW_MODE_RATIO = .225;
         public static final double GEAR_RATIO = 8.4586;
-        public static final double OLD_GEAR_RATIO = 10.71;
-        public static final double kTrackwidthMeters = .38;
+
+        public static final double kTrackwidthMeters=.38;
         public static final double FEET_PER_METER=3.28084;
         public static final int TICKS_PER_ROTATION=2048;
         public static final double WHEEL_DIAMETER = 0.5;
@@ -259,7 +243,7 @@ public class Constants extends CommandBase
         public static final int SHOULDER_LIMIT_SWITCH_BACK = 1;
         public static final int WRIST_LIMIT_SWITCH = 2;
 
-        public static final int MAX_WRIST_ROTATION = 286;
+        public static final int MAX_WRIST_ROTATION = 235;
         public static final double WRIST_TOLERANCE = 2;
         public static final double WRIST_PARALLEL_WITH_SHOULDER = 164.05;
         public static final double WRIST_POWER = .15;
@@ -277,17 +261,16 @@ public class Constants extends CommandBase
     public enum ArmPose {
         FLOOR_WEIRD(-90, 220, 1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
         FLOOR_NORMAL(-128.59537049672488, 100.70434, -1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
-        FLOOR_CUBE(-128.59537049672488, 115.25, -1.5, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
-        FLOOR_CONE(-128.59537049672488, 112.75, -1.5, false, 20),
-        HIGH_CUBE(41.57, 100, -2, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
+        FLOOR_CUBE(-128.59537049672488, 115.25, -1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
+        FLOOR_CONE(-128.59537049672488, 112.75, -2, false, 12),
+        HIGH_CUBE(41.57, 100, -1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
         SUBSTATION_CUBE(43.68152, 174.73779, 1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
-        SUBSTATION_CONE(44.56579, 156.46118, 3, true,20),
+        SUBSTATION_CONE(42.56579, 156.46118, 3, true, Collector.CONE_COLLECT_AMP_THRESHOLD),
         SCORE_MID_CUBE(56.56579, 160.46118, 1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
-        SCORE_MID_CONE(46.56579, 150.46118, 1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
+        SCORE_MID_CONE(44.56579, 150.46118, 1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
         STOW(-128.59537049672488, 15.531, -1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),//TODO: stow is wierd
         STOW_AUTO(-128.59537049672488, 15.531, -1.15, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
-        HIGH_CUBE_AUTO(41.57, 96, -1.15, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
-        SINGLE_SUBSTATION_CONE(-32.59757, 281.99207, 2, false, 20);
+        HIGH_CUBE_AUTO(41.57, 96, -1.15, false, Collector.CONE_COLLECT_AMP_THRESHOLD);
 
         public final double shoulderAngle;
         public final double wristAngle;
@@ -329,7 +312,6 @@ public class Constants extends CommandBase
         public static final double FLOOR_CUBE_PICKUP_WRIST = 112.75;
         public static final double CARRY_WRIST = 15.531;
         public static final double SCORE_CONE_WEIRD_SHOULDER = -90;
-        public static final double SINGLE_SUBSTATION_CONE = -32.59757;
     }
 
     public class Lights {
@@ -423,13 +405,5 @@ public class Constants extends CommandBase
         public static final int TICKS_PER_MOTOR_REV = 2048;
         public static final double TICKS_PER_FOOT =
                 (TICKS_PER_MOTOR_REV * GEAR_RATIO) / (WHEEL_DIAMETER * Math.PI);
-    }
-
-    public class FieldMeasurements{
-
-        public final static double FieldYFeetTotal=26.58333333333333;
-        public final static double FieldXFeetTotal=54.08333333333;
-        //TODO: add infinitely more 3s here
-
     }
 }

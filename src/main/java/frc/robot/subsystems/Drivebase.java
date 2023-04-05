@@ -15,6 +15,7 @@ import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.constraint.MaxVelocityConstraint;
 import edu.wpi.first.math.trajectory.constraint.TrajectoryConstraint;
+import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.I2C;
@@ -324,7 +325,7 @@ public Field2d getField(){
         poseEstimator.update(gyro.getRotation2d(),
                 ticksToMeters((int)leftMotor1.getSelectedSensorPosition()),
                 ticksToMeters((int)rightMotor1.getSelectedSensorPosition()));
-
+        SmartDashboard.putNumber("Pose angle: ", gyro.getRotation2d().getDegrees());
         field.setRobotPose(poseEstimator.getEstimatedPosition());
         SmartDashboard.putData("field",field);
 
