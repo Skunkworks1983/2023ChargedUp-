@@ -175,11 +175,11 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopInit()
     {
-        new ArcadeDrive(Drivebase.GetDrivebase(), Oi.GetInstance(),LimeLight.getInstance()).schedule();
         arm.SetLightMode(Constants.Lights.BLANK);
         drivebase.setGyroStatus(false);
         setBrakeModeOnDisable = true;
         drivebase.SetBrakeMode(true);
+        drivebase.setDefaultCommand(new ArcadeDrive(Drivebase.GetDrivebase(), Oi.GetInstance(),LimeLight.getInstance()));
     }
 
 

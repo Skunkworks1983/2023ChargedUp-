@@ -24,7 +24,7 @@ public class Collector extends SubsystemBase {
         Motor.config_kP(1, 0.05);
         Motor.setNeutralMode(NeutralMode.Brake);
         Motor.setInverted(true);
-        Motor.configOpenloopRamp(0.5);
+        Motor.configOpenloopRamp(0.1);
     }
 
 
