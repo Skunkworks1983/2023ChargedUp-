@@ -15,7 +15,6 @@ public class Constants extends CommandBase
     public static class Collector
     {
         public static final int MOTOR_ID = 7;
-
         public static final double GEAR_RATIO = 2;
         public static final double WHEEL_CIRCUMFERENCE = Math.PI * 2;
         public static final double WHEEL_REVS_PER_SEC_TO_VELOCITY = 8050;
@@ -94,6 +93,8 @@ public class Constants extends CommandBase
 
         public static final int COLLECT_SHELF = 11;
 
+        public static final int UNBOUND = 15;
+
         public static final int INTAKE = 23;
 
         public static final int EXPEL = 22;
@@ -105,7 +106,6 @@ public class Constants extends CommandBase
         public static final int LIGHTS_UP = 9;
 
         public static final int LIGHTS_DOWN = 16;
-
 
     }
 
@@ -150,8 +150,8 @@ public class Constants extends CommandBase
 
         public static final double SLOW_MODE_RATIO = .225;
         public static final double GEAR_RATIO = 8.4586;
-
-        public static final double kTrackwidthMeters=.38;
+        public static final double OLD_GEAR_RATIO = 10.71;
+        public static final double kTrackwidthMeters = .38;
         public static final double FEET_PER_METER=3.28084;
         public static final int TICKS_PER_ROTATION=2048;
         public static final double WHEEL_DIAMETER = 0.5;
@@ -231,7 +231,7 @@ public class Constants extends CommandBase
         public static final int SHOULDER_LIMIT_SWITCH_BACK = 1;
         public static final int WRIST_LIMIT_SWITCH = 2;
 
-        public static final int MAX_WRIST_ROTATION = 235;
+        public static final int MAX_WRIST_ROTATION = 286;
         public static final double WRIST_TOLERANCE = 2;
         public static final double WRIST_PARALLEL_WITH_SHOULDER = 164.05;
         public static final double WRIST_POWER = .15;
@@ -258,7 +258,8 @@ public class Constants extends CommandBase
         SCORE_MID_CONE(44.56579, 150.46118, 1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
         STOW(-128.59537049672488, 15.531, -1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),//TODO: stow is wierd
         STOW_AUTO(-128.59537049672488, 15.531, -1.15, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
-        HIGH_CUBE_AUTO(41.57, 96, -1.15, false, Collector.CONE_COLLECT_AMP_THRESHOLD);
+        HIGH_CUBE_AUTO(41.57, 96, -1.15, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
+        SINGLE_SUBSTATION_CONE(-32.59757, 281.99207, 2, false, 20);
 
         public final double shoulderAngle;
         public final double wristAngle;
@@ -300,6 +301,7 @@ public class Constants extends CommandBase
         public static final double FLOOR_CUBE_PICKUP_WRIST = 112.75;
         public static final double CARRY_WRIST = 15.531;
         public static final double SCORE_CONE_WEIRD_SHOULDER = -90;
+        public static final double SINGLE_SUBSTATION_CONE = -32.59757;
     }
 
     public class Lights {
