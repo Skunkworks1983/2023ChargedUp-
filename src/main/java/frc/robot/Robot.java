@@ -31,6 +31,10 @@ import frc.robot.commands.autos.CompAutos.TwoPiece2Blue;
 import frc.robot.commands.autos.CompAutos.TwoPiece2Red;
 import frc.robot.commands.autos.CompAutos.TwoPiece8Blue;
 import frc.robot.commands.autos.CompAutos.TwoPiece8Red;
+import frc.robot.commands.autos.ScoreAndExitCommunityP1CommandGroup;
+import frc.robot.commands.autos.ScoreAndExitCommunityP2CommandGroup;
+import frc.robot.commands.autos.SimpleAutoCommandGroup;
+import frc.robot.commands.drivebase.DriveToGamePieceCommand;
 import frc.robot.commands.autos.CompAutos.TwoPieceBalance2Blue;
 import frc.robot.commands.autos.CompAutos.TwoPieceBalance2Red;
 import frc.robot.commands.autos.CompAutos.TwoPieceBalance8Blue;
@@ -191,9 +195,10 @@ public class Robot extends TimedRobot {
      * This method is called periodically during operator control.
      */
     @Override
-    public void teleopPeriodic() {
-
-    }
+    public void teleopPeriodic()
+{
+    SmartDashboard.putData("field" , drivebase.getField());
+}
 
 
     @Override

@@ -16,6 +16,7 @@ import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.constraint.MaxVelocityConstraint;
 import edu.wpi.first.math.trajectory.constraint.TrajectoryConstraint;
 import edu.wpi.first.util.sendable.Sendable;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.I2C;
@@ -28,6 +29,8 @@ import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.commands.drivebase.ArcadeDrive;
 import frc.robot.constants.Constants;
 import frc.robot.services.Oi;
+
+import java.util.Arrays;
 
 import static java.lang.Double.NaN;
 
@@ -94,6 +97,7 @@ public class Drivebase implements Subsystem {
 
     public AHRS gyro = new AHRS(I2C.Port.kOnboard);
 
+    boolean isRedAlliance;
 
     public final TrajectoryConstraint autoVoltageConstraint= new MaxVelocityConstraint(Constants.Drivebase.kMaxSpeedMetersPerSecond);
     public DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(Constants.Drivebase.kTrackwidthMeters);
@@ -122,12 +126,15 @@ public Field2d getField(){
     return field;
 }
 
+//private final edu.wpi.first.wpilibj.smartdashboard.FieldObject2d
+
     private Drivebase()
     {
         SmartDashboard.putData("field",field);
         //setDefaultCommand(ArcadeDrive);
         gyro.calibrate();
         isHeadingReliable = false;
+        isRedAlliance = DriverStation.getAlliance() == DriverStation.Alliance.Red;
         System.out.println("drivebase is constructing");
         rightMotor1.setInverted(true);
         rightMotor2.setInverted(true);
@@ -219,6 +226,40 @@ public Field2d getField(){
             return NaN;
 
         }
+    }
+
+    public void updatePoseLimelight()
+    {
+        LimeLight limelight = LimeLight.getInstance();
+        if(limelight.tv.getInteger(0) == 1)
+        {
+            double[] botpose;
+            if(isRedAlliance)
+            {
+                botpose = limelight.botpose_wpired.getDoubleArray(LimeLight.defaultpose);
+            }
+            else
+            {
+                botpose = limelight.botpose_wpiblue.getDoubleArray(LimeLight.defaultpose);
+            }
+
+            Pose2d currentPose = new Pose2d(botpose[0], botpose[1], new Rotation2d(Units.degreesToRadians(botpose[5])));
+            if(currentPose.getTranslation().getNorm() > 0.25)
+            {
+                poseEstimator.addVisionMeasurement(
+                    currentPose,
+                    Timer.getFPGATimestamp()
+                            - (limelight.tl.getDouble(0) / 1000.0)
+                            - (limelight.cl.getDouble(0) / 1000.0)
+                );
+            }
+            System.out.println("updatePoseLimelight, array: " + Arrays.toString(botpose) + " tl: " + limelight.tl.getDouble(0) + " cl: " + limelight.cl.getDouble(0));
+        }
+    }
+
+
+    public Pose2d getPose() {
+        return odometry.getPoseMeters();
     }
 
     public void setPose(Pose2d pose){
@@ -329,14 +370,14 @@ public Field2d getField(){
         poseEstimator.update(gyro.getRotation2d(),
                 ticksToMeters((int)leftMotor1.getSelectedSensorPosition()),
                 ticksToMeters((int)rightMotor1.getSelectedSensorPosition()));
-        SmartDashboard.putNumber("Pose angle: ", gyro.getRotation2d().getDegrees());
+        updatePoseLimelight();
+
         field.setRobotPose(poseEstimator.getEstimatedPosition());
         SmartDashboard.putData("field",field);
 
 //TODO: if we have an april tag in view, call addVisionMeasurement();
 
     }
-
 
     public void setRightMeters(double meters){
         rightMotor1.set(ControlMode.Velocity,meters);
