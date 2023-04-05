@@ -18,11 +18,12 @@ import edu.wpi.first.math.trajectory.constraint.TrajectoryConstraint;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalOutput;
+import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.commands.drivebase.ArcadeDrive;
 import frc.robot.constants.Constants;
@@ -88,7 +89,7 @@ public class Drivebase implements Subsystem {
     private DifferentialDrivePoseEstimator poseEstimator;
 
     private final double TicksPerFoot =
-            Constants.Wobbles.TICKS_PER_MOTOR_REV * Constants.Drivebase.GEAR_RATIO /
+            Constants.Wobbles.TICKS_PER_MOTOR_REV * Constants.Drivebase.OLD_GEAR_RATIO /
                     (Constants.Drivebase.WHEEL_DIAMETER * Math.PI);
 
     public AHRS gyro = new AHRS(I2C.Port.kOnboard);
@@ -196,7 +197,7 @@ public Field2d getField(){
     }
 
     public Pose2d GetCurrentPose(){return poseEstimator.getEstimatedPosition();}
-        public void SetPose(Pose2d pose){poseEstimator.resetPosition(new Rotation2d(0),0,0,pose);}
+
     public double getPosLeft() {
         return leftMotor1.getSelectedSensorPosition() / TicksPerFoot;
     }
@@ -220,12 +221,10 @@ public Field2d getField(){
         }
     }
 
-    public Pose2d getPose() {
-        return odometry.getPoseMeters();
-    }
-
     public void setPose(Pose2d pose){
-    poseEstimator.resetPosition(new Rotation2d(gyro.getYaw()),0,0,pose);
+    poseEstimator.resetPosition
+            (new Rotation2d(gyro.getYaw()),ticksToMeters((int)leftMotor1.getSelectedSensorPosition()),
+            ticksToMeters((int)rightMotor1.getSelectedSensorPosition()),pose);
     //leftPositonMeters and rightPositionMeters posibly should not be 0. Not sure.
     }
 
@@ -275,11 +274,6 @@ public Field2d getField(){
 
     public void setGyroStatus(boolean status) {
         isHeadingReliable = status;
-    }
-
-
-    public DriveDirection getDriveDirection() {
-        return driveDirection;
     }
 
     public int getFrontRangeSensor() {
