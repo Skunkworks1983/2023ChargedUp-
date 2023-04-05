@@ -34,7 +34,7 @@ public class Oi {
     JoystickButton intakeButton;
     JoystickButton expelButton;
 
-    JoystickButton cubeToggle;
+    JoystickButton coneToggle;
     JoystickButton manualToggle;
 
     JoystickButton manualShoulderUp;
@@ -80,7 +80,7 @@ public class Oi {
 
         scoreMid = new JoystickButton(buttonStick, Constants.OIButtons.SCORE_MID);
         balanceButton = new JoystickButton(leftStick,3);//make constant later
-        cubeToggle = new JoystickButton(buttonStick, Constants.OIButtons.CONE_TOGGLE);
+        coneToggle = new JoystickButton(buttonStick, Constants.OIButtons.CONE_TOGGLE);
 
         scoreWeird = new JoystickButton(buttonStick, Constants.OIButtons.SHOOT_CUBE);
 
@@ -113,23 +113,23 @@ public class Oi {
         funSwitch2 = new JoystickButton(buttonStick, 20);
 
         //when held
-        expelButton.and(cubeToggle).whileTrue(new ExpelConeCommand());
-        expelButton.and(cubeToggle.negate()).whileTrue(new ExpelCubeCommand());
-        intakeButton.and(cubeToggle).and(manualToggle).whileTrue(new IntakeConeManualCommand());
-        intakeButton.and(cubeToggle.negate()).and(manualToggle).whileTrue(new IntakeCubeManualCommand());
-        intakeButton.and(cubeToggle).and(manualToggle.negate()).whileTrue(new IntakeConeAndStowCommand());
-        intakeButton.and(cubeToggle.negate()).and(manualToggle.negate()).whileTrue(new IntakeCubeAndStowCommand());
+        expelButton.and(coneToggle).whileTrue(new ExpelConeCommand());
+        expelButton.and(coneToggle.negate()).whileTrue(new ExpelCubeCommand());
+        intakeButton.and(coneToggle).and(manualToggle).whileTrue(new IntakeConeManualCommand());
+        intakeButton.and(coneToggle.negate()).and(manualToggle).whileTrue(new IntakeCubeManualCommand());
+        intakeButton.and(coneToggle).and(manualToggle.negate()).whileTrue(new IntakeConeAndStowCommand());
+        intakeButton.and(coneToggle.negate()).and(manualToggle.negate()).whileTrue(new IntakeCubeAndStowCommand());
 
         floorNormalScore.whileTrue(new SetArmPositionCommand(Constants.ArmPose.FLOOR_NORMAL));
-        scoreWeird.and(cubeToggle.negate()).whileTrue(new SetArmPositionCommand(Constants.ArmPose.HIGH_CUBE));
-        scoreWeird.and(cubeToggle).whileTrue(new SetArmPositionCommand(Constants.ArmPose.FLOOR_WEIRD));
-        humanPlayerPickup.and(cubeToggle.negate()).whileTrue(new SetArmPositionCommand(Constants.ArmPose.SUBSTATION_CUBE));
-        humanPlayerPickup.and(cubeToggle).whileTrue(new SetArmPositionCommand(Constants.ArmPose.SUBSTATION_CONE));
+        scoreWeird.and(coneToggle.negate()).whileTrue(new SetArmPositionCommand(Constants.ArmPose.HIGH_CUBE));
+        scoreWeird.and(coneToggle).whileTrue(new SetArmPositionCommand(Constants.ArmPose.FLOOR_WEIRD));
+        humanPlayerPickup.and(coneToggle.negate()).whileTrue(new SetArmPositionCommand(Constants.ArmPose.SUBSTATION_CUBE));
+        humanPlayerPickup.and(coneToggle).whileTrue(new SetArmPositionCommand(Constants.ArmPose.SUBSTATION_CONE));
         carry.onTrue(new SetArmPositionCommand(Constants.ArmPose.STOW));
-        scoreMid.and(cubeToggle.negate()).whileTrue(new SetArmPositionCommand(Constants.ArmPose.SCORE_MID_CUBE));
-        scoreMid.and(cubeToggle).whileTrue(new SetArmPositionCommand(Constants.ArmPose.SCORE_MID_CONE));
-        floorPickup.and(cubeToggle.negate()).whileTrue(new SetArmPositionCommand(Constants.ArmPose.FLOOR_CUBE));
-        floorPickup.and(cubeToggle).whileTrue(new SetArmPositionCommand(Constants.ArmPose.FLOOR_CONE));
+        scoreMid.and(coneToggle.negate()).whileTrue(new SetArmPositionCommand(Constants.ArmPose.SCORE_MID_CUBE));
+        scoreMid.and(coneToggle).whileTrue(new ScoreMidAndHoldCommandGroup());
+        floorPickup.and(coneToggle.negate()).whileTrue(new SetArmPositionCommand(Constants.ArmPose.FLOOR_CUBE));
+        floorPickup.and(coneToggle).whileTrue(new SetArmPositionCommand(Constants.ArmPose.FLOOR_CONE));
 
         (resetArm.negate()).whileTrue(new ResetArm());
         wristUp.whileTrue(new RotateWristByPowerCommand(Constants.Arm.WRIST_POWER));
