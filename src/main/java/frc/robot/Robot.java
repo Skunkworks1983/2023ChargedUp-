@@ -14,7 +14,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.autos.CompAutos.*;
 import frc.robot.commands.autos.ScoreAndExitCommunityP1CommandGroup;
 import frc.robot.commands.autos.ScoreAndExitCommunityP2CommandGroup;
@@ -37,15 +36,12 @@ import frc.robot.commands.autos.CompAutos.TwoPieceBalance2Red;
 import frc.robot.commands.autos.CompAutos.TwoPieceBalance8Blue;
 import frc.robot.commands.autos.CompAutos.TwoPieceBalance8Red;
 import frc.robot.commands.drivebase.ArcadeDrive;
-import frc.robot.commands.drivebase.ResetPoseCommand;
 import frc.robot.constants.Constants;
 import frc.robot.services.Oi;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Collector;
 import frc.robot.subsystems.Drivebase;
 import frc.robot.subsystems.LimeLight;
-
-import static frc.robot.constants.Constants.Autos.twoPeiceBalanceAuto.driveToObject;
 
 
 /**
@@ -66,8 +62,6 @@ public class Robot extends TimedRobot {
     Command ScoreAndExitCommunityP2 = new ScoreAndExitCommunityP2CommandGroup();
     Command ScoreAndExitCommunityP1 = new ScoreAndExitCommunityP1CommandGroup();
     private RobotContainer robotContainer;
-
-    public enum Side{Blue,Red};
 
     private Arm arm;
 
@@ -99,7 +93,7 @@ public class Robot extends TimedRobot {
         autoChooser.addOption("TwoPiece2Red", new TwoPiece2Red());
         autoChooser.addOption("TwoPiece2Blue", new TwoPiece2Blue());
 
-        autoChooser.addOption("TrajectoryTwoPieceBalanceAuto", new TrajectoryTwoPieceBalanceAuto(false));
+        autoChooser.addOption("FindAndCollectCone", new FindAndCollectCone());
 
         SmartDashboard.putData("autoChooser", autoChooser);
 
@@ -109,7 +103,7 @@ public class Robot extends TimedRobot {
         robotContainer = new RobotContainer();
 
         drivebase.waitForHeadingReliable();
-        drivebase.resetGyro();
+
         SmartDashboard.putNumber("floor cube pickup", Constants.ArmPos.FLOOR_CUBE_PICKUP_WRIST);
     }
 
@@ -157,12 +151,9 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousInit() {
-        //Drivebase.GetDrivebase().setPose(new Pose2d(Units.feetToMeters(5.9166), Units.feetToMeters(25.125), new Rotation2d(Math.PI)));
-        boolean notFlipped=true;
-        new SequentialCommandGroup(
-                (notFlipped)?new ResetPoseCommand(Constants.Autos.twoPeiceBalanceAuto.startPose):new ResetPoseCommand(FlipFieldHelper.flipPose(Constants.Autos.twoPeiceBalanceAuto.startPose)),
-        new SmartDriveCommand((notFlipped)?driveToObject:driveToObject.flipped())).schedule();/*uncomment in future
-        );
+
+        Drivebase.GetDrivebase().setPose(new Pose2d(Units.feetToMeters(5.9166), Units.feetToMeters(25.125), new Rotation2d(Math.PI)));
+
         Collector.getInstance().SetSpeed(0);
         arm.SetLightMode(Constants.Lights.BLANK);
         setBrakeModeOnDisable = true;
@@ -174,21 +165,21 @@ public class Robot extends TimedRobot {
             autonomousCommand.schedule();
         }
         LimeLight.getInstance().setEnable(true);
-        //drivebase.waitForHeadingReliable();
-        drivebase.SetBrakeMode(true);*/
+
+        drivebase.waitForHeadingReliable();
+
+        drivebase.SetBrakeMode(true);
     }
 
 
     @Override
     public void teleopInit()
     {
-        Drivebase.GetDrivebase().setPose(new Pose2d(Units.feetToMeters(5.9166), Units.feetToMeters(25.125), new Rotation2d(Math.PI)));
-        new ArcadeDrive(Drivebase.GetDrivebase(), Oi.GetInstance(),LimeLight.getInstance()).schedule();
         arm.SetLightMode(Constants.Lights.BLANK);
-        //drivebase.resetGyroTo(180);
-       //drivebase.setGyroStatus(false);
+        drivebase.setGyroStatus(false);
         setBrakeModeOnDisable = true;
         drivebase.SetBrakeMode(true);
+        drivebase.setDefaultCommand(new ArcadeDrive(Drivebase.GetDrivebase(), Oi.GetInstance(),LimeLight.getInstance()));
     }
 
 
@@ -217,7 +208,9 @@ public class Robot extends TimedRobot {
      * This method is called periodically during test mode.
      */
     @Override
-    public void testPeriodic() {
+    public void testPeriodic()
+    {
+
     }
 
 
