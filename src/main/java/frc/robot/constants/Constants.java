@@ -96,6 +96,8 @@ public class Constants extends CommandBase
 
         public static final int COLLECT_SHELF = 11;
 
+        public static final int UNBOUND = 15;
+
         public static final int INTAKE = 23;
 
         public static final int EXPEL = 22;
@@ -118,10 +120,11 @@ public class Constants extends CommandBase
             public static Pose2d startPose = new Pose2d(Units.feetToMeters(5.9166), Units.feetToMeters(23), new Rotation2d(Math.PI));
 
 
-            public static UnconstructedTrajectory driveToObject = new UnconstructedTrajectory(
+            public static Trajectory driveToObject = TrajectoryGenerator.generateTrajectory(
+                    startPose,
                     List.of(new Translation2d(Units.feetToMeters(5.9166 + 6),Units.feetToMeters(23 + .5))),
-                    new Pose2d(Units.feetToMeters(5.9166 + 12), Units.feetToMeters(23 + .5), new Rotation2d(Units.degreesToRadians(175)))
-                    ,true);
+                    new Pose2d(Units.feetToMeters(5.9166 + 15.5), Units.feetToMeters(23 + .5), new Rotation2d(Units.degreesToRadians(183))),
+                    frc.robot.subsystems.Drivebase.GetDrivebase().reversedConfig);
 
             //pickup
 
@@ -156,7 +159,7 @@ public class Constants extends CommandBase
         public static final double OLD_GEAR_RATIO = 10.71;
         public static final double AUTO_KP =.023;
 
-        public static final double AUTO_KD= .003;
+        public static final double AUTO_KD= .006;
 
         public static final double SLOW_MODE_RATIO = .225;
         public static final double GEAR_RATIO = 8.4586;
@@ -241,7 +244,7 @@ public class Constants extends CommandBase
         public static final int SHOULDER_LIMIT_SWITCH_BACK = 1;
         public static final int WRIST_LIMIT_SWITCH = 2;
 
-        public static final int MAX_WRIST_ROTATION = 235;
+        public static final int MAX_WRIST_ROTATION = 286;
         public static final double WRIST_TOLERANCE = 2;
         public static final double WRIST_PARALLEL_WITH_SHOULDER = 164.05;
         public static final double WRIST_POWER = .15;
@@ -268,7 +271,8 @@ public class Constants extends CommandBase
         SCORE_MID_CONE(44.56579, 150.46118, 1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
         STOW(-128.59537049672488, 15.531, -1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),//TODO: stow is wierd
         STOW_AUTO(-128.59537049672488, 15.531, -1.15, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
-        HIGH_CUBE_AUTO(41.57, 96, -1.15, false, Collector.CONE_COLLECT_AMP_THRESHOLD);
+        HIGH_CUBE_AUTO(41.57, 96, -1.15, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
+        SINGLE_SUBSTATION_CONE(-32.59757, 281.99207, 2, false, 20);
 
         public final double shoulderAngle;
         public final double wristAngle;
