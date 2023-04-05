@@ -127,7 +127,7 @@ public class Oi {
         humanPlayerPickup.and(coneToggle).whileTrue(new SetArmPositionCommand(Constants.ArmPose.SUBSTATION_CONE));
         carry.onTrue(new SetArmPositionCommand(Constants.ArmPose.STOW));
         scoreMid.and(coneToggle.negate()).whileTrue(new SetArmPositionCommand(Constants.ArmPose.SCORE_MID_CUBE));
-        scoreMid.and(coneToggle).whileTrue(new ScoreMidAndHoldCommandGroup());
+        scoreMid.and(coneToggle).whileTrue(new ScoreMidConeAndHoldCommandGroup());
         floorPickup.and(coneToggle.negate()).whileTrue(new SetArmPositionCommand(Constants.ArmPose.FLOOR_CUBE));
         floorPickup.and(coneToggle).whileTrue(new SetArmPositionCommand(Constants.ArmPose.FLOOR_CONE));
 

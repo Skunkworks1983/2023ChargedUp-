@@ -5,17 +5,17 @@ import frc.robot.subsystems.Collector;
 
 
 public class SetHoldModeCommand extends CommandBase {
-    private Collector collectorIntance = Collector.getInstance();
+    private Collector collectorInstance = Collector.getInstance();
 
     public SetHoldModeCommand() {
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
-        addRequirements(collectorIntance);
+        addRequirements(collectorInstance);
     }
 
     @Override
     public void initialize() {
-        collectorIntance.SetSpeed(0,true);
+        collectorInstance.SetSpeed(0,true);
     }
 
     @Override
