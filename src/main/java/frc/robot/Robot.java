@@ -151,7 +151,8 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousInit() {
-
+new SmartDriveCommand(Constants.Autos.twoPeiceBalanceAuto.driveToGrid).schedule();
+        /*
         Drivebase.GetDrivebase().setPose(new Pose2d(Units.feetToMeters(5.9166), Units.feetToMeters(25.125), new Rotation2d(Math.PI)));
 
         Collector.getInstance().SetSpeed(0);
@@ -185,7 +186,9 @@ public class Robot extends TimedRobot {
         setBrakeModeOnDisable = true;
         drivebase.SetBrakeMode(true);
         drivebase.setDefaultCommand(new ArcadeDrive(Drivebase.GetDrivebase(), Oi.GetInstance(),LimeLight.getInstance()));
+    */
     }
+
 
 
     /**

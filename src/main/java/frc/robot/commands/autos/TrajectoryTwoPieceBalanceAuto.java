@@ -7,6 +7,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.FlipFieldHelper;
 import frc.robot.commands.Collector.ExpelConeCommand;
 import frc.robot.commands.Collector.ExpelCubeCommand;
 import frc.robot.commands.arm.ResetArm;
@@ -19,10 +20,10 @@ import frc.robot.subsystems.Drivebase;
 import pabeles.concurrency.ConcurrencyOps;
 
 public class TrajectoryTwoPieceBalanceAuto/*two peice auto*/ extends SequentialCommandGroup {
-    public TrajectoryTwoPieceBalanceAuto() {
+    public TrajectoryTwoPieceBalanceAuto(boolean redSide) {
 
         super(
-                new ResetPoseCommand(Constants.Autos.twoPeiceBalanceAuto.startPose),
+                new ResetPoseCommand(redSide?Constants.Autos.twoPeiceBalanceAuto.startPose: FlipFieldHelper.flipPose(Constants.Autos.twoPeiceBalanceAuto.startPose)),
                 new ParallelRaceGroup(
                     new SetArmPositionCommand(Constants.ArmPose.HIGH_CUBE_AUTO),
                     new TimerCommand(1.5)
@@ -38,11 +39,11 @@ public class TrajectoryTwoPieceBalanceAuto/*two peice auto*/ extends SequentialC
                         new TimerCommand(.75)
                 ),
                 new ParallelRaceGroup(
-                    new SmartDriveCommand(Constants.Autos.twoPeiceBalanceAuto.driveToObject),
+                    new SmartDriveCommand(redSide?Constants.Autos.twoPeiceBalanceAuto.driveToObject:Constants.Autos.twoPeiceBalanceAuto.driveToObject.flipped()),
                     new SequentialCommandGroup(new TimerCommand(1.75),new SetArmPositionCommand(Constants.ArmPose.FLOOR_CONE))
                 ),
                 new FindAndCollectCone(),
-                new SmartDriveCommand(Constants.Autos.twoPeiceBalanceAuto.driveToGrid),
+                new SmartDriveCommand(redSide?Constants.Autos.twoPeiceBalanceAuto.driveToGrid:Constants.Autos.twoPeiceBalanceAuto.driveToGrid.flipped()),
                 new ParallelRaceGroup(
                         new ExpelConeCommand(),
                         new TimerCommand(0.2)
