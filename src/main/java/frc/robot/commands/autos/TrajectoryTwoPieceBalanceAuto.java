@@ -7,6 +7,8 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.Robot;
+import frc.robot.UnconstructedTrajectory;
 import frc.robot.commands.Collector.ExpelConeCommand;
 import frc.robot.commands.Collector.ExpelCubeCommand;
 import frc.robot.commands.arm.ResetArm;
@@ -15,8 +17,11 @@ import frc.robot.commands.drivebase.ResetPoseCommand;
 import frc.robot.constants.Constants;
 import pabeles.concurrency.ConcurrencyOps;
 
-public class TrajectoryTwoPieceBalanceAuto/*two peice auto*/ extends SequentialCommandGroup {
-    public TrajectoryTwoPieceBalanceAuto() {
+import static frc.robot.constants.Constants.Autos.twoPeiceBalanceAuto.*;
+
+public class TrajectoryTwoPieceBalanceAuto/*two piece auto*/ extends SequentialCommandGroup {
+    public TrajectoryTwoPieceBalanceAuto(boolean redSide) {
+
 
         super(
                 new ResetPoseCommand(Constants.Autos.twoPeiceBalanceAuto.startPose),
@@ -35,17 +40,19 @@ public class TrajectoryTwoPieceBalanceAuto/*two peice auto*/ extends SequentialC
                         new TimerCommand(1)
                 ),
                 new ParallelRaceGroup(
-                    new SmartDriveCommand(Constants.Autos.twoPeiceBalanceAuto.driveToObject),
+                    new SmartDriveCommand((redSide)?driveToObject:driveToObject.flipped()),
                     new SequentialCommandGroup(new TimerCommand(4),new SetArmPositionCommand(Constants.ArmPose.FLOOR_CONE))
                 ),
                 new FindAndCollectCone(),
-                new SmartDriveCommand(Constants.Autos.twoPeiceBalanceAuto.driveToGrid),
+                new SmartDriveCommand(
+                        (redSide)?driveToGrid:driveToGrid.flipped()
+                ),
                 new ParallelRaceGroup(
                         new ExpelConeCommand(),
                         new TimerCommand(1)
                 ),
                 new ParallelRaceGroup(
-                        new SmartDriveCommand(Constants.Autos.twoPeiceBalanceAuto.driveToBalance),
+                        new SmartDriveCommand((redSide)?driveToBalance:driveToBalance.flipped()),
                         new TimerCommand(4)
                 ),
                 new ParallelCommandGroup(

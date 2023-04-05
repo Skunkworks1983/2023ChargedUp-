@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.autos.CompAutos.*;
 import frc.robot.commands.autos.ScoreAndExitCommunityP1CommandGroup;
 import frc.robot.commands.autos.ScoreAndExitCommunityP2CommandGroup;
@@ -36,12 +37,15 @@ import frc.robot.commands.autos.CompAutos.TwoPieceBalance2Red;
 import frc.robot.commands.autos.CompAutos.TwoPieceBalance8Blue;
 import frc.robot.commands.autos.CompAutos.TwoPieceBalance8Red;
 import frc.robot.commands.drivebase.ArcadeDrive;
+import frc.robot.commands.drivebase.ResetPoseCommand;
 import frc.robot.constants.Constants;
 import frc.robot.services.Oi;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Collector;
 import frc.robot.subsystems.Drivebase;
 import frc.robot.subsystems.LimeLight;
+
+import static frc.robot.constants.Constants.Autos.twoPeiceBalanceAuto.driveToObject;
 
 
 /**
@@ -62,6 +66,8 @@ public class Robot extends TimedRobot {
     Command ScoreAndExitCommunityP2 = new ScoreAndExitCommunityP2CommandGroup();
     Command ScoreAndExitCommunityP1 = new ScoreAndExitCommunityP1CommandGroup();
     private RobotContainer robotContainer;
+
+    public enum Side{Blue,Red};
 
     private Arm arm;
 
@@ -93,7 +99,7 @@ public class Robot extends TimedRobot {
         autoChooser.addOption("TwoPiece2Red", new TwoPiece2Red());
         autoChooser.addOption("TwoPiece2Blue", new TwoPiece2Blue());
 
-        autoChooser.addOption("TrajectoryTwoPieceBalanceAuto", new TrajectoryTwoPieceBalanceAuto());
+        autoChooser.addOption("TrajectoryTwoPieceBalanceAuto", new TrajectoryTwoPieceBalanceAuto(false));
 
         SmartDashboard.putData("autoChooser", autoChooser);
 
@@ -152,7 +158,11 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousInit() {
         //Drivebase.GetDrivebase().setPose(new Pose2d(Units.feetToMeters(5.9166), Units.feetToMeters(25.125), new Rotation2d(Math.PI)));
-
+        boolean notFlipped=true;
+        new SequentialCommandGroup(
+                (notFlipped)?new ResetPoseCommand(Constants.Autos.twoPeiceBalanceAuto.startPose):new ResetPoseCommand(FlipFieldHelper.flipPose(Constants.Autos.twoPeiceBalanceAuto.startPose)),
+        new SmartDriveCommand((notFlipped)?driveToObject:driveToObject.flipped())).schedule();/*uncomment in future
+        );
         Collector.getInstance().SetSpeed(0);
         arm.SetLightMode(Constants.Lights.BLANK);
         setBrakeModeOnDisable = true;
@@ -165,7 +175,7 @@ public class Robot extends TimedRobot {
         }
         LimeLight.getInstance().setEnable(true);
         //drivebase.waitForHeadingReliable();
-        drivebase.SetBrakeMode(true);
+        drivebase.SetBrakeMode(true);*/
     }
 
 

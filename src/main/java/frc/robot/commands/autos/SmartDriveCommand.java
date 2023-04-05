@@ -71,11 +71,13 @@ public class SmartDriveCommand extends CommandBase {
                 );
             }
         }
-        SmartDashboard.putData("should be",Drivebase.GetDrivebase().getField());
+
+
+        Drivebase.GetDrivebase().getField().close();
         Drivebase.GetDrivebase().getField().getObject("traj").setTrajectory(trajectory);
+        SmartDashboard.putData("should be",Drivebase.GetDrivebase().getField());
+
         // Create config for trajectory
-        SmartDashboard.putData("should be",Drivebase.GetDrivebase().getField());
-        Drivebase.GetDrivebase().getField().getObject("traj").setTrajectory(trajectory);
 
         ramseteCommand =
                 new RamseteCommand(trajectory,

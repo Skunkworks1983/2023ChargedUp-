@@ -184,15 +184,7 @@ public Field2d getField(){
 
     }
 
-    public void runMotor(double turnSpeedLeft, double turnSpeedRight) {
-        leftMotor1.set(TalonFXControlMode.PercentOutput, turnSpeedLeft);
-        rightMotor1.set(TalonFXControlMode.PercentOutput, turnSpeedRight);
-        if (turnSpeedLeft > 0 && turnSpeedRight > 0) driveDirection = DriveDirection.FORWARD;
-        else if (turnSpeedLeft < 0 && turnSpeedRight < 0) driveDirection = DriveDirection.BACKWARD;
-        else {
-            driveDirection = DriveDirection.UNCLEAR;
-        }
-    }
+
 
     public Pose2d GetCurrentPose(){return poseEstimator.getEstimatedPosition();}
         public void SetPose(Pose2d pose){poseEstimator.resetPosition(new Rotation2d(0),0,0,pose);}
@@ -341,11 +333,25 @@ public Field2d getField(){
 
 
     public void setRightMeters(double meters){
-        rightMotor1.set(ControlMode.Velocity,meters);
+        //rightMotor1.set(ControlMode.Velocity,meters);
     }
     public void setLeftMeters(double meters){
-        leftMotor1.set(ControlMode.Velocity,meters);//actualy ticks should be fixed.
+        //leftMotor1.set(ControlMode.Velocity,meters);//actualy ticks should be fixed.
     }
+
+
+    public void runMotor(double turnSpeedLeft, double turnSpeedRight) {
+        //leftMotor1.set(TalonFXControlMode.PercentOutput, turnSpeedLeft);
+        //rightMotor1.set(TalonFXControlMode.PercentOutput, turnSpeedRight);
+        if (turnSpeedLeft > 0 && turnSpeedRight > 0) driveDirection = DriveDirection.FORWARD;
+        else if (turnSpeedLeft < 0 && turnSpeedRight < 0) driveDirection = DriveDirection.BACKWARD;
+        else {
+            driveDirection = DriveDirection.UNCLEAR;
+        }
+    }
+
+
+
     double ticksToMeters(double ticks){return ticksToFeet(ticks)/Constants.Drivebase.FEET_PER_METER;}
 
     double ticksToFeet(double ticks){
