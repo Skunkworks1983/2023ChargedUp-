@@ -24,7 +24,7 @@ public class TrajectoryTwoPieceBalanceAuto/*two peice auto*/ extends SequentialC
     public TrajectoryTwoPieceBalanceAuto(boolean redSide) {
 
         super(
-                new ResetPoseCommand(Constants.Autos.twoPeiceBalanceAuto.startPose),
+                new ResetPoseCommand(redSide?Constants.Autos.twoPeiceBalanceAuto.startPose:FlipFieldHelper.flipPose(Constants.Autos.twoPeiceBalanceAuto.startPose)),
                 /*
                 new ParallelRaceGroup(
                     new SetArmPositionCommand(Constants.ArmPose.HIGH_CUBE_AUTO),
@@ -43,7 +43,7 @@ public class TrajectoryTwoPieceBalanceAuto/*two peice auto*/ extends SequentialC
 
                  */
                 new ParallelRaceGroup(
-                    new SmartDriveCommand(Constants.Autos.twoPeiceBalanceAuto.driveToObject),
+                    new SmartDriveCommand(redSide?Constants.Autos.twoPeiceBalanceAuto.driveToObject:Constants.Autos.twoPeiceBalanceAuto.driveToObject.flipped()),
                     new SequentialCommandGroup(
                             new TimerCommand(1.75),
                             new ParallelRaceGroup(

@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.autos.CompAutos.*;
 import frc.robot.commands.autos.ScoreAndExitCommunityP1CommandGroup;
 import frc.robot.commands.autos.ScoreAndExitCommunityP2CommandGroup;
@@ -36,6 +37,7 @@ import frc.robot.commands.autos.CompAutos.TwoPieceBalance2Red;
 import frc.robot.commands.autos.CompAutos.TwoPieceBalance8Blue;
 import frc.robot.commands.autos.CompAutos.TwoPieceBalance8Red;
 import frc.robot.commands.drivebase.ArcadeDrive;
+import frc.robot.commands.drivebase.ResetPoseCommand;
 import frc.robot.constants.Constants;
 import frc.robot.services.Oi;
 import frc.robot.subsystems.Arm;
@@ -92,6 +94,7 @@ public class Robot extends TimedRobot {
         autoChooser.addOption("TwoPiece8Blue", new TwoPiece8Blue());
         autoChooser.addOption("TwoPiece2Red", new TwoPiece2Red());
         autoChooser.addOption("TwoPiece2Blue", new TwoPiece2Blue());
+        autoChooser.addOption("TrajectoryTwoPiece", new TrajectoryTwoPieceBalanceAuto(true));
 
         autoChooser.addOption("FindAndCollectCone", new FindAndCollectCone());
 
@@ -151,8 +154,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousInit() {
-new SmartDriveCommand(Constants.Autos.twoPeiceBalanceAuto.driveToGrid).schedule();
-        /*
+
         Drivebase.GetDrivebase().setPose(new Pose2d(Units.feetToMeters(5.9166), Units.feetToMeters(25.125), new Rotation2d(Math.PI)));
 
         Collector.getInstance().SetSpeed(0);
@@ -186,7 +188,7 @@ new SmartDriveCommand(Constants.Autos.twoPeiceBalanceAuto.driveToGrid).schedule(
         setBrakeModeOnDisable = true;
         drivebase.SetBrakeMode(true);
         drivebase.setDefaultCommand(new ArcadeDrive(Drivebase.GetDrivebase(), Oi.GetInstance(),LimeLight.getInstance()));
-    */
+
     }
 
 

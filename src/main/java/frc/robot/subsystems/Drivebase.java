@@ -331,16 +331,16 @@ public Field2d getField(){
 
 
     public void setRightMeters(double meters){
-        //rightMotor1.set(ControlMode.Velocity,meters);
+        rightMotor1.set(ControlMode.Velocity,meters);
     }
     public void setLeftMeters(double meters){
-        //leftMotor1.set(ControlMode.Velocity,meters);//actualy ticks should be fixed.
+        leftMotor1.set(ControlMode.Velocity,meters);//actualy ticks should be fixed.
     }
 
 
     public void runMotor(double turnSpeedLeft, double turnSpeedRight) {
-        //leftMotor1.set(TalonFXControlMode.PercentOutput, turnSpeedLeft);
-        //rightMotor1.set(TalonFXControlMode.PercentOutput, turnSpeedRight);
+        leftMotor1.set(TalonFXControlMode.PercentOutput, turnSpeedLeft);
+        rightMotor1.set(TalonFXControlMode.PercentOutput, turnSpeedRight);
         if (turnSpeedLeft > 0 && turnSpeedRight > 0) driveDirection = DriveDirection.FORWARD;
         else if (turnSpeedLeft < 0 && turnSpeedRight < 0) driveDirection = DriveDirection.BACKWARD;
         else {
