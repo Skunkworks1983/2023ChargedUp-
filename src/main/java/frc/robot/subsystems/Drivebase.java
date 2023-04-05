@@ -92,7 +92,7 @@ public class Drivebase implements Subsystem {
             Constants.Wobbles.TICKS_PER_MOTOR_REV * Constants.Drivebase.OLD_GEAR_RATIO /
                     (Constants.Drivebase.WHEEL_DIAMETER * Math.PI);
 
-    public AHRS gyro = new AHRS(I2C.Port.kOnboard);
+    private AHRS gyro = new AHRS(I2C.Port.kOnboard);
 
 
     public final TrajectoryConstraint autoVoltageConstraint= new MaxVelocityConstraint(Constants.Drivebase.kMaxSpeedMetersPerSecond);
