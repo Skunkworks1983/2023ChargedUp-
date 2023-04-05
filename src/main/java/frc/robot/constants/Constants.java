@@ -4,6 +4,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -117,20 +118,41 @@ public class Constants extends CommandBase
 
             public static Pose2d startPose = new Pose2d(Units.feetToMeters(5.9166), Units.feetToMeters(23), new Rotation2d(Math.PI));
 
+            public static TrajectoryConfig driveToObject2Config = new TrajectoryConfig(
+                    Drivebase.kMaxSpeedMetersPerSecond*.5,
+                    Drivebase.kMaxAccelerationMetersPerSecondSquared)
+                    .setKinematics(frc.robot.subsystems.Drivebase.GetDrivebase().kDriveKinematics)
+                    .addConstraint(frc.robot.subsystems.Drivebase.GetDrivebase().autoVoltageConstraint)
+                    .setReversed(true)
+                    .setStartVelocity(Drivebase.kMaxSpeedMetersPerSecond*.5);
+
+            public static TrajectoryConfig driveToObjectConfig = new TrajectoryConfig(
+                    Drivebase.kMaxSpeedMetersPerSecond,
+                    Drivebase.kMaxAccelerationMetersPerSecondSquared)
+                    .setKinematics(frc.robot.subsystems.Drivebase.GetDrivebase().kDriveKinematics)
+                    .addConstraint(frc.robot.subsystems.Drivebase.GetDrivebase().autoVoltageConstraint)
+                    .setReversed(true)
+                    .setEndVelocity(Drivebase.kMaxSpeedMetersPerSecond*.5);
 
             public static Trajectory driveToObject = TrajectoryGenerator.generateTrajectory(
                     startPose,
-                    List.of(new Translation2d(Units.feetToMeters(5.9166 + 6),Units.feetToMeters(23 + .5))),
-                    new Pose2d(Units.feetToMeters(5.9166 + 15.5), Units.feetToMeters(23 + .5), new Rotation2d(Units.degreesToRadians(183))),
-                    frc.robot.subsystems.Drivebase.GetDrivebase().reversedConfig);
+                    List.of(new Translation2d(Units.feetToMeters(5.9166 + 4),Units.feetToMeters(23 + .25))),
+                    new Pose2d(Units.feetToMeters(5.9166 + 8), Units.feetToMeters(23 + .5), new Rotation2d(Math.PI)),
+                    driveToObjectConfig);
+                    //frc.robot.subsystems.Drivebase.GetDrivebase().reversedConfig);
 
+            public static Trajectory driveToObject2 = TrajectoryGenerator.generateTrajectory(
+                    new Pose2d(Units.feetToMeters(5.9166 + 8), Units.feetToMeters(23 + .5), new Rotation2d(Math.PI)),
+                    List.of(new Translation2d(Units.feetToMeters(5.9166 + 12.25),Units.feetToMeters(23 + 1))),
+                    new Pose2d(Units.feetToMeters(5.9166 + 14.75), Units.feetToMeters(23 + 1), new Rotation2d(Units.degreesToRadians(182.5))),
+                    driveToObject2Config);
             //pickup
 
             public static UnconstructedTrajectory driveToGrid= new UnconstructedTrajectory(List.of(
-                    new Translation2d(Units.feetToMeters(5.9166 + 11.5), Units.feetToMeters(23 + .75)),
-                    new Translation2d(Units.feetToMeters(5.9166 + 6),Units.feetToMeters(23 + .75)),
-                    new Translation2d(Units.feetToMeters(5.9166 + 1.5), Units.feetToMeters(23))
-            ),new Pose2d(Units.feetToMeters(5.9166 + .5), Units.feetToMeters(254 / 12), new Rotation2d(Math.PI*3/2)),false);
+                    new Translation2d(Units.feetToMeters(5.9166 + 12.5), Units.feetToMeters(23 + 1)),
+                    new Translation2d(Units.feetToMeters(5.9166 + 7),Units.feetToMeters(23 + 1)),
+                    new Translation2d(Units.feetToMeters(5.9166 + 2.5), Units.feetToMeters(23))
+            ),new Pose2d(Units.feetToMeters(5.9166 + .25), Units.feetToMeters(254 / 12), new Rotation2d(Math.PI*3/2)),false);
             //place second peice
             public static Trajectory turnToBalance = TrajectoryGenerator.generateTrajectory(//need to do this
                     new Pose2d(Units.feetToMeters(6.33), Units.feetToMeters(23), new Rotation2d(0)), List.of(new Translation2d(Units.feetToMeters(7),Units.feetToMeters(26.6-7.33))),
@@ -158,7 +180,7 @@ public class Constants extends CommandBase
 
         public static final double AUTO_KP =.023;
 
-        public static final double AUTO_KD= .006;
+        public static final double AUTO_KD= .003;
 
         public static final double SLOW_MODE_RATIO = .225;
         public static final double GEAR_RATIO = 8.4586;
