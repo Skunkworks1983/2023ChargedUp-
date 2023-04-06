@@ -330,13 +330,13 @@ public class Constants extends CommandBase
     }
 
     public enum ArmPose {
-        FLOOR_WEIRD(-90, 220, 1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
+        FLOOR_WEIRD(-80, 220, 1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
         FLOOR_NORMAL(-128.59537049672488, 100.70434, -1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
         FLOOR_CUBE(-128.59537049672488, 115.25, -1.5, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
         FLOOR_CONE(-128.59537049672488, 112.75, -1.5, false, 20),
         HIGH_CUBE(43.57, 101, -2, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
         SUBSTATION_CUBE(43.68152, 174.73779, 1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
-        SUBSTATION_CONE(44.56579, 156.46118, 3, false,20),
+        SUBSTATION_CONE(48.56579, 156.46118, 3, false,20),
         SCORE_MID_CUBE(56.56579, 160.46118, 1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
         SCORE_MID_CONE(46.56579, 150.46118, 1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
         STOW(-128.59537049672488, 15.531, -1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),//TODO: stow is wierd
