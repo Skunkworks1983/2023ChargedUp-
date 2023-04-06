@@ -88,16 +88,16 @@ public class Robot extends TimedRobot {
         autoChooser.addOption("CubeHighAndBalance5", new CubeHighAndBalance5());
         autoChooser.addOption("CubeHighLeaveCommunity2_8", new CubeHighLeaveCommunity2_8());
         autoChooser.addOption("DoNothing", new DoNothing());
-        autoChooser.addOption("TwoPieceBalance8Red", new TwoPieceBalance8Red());
-        autoChooser.addOption("TwoPieceBalance8Blue", new TwoPieceBalance8Blue());
-        autoChooser.addOption("TwoPieceBalance2Red", new TwoPieceBalance2Red());
-        autoChooser.addOption("TwoPieceBalance2Blue", new TwoPieceBalance2Blue());
-        autoChooser.addOption("TwoPiece8Red", new TwoPiece8Red());
-        autoChooser.addOption("TwoPiece8Blue", new TwoPiece8Blue());
-        autoChooser.addOption("TwoPiece2Red", new TwoPiece2Red());
-        autoChooser.addOption("TwoPiece2Blue", new TwoPiece2Blue());
-
-        autoChooser.addOption("TrajectoryTwoPieceBalanceAuto", new TrajectoryTwoPieceBalanceAuto());
+//        autoChooser.addOption("TwoPieceBalance8Red", new TwoPieceBalance8Red());
+//        autoChooser.addOption("TwoPieceBalance8Blue", new TwoPieceBalance8Blue());
+//        autoChooser.addOption("TwoPieceBalance2Red", new TwoPieceBalance2Red());
+//        autoChooser.addOption("TwoPieceBalance2Blue", new TwoPieceBalance2Blue());
+//        autoChooser.addOption("TwoPiece8Red", new TwoPiece8Red());
+//        autoChooser.addOption("TwoPiece8Blue", new TwoPiece8Blue());
+//        autoChooser.addOption("TwoPiece2Red", new TwoPiece2Red());
+//        autoChooser.addOption("TwoPiece2Blue", new TwoPiece2Blue());
+        autoChooser.addOption("TrajectoryTwoPieceBumpRed", new TrajectoryTwoPieceBumpRed());
+        autoChooser.addOption("TrajectoryTwoPieceBumpBlue", new TrajectoryTwoPieceBumpBlue());
 
         SmartDashboard.putData("autoChooser", autoChooser);
 
