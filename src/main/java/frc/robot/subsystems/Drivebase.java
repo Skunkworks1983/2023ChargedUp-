@@ -19,6 +19,7 @@ import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalOutput;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
@@ -228,35 +229,6 @@ public Field2d getField(){
         }
     }
 
-    public void updatePoseLimelight()
-    {
-        LimeLight limelight = LimeLight.getInstance();
-        if(limelight.tv.getInteger(0) == 1)
-        {
-            double[] botpose;
-            if(isRedAlliance)
-            {
-                botpose = limelight.botpose_wpired.getDoubleArray(LimeLight.defaultpose);
-            }
-            else
-            {
-                botpose = limelight.botpose_wpiblue.getDoubleArray(LimeLight.defaultpose);
-            }
-
-            Pose2d currentPose = new Pose2d(botpose[0], botpose[1], new Rotation2d(Units.degreesToRadians(botpose[5])));
-            if(currentPose.getTranslation().getNorm() > 0.25)
-            {
-                poseEstimator.addVisionMeasurement(
-                    currentPose,
-                    Timer.getFPGATimestamp()
-                            - (limelight.tl.getDouble(0) / 1000.0)
-                            - (limelight.cl.getDouble(0) / 1000.0)
-                );
-            }
-            System.out.println("updatePoseLimelight, array: " + Arrays.toString(botpose) + " tl: " + limelight.tl.getDouble(0) + " cl: " + limelight.cl.getDouble(0));
-        }
-    }
-
 
     public Pose2d getPose() {
         return odometry.getPoseMeters();
@@ -370,7 +342,6 @@ public Field2d getField(){
         poseEstimator.update(gyro.getRotation2d(),
                 ticksToMeters((int)leftMotor1.getSelectedSensorPosition()),
                 ticksToMeters((int)rightMotor1.getSelectedSensorPosition()));
-        updatePoseLimelight();
 
         field.setRobotPose(poseEstimator.getEstimatedPosition());
         SmartDashboard.putData("field",field);
