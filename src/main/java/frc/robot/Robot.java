@@ -182,13 +182,11 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopInit()
     {
-        Drivebase.GetDrivebase().setPose(new Pose2d(Units.feetToMeters(5.9166), Units.feetToMeters(25.125), new Rotation2d(Math.PI)));
-        new ArcadeDrive(Drivebase.GetDrivebase(), Oi.GetInstance(),LimeLight.getInstance()).schedule();
         arm.SetLightMode(Constants.Lights.BLANK);
-        //drivebase.resetGyroTo(180);
-       //drivebase.setGyroStatus(false);
+        drivebase.setGyroStatus(false);
         setBrakeModeOnDisable = true;
         drivebase.SetBrakeMode(true);
+        drivebase.setDefaultCommand(new ArcadeDrive(Drivebase.GetDrivebase(), Oi.GetInstance(),LimeLight.getInstance()));
     }
 
 
