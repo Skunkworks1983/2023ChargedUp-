@@ -92,7 +92,6 @@ public class Robot extends TimedRobot {
         autoChooser.addOption("TwoPiece8Blue", new TwoPiece8Blue());
         autoChooser.addOption("TwoPiece2Red", new TwoPiece2Red());
         autoChooser.addOption("TwoPiece2Blue", new TwoPiece2Blue());
-
         autoChooser.addOption("TrajectoryTwoPieceBalanceAuto", new TrajectoryTwoPieceBalanceAuto());
 
         SmartDashboard.putData("autoChooser", autoChooser);

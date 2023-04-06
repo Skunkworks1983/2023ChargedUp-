@@ -64,17 +64,17 @@ public class TrajectoryTwoPieceBalanceAuto/*two peice auto*/ extends SequentialC
                 new ParallelRaceGroup(
                         new ExpelConeCommand(),
                         new TimerCommand(0.2)
-                ),
-                new ParallelRaceGroup(
-                        new DriveDistanceCommandGyro(Drivebase.GetDrivebase(), 5.5, Constants.Drivebase.DRIVEBASE_KF + .32)
-                        ,
-                        new TimerCommand(4)
-                )
-                ,
-                new ParallelCommandGroup(
-                        new SafeBalanceCommandGroup(),
-                        new ResetArm()
-                )
+            )//,
+//                new ParallelRaceGroup(
+//                        new DriveDistanceCommandGyro(Drivebase.GetDrivebase(), 5.5, Constants.Drivebase.DRIVEBASE_KF + .32)
+//                        ,
+//                        new TimerCommand(4)
+//                )
+//                ,
+//                new ParallelCommandGroup(
+//                        new SafeBalanceCommandGroup(),
+//                        new ResetArm()
+//                )
         );
 
     }
