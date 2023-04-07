@@ -229,11 +229,6 @@ public Field2d getField(){
         }
     }
 
-
-    public Pose2d getPose() {
-        return odometry.getPoseMeters();
-    }
-
     public void setPose(Pose2d pose){
     poseEstimator.resetPosition(
             gyro.getRotation2d(),

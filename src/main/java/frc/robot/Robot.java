@@ -40,6 +40,7 @@ import frc.robot.commands.autos.CompAutos.TwoPieceBalance2Red;
 import frc.robot.commands.autos.CompAutos.TwoPieceBalance8Blue;
 import frc.robot.commands.autos.CompAutos.TwoPieceBalance8Red;
 import frc.robot.commands.drivebase.ArcadeDrive;
+import frc.robot.commands.drivebase.TestAutoTerminateCommandGroup;
 import frc.robot.constants.Constants;
 import frc.robot.services.Oi;
 import frc.robot.subsystems.Arm;
@@ -98,7 +99,6 @@ public class Robot extends TimedRobot {
 //        autoChooser.addOption("TwoPiece2Blue", new TwoPiece2Blue());
         autoChooser.addOption("TrajectoryTwoPieceBumpRed", new TrajectoryTwoPieceBumpRed());
         autoChooser.addOption("TrajectoryTwoPieceBumpBlue", new TrajectoryTwoPieceBumpBlue());
-        autoChooser.addOption("SafeBalance", new SafeBalanceCommandGroup());
 
         SmartDashboard.putData("autoChooser", autoChooser);
 

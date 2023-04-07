@@ -141,8 +141,8 @@ public class Constants extends CommandBase
 
             public static Trajectory driveToObject2 = TrajectoryGenerator.generateTrajectory(
                     new Pose2d(Units.feetToMeters(5.9166 + 8), Units.feetToMeters(23 + .5), new Rotation2d(Math.PI)),
-                    List.of(new Translation2d(Units.feetToMeters(5.9166 + 12.25),Units.feetToMeters(23 + 1))),
-                    new Pose2d(Units.feetToMeters(5.9166 + 14.75), Units.feetToMeters(23 + 1), new Rotation2d(Units.degreesToRadians(182.5))),
+                    List.of(new Translation2d(Units.feetToMeters(5.9166 + 10.25),Units.feetToMeters(23 + 1))),
+                    new Pose2d(Units.feetToMeters(5.9166 + 12.75), Units.feetToMeters(23 + 1), new Rotation2d(Units.degreesToRadians(182.5))),
                     driveToObject2Config);
             //pickup
 
@@ -196,8 +196,8 @@ public class Constants extends CommandBase
 
             public static Trajectory driveToObject2 = TrajectoryGenerator.generateTrajectory(
                     new Pose2d(Units.feetToMeters(5.9166 + 8), Units.feetToMeters(Y_OFFSET - (23 + .5)), new Rotation2d(-Math.PI)),
-                    List.of(new Translation2d(Units.feetToMeters(5.9166 + 12.25),Units.feetToMeters(Y_OFFSET - (23 + 1)))),
-                    new Pose2d(Units.feetToMeters(5.9166 + 14.75), Units.feetToMeters(Y_OFFSET - (23 + 1)), new Rotation2d(-Units.degreesToRadians(182.5))),
+                    List.of(new Translation2d(Units.feetToMeters(5.9166 + 10.25),Units.feetToMeters(Y_OFFSET - (23 + 1)))),
+                    new Pose2d(Units.feetToMeters(5.9166 + 12.75), Units.feetToMeters(Y_OFFSET - (23 + 1)), new Rotation2d(-Units.degreesToRadians(182.5))),
                     driveToObject2Config);
             //pickup
 

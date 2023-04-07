@@ -7,7 +7,9 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.Collector.ExpelConeCommand;
 import frc.robot.commands.Collector.ExpelCubeCommand;
 import frc.robot.commands.Collector.IntakeConeSmartCommand;
+import frc.robot.commands.arm.ResetArm;
 import frc.robot.commands.arm.SetArmPositionCommand;
+import frc.robot.commands.drivebase.PoseEstimatorTerminateCommand;
 import frc.robot.commands.drivebase.ResetPoseCommand;
 import frc.robot.commands.drivebase.RotateCommand;
 import frc.robot.constants.Constants;
@@ -37,12 +39,12 @@ public class TrajectoryTwoPieceBumpBlue extends SequentialCommandGroup {
                     new SmartDriveCommand(Constants.Autos.twoPieceBumpBlue.driveToObject.concatenate(Constants.Autos.twoPieceBumpBlue.driveToObject2)),
                     new SequentialCommandGroup(
                             new TimerCommand(1.75),
-                            new ParallelRaceGroup(
-                                    new SetArmPositionCommand(Constants.ArmPose.FLOOR_CONE),
-                                    new TimerCommand(0.5)
-                            ),
-                            new IntakeConeSmartCommand()
+                            new SetArmPositionCommand(Constants.ArmPose.FLOOR_CONE)
                     )
+                ),
+                new ParallelRaceGroup(
+                        new FindAndCollectCone(),
+                        new PoseEstimatorTerminateCommand(22.1666)
                 ),
                 new ParallelCommandGroup(
                     new SmartDriveCommand(Constants.Autos.twoPieceBumpBlue.driveToGrid),
@@ -52,11 +54,12 @@ public class TrajectoryTwoPieceBumpBlue extends SequentialCommandGroup {
                         new TimerCommand(1)
                         )
                     ),
-                new RotateCommand(Drivebase.GetDrivebase(), -45),
+                new RotateCommand(Drivebase.GetDrivebase(), 60),
                 new ParallelRaceGroup(
                         new ExpelConeCommand(),
                         new TimerCommand(0.2)
-            )//,
+                ),
+                new ResetArm()
 //                new ParallelRaceGroup(
 //                        new DriveDistanceCommandGyro(Drivebase.GetDrivebase(), 5.5, Constants.Drivebase.DRIVEBASE_KF + .32)
 //                        ,

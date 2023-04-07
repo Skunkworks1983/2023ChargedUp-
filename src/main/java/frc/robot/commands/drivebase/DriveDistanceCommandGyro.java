@@ -63,7 +63,7 @@ public class DriveDistanceCommandGyro extends CommandBase
     @Override
     public void execute()
     {
-        periodicCounter = (periodicCounter + 1) % 25;
+        periodicCounter = (periodicCounter + 1) % 15;
         double headingError = startDegree - drivebase.getHeading();
         double error = finishDistanceFT - drivebase.getPosLeft();
         if(error < 0)
@@ -89,7 +89,7 @@ public class DriveDistanceCommandGyro extends CommandBase
         drivebase.runMotor(leftSpeed, rightSpeed);
         if(periodicCounter == 0)
         {
-            System.out.println("DriveDistanceGyro left speed: " + leftSpeed + " right speed: " + rightSpeed);
+            System.out.println("DriveDistance current pos: " + drivebase.getPosLeft());
         }
     }
 
