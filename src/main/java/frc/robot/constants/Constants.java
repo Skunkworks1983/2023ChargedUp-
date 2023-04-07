@@ -339,7 +339,7 @@ public class Constants extends CommandBase
         SUBSTATION_CONE(48.56579, 156.46118, 3, false,20),
         SCORE_MID_CUBE(56.56579, 160.46118, 1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
         SCORE_MID_CONE(46.56579, 150.46118, 1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
-        STOW(-128.59537049672488, 15.531, -1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),//TODO: stow is wierd
+        STOW(-127.59537049672488, 15.531, -1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),//TODO: stow is wierd
         STOW_AUTO(-128.59537049672488, 15.531, -1.15, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
         HIGH_CUBE_AUTO(41.57, 96, -1.15, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
         SINGLE_SUBSTATION_CONE(-32.59757, 281.99207, 2, false, 20);
