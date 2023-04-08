@@ -330,19 +330,19 @@ public class Constants extends CommandBase
     }
 
     public enum ArmPose {
-        FLOOR_WEIRD(-90, 220, 1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
+        FLOOR_WEIRD(-88.5, 220, 1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
         FLOOR_NORMAL(-128.59537049672488, 100.70434, -1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
         FLOOR_CUBE(-128.59537049672488, 111.25, -1.5, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
         FLOOR_CONE(-128.59537049672488, 110.25, -1.5, false, 20),
-        HIGH_CUBE(43.57, 101, -2, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
-        SUBSTATION_CUBE(43.68152, 174.73779, 1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
-        SUBSTATION_CONE(38.56579, 156.46118, 3, false,20),
-        SCORE_MID_CUBE(56.56579, 160.46118, 1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
+        HIGH_CUBE(45.07, 101, -2, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
+        SUBSTATION_CUBE(45.18152, 174.73779, 1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
+        SUBSTATION_CONE(40.06579, 156.46118, 3, false,20),
+        SCORE_MID_CUBE(58.06579, 160.46118, 1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
         SCORE_MID_CONE(45.06579, 150.46118, 1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
         STOW(-128.59537049672488, 15.531, -1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),//TODO: stow is wierd
         STOW_AUTO(-128.59537049672488, 15.531, -1.15, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
-        HIGH_CUBE_AUTO(39.57, 96, -1.15, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
-        SINGLE_SUBSTATION_CONE(-32.59757, 281.99207, 2, false, 20);
+        HIGH_CUBE_AUTO(41.07, 96, -1.15, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
+        SINGLE_SUBSTATION_CONE(-31.09757, 281.99207, 2, false, 20);
 
         public final double shoulderAngle;
         public final double wristAngle;
