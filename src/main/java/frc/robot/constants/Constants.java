@@ -141,8 +141,8 @@ public class Constants extends CommandBase
 
             public static Trajectory driveToObject2 = TrajectoryGenerator.generateTrajectory(
                     new Pose2d(Units.feetToMeters(5.9166 + 8), Units.feetToMeters(23 + .5), new Rotation2d(Math.PI)),
-                    List.of(new Translation2d(Units.feetToMeters(5.9166 + 10.25),Units.feetToMeters(23 + 1))),
-                    new Pose2d(Units.feetToMeters(5.9166 + 12.75), Units.feetToMeters(23 + 1), new Rotation2d(Units.degreesToRadians(182.5))),
+                    List.of(new Translation2d(Units.feetToMeters(5.9166 + 9.875),Units.feetToMeters(23 + .75))),
+                    new Pose2d(Units.feetToMeters(5.9166 + 11.75), Units.feetToMeters(23 + 1), new Rotation2d(Units.degreesToRadians(182.5))),
                     driveToObject2Config);
             //pickup
 
@@ -150,7 +150,7 @@ public class Constants extends CommandBase
                     new Translation2d(Units.feetToMeters(5.9166 + 12.5), Units.feetToMeters(23 + 1)),
                     new Translation2d(Units.feetToMeters(5.9166 + 7),Units.feetToMeters(23 + 1)),
                     new Translation2d(Units.feetToMeters(5.9166 + 2.5), Units.feetToMeters(23))
-            ),new Pose2d(Units.feetToMeters(5.9166 + .25), Units.feetToMeters(254 / 12), new Rotation2d(Math.PI*3/2)),false);
+            ),new Pose2d(Units.feetToMeters(5.9166 + 0.25), Units.feetToMeters(254 / 12), new Rotation2d(Math.PI*3/2)),false);
             //place second piece
             public static Trajectory turnToBalance = TrajectoryGenerator.generateTrajectory(//need to do this
                     new Pose2d(Units.feetToMeters(6.33), Units.feetToMeters(23), new Rotation2d(0)), List.of(new Translation2d(Units.feetToMeters(7),Units.feetToMeters(26.6-7.33))),
@@ -196,8 +196,8 @@ public class Constants extends CommandBase
 
             public static Trajectory driveToObject2 = TrajectoryGenerator.generateTrajectory(
                     new Pose2d(Units.feetToMeters(5.9166 + 8), Units.feetToMeters(Y_OFFSET - (23 + .5)), new Rotation2d(-Math.PI)),
-                    List.of(new Translation2d(Units.feetToMeters(5.9166 + 10.25),Units.feetToMeters(Y_OFFSET - (23 + 1)))),
-                    new Pose2d(Units.feetToMeters(5.9166 + 12.75), Units.feetToMeters(Y_OFFSET - (23 + 1)), new Rotation2d(-Units.degreesToRadians(182.5))),
+                    List.of(new Translation2d(Units.feetToMeters(5.9166 + 9.875),Units.feetToMeters(Y_OFFSET - (23 + 0.75)))),
+                    new Pose2d(Units.feetToMeters(5.9166 + 11.75), Units.feetToMeters(Y_OFFSET - (23 + 1)), new Rotation2d(-Units.degreesToRadians(182.5))),
                     driveToObject2Config);
             //pickup
 
@@ -330,18 +330,18 @@ public class Constants extends CommandBase
     }
 
     public enum ArmPose {
-        FLOOR_WEIRD(-80, 220, 1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
+        FLOOR_WEIRD(-90, 220, 1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
         FLOOR_NORMAL(-128.59537049672488, 100.70434, -1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
-        FLOOR_CUBE(-128.59537049672488, 115.25, -1.5, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
-        FLOOR_CONE(-128.59537049672488, 112.75, -1.5, false, 20),
+        FLOOR_CUBE(-128.59537049672488, 111.25, -1.5, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
+        FLOOR_CONE(-128.59537049672488, 110.25, -1.5, false, 20),
         HIGH_CUBE(43.57, 101, -2, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
         SUBSTATION_CUBE(43.68152, 174.73779, 1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
-        SUBSTATION_CONE(48.56579, 156.46118, 3, false,20),
+        SUBSTATION_CONE(38.56579, 156.46118, 3, false,20),
         SCORE_MID_CUBE(56.56579, 160.46118, 1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
-        SCORE_MID_CONE(46.56579, 150.46118, 1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
-        STOW(-127.59537049672488, 15.531, -1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),//TODO: stow is wierd
+        SCORE_MID_CONE(45.06579, 150.46118, 1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
+        STOW(-128.59537049672488, 15.531, -1, false, Collector.CONE_COLLECT_AMP_THRESHOLD),//TODO: stow is wierd
         STOW_AUTO(-128.59537049672488, 15.531, -1.15, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
-        HIGH_CUBE_AUTO(41.57, 96, -1.15, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
+        HIGH_CUBE_AUTO(39.57, 96, -1.15, false, Collector.CONE_COLLECT_AMP_THRESHOLD),
         SINGLE_SUBSTATION_CONE(-32.59757, 281.99207, 2, false, 20);
 
         public final double shoulderAngle;

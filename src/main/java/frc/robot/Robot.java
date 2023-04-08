@@ -218,7 +218,7 @@ public class Robot extends TimedRobot {
     @Override
     public void testPeriodic()
     {
-
+        System.out.println("shoulder back switch: " + arm.ShoulderMotor.getSensorCollection().isRevLimitSwitchClosed() + " wrist switch: " + arm.WristMotor.getSensorCollection().isRevLimitSwitchClosed());
     }
 
 

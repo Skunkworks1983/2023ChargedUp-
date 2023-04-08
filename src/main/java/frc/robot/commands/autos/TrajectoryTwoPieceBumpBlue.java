@@ -45,7 +45,8 @@ public class TrajectoryTwoPieceBumpBlue extends SequentialCommandGroup {
                 new ParallelRaceGroup(
                         new FindAndCollectCone(),
                         new PoseEstimatorTerminateCommand(22.1666)
-                ),
+                )
+                /*
                 new ParallelCommandGroup(
                     new SmartDriveCommand(Constants.Autos.twoPieceBumpBlue.driveToGrid),
                     new ParallelRaceGroup(
@@ -60,6 +61,8 @@ public class TrajectoryTwoPieceBumpBlue extends SequentialCommandGroup {
                         new TimerCommand(0.2)
                 ),
                 new ResetArm()
+
+                 */
 //                new ParallelRaceGroup(
 //                        new DriveDistanceCommandGyro(Drivebase.GetDrivebase(), 5.5, Constants.Drivebase.DRIVEBASE_KF + .32)
 //                        ,
