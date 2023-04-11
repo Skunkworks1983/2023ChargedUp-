@@ -3,6 +3,7 @@ package frc.robot.commands.drivebase;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.constants.Constants;
+import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drivebase;
 
 import static java.lang.Double.NaN;
@@ -102,6 +103,7 @@ public class DriveDistanceCommandGyro extends CommandBase
     @Override
     public void end(boolean interrupted)
     {
+        Arm.getInstance().SetLightMode(Constants.Lights.CUBE);
         drivebase.runMotor(0, 0);
         System.out.println("Ended at: "+drivebase.getPosLeft());
     }

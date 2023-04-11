@@ -9,7 +9,7 @@ public class SafeBalanceCommandGroup extends ParallelRaceGroup
 
     public SafeBalanceCommandGroup()
     {
-        super(new DetectRangeSensorCommand(), new BalanceOnChargeStationCommand(.023, 0.004, 0, .09));
-        //super(new DetectRangeSensorCommand(), new BalanceOnChargeStationCommand(.023, 0.017, 0, .15));
+        super(new DetectRangeSensorCommand(), new BalanceOnChargeStationCommand(.09,.023, 0.004, 0, .14,12,7));
+        //super(new DetectRangeSensorCommand(), new BalanceOnChargeStationCommand(.023, 0.017, 0, .15));//     .09,.17
     }
 }

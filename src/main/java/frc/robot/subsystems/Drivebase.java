@@ -96,7 +96,8 @@ public class Drivebase implements Subsystem {
             Constants.Wobbles.TICKS_PER_MOTOR_REV * Constants.Drivebase.OLD_GEAR_RATIO /
                     (Constants.Drivebase.WHEEL_DIAMETER * Math.PI);
 
-    public AHRS gyro = new AHRS(I2C.Port.kOnboard);
+    //public AHRS gyro = new AHRS(I2C.Port.kMXP);
+public AHRS gyro = new AHRS(I2C.Port.kOnboard);
 
     boolean isRedAlliance;
 
@@ -240,8 +241,9 @@ public Field2d getField(){
     }
 
     public double getPitch() {
+        System.out.println("rawgyrox"+gyro.getRawGyroX()+", pitch"+gyro.getPitch());
         return gyro.getPitch();
-    }
+        }
 
     public void SetBrakeMode(boolean enable) {
         if (enable) {
