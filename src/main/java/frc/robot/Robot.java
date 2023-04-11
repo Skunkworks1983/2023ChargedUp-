@@ -31,11 +31,16 @@ import frc.robot.commands.autos.CompAutos.TwoPiece2Blue;
 import frc.robot.commands.autos.CompAutos.TwoPiece2Red;
 import frc.robot.commands.autos.CompAutos.TwoPiece8Blue;
 import frc.robot.commands.autos.CompAutos.TwoPiece8Red;
+import frc.robot.commands.autos.ScoreAndExitCommunityP1CommandGroup;
+import frc.robot.commands.autos.ScoreAndExitCommunityP2CommandGroup;
+import frc.robot.commands.autos.SimpleAutoCommandGroup;
+import frc.robot.commands.drivebase.DriveToGamePieceCommand;
 import frc.robot.commands.autos.CompAutos.TwoPieceBalance2Blue;
 import frc.robot.commands.autos.CompAutos.TwoPieceBalance2Red;
 import frc.robot.commands.autos.CompAutos.TwoPieceBalance8Blue;
 import frc.robot.commands.autos.CompAutos.TwoPieceBalance8Red;
 import frc.robot.commands.drivebase.ArcadeDrive;
+import frc.robot.commands.drivebase.TestAutoTerminateCommandGroup;
 import frc.robot.constants.Constants;
 import frc.robot.services.Oi;
 import frc.robot.subsystems.Arm;
@@ -84,16 +89,16 @@ public class Robot extends TimedRobot {
         autoChooser.addOption("CubeHighAndBalance5", new CubeHighAndBalance5());
         autoChooser.addOption("CubeHighLeaveCommunity2_8", new CubeHighLeaveCommunity2_8());
         autoChooser.addOption("DoNothing", new DoNothing());
-        autoChooser.addOption("TwoPieceBalance8Red", new TwoPieceBalance8Red());
-        autoChooser.addOption("TwoPieceBalance8Blue", new TwoPieceBalance8Blue());
-        autoChooser.addOption("TwoPieceBalance2Red", new TwoPieceBalance2Red());
-        autoChooser.addOption("TwoPieceBalance2Blue", new TwoPieceBalance2Blue());
-        autoChooser.addOption("TwoPiece8Red", new TwoPiece8Red());
-        autoChooser.addOption("TwoPiece8Blue", new TwoPiece8Blue());
-        autoChooser.addOption("TwoPiece2Red", new TwoPiece2Red());
-        autoChooser.addOption("TwoPiece2Blue", new TwoPiece2Blue());
-
-        autoChooser.addOption("FindAndCollectCone", new FindAndCollectCone());
+//        autoChooser.addOption("TwoPieceBalance8Red", new TwoPieceBalance8Red());
+//        autoChooser.addOption("TwoPieceBalance8Blue", new TwoPieceBalance8Blue());
+//        autoChooser.addOption("TwoPieceBalance2Red", new TwoPieceBalance2Red());
+//        autoChooser.addOption("TwoPieceBalance2Blue", new TwoPieceBalance2Blue());
+//        autoChooser.addOption("TwoPiece8Red", new TwoPiece8Red());
+//        autoChooser.addOption("TwoPiece8Blue", new TwoPiece8Blue());
+//        autoChooser.addOption("TwoPiece2Red", new TwoPiece2Red());
+//        autoChooser.addOption("TwoPiece2Blue", new TwoPiece2Blue());
+        autoChooser.addOption("TrajectoryTwoPieceBumpRed", new TrajectoryTwoPieceBumpRed());
+        autoChooser.addOption("TrajectoryTwoPieceBumpBlue", new TrajectoryTwoPieceBumpBlue());
 
         SmartDashboard.putData("autoChooser", autoChooser);
 
@@ -103,7 +108,7 @@ public class Robot extends TimedRobot {
         robotContainer = new RobotContainer();
 
         drivebase.waitForHeadingReliable();
-
+        drivebase.resetGyro();
         SmartDashboard.putNumber("floor cube pickup", Constants.ArmPos.FLOOR_CUBE_PICKUP_WRIST);
     }
 
@@ -151,8 +156,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousInit() {
-
-        Drivebase.GetDrivebase().setPose(new Pose2d(Units.feetToMeters(5.9166), Units.feetToMeters(25.125), new Rotation2d(Math.PI)));
+        //Drivebase.GetDrivebase().setPose(new Pose2d(Units.feetToMeters(5.9166), Units.feetToMeters(25.125), new Rotation2d(Math.PI)));
 
         Collector.getInstance().SetSpeed(0);
         arm.SetLightMode(Constants.Lights.BLANK);
@@ -163,11 +167,14 @@ public class Robot extends TimedRobot {
         autonomousCommand = (Command) autoChooser.getSelected();
         if (autonomousCommand != null) {
             autonomousCommand.schedule();
+            System.out.println("ENABLING AUTO");
+        }
+        else
+        {
+            System.out.println("auto is null");
         }
         LimeLight.getInstance().setEnable(true);
-
-        drivebase.waitForHeadingReliable();
-
+        //drivebase.waitForHeadingReliable();
         drivebase.SetBrakeMode(true);
     }
 
@@ -187,9 +194,10 @@ public class Robot extends TimedRobot {
      * This method is called periodically during operator control.
      */
     @Override
-    public void teleopPeriodic() {
-
-    }
+    public void teleopPeriodic()
+{
+    SmartDashboard.putData("field" , drivebase.getField());
+}
 
 
     @Override
@@ -210,7 +218,7 @@ public class Robot extends TimedRobot {
     @Override
     public void testPeriodic()
     {
-
+        System.out.println("shoulder back switch: " + arm.ShoulderMotor.getSensorCollection().isRevLimitSwitchClosed() + " wrist switch: " + arm.WristMotor.getSensorCollection().isRevLimitSwitchClosed());
     }
 
 
