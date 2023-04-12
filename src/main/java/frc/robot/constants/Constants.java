@@ -479,5 +479,6 @@ public class Constants extends CommandBase
         public static final int TICKS_PER_MOTOR_REV = 2048;
         public static final double TICKS_PER_FOOT =
                 (TICKS_PER_MOTOR_REV * GEAR_RATIO) / (WHEEL_DIAMETER * Math.PI);
+        public static final double DISTANCE_BETWEEN_WHEELS = 14.78;
     }
 }
