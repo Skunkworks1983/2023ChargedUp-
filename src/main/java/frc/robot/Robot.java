@@ -6,6 +6,9 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -15,12 +18,35 @@ import frc.robot.commands.autos.CompAutos.*;
 import frc.robot.commands.autos.ScoreAndExitCommunityP1CommandGroup;
 import frc.robot.commands.autos.ScoreAndExitCommunityP2CommandGroup;
 import frc.robot.commands.autos.SimpleAutoCommandGroup;
-import frc.robot.commands.drivebase.RotateWithEncoderCommand;
+import frc.robot.commands.autos.*;
+import frc.robot.commands.autos.CompAutos.CubeHighAndBalance5;
+import frc.robot.commands.autos.CompAutos.CubeHighLeaveCommunity2_8;
+import frc.robot.commands.autos. CompAutos.ConeLowAndBalance4_5_6;
+import frc.robot.commands.autos.CompAutos.ConeMidLeaveCommunity1_9;
+import frc.robot.commands.autos.CompAutos.CubeMidLeaveCommunity2_8;
+import frc.robot.commands.autos.CompAutos.CubeMidAndBalance5;
+import frc.robot.commands.autos.CompAutos.ConeMidAndBalance4_6;
+import frc.robot.commands.autos.CompAutos.DoNothing;
+import frc.robot.commands.autos.CompAutos.TwoPiece2Blue;
+import frc.robot.commands.autos.CompAutos.TwoPiece2Red;
+import frc.robot.commands.autos.CompAutos.TwoPiece8Blue;
+import frc.robot.commands.autos.CompAutos.TwoPiece8Red;
+import frc.robot.commands.autos.ScoreAndExitCommunityP1CommandGroup;
+import frc.robot.commands.autos.ScoreAndExitCommunityP2CommandGroup;
+import frc.robot.commands.autos.SimpleAutoCommandGroup;
+import frc.robot.commands.drivebase.DriveToGamePieceCommand;
+import frc.robot.commands.autos.CompAutos.TwoPieceBalance2Blue;
+import frc.robot.commands.autos.CompAutos.TwoPieceBalance2Red;
+import frc.robot.commands.autos.CompAutos.TwoPieceBalance8Blue;
+import frc.robot.commands.autos.CompAutos.TwoPieceBalance8Red;
+import frc.robot.commands.drivebase.ArcadeDrive;
+import frc.robot.commands.drivebase.TestAutoTerminateCommandGroup;
 import frc.robot.constants.Constants;
 import frc.robot.services.Oi;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Collector;
 import frc.robot.subsystems.Drivebase;
+import frc.robot.subsystems.LimeLight;
 
 
 /**
@@ -55,19 +81,24 @@ public class Robot extends TimedRobot {
         arm.WristMotor.setNeutralMode(NeutralMode.Coast);
         autoChooser = new SendableChooser();
         autoChooser.addOption("ConeMidAndBalance4_6", new ConeMidAndBalance4_6());
-        autoChooser.addOption("CubeMidAndBalance5",new CubeMidAndBalance5());
-        autoChooser.addOption("ConeMidLeaveCommunity1_9",new ConeMidLeaveCommunity1_9());
-        autoChooser.addOption("CubeMidLeaveCommunity2_8",new CubeMidLeaveCommunity2_8());
-        autoChooser.addOption("ConeLowAndBalance4_5_6",new ConeLowAndBalance4_5_6());
-        autoChooser.addOption("CubeHighAndBalance5",new CubeHighAndBalance5());
-        autoChooser.addOption("CubeHighLeaveCommunity2_8",new CubeHighLeaveCommunity2_8());
+        autoChooser.addOption("CubeMidAndBalance5", new CubeMidAndBalance5());
+        autoChooser.addOption("ConeMidLeaveCommunity1_9", new ConeMidLeaveCommunity1_9());
+        autoChooser.addOption("CubeMidLeaveCommunity2_8", new CubeMidLeaveCommunity2_8());
+        autoChooser.addOption("ConeLowAndBalance4_5_6", new ConeLowAndBalance4_5_6());
+        autoChooser.addOption("CubeHighAndBalance5", new CubeHighAndBalance5());
+        autoChooser.addOption("CubeHighLeaveCommunity2_8", new CubeHighLeaveCommunity2_8());
+        autoChooser.addOption("DoNothing", new DoNothing());
+//        autoChooser.addOption("TwoPieceBalance8Red", new TwoPieceBalance8Red());
+//        autoChooser.addOption("TwoPieceBalance8Blue", new TwoPieceBalance8Blue());
+//        autoChooser.addOption("TwoPieceBalance2Red", new TwoPieceBalance2Red());
+//        autoChooser.addOption("TwoPieceBalance2Blue", new TwoPieceBalance2Blue());
+//        autoChooser.addOption("TwoPiece8Red", new TwoPiece8Red());
+//        autoChooser.addOption("TwoPiece8Blue", new TwoPiece8Blue());
+//        autoChooser.addOption("TwoPiece2Red", new TwoPiece2Red());
+//        autoChooser.addOption("TwoPiece2Blue", new TwoPiece2Blue());
+        autoChooser.addOption("TrajectoryTwoPieceBumpRed", new TrajectoryTwoPieceBumpRed());
+        autoChooser.addOption("TrajectoryTwoPieceBumpBlue", new TrajectoryTwoPieceBumpBlue());
 
-
-        autoChooser.addOption("rotate with encoders 90 degrees", new RotateWithEncoderCommand(Drivebase.GetDrivebase(), 90));
-
-
-        //autoChooser.addOption("oneBallAutosHigh", new OneBallAutosHighCommandGroup());
-        // autoChooser.addOption("oneBallAutosLow", new OneBallAutosLowCommandGroup());
         SmartDashboard.putData("autoChooser", autoChooser);
 
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
@@ -76,7 +107,7 @@ public class Robot extends TimedRobot {
         robotContainer = new RobotContainer();
 
         drivebase.waitForHeadingReliable();
-
+        drivebase.resetGyro();
         SmartDashboard.putNumber("floor cube pickup", Constants.ArmPos.FLOOR_CUBE_PICKUP_WRIST);
     }
 
@@ -124,28 +155,25 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousInit() {
-//        arm.SetLightMode(Constants.Lights.BLANK);
-//        setBrakeModeOnDisable = true;
-//        arm.WristMotor.setNeutralMode(NeutralMode.Brake);
+        //Drivebase.GetDrivebase().setPose(new Pose2d(Units.feetToMeters(5.9166), Units.feetToMeters(25.125), new Rotation2d(Math.PI)));
+
+        Collector.getInstance().SetSpeed(0);
+        arm.SetLightMode(Constants.Lights.BLANK);
+        setBrakeModeOnDisable = true;
+        arm.WristMotor.setNeutralMode(NeutralMode.Brake);//auto volocit kp /kd
         CommandScheduler.getInstance().cancelAll();
-
-        RotateWithEncoderCommand rotate = new RotateWithEncoderCommand(Drivebase.GetDrivebase(), 90);
-        rotate.schedule();
-//        SendableChooser autoChooser = (SendableChooser) SmartDashboard.getData("autoChooser");
-//        autonomousCommand = (Command) autoChooser.getSelected();
-//        if (autonomousCommand != null) {
-//            autonomousCommand.schedule();
-//        }
-        // autoChooser.addOption();
-
-        //  SendableChooser autoChooser = (SendableChooser) SmartDashboard.getData("autoChooser");
-        //   DriveOnChargeStationAndBalanceP2.schedule();
-        //   SimpleAuto.schedule();
-        //   ScoreAndExitCommunityP2.schedule();
-        //   ScoreAndExitCommunityP1.schedule();
-
-        drivebase.waitForHeadingReliable();
-
+        SendableChooser autoChooser = (SendableChooser) SmartDashboard.getData("autoChooser");
+        autonomousCommand = (Command) autoChooser.getSelected();
+        if (autonomousCommand != null) {
+            autonomousCommand.schedule();
+            System.out.println("ENABLING AUTO");
+        }
+        else
+        {
+            System.out.println("auto is null");
+        }
+        LimeLight.getInstance().setEnable(true);
+        //drivebase.waitForHeadingReliable();
         drivebase.SetBrakeMode(true);
     }
 
@@ -156,6 +184,7 @@ public class Robot extends TimedRobot {
         drivebase.setGyroStatus(false);
         setBrakeModeOnDisable = true;
         drivebase.SetBrakeMode(true);
+        drivebase.setDefaultCommand(new ArcadeDrive(Drivebase.GetDrivebase(), Oi.GetInstance(),LimeLight.getInstance()));
     }
 
 
@@ -163,8 +192,10 @@ public class Robot extends TimedRobot {
      * This method is called periodically during operator control.
      */
     @Override
-    public void teleopPeriodic() {
-    }
+    public void teleopPeriodic()
+{
+    SmartDashboard.putData("field" , drivebase.getField());
+}
 
 
     @Override
@@ -183,7 +214,9 @@ public class Robot extends TimedRobot {
      * This method is called periodically during test mode.
      */
     @Override
-    public void testPeriodic() {
+    public void testPeriodic()
+    {
+        System.out.println("shoulder back switch: " + arm.ShoulderMotor.getSensorCollection().isRevLimitSwitchClosed() + " wrist switch: " + arm.WristMotor.getSensorCollection().isRevLimitSwitchClosed());
     }
 
 

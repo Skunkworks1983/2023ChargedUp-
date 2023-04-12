@@ -1,35 +1,32 @@
-package frc.robot.commands.autos;
+package frc.robot.commands.Collector;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.Collector;
 
 
-public class TimerCommand extends CommandBase {
-    double seconds;
-    Timer timer = new Timer();
+public class SetHoldModeCommand extends CommandBase {
+    private Collector collectorInstance = Collector.getInstance();
 
-    public TimerCommand(double seconds) {
-        this.seconds = seconds;
+    public SetHoldModeCommand() {
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
-        addRequirements();
+        addRequirements(collectorInstance);
     }
 
     @Override
     public void initialize() {
-        timer.reset();
-        timer.start();
+        collectorInstance.SetSpeed(0,true);
     }
 
     @Override
     public void execute() {
+
     }
 
     @Override
     public boolean isFinished() {
         // TODO: Make this return true when this Command no longer needs to run execute()
-
-        return timer.get() >= seconds;
+        return true;
     }
 
     @Override
