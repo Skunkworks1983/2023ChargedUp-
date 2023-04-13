@@ -12,6 +12,7 @@ import frc.robot.commands.autos.TimerCommand;
 import frc.robot.commands.drivebase.DriveDistanceCommand;
 import frc.robot.commands.drivebase.DriveDistanceCommandGyro;
 import frc.robot.commands.drivebase.RotateCommand;
+import frc.robot.commands.drivebase.ThreePartBalanceCommand;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drivebase;
@@ -25,8 +26,8 @@ public class CubeMidAndBalance5 extends SequentialCommandGroup {
                 new RotateCommand(Drivebase.GetDrivebase(), 180),
                 new DriveDistanceCommandGyro(Drivebase.GetDrivebase(), 11, Constants.Drivebase.DRIVEBASE_KF + .1),
                 new RotateCommand(Drivebase.GetDrivebase(), 180),
-                new DriveDistanceCommandGyro(Drivebase.GetDrivebase(), 6.5, Constants.Drivebase.DRIVEBASE_KF + .15),
-                new ParallelCommandGroup(new SafeBalanceCommandGroup(), new ResetArm())
+                //new DriveDistanceCommandGyro(Drivebase.GetDrivebase(), 6.5, Constants.Drivebase.DRIVEBASE_KF + .15),
+                new ParallelCommandGroup(new ThreePartBalanceCommand(), new ResetArm())
         );
     }
 }

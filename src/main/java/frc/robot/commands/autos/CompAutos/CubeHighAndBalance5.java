@@ -27,9 +27,10 @@ public class CubeHighAndBalance5 extends SequentialCommandGroup {
               new RotateCommand(Drivebase.GetDrivebase(), 180),
               new DriveDistanceCommandGyro(Drivebase.GetDrivebase(), 8.8, Constants.Drivebase.DRIVEBASE_KF + .22),
               new RotateCommand(Drivebase.GetDrivebase(), 180),
-                new ThreePartBalanceCommand()
+                new ParallelCommandGroup(new ResetArm(),
+                        new ThreePartBalanceCommand())
               //new DriveDistanceCommandGyro(Drivebase.GetDrivebase(), 4.5, Constants.Drivebase.DRIVEBASE_KF + .15),
-              //new ParallelCommandGroup(new SafeBalanceCommandGroup(), new ResetArm())
+              //
              );
     }
 }
