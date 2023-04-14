@@ -43,7 +43,6 @@ public class RotateCommand extends CommandBase {
 
     @Override
     public void execute() {
-        System.out.print("err: " + (finishDegree - drivebase.getHeading()));
         double speed = 0;
         speed = pidController.calculate(drivebase.getHeading(), finishDegree);
         if (speed > 0.5) {

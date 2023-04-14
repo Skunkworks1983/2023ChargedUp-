@@ -252,10 +252,6 @@ public class Drivebase implements Subsystem {
         return gyro.getPitch();
     }
 
-    public boolean isCalibrating() {
-        return gyro.isCalibrating();
-    }
-
 
     public double getTicksLeft() {
         return leftMotor1.getSelectedSensorPosition();
@@ -280,14 +276,6 @@ public class Drivebase implements Subsystem {
             leftMotor2.setNeutralMode(NeutralMode.Coast);
             rightMotor2.setNeutralMode(NeutralMode.Coast);
         }
-    }
-
-    public double getSpeedLeft() {
-        return leftMotor1.getSelectedSensorVelocity();
-    }
-
-    public double getSpeedRight() {
-        return (-rightMotor1.getSelectedSensorVelocity());
     }
 
     public void waitForHeadingReliable() {
