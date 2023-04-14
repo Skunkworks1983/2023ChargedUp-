@@ -15,13 +15,7 @@ import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.constraint.MaxVelocityConstraint;
 import edu.wpi.first.math.trajectory.constraint.TrajectoryConstraint;
-import edu.wpi.first.util.sendable.Sendable;
-import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.DigitalOutput;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -30,8 +24,6 @@ import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.commands.drivebase.ArcadeDrive;
 import frc.robot.constants.Constants;
 import frc.robot.services.Oi;
-
-import java.util.Arrays;
 
 import static java.lang.Double.NaN;
 
@@ -82,7 +74,7 @@ public class Drivebase implements Subsystem {
 
     private SimpleMotorFeedforward feedforward;
 
-    int i=0;
+    int i = 0;
 
     DifferentialDriveKinematics kinematics;
 
@@ -100,7 +92,7 @@ public class Drivebase implements Subsystem {
 
     boolean isRedAlliance;
 
-    public final TrajectoryConstraint autoVoltageConstraint= new MaxVelocityConstraint(Constants.Drivebase.kMaxSpeedMetersPerSecond);
+    public final TrajectoryConstraint autoVoltageConstraint = new MaxVelocityConstraint(Constants.Drivebase.kMaxSpeedMetersPerSecond);
     public DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(Constants.Drivebase.kTrackwidthMeters);
 
     private Timer timer = new Timer();
@@ -122,16 +114,16 @@ public class Drivebase implements Subsystem {
                     // Apply the voltage constraint
                     .addConstraint(autoVoltageConstraint).setReversed(true);
 
-private final Field2d field= new Field2d();
-public Field2d getField(){
-    return field;
-}
+    private final Field2d field = new Field2d();
+
+    public Field2d getField() {
+        return field;
+    }
 
 //private final edu.wpi.first.wpilibj.smartdashboard.FieldObject2d
 
-    private Drivebase()
-    {
-        SmartDashboard.putData("field",field);
+    private Drivebase() {
+        SmartDashboard.putData("field", field);
         //setDefaultCommand(ArcadeDrive);
         gyro.calibrate();
         isHeadingReliable = false;
@@ -145,39 +137,39 @@ public Field2d getField(){
         rightMotor1.setSelectedSensorPosition(0);
         leftMotor1.setSelectedSensorPosition(0);
 
-        leftMotor1.config_kP(0,Constants.Drivebase.AUTO_KP);
-        leftMotor2.config_kP(0,Constants.Drivebase.AUTO_KP);
+        leftMotor1.config_kP(0, Constants.Drivebase.AUTO_KP);
+        leftMotor2.config_kP(0, Constants.Drivebase.AUTO_KP);
 
-        rightMotor1.config_kP(0,Constants.Drivebase.AUTO_KP);
-        rightMotor2.config_kP(0,Constants.Drivebase.AUTO_KP);
-        leftMotor1.config_kD(0,Constants.Drivebase.AUTO_KD);
-        leftMotor2.config_kD(0,Constants.Drivebase.AUTO_KD);
+        rightMotor1.config_kP(0, Constants.Drivebase.AUTO_KP);
+        rightMotor2.config_kP(0, Constants.Drivebase.AUTO_KP);
+        leftMotor1.config_kD(0, Constants.Drivebase.AUTO_KD);
+        leftMotor2.config_kD(0, Constants.Drivebase.AUTO_KD);
 
-        rightMotor1.config_kD(0,Constants.Drivebase.AUTO_KD);
-        rightMotor2.config_kD(0,Constants.Drivebase.AUTO_KD);
+        rightMotor1.config_kD(0, Constants.Drivebase.AUTO_KD);
+        rightMotor2.config_kD(0, Constants.Drivebase.AUTO_KD);
 
-        leftMotor1.configOpenloopRamp(0,0);
+        leftMotor1.configOpenloopRamp(0, 0);
 
-        rightMotor1.configOpenloopRamp(0,0);
+        rightMotor1.configOpenloopRamp(0, 0);
 
-        leftMotor2.configOpenloopRamp(0,0);
+        leftMotor2.configOpenloopRamp(0, 0);
 
-        rightMotor2.configOpenloopRamp(0,0);
+        rightMotor2.configOpenloopRamp(0, 0);
 
-        leftMotor1.config_kF(0,0);
+        leftMotor1.config_kF(0, 0);
 
-        rightMotor1.config_kF(0,0);
+        rightMotor1.config_kF(0, 0);
 
-        leftMotor2.config_kF(0,0);
+        leftMotor2.config_kF(0, 0);
 
-        rightMotor2.config_kF(0,0);
+        rightMotor2.config_kF(0, 0);
 
         rightMotor1.setSelectedSensorPosition(0);
         leftMotor1.setSelectedSensorPosition(0);
 
         kinematics = new DifferentialDriveKinematics(Constants.Drivebase.kTrackwidthMeters);
         ramseteController = new RamseteController();
-        ramseteController.setTolerance(new Pose2d(.05,.05,new Rotation2d(Math.PI/20)));
+        ramseteController.setTolerance(new Pose2d(.05, .05, new Rotation2d(Math.PI / 20)));
         odometry =
                 new DifferentialDriveOdometry(
                         gyro.getRotation2d(), leftMotor1.getSelectedSensorPosition(), rightMotor1.getSelectedSensorPosition());
@@ -187,11 +179,19 @@ public Field2d getField(){
                 gyro.getRotation2d(),
                 ticksToMeters(leftMotor1.getSelectedSensorPosition()),
                 ticksToMeters(rightMotor1.getSelectedSensorPosition()),
-                new Pose2d(0,0,new Rotation2d(0))
+                new Pose2d(0, 0, new Rotation2d(0))
         );
+
+        leftMotor1.config_kP(1, Constants.Drivebase.ENCODER_ROTATE_KP);
+        rightMotor1.config_kP(1, Constants.Drivebase.ENCODER_ROTATE_KP);
+
+        leftMotor1.config_kI(1, Constants.Drivebase.ENCODER_ROTATE_KI);
+        rightMotor1.config_kI(1, Constants.Drivebase.ENCODER_ROTATE_KI);
+
+        leftMotor1.configClosedLoopPeakOutput(1, 0.25);
+        rightMotor1.configClosedLoopPeakOutput(1, 0.25);
+
         CommandScheduler.getInstance().registerSubsystem(this);
-
-
     }
 
     public void runMotor(double turnSpeedLeft, double turnSpeedRight) {
@@ -204,7 +204,17 @@ public Field2d getField(){
         }
     }
 
-    public Pose2d GetCurrentPose(){return poseEstimator.getEstimatedPosition();}
+    public void setPosition(double leftPos, double rightPos) {
+        leftMotor1.selectProfileSlot(1, 0);
+        rightMotor1.selectProfileSlot(1, 0);
+
+        leftMotor1.set(TalonFXControlMode.Position, leftPos);
+        rightMotor1.set(TalonFXControlMode.Position, rightPos);
+    }
+
+    public Pose2d GetCurrentPose() {
+        return poseEstimator.getEstimatedPosition();
+    }
 
     public double getPosLeft() {
         return leftMotor1.getSelectedSensorPosition() / TicksPerFoot;
@@ -228,14 +238,14 @@ public Field2d getField(){
         }
     }
 
-    public void setPose(Pose2d pose){
-    poseEstimator.resetPosition(
-            gyro.getRotation2d(),
-            ticksToMeters((int)leftMotor1.getSelectedSensorPosition()),
-            ticksToMeters((int)rightMotor1.getSelectedSensorPosition()),
-            pose
-                               );
-    //leftPositonMeters and rightPositionMeters posibly should not be 0. Not sure.
+    public void setPose(Pose2d pose) {
+        poseEstimator.resetPosition(
+                gyro.getRotation2d(),
+                ticksToMeters((int) leftMotor1.getSelectedSensorPosition()),
+                ticksToMeters((int) rightMotor1.getSelectedSensorPosition()),
+                pose
+        );
+        //leftPositonMeters and rightPositionMeters posibly should not be 0. Not sure.
     }
 
     public double getPitch() {
@@ -322,7 +332,6 @@ public Field2d getField(){
     }
 
 
-
     public void setBackRangeSensor(boolean value) {
         backRangeSensorTrigger.set(value);
     }
@@ -341,11 +350,11 @@ public Field2d getField(){
 
     }
 
-    public void resetGyro()
-    {
+    public void resetGyro() {
         gyro.reset();
     }
-    public void resetGyroTo(double angle){
+
+    public void resetGyroTo(double angle) {
         gyro.reset();
         gyro.setAngleAdjustment(angle);
     }
@@ -355,38 +364,47 @@ public Field2d getField(){
         // Update the odometry in the periodic block
         //updateOdometry();//update odometry is just backup
         poseEstimator.update(gyro.getRotation2d(),
-                ticksToMeters((int)leftMotor1.getSelectedSensorPosition()),
-                ticksToMeters((int)rightMotor1.getSelectedSensorPosition()));
+                ticksToMeters((int) leftMotor1.getSelectedSensorPosition()),
+                ticksToMeters((int) rightMotor1.getSelectedSensorPosition()));
 
         field.setRobotPose(poseEstimator.getEstimatedPosition());
-        SmartDashboard.putData("field",field);
+        SmartDashboard.putData("field", field);
 
 //TODO: if we have an april tag in view, call addVisionMeasurement();
 
     }
 
-    public void setRightMeters(double meters){
-        rightMotor1.set(ControlMode.Velocity,meters);
+    public void setRightMeters(double meters) {
+        rightMotor1.selectProfileSlot(0, 0);
+        rightMotor1.set(ControlMode.Velocity, meters);
     }
-    public void setLeftMeters(double meters){
-        leftMotor1.set(ControlMode.Velocity,meters);//actualy ticks should be fixed.
+
+    public void setLeftMeters(double meters) {
+        leftMotor1.selectProfileSlot(0, 0);
+        leftMotor1.set(ControlMode.Velocity, meters);//actualy ticks should be fixed.
     }
-    double ticksToMeters(double ticks){return ticksToFeet(ticks)/Constants.Drivebase.FEET_PER_METER;}
 
-    double ticksToFeet(double ticks){
+    double ticksToMeters(double ticks) {
+        return ticksToFeet(ticks) / Constants.Drivebase.FEET_PER_METER;
+    }
 
-        return ticks/Constants.Drivebase.TICKS_PER_ROTATION
-                /Constants.Drivebase.GEAR_RATIO*Constants.Drivebase.WHEEL_DIAMETER*Math.PI;
+    double ticksToFeet(double ticks) {
+
+        return ticks / Constants.Drivebase.TICKS_PER_ROTATION
+                / Constants.Drivebase.GEAR_RATIO * Constants.Drivebase.WHEEL_DIAMETER * Math.PI;
 
     }
-    double feetToTicks(double feet){
+
+    double feetToTicks(double feet) {
 
         //ticks to feet ticks/ticks_per_rotation*gearratio*wheeldiamater=feet
-        return feet*Constants.Drivebase.TICKS_PER_ROTATION
-                *Constants.Drivebase.GEAR_RATIO/Constants.Drivebase.WHEEL_DIAMETER/Math.PI;
+        return feet * Constants.Drivebase.TICKS_PER_ROTATION
+                * Constants.Drivebase.GEAR_RATIO / Constants.Drivebase.WHEEL_DIAMETER / Math.PI;
 
     }
 
-    public double metersToTicks(double meters){return feetToTicks(meters)*Constants.Drivebase.FEET_PER_METER;}
+    public double metersToTicks(double meters) {
+        return feetToTicks(meters) * Constants.Drivebase.FEET_PER_METER;
+    }
 
 }

@@ -286,6 +286,13 @@ public class Constants extends CommandBase
         public static final double LIMELIGHT_CAMERA_PIXEL_HEIGHT = 240;
         public static final int ROLLING_AVERAGE_LENGTH = 15;
 
+        public static final double ENCODER_ROTATE_KP = 0.62;
+        public static final double ENCODER_ROTATE_KI = 0.0001;
+
+        public static final double ENCODER_ROTATE_INPUT_MULTIPLIER = 1.1;
+
+        public static final double ROTATE_TOLERANCE = 150;
+
     }
 
     public class Arm {
@@ -479,6 +486,6 @@ public class Constants extends CommandBase
         public static final int TICKS_PER_MOTOR_REV = 2048;
         public static final double TICKS_PER_FOOT =
                 (TICKS_PER_MOTOR_REV * GEAR_RATIO) / (WHEEL_DIAMETER * Math.PI);
-        public static final double DISTANCE_BETWEEN_WHEELS = 14.78;
+        public static final double DISTANCE_BETWEEN_WHEELS = 15;//14.78;
     }
 }

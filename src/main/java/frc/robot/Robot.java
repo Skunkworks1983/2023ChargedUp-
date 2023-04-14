@@ -73,7 +73,7 @@ public class Robot extends TimedRobot {
         autoChooser.addOption("TrajectoryTwoPieceBumpRed", new TrajectoryTwoPieceBumpRed());
         autoChooser.addOption("TrajectoryTwoPieceBumpBlue", new TrajectoryTwoPieceBumpBlue());
 
-        autoChooser.addOption("RotateWithEncoder", new RotateWithEncoderCommand(90));
+        autoChooser.addOption("RotateWithEncoder", new RotateWithEncoderCommand(180));
 
         SmartDashboard.putData("autoChooser", autoChooser);
 
