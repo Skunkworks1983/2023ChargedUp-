@@ -1,8 +1,8 @@
 package frc.robot.commands.autos;
 
 //import com.ctre.phoenix.motorcontrol.can.SlotConfiguration;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.commands.drivebase.DetectRangeSensorCommand;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Drivebase;
 

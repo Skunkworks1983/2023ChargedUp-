@@ -223,7 +223,7 @@ public class Drivebase implements Subsystem {
     public double getPosRight() {
         return -(rightMotor1.getSelectedSensorPosition() / TicksPerFoot);
     }
-
+    //public AHRS gyro = new AHRS(I2C.Port.kMXP);
 
     public double getHeading() {
 
@@ -393,6 +393,14 @@ public class Drivebase implements Subsystem {
 
     public double metersToTicks(double meters) {
         return feetToTicks(meters) * Constants.Drivebase.FEET_PER_METER;
+    }
+
+    public double getLeftError() {
+        return leftMotor1.getClosedLoopError();
+    }
+
+    public double getRightError() {
+        return rightMotor1.getClosedLoopError();
     }
 
 }
