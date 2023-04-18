@@ -6,41 +6,15 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.autos.CompAutos.*;
-import frc.robot.commands.autos.ScoreAndExitCommunityP1CommandGroup;
-import frc.robot.commands.autos.ScoreAndExitCommunityP2CommandGroup;
-import frc.robot.commands.autos.SimpleAutoCommandGroup;
 import frc.robot.commands.autos.*;
-import frc.robot.commands.autos.CompAutos.CubeHighAndBalance5;
-import frc.robot.commands.autos.CompAutos.CubeHighLeaveCommunity2_8;
-import frc.robot.commands.autos. CompAutos.ConeLowAndBalance4_5_6;
-import frc.robot.commands.autos.CompAutos.ConeMidLeaveCommunity1_9;
-import frc.robot.commands.autos.CompAutos.CubeMidLeaveCommunity2_8;
-import frc.robot.commands.autos.CompAutos.CubeMidAndBalance5;
-import frc.robot.commands.autos.CompAutos.ConeMidAndBalance4_6;
-import frc.robot.commands.autos.CompAutos.DoNothing;
-import frc.robot.commands.autos.CompAutos.TwoPiece2Blue;
-import frc.robot.commands.autos.CompAutos.TwoPiece2Red;
-import frc.robot.commands.autos.CompAutos.TwoPiece8Blue;
-import frc.robot.commands.autos.CompAutos.TwoPiece8Red;
-import frc.robot.commands.autos.ScoreAndExitCommunityP1CommandGroup;
-import frc.robot.commands.autos.ScoreAndExitCommunityP2CommandGroup;
-import frc.robot.commands.autos.SimpleAutoCommandGroup;
-import frc.robot.commands.drivebase.DriveToGamePieceCommand;
-import frc.robot.commands.autos.CompAutos.TwoPieceBalance2Blue;
-import frc.robot.commands.autos.CompAutos.TwoPieceBalance2Red;
-import frc.robot.commands.autos.CompAutos.TwoPieceBalance8Blue;
-import frc.robot.commands.autos.CompAutos.TwoPieceBalance8Red;
 import frc.robot.commands.drivebase.ArcadeDrive;
-import frc.robot.commands.drivebase.TestAutoTerminateCommandGroup;
+import frc.robot.commands.drivebase.RotateWithEncoderCommand;
 import frc.robot.constants.Constants;
 import frc.robot.services.Oi;
 import frc.robot.subsystems.Arm;
@@ -71,7 +45,6 @@ public class Robot extends TimedRobot {
     private Arm arm;
 
 
-
     /**
      * This method is run when the robot is first started up and should be used for any
      * initialization code.
@@ -99,6 +72,8 @@ public class Robot extends TimedRobot {
 //        autoChooser.addOption("TwoPiece2Blue", new TwoPiece2Blue());
         autoChooser.addOption("TrajectoryTwoPieceBumpRed", new TrajectoryTwoPieceBumpRed());
         autoChooser.addOption("TrajectoryTwoPieceBumpBlue", new TrajectoryTwoPieceBumpBlue());
+
+        autoChooser.addOption("RotateWithEncoder", new RotateWithEncoderCommand(180));
 
         SmartDashboard.putData("autoChooser", autoChooser);
 
@@ -162,6 +137,7 @@ public class Robot extends TimedRobot {
         arm.SetLightMode(Constants.Lights.BLANK);
         setBrakeModeOnDisable = true;
         arm.WristMotor.setNeutralMode(NeutralMode.Brake);//auto volocit kp /kd
+
         CommandScheduler.getInstance().cancelAll();
         SendableChooser autoChooser = (SendableChooser) SmartDashboard.getData("autoChooser");
         autonomousCommand = (Command) autoChooser.getSelected();
@@ -180,8 +156,7 @@ public class Robot extends TimedRobot {
 
 
     @Override
-    public void teleopInit()
-    {
+    public void teleopInit() {
         arm.SetLightMode(Constants.Lights.BLANK);
         drivebase.setGyroStatus(false);
         setBrakeModeOnDisable = true;
