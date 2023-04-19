@@ -241,7 +241,6 @@ public Field2d getField(){
     }
 
     public double getPitch() {
-        System.out.println("rawgyrox"+gyro.getRawGyroX()+", pitch"+gyro.getPitch());
         return gyro.getPitch();
         }
 

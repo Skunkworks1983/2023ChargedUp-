@@ -82,7 +82,6 @@ public class Robot extends TimedRobot {
         arm.WristMotor.setNeutralMode(NeutralMode.Coast);
         autoChooser = new SendableChooser();
         autoChooser.addOption("ConeMidAndBalance4_6", new ConeMidAndBalance4_6());
-        autoChooser.addOption("CubeMidAndBalance5", new CubeMidAndBalance5());
         autoChooser.addOption("ConeMidLeaveCommunity1_9", new ConeMidLeaveCommunity1_9());
         autoChooser.addOption("CubeMidLeaveCommunity2_8", new CubeMidLeaveCommunity2_8());
         autoChooser.addOption("ConeLowAndBalance4_5_6", new ConeLowAndBalance4_5_6());
