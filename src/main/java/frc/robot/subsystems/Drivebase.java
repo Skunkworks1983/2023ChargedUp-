@@ -403,4 +403,12 @@ public class Drivebase implements Subsystem {
         return rightMotor1.getClosedLoopError();
     }
 
+    public boolean gyroCalibrating() {
+        return gyro.isCalibrating();
+    }
+
+    public boolean gyroConnected() {
+        return gyro.isConnected();
+    }
+
 }

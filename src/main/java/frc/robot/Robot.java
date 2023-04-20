@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.autos.CompAutos.*;
 import frc.robot.commands.autos.*;
 import frc.robot.commands.drivebase.ArcadeDrive;
-import frc.robot.commands.drivebase.RotateWithEncoderCommand;
+import frc.robot.commands.drivebase.RotateCommand;
 import frc.robot.constants.Constants;
 import frc.robot.services.Oi;
 import frc.robot.subsystems.Arm;
@@ -73,7 +73,7 @@ public class Robot extends TimedRobot {
         autoChooser.addOption("TrajectoryTwoPieceBumpRed", new TrajectoryTwoPieceBumpRed());
         autoChooser.addOption("TrajectoryTwoPieceBumpBlue", new TrajectoryTwoPieceBumpBlue());
 
-        autoChooser.addOption("RotateWithEncoder", new RotateWithEncoderCommand(180));
+        autoChooser.addOption("Rotate180", new RotateCommand(drivebase, 180));
 
         SmartDashboard.putData("autoChooser", autoChooser);
 
