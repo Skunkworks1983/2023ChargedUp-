@@ -1,5 +1,6 @@
 package frc.robot.commands.drivebase;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Drivebase;
@@ -46,7 +47,8 @@ public class RotateWithEncoderCommand extends CommandBase {
 
     @Override
     public void execute() {
-
+        SmartDashboard.putNumber("left motor encoder", drivebase.getLeftError());
+        SmartDashboard.putNumber("right motor encoder", drivebase.getRightError());
     }
 
     @Override

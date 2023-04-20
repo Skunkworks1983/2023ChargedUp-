@@ -289,7 +289,7 @@ public class Constants extends CommandBase
         public static final double ENCODER_ROTATE_KP = 0.62;
         public static final double ENCODER_ROTATE_KI = 0;//0.0001;
 
-        public static final double ENCODER_ROTATE_INPUT_MULTIPLIER = 1.1;
+        public static final double ENCODER_ROTATE_INPUT_MULTIPLIER = 1.073;
 
         public static final double ROTATE_TOLERANCE = 450;
 
