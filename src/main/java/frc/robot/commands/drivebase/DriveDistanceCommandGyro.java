@@ -97,7 +97,7 @@ public class DriveDistanceCommandGyro extends CommandBase
     @Override
     public boolean isFinished()
     {
-        return Math.abs(drivebase.getPosLeft() - finishDistanceFT) < 0.1;
+        return Math.abs((drivebase.getPosLeft()) - finishDistanceFT) < 0.1;
     }
 
     @Override

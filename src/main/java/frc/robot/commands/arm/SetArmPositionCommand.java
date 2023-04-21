@@ -61,7 +61,6 @@ public class SetArmPositionCommand extends CommandBase
             weirdAngle = false;
             System.out.println("weird/single substation angle is no longer true, arm running");
         }
-        System.out.println("error: " + arm.ShoulderMotor.getClosedLoopError() * Constants.Arm.SHOULDER_TICKS_TO_DEGREES);
     }
 
     @Override

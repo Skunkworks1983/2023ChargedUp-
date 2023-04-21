@@ -45,7 +45,8 @@ public class TrajectoryTwoPieceBumpRed extends SequentialCommandGroup {
                 new ParallelRaceGroup(
                         new FindAndCollectCone(),
                         new PoseEstimatorTerminateCommand(22.1666)
-                        )
+                        ),
+                new SetArmPositionCommand(Constants.ArmPose.STOW_AUTO)
                 /*
                 new ParallelCommandGroup(
                     new SmartDriveCommand(Constants.Autos.twoPieceBumpRed.driveToGrid),

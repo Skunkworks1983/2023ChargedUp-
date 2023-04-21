@@ -18,14 +18,16 @@ import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drivebase;
 
-public class CubeHighAndBalance5 extends SequentialCommandGroup {
+public class CubeHighAndBalance5 extends SequentialCommandGroup
+{
+
     public CubeHighAndBalance5() {
         super(new SetArmRaceCommandGroup(Constants.ArmPose.HIGH_CUBE_AUTO, 1.5),
               new ParallelRaceGroup(new ExpelCubeCommand(), new TimerCommand(.2)),
-              new SetArmRaceCommandGroup(Constants.ArmPose.HIGH_CUBE.STOW, .75),
+              new SetArmRaceCommandGroup(Constants.ArmPose.STOW, .75),
               new DriveDistanceCommand(Drivebase.GetDrivebase(), -.5),
               new RotateCommand(Drivebase.GetDrivebase(), 180),
-              new DriveDistanceCommandGyro(Drivebase.GetDrivebase(), 8.8, Constants.Drivebase.DRIVEBASE_KF + .22),
+              new DriveDistanceCommandGyro(Drivebase.GetDrivebase(), 9.6, Constants.Drivebase.DRIVEBASE_KF + .22),
               new RotateCommand(Drivebase.GetDrivebase(), 180),
                 new ParallelCommandGroup(new ResetArm(),
                         new ThreePartBalanceCommand())
