@@ -196,6 +196,7 @@ public class Robot extends TimedRobot {
     public void teleopPeriodic()
 {
     SmartDashboard.putData("field" , drivebase.getField());
+    SmartDashboard.putNumber("collector motor current", collector.GetCollectorCurrent());
 }
 
 
