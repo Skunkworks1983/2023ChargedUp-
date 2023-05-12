@@ -6,47 +6,22 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.autos.CompAutos.*;
-import frc.robot.commands.autos.ScoreAndExitCommunityP1CommandGroup;
-import frc.robot.commands.autos.ScoreAndExitCommunityP2CommandGroup;
-import frc.robot.commands.autos.SimpleAutoCommandGroup;
 import frc.robot.commands.autos.*;
-import frc.robot.commands.autos.CompAutos.CubeHighAndBalance5;
-import frc.robot.commands.autos.CompAutos.CubeHighLeaveCommunity2_8;
-import frc.robot.commands.autos. CompAutos.ConeLowAndBalance4_5_6;
-import frc.robot.commands.autos.CompAutos.ConeMidLeaveCommunity1_9;
-import frc.robot.commands.autos.CompAutos.CubeMidLeaveCommunity2_8;
-import frc.robot.commands.autos.CompAutos.CubeMidAndBalance5;
-import frc.robot.commands.autos.CompAutos.ConeMidAndBalance4_6;
-import frc.robot.commands.autos.CompAutos.DoNothing;
-import frc.robot.commands.autos.CompAutos.TwoPiece2Blue;
-import frc.robot.commands.autos.CompAutos.TwoPiece2Red;
-import frc.robot.commands.autos.CompAutos.TwoPiece8Blue;
-import frc.robot.commands.autos.CompAutos.TwoPiece8Red;
-import frc.robot.commands.autos.ScoreAndExitCommunityP1CommandGroup;
-import frc.robot.commands.autos.ScoreAndExitCommunityP2CommandGroup;
-import frc.robot.commands.autos.SimpleAutoCommandGroup;
-import frc.robot.commands.drivebase.DriveToGamePieceCommand;
-import frc.robot.commands.autos.CompAutos.TwoPieceBalance2Blue;
-import frc.robot.commands.autos.CompAutos.TwoPieceBalance2Red;
-import frc.robot.commands.autos.CompAutos.TwoPieceBalance8Blue;
-import frc.robot.commands.autos.CompAutos.TwoPieceBalance8Red;
 import frc.robot.commands.drivebase.ArcadeDrive;
-import frc.robot.commands.drivebase.TestAutoTerminateCommandGroup;
 import frc.robot.constants.Constants;
 import frc.robot.services.Oi;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Collector;
 import frc.robot.subsystems.Drivebase;
 import frc.robot.subsystems.LimeLight;
+import org.littletonrobotics.junction.LoggedRobot;
+import org.littletonrobotics.junction.Logger;
+import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
 
 /**
@@ -55,7 +30,7 @@ import frc.robot.subsystems.LimeLight;
  * the package after creating this project, you must also update the build.gradle file in the
  * project.
  */
-public class Robot extends TimedRobot {
+public class Robot extends LoggedRobot {
     private boolean setBrakeModeOnDisable = true;
     private Oi oi = Oi.GetInstance();
     private Command autonomousCommand;
@@ -105,6 +80,14 @@ public class Robot extends TimedRobot {
         // autonomous chooser on the dashboard.\
 
         robotContainer = new RobotContainer();
+
+        Logger.getInstance().recordMetadata("Mike", "2023");
+
+        if (isReal()) {
+            Logger.getInstance().addDataReceiver(new WPILOGWriter("/media/sda/"));
+        }
+
+        Logger.getInstance().start();
 
         drivebase.waitForHeadingReliable();
         drivebase.resetGyro();
