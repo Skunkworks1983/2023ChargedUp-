@@ -15,10 +15,7 @@ import frc.robot.commands.autos.*;
 import frc.robot.commands.drivebase.ArcadeDrive;
 import frc.robot.constants.Constants;
 import frc.robot.services.Oi;
-import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.Collector;
-import frc.robot.subsystems.Drivebase;
-import frc.robot.subsystems.LimeLight;
+import frc.robot.subsystems.*;
 import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.wpilog.WPILOGWriter;
@@ -53,8 +50,9 @@ public class Robot extends LoggedRobot {
      */
     @Override
     public void robotInit() {
-        arm = Arm.getInstance();
-        arm.WristMotor.setNeutralMode(NeutralMode.Coast);
+        arm = new Arm(new ArmIOMike());
+        arm.setWristBrakeMode(false);
+
         autoChooser = new SendableChooser();
         autoChooser.addOption("ConeMidAndBalance4_6", new ConeMidAndBalance4_6());
         autoChooser.addOption("ConeMidLeaveCommunity1_9", new ConeMidLeaveCommunity1_9());
@@ -189,8 +187,8 @@ public class Robot extends LoggedRobot {
         // Cancels all running commands at the start of test mode.
         CommandScheduler.getInstance().cancelAll();
         arm = Arm.getInstance();
-        arm.SetBrakeMode(false, arm.ShoulderMotor);
-        arm.SetBrakeMode(false, arm.WristMotor);
+        arm.setShoulderBrakeMode(false);
+        arm.setWristBrakeMode(false);
     }
 
 
@@ -200,7 +198,7 @@ public class Robot extends LoggedRobot {
     @Override
     public void testPeriodic()
     {
-        System.out.println("shoulder back switch: " + arm.ShoulderMotor.getSensorCollection().isRevLimitSwitchClosed() + " wrist switch: " + arm.WristMotor.getSensorCollection().isRevLimitSwitchClosed());
+        //System.out.println("shoulder back switch: " + arm.ShoulderMotor.getSensorCollection().isRevLimitSwitchClosed() + " wrist switch: " + arm.WristMotor.getSensorCollection().isRevLimitSwitchClosed());
     }
 
 
