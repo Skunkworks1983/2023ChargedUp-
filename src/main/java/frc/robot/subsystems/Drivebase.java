@@ -15,13 +15,7 @@ import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.constraint.MaxVelocityConstraint;
 import edu.wpi.first.math.trajectory.constraint.TrajectoryConstraint;
-import edu.wpi.first.util.sendable.Sendable;
-import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.DigitalOutput;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -30,8 +24,6 @@ import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.commands.drivebase.ArcadeDrive;
 import frc.robot.constants.Constants;
 import frc.robot.services.Oi;
-
-import java.util.Arrays;
 
 import static java.lang.Double.NaN;
 
@@ -196,8 +188,8 @@ public Field2d getField(){
     }
 
     public void runMotor(double turnSpeedLeft, double turnSpeedRight) {
-        leftMotor1.set(TalonFXControlMode.PercentOutput, turnSpeedLeft);
-        rightMotor1.set(TalonFXControlMode.PercentOutput, turnSpeedRight);
+        leftMotor1.set(TalonFXControlMode.PercentOutput, turnSpeedLeft * Constants.Drivebase.SLOW_MODE_MULTIPLIER);
+        rightMotor1.set(TalonFXControlMode.PercentOutput, turnSpeedRight * Constants.Drivebase.SLOW_MODE_MULTIPLIER);
         if (turnSpeedLeft > 0 && turnSpeedRight > 0) driveDirection = DriveDirection.FORWARD;
         else if (turnSpeedLeft < 0 && turnSpeedRight < 0) driveDirection = DriveDirection.BACKWARD;
         else {

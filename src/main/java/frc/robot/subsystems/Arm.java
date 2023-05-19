@@ -51,6 +51,7 @@ public class Arm extends SubsystemBase
         ShoulderMotor.configNeutralDeadband(0.0);
         ShoulderMotor.setInverted(InvertType.None);
         ShoulderMotor.setSelectedSensorPosition(Constants.Arm.SHOULDER_RESTING_ANGLE / Constants.Arm.SHOULDER_TICKS_TO_DEGREES);
+        ShoulderMotor.configClosedLoopPeakOutput(0, Constants.Arm.SHOULDER_PEAK_OUTPUT);
 
         //Wrist config
         WristMotor.selectProfileSlot(0, 0);
@@ -216,7 +217,6 @@ public class Arm extends SubsystemBase
 
     public void SetPercentOutput(double percent)
     {
-
         ShoulderMotor.set(ControlMode.PercentOutput, percent);
 
     }
