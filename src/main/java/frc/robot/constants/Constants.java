@@ -302,7 +302,7 @@ public class Constants extends CommandBase
         public static final double SHOULDER_KI = 0;
         public static final double SHOULDER_KF = -0.041;
         public static final double SHOULDER_KP_AUTO = 0.016;
-        public static final double SHOULDER_PEAK_OUTPUT = 0.35;
+        public static final double SHOULDER_PEAK_OUTPUT = 0.7 * Drivebase.SLOW_MODE_MULTIPLIER + 0.2;
         public static final double SHOULDER_PEAK_OUTPUT_AUTO = 0.75;
         public static final double SHOULDER_TOLERANCE = 2;
         public static final double SHOULDER_GEAR_RATIO = 137.4;
@@ -323,7 +323,7 @@ public class Constants extends CommandBase
         public static final double WRIST_GEAR_RATIO = 176;
         public static final double WRIST_RESTING_ANGLE = 0;
         public static final double WRIST_LIMIT_ANGLE = 0;
-        public static final double WRIST_PEAK_OUTPUT = 0.8;
+        public static final double WRIST_PEAK_OUTPUT = 1 * Drivebase.SLOW_MODE_MULTIPLIER + 0.2;
         public static final double WRIST_KP = 0.05;
         public static final double WRIST_KI = 0;
         public static final double WRIST_KD = 0;
