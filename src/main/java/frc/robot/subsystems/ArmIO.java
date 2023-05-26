@@ -10,9 +10,12 @@ public interface ArmIO {
         public int shoulderRevSwitchClosed;
         public int shoulderFwdSwitchClosed;
         public int wristIsSwitchClosed;
+        public double shoulderClosedLoopError;
+        public double wristClosedLoopError;
+        public double shoulderClosedLoopTarget;
     }
 
-    public default void updateInputs(ArmIOInputs inputs) {
+    public default void updateInputs(ArmIOInputsAutoLogged inputs) {
     }
 
     public default void setShoulderPos(double degrees) {
@@ -52,6 +55,12 @@ public interface ArmIO {
 
     public default boolean isArmReset() {
         return false;
+    }
+
+    public default void setWristSensorPosition(double sensorPos) {
+    }
+
+    public default void setShoulderSensorPosition(double sensorPos) {
     }
 
 }

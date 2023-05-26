@@ -5,13 +5,13 @@
 
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.NeutralMode;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.autos.CompAutos.*;
-import frc.robot.commands.autos.*;
+import frc.robot.commands.autos.TrajectoryTwoPieceBumpBlue;
+import frc.robot.commands.autos.TrajectoryTwoPieceBumpRed;
 import frc.robot.commands.drivebase.ArcadeDrive;
 import frc.robot.constants.Constants;
 import frc.robot.services.Oi;
@@ -29,19 +29,14 @@ import org.littletonrobotics.junction.wpilog.WPILOGWriter;
  */
 public class Robot extends LoggedRobot {
     private boolean setBrakeModeOnDisable = true;
-    private Oi oi = Oi.GetInstance();
+    private Oi oi;
     private Command autonomousCommand;
     private SendableChooser autoChooser;
     private Drivebase drivebase = Drivebase.GetDrivebase();
     private Collector collector = Collector.getInstance();
-    Command DriveOnChargeStationAndBalanceP2 = new ConeMidAndBalance4_6();
-    Command SimpleAuto = new SimpleAutoCommandGroup();
-    Command ScoreAndExitCommunityP2 = new ScoreAndExitCommunityP2CommandGroup();
-    Command ScoreAndExitCommunityP1 = new ScoreAndExitCommunityP1CommandGroup();
     private RobotContainer robotContainer;
 
     private Arm arm;
-
 
 
     /**
@@ -52,6 +47,8 @@ public class Robot extends LoggedRobot {
     public void robotInit() {
         arm = new Arm(new ArmIOMike());
         arm.setWristBrakeMode(false);
+
+        oi = Oi.GetInstance();
 
         autoChooser = new SendableChooser();
         autoChooser.addOption("ConeMidAndBalance4_6", new ConeMidAndBalance4_6());
@@ -82,7 +79,7 @@ public class Robot extends LoggedRobot {
         Logger.getInstance().recordMetadata("Mike", "2023");
 
         if (isReal()) {
-            Logger.getInstance().addDataReceiver(new WPILOGWriter("/media/sda/"));
+            Logger.getInstance().addDataReceiver(new WPILOGWriter("/media/sda1/"));
         }
 
         Logger.getInstance().start();
@@ -116,7 +113,7 @@ public class Robot extends LoggedRobot {
     @Override
     public void disabledInit() {
         drivebase.runMotor(0, 0);
-        arm.WristMotor.setNeutralMode(NeutralMode.Coast);
+        arm.setWristBrakeMode(false);
         if (setBrakeModeOnDisable) {
             drivebase.SetBrakeMode(true);
         }
@@ -141,16 +138,14 @@ public class Robot extends LoggedRobot {
         Collector.getInstance().SetSpeed(0);
         arm.SetLightMode(Constants.Lights.BLANK);
         setBrakeModeOnDisable = true;
-        arm.WristMotor.setNeutralMode(NeutralMode.Brake);//auto volocit kp /kd
+        arm.setWristBrakeMode(true);//auto volocit kp /kd
         CommandScheduler.getInstance().cancelAll();
         SendableChooser autoChooser = (SendableChooser) SmartDashboard.getData("autoChooser");
         autonomousCommand = (Command) autoChooser.getSelected();
         if (autonomousCommand != null) {
             autonomousCommand.schedule();
             System.out.println("ENABLING AUTO");
-        }
-        else
-        {
+        } else {
             System.out.println("auto is null");
         }
         LimeLight.getInstance().setEnable(true);
@@ -160,13 +155,12 @@ public class Robot extends LoggedRobot {
 
 
     @Override
-    public void teleopInit()
-    {
+    public void teleopInit() {
         arm.SetLightMode(Constants.Lights.BLANK);
         drivebase.setGyroStatus(false);
         setBrakeModeOnDisable = true;
         drivebase.SetBrakeMode(true);
-        drivebase.setDefaultCommand(new ArcadeDrive(Drivebase.GetDrivebase(), Oi.GetInstance(),LimeLight.getInstance()));
+        drivebase.setDefaultCommand(new ArcadeDrive(Drivebase.GetDrivebase(), Oi.GetInstance(), LimeLight.getInstance()));
     }
 
 
@@ -174,10 +168,9 @@ public class Robot extends LoggedRobot {
      * This method is called periodically during operator control.
      */
     @Override
-    public void teleopPeriodic()
-{
-    SmartDashboard.putData("field" , drivebase.getField());
-}
+    public void teleopPeriodic() {
+        SmartDashboard.putData("field", drivebase.getField());
+    }
 
 
     @Override
@@ -196,8 +189,7 @@ public class Robot extends LoggedRobot {
      * This method is called periodically during test mode.
      */
     @Override
-    public void testPeriodic()
-    {
+    public void testPeriodic() {
         //System.out.println("shoulder back switch: " + arm.ShoulderMotor.getSensorCollection().isRevLimitSwitchClosed() + " wrist switch: " + arm.WristMotor.getSensorCollection().isRevLimitSwitchClosed());
     }
 

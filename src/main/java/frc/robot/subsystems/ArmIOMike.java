@@ -48,6 +48,11 @@ public class ArmIOMike implements ArmIO {
         inputs.shoulderRevSwitchClosed = shoulderSensorCollection.isRevLimitSwitchClosed();
 
         inputs.wristIsSwitchClosed = WristMotor.getSensorCollection().isRevLimitSwitchClosed();
+
+        inputs.shoulderClosedLoopError = ShoulderMotor.getClosedLoopError();
+        inputs.wristClosedLoopError = WristMotor.getClosedLoopError();
+
+        inputs.shoulderClosedLoopTarget = ShoulderMotor.getClosedLoopTarget();
     }
 
     public void setShoulderPos(double pos) {
@@ -95,12 +100,31 @@ public class ArmIOMike implements ArmIO {
 
     // TODO: finish below functions
     public void setWristBrakeMode(boolean enabled) {
+        if (enabled) {
+            WristMotor.setNeutralMode(NeutralMode.Brake);
+        } else {
+            WristMotor.setNeutralMode(NeutralMode.Coast);
+        }
     }
 
     public void setShoulderBrakeMode(boolean enabled) {
+        if (enabled) {
+            ShoulderMotor.setNeutralMode(NeutralMode.Brake);
+        } else {
+            ShoulderMotor.setNeutralMode(NeutralMode.Coast);
+        }
     }
 
     public boolean isArmReset() {
-        return false;
+        return ShoulderMotor.getSensorCollection().isRevLimitSwitchClosed() == 1
+                && WristMotor.getSensorCollection().isRevLimitSwitchClosed() == 1;
+    }
+
+    public void setWristSensorPosition(double sensorPos) {
+        WristMotor.setSelectedSensorPosition(sensorPos);
+    }
+
+    public void setShoulderSensorPosition(double sensorPos) {
+        ShoulderMotor.setSelectedSensorPosition(sensorPos);
     }
 }

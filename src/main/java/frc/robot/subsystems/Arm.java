@@ -4,6 +4,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.Constants;
+import org.littletonrobotics.junction.Logger;
 
 
 public class Arm extends SubsystemBase {
@@ -169,9 +170,34 @@ public class Arm extends SubsystemBase {
         io.setLightMode(mode);
     }
 
+    public boolean isArmReset() {
+        return io.isArmReset();
+    }
+
+    public void setWristSensorPosition(double sensorPos) {
+        io.setWristSensorPosition(sensorPos);
+    }
+
+    public void setShoulderSensorPosition(double sensorPos) {
+        io.setShoulderSensorPosition(sensorPos);
+    }
+
+    public double getShoulderClosedLoopError() {
+        return inputs.shoulderClosedLoopError;
+    }
+
+    public double getWristClosedLoopError() {
+        return inputs.wristClosedLoopError;
+    }
+
+    public double getShoulderClosedLoopTarget() {
+        return inputs.shoulderClosedLoopTarget;
+    }
+
     @Override
     public void periodic() {
         io.updateInputs(inputs);
+        Logger.getInstance().processInputs("Arm", inputs);
 
         periodicCounter = (periodicCounter + 1) % 5;
 
