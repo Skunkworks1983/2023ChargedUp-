@@ -16,6 +16,8 @@ import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.constraint.MaxVelocityConstraint;
 import edu.wpi.first.math.trajectory.constraint.TrajectoryConstraint;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
@@ -30,6 +32,7 @@ import frc.robot.services.Oi;
 
 import java.util.Arrays;
 
+import static edu.wpi.first.math.util.Units.inchesToMeters;
 import static java.lang.Double.NaN;
 
 public class Drivebase implements Subsystem {
@@ -49,7 +52,9 @@ public class Drivebase implements Subsystem {
     TalonFX leftMotor2 = new TalonFX(Constants.Wobbles.LEFT_MOTOR_2);
     TalonFX rightMotor1 = new TalonFX(Constants.Wobbles.RIGHT_MOTOR_1);
     TalonFX rightMotor2 = new TalonFX(Constants.Wobbles.RIGHT_MOTOR_2);
-
+    Pose2d aprilTag1 = new Pose2d(inchesToMeters(610.77), inchesToMeters(42.19),new Rotation2d(Math.PI));
+    Pose2d aprilTag2 = new Pose2d(inchesToMeters(610.77), inchesToMeters(108.19),new Rotation2d(Math.PI));
+    Pose2d aprilTag3 = new Pose2d(inchesToMeters(610.77), inchesToMeters(174.19),new Rotation2d(Math.PI));
     double backRangeVoltage;
 
     double frontRangeVoltage;
@@ -111,8 +116,6 @@ public class Drivebase implements Subsystem {
                     .setKinematics(kDriveKinematics)
                     // Apply the voltage constraint
                     .addConstraint(autoVoltageConstraint);
-
-
 private final Field2d field= new Field2d();
 public Field2d getField(){
     return field;
@@ -365,9 +368,17 @@ public Field2d getField(){
 
         field.setRobotPose(poseEstimator.getEstimatedPosition());
         SmartDashboard.putData("field",field);
+        double distToAprilTags;
+        long aprilTagID = NetworkTableInstance.getDefault().getTable("limelight-front").getEntry("tid").getInteger(-1);
+        System.out.println("Apriltag " + aprilTagID);
+        if(aprilTagID != -1)
+        {
+            Double[] poseInfo = NetworkTableInstance.getDefault().getTable("limelight-front").
+                    getEntry("botpose-wpired").getDoubleArray(new Double[]{0.0,0.0,0.0,0.0,0.0,0.0,0.0});
+            aprilTag1.getX() - poseInfo[0](Math.pow(aprilTag1.getX() - poseInfo[0],2),
+                aprilTag1.getY()-poseInfo[0](Math.pow(aprilTag1.getY() - poseInfo[0],2))
 
-//TODO: if we have an april tag in view, call addVisionMeasurement();
-
+        }
     }
 
     public void setRightMeters(double meters){
