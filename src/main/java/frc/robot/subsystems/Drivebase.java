@@ -5,6 +5,9 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.apriltag.AprilTag;
+import edu.wpi.first.math.Matrix;
+import edu.wpi.first.math.Nat;
 import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
@@ -12,6 +15,8 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.numbers.N1;
+import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.constraint.MaxVelocityConstraint;
 import edu.wpi.first.math.trajectory.constraint.TrajectoryConstraint;
@@ -357,14 +362,22 @@ public Field2d getField(){
         gyro.reset();
     }
 
+    private double caculateDistance(Pose2d apriltag, Pose2d robot)
+    {
+        double YDistance = apriltag.getY() - robot.getY();
+        double XDistance = apriltag.getX() - robot.getX();
+        double overallDistance = Math.pow(Math.pow(YDistance,2) + Math.pow(XDistance,2), 0.5);
+        return overallDistance;
+    }
     @Override
-    public void periodic() {
-        // Update the odometry in the periodic block
-        //updateOdometry();//update odometry is just backup
-        poseEstimator.update(gyro.getRotation2d(),
-                ticksToMeters((int)leftMotor1.getSelectedSensorPosition()),
-                ticksToMeters((int)rightMotor1.getSelectedSensorPosition()));
-        updatePoseLimelight();
+        public void periodic()
+        {
+            // Update the odometry in the periodic block
+            //updateOdometry();//update odometry is just backup
+            poseEstimator.update(gyro.getRotation2d(),
+                                 ticksToMeters((int)leftMotor1.getSelectedSensorPosition()),
+                                 ticksToMeters((int)rightMotor1.getSelectedSensorPosition()));
+            updatePoseLimelight();
 
         field.setRobotPose(poseEstimator.getEstimatedPosition());
         SmartDashboard.putData("field",field);
@@ -375,9 +388,14 @@ public Field2d getField(){
         {
             Double[] poseInfo = NetworkTableInstance.getDefault().getTable("limelight-front").
                     getEntry("botpose-wpired").getDoubleArray(new Double[]{0.0,0.0,0.0,0.0,0.0,0.0,0.0});
-            aprilTag1.getX() - poseInfo[0](Math.pow(aprilTag1.getX() - poseInfo[0],2),
-                aprilTag1.getY()-poseInfo[0](Math.pow(aprilTag1.getY() - poseInfo[0],2))
-
+            Pose2d aprilTagPose = new Pose2d(poseInfo[0],poseInfo[1],new Rotation2d(poseInfo[5]));
+            Pose2d robotPose = poseEstimator.getEstimatedPosition();
+            double distanceFromApriltag = caculateDistance(aprilTagPose,robotPose);
+            Matrix<N3,N1> standardDeviationMatrix = new Matrix<N3,N1>(Nat.N3(), Nat.N1());
+            standardDeviationMatrix.set(0,0, distanceFromApriltag);
+            standardDeviationMatrix.set(1,0, distanceFromApriltag);
+            standardDeviationMatrix.set(2,0, 500000000.0);
+            poseEstimator.addVisionMeasurement(aprilTagPose, Timer.getFPGATimestamp() - poseInfo[6],standardDeviationMatrix);
         }
     }
 
