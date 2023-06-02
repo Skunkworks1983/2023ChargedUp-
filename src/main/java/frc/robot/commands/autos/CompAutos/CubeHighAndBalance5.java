@@ -13,6 +13,7 @@ import frc.robot.commands.autos.TimerCommand;
 import frc.robot.commands.drivebase.DriveDistanceCommand;
 import frc.robot.commands.drivebase.DriveDistanceCommandGyro;
 import frc.robot.commands.drivebase.RotateCommand;
+import frc.robot.commands.drivebase.ThreePartBalanceCommand;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drivebase;
@@ -24,10 +25,12 @@ public class CubeHighAndBalance5 extends SequentialCommandGroup {
               new SetArmRaceCommandGroup(Constants.ArmPose.HIGH_CUBE.STOW, .75),
               new DriveDistanceCommand(Drivebase.GetDrivebase(), -.5),
               new RotateCommand(Drivebase.GetDrivebase(), 180),
-              new DriveDistanceCommandGyro(Drivebase.GetDrivebase(), 11, Constants.Drivebase.DRIVEBASE_KF + .1),
+              new DriveDistanceCommandGyro(Drivebase.GetDrivebase(), 8.8, Constants.Drivebase.DRIVEBASE_KF + .22),
               new RotateCommand(Drivebase.GetDrivebase(), 180),
-              new DriveDistanceCommandGyro(Drivebase.GetDrivebase(), 6.5, Constants.Drivebase.DRIVEBASE_KF + .15),
-              new ParallelCommandGroup(new SafeBalanceCommandGroup(), new ResetArm())
+                new ParallelCommandGroup(new ResetArm(),
+                        new ThreePartBalanceCommand())
+              //new DriveDistanceCommandGyro(Drivebase.GetDrivebase(), 4.5, Constants.Drivebase.DRIVEBASE_KF + .15),
+              //
              );
     }
 }

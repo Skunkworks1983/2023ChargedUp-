@@ -20,16 +20,19 @@ import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.constraint.MaxVelocityConstraint;
 import edu.wpi.first.math.trajectory.constraint.TrajectoryConstraint;
+import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalOutput;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.commands.drivebase.ArcadeDrive;
 import frc.robot.constants.Constants;
@@ -100,14 +103,13 @@ public class Drivebase implements Subsystem {
     private DifferentialDrivePoseEstimator poseEstimator;
 
     private final double TicksPerFoot =
-            Constants.Wobbles.TICKS_PER_MOTOR_REV * Constants.Drivebase.GEAR_RATIO /
+            Constants.Wobbles.TICKS_PER_MOTOR_REV * Constants.Drivebase.OLD_GEAR_RATIO /
                     (Constants.Drivebase.WHEEL_DIAMETER * Math.PI);
 
+    //public AHRS gyro = new AHRS(I2C.Port.kMXP);
+public AHRS gyro = new AHRS(I2C.Port.kOnboard);
 
     boolean isRedAlliance;
-
-    AHRS gyro = new AHRS(I2C.Port.kOnboard);
-
 
     public final TrajectoryConstraint autoVoltageConstraint= new MaxVelocityConstraint(Constants.Drivebase.kMaxSpeedMetersPerSecond);
     public DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(Constants.Drivebase.kTrackwidthMeters);
@@ -120,7 +122,17 @@ public class Drivebase implements Subsystem {
                     // Add kinematics to ensure max speed is actually obeyed
                     .setKinematics(kDriveKinematics)
                     // Apply the voltage constraint
-                    .addConstraint(autoVoltageConstraint);
+                    .addConstraint(autoVoltageConstraint).setReversed(false);
+
+    public final TrajectoryConfig reversedConfig =
+            new TrajectoryConfig(
+                    Constants.Drivebase.kMaxSpeedMetersPerSecond,
+                    Constants.Drivebase.kMaxAccelerationMetersPerSecondSquared)
+                    // Add kinematics to ensure max speed is actually obeyed
+                    .setKinematics(kDriveKinematics)
+                    // Apply the voltage constraint
+                    .addConstraint(autoVoltageConstraint).setReversed(true);
+
 private final Field2d field= new Field2d();
 public Field2d getField(){
     return field;
@@ -188,14 +200,12 @@ public Field2d getField(){
                 ticksToMeters(rightMotor1.getSelectedSensorPosition()),
                 new Pose2d(0,0,new Rotation2d(0))
         );
-
         CommandScheduler.getInstance().registerSubsystem(this);
 
 
     }
 
     public void runMotor(double turnSpeedLeft, double turnSpeedRight) {
-    System.out.println("runmotor called");
         leftMotor1.set(TalonFXControlMode.PercentOutput, turnSpeedLeft);
         rightMotor1.set(TalonFXControlMode.PercentOutput, turnSpeedRight);
         if (turnSpeedLeft > 0 && turnSpeedRight > 0) driveDirection = DriveDirection.FORWARD;
@@ -203,11 +213,10 @@ public Field2d getField(){
         else {
             driveDirection = DriveDirection.UNCLEAR;
         }
-        System.out.println(turnSpeedLeft + "," + turnSpeedRight);
     }
 
     public Pose2d GetCurrentPose(){return poseEstimator.getEstimatedPosition();}
-        public void SetPose(Pose2d pose){poseEstimator.resetPosition(new Rotation2d(0),0,0,pose);}
+
     public double getPosLeft() {
         return leftMotor1.getSelectedSensorPosition() / TicksPerFoot;
     }
@@ -231,48 +240,19 @@ public Field2d getField(){
         }
     }
 
-    public void updatePoseLimelight()
-    {
-        LimeLight limelight = LimeLight.getInstance();
-        if(limelight.tv.getInteger(0) == 1)
-        {
-            double[] botpose;
-            if(isRedAlliance)
-            {
-                botpose = limelight.botpose_wpired.getDoubleArray(LimeLight.defaultpose);
-            }
-            else
-            {
-                botpose = limelight.botpose_wpiblue.getDoubleArray(LimeLight.defaultpose);
-            }
-
-            Pose2d currentPose = new Pose2d(botpose[0], botpose[1], new Rotation2d(Units.degreesToRadians(botpose[5])));
-            if(currentPose.getTranslation().getNorm() > 0.25)
-            {
-               /* poseEstimator.addVisionMeasurement(
-                    currentPose,
-                    Timer.getFPGATimestamp()
-                            - (limelight.tl.getDouble(0) / 1000.0)
-                            - (limelight.cl.getDouble(0) / 1000.0)
-                );*/
-            }
-            System.out.println("updatePoseLimelight, array: " + Arrays.toString(botpose) + " tl: " + limelight.tl.getDouble(0) + " cl: " + limelight.cl.getDouble(0));
-        }
-    }
-
-
-    public Pose2d getPose() {
-        return odometry.getPoseMeters();
-    }
-
     public void setPose(Pose2d pose){
-    poseEstimator.resetPosition(new Rotation2d(gyro.getYaw()),0,0,pose);
+    poseEstimator.resetPosition(
+            gyro.getRotation2d(),
+            ticksToMeters((int)leftMotor1.getSelectedSensorPosition()),
+            ticksToMeters((int)rightMotor1.getSelectedSensorPosition()),
+            pose
+                               );
     //leftPositonMeters and rightPositionMeters posibly should not be 0. Not sure.
     }
 
     public double getPitch() {
         return gyro.getPitch();
-    }
+        }
 
     public void SetBrakeMode(boolean enable) {
         if (enable) {
@@ -318,11 +298,6 @@ public Field2d getField(){
         isHeadingReliable = status;
     }
 
-
-    public DriveDirection getDriveDirection() {
-        return driveDirection;
-    }
-
     public int getFrontRangeSensor() {
         return frontRangeSensorValue.getValue();
     }
@@ -361,6 +336,10 @@ public Field2d getField(){
     {
         gyro.reset();
     }
+    public void resetGyroTo(double angle){
+        gyro.reset();
+        gyro.setAngleAdjustment(angle);
+    }
 
     private double caculateDistance(Pose2d apriltag, Pose2d robot)
     {
@@ -370,14 +349,12 @@ public Field2d getField(){
         return overallDistance;
     }
     @Override
-        public void periodic()
-        {
-            // Update the odometry in the periodic block
-            //updateOdometry();//update odometry is just backup
-            poseEstimator.update(gyro.getRotation2d(),
-                                 ticksToMeters((int)leftMotor1.getSelectedSensorPosition()),
-                                 ticksToMeters((int)rightMotor1.getSelectedSensorPosition()));
-            updatePoseLimelight();
+    public void periodic() {
+        // Update the odometry in the periodic block
+        //updateOdometry();//update odometry is just backup
+        poseEstimator.update(gyro.getRotation2d(),
+                ticksToMeters((int)leftMotor1.getSelectedSensorPosition()),
+                ticksToMeters((int)rightMotor1.getSelectedSensorPosition()));
 
         field.setRobotPose(poseEstimator.getEstimatedPosition());
         SmartDashboard.putData("field",field);
