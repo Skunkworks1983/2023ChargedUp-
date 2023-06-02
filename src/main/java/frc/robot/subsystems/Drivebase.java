@@ -249,12 +249,12 @@ public Field2d getField(){
             Pose2d currentPose = new Pose2d(botpose[0], botpose[1], new Rotation2d(Units.degreesToRadians(botpose[5])));
             if(currentPose.getTranslation().getNorm() > 0.25)
             {
-                poseEstimator.addVisionMeasurement(
+               /* poseEstimator.addVisionMeasurement(
                     currentPose,
                     Timer.getFPGATimestamp()
                             - (limelight.tl.getDouble(0) / 1000.0)
                             - (limelight.cl.getDouble(0) / 1000.0)
-                );
+                );*/
             }
             System.out.println("updatePoseLimelight, array: " + Arrays.toString(botpose) + " tl: " + limelight.tl.getDouble(0) + " cl: " + limelight.cl.getDouble(0));
         }
@@ -395,7 +395,7 @@ public Field2d getField(){
             standardDeviationMatrix.set(0,0, distanceFromApriltag);
             standardDeviationMatrix.set(1,0, distanceFromApriltag);
             standardDeviationMatrix.set(2,0, 500000000.0);
-            poseEstimator.addVisionMeasurement(aprilTagPose, Timer.getFPGATimestamp() - poseInfo[6],standardDeviationMatrix);
+            //poseEstimator.addVisionMeasurement(aprilTagPose, Timer.getFPGATimestamp() - poseInfo[6],standardDeviationMatrix);
         }
     }
 
