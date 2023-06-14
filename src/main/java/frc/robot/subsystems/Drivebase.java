@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.apriltag.AprilTag;
+import edu.wpi.first.apriltag.AprilTagDetection;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.Nat;
 import edu.wpi.first.math.controller.RamseteController;
@@ -67,6 +68,8 @@ public class Drivebase implements Subsystem {
 
     double frontRangeVoltage;
 
+    private Arm armInstance = Arm.getInstance();
+
     public double getFrontRangeVoltage() {
         return frontRangeVoltage;
     }
@@ -92,7 +95,8 @@ public class Drivebase implements Subsystem {
 
     private SimpleMotorFeedforward feedforward;
 
-    int i=0;
+    private int seeTag = 0;
+    private boolean poseInitilized;
 
     DifferentialDriveKinematics kinematics;
 
@@ -341,17 +345,18 @@ public Field2d getField(){
         gyro.setAngleAdjustment(angle);
     }
 
-    private double caculateDistance(Pose2d apriltag, Pose2d robot)
-    {
+    private double caculateDistance(Pose2d apriltag, Pose2d robot) {
         double YDistance = apriltag.getY() - robot.getY();
         double XDistance = apriltag.getX() - robot.getX();
-        double overallDistance = Math.pow(Math.pow(YDistance,2) + Math.pow(XDistance,2), 0.5);
+        double overallDistance = Math.pow(Math.pow(YDistance, 2) + Math.pow(XDistance, 2), 0.5);
         return overallDistance;
     }
+
     @Override
     public void periodic() {
         // Update the odometry in the periodic block
         //updateOdometry();//update odometry is just backup
+        poseInitilized = false;
         poseEstimator.update(gyro.getRotation2d(),
                 ticksToMeters((int)leftMotor1.getSelectedSensorPosition()),
                 ticksToMeters((int)rightMotor1.getSelectedSensorPosition()));
@@ -364,15 +369,44 @@ public Field2d getField(){
         if(aprilTagID != -1)
         {
             Double[] poseInfo = NetworkTableInstance.getDefault().getTable("limelight-front").
-                    getEntry("botpose-wpired").getDoubleArray(new Double[]{0.0,0.0,0.0,0.0,0.0,0.0,0.0});
-            Pose2d aprilTagPose = new Pose2d(poseInfo[0],poseInfo[1],new Rotation2d(poseInfo[5]));
+                    getEntry("botpose_wpired").getDoubleArray(new Double[]{0.0,0.0,0.0,0.0,0.0,0.0,0.0});
+            Pose2d aprilTagPose = new Pose2d(poseInfo[0],poseInfo[1],new Rotation2d(Units.degreesToRadians(poseInfo[5])));
+            System.out.println("the april tag pose is " + aprilTagPose.getY() + " " + aprilTagPose.getX());
             Pose2d robotPose = poseEstimator.getEstimatedPosition();
-            double distanceFromApriltag = caculateDistance(aprilTagPose,robotPose);
+            System.out.println("the poseEstimator is " + robotPose.getY() + " " + robotPose.getX());
+            double distanceFromAprilTag = caculateDistance(aprilTagPose,robotPose);
             Matrix<N3,N1> standardDeviationMatrix = new Matrix<N3,N1>(Nat.N3(), Nat.N1());
-            standardDeviationMatrix.set(0,0, distanceFromApriltag);
-            standardDeviationMatrix.set(1,0, distanceFromApriltag);
-            standardDeviationMatrix.set(2,0, 500000000.0);
-            //poseEstimator.addVisionMeasurement(aprilTagPose, Timer.getFPGATimestamp() - poseInfo[6],standardDeviationMatrix);
+            standardDeviationMatrix.set(0,0, distanceFromAprilTag * Constants.Drivebase.VISUAL_ODOMETRY_STD_DEV_SCALE);
+            standardDeviationMatrix.set(1,0, distanceFromAprilTag * Constants.Drivebase.VISUAL_ODOMETRY_STD_DEV_SCALE);
+            if(poseInitilized == true)
+            {
+                standardDeviationMatrix.set(2,0, 500000000.0);
+            }
+            else
+            {
+               standardDeviationMatrix.set(2,0,.5);
+            }
+            double latency = NetworkTableInstance.getDefault().getTable("limelight-front").getEntry("tl").getDouble(0.0)/1000;
+            poseEstimator.addVisionMeasurement(aprilTagPose, Timer.getFPGATimestamp() - latency,standardDeviationMatrix);
+            SmartDashboard.putNumber("aprilTagX", aprilTagPose.getX());
+            SmartDashboard.putNumber("aprilTagY", aprilTagPose.getY());
+            SmartDashboard.putNumber("aprilTagRotation", aprilTagPose.getRotation().getDegrees());
+            SmartDashboard.putNumber("robotX", robotPose.getX());
+            SmartDashboard.putNumber("robotY", robotPose.getY());
+            SmartDashboard.putNumber("robotRotation", robotPose.getRotation().getDegrees());
+            if(poseInitilized == false)
+            {
+            seeTag++;
+            }
+            if(seeTag >= 20)
+            {
+                rightMotor1.setNeutralMode(NeutralMode.Coast);
+                rightMotor2.setNeutralMode(NeutralMode.Coast);
+                leftMotor1.setNeutralMode(NeutralMode.Coast);
+                leftMotor2.setNeutralMode(NeutralMode.Coast);
+                armInstance.SetLightMode(Constants.Lights.RED_WITH_WHITE);
+                poseInitilized = true;
+            }
         }
     }
 
@@ -380,7 +414,7 @@ public Field2d getField(){
         rightMotor1.set(ControlMode.Velocity,meters);
     }
     public void setLeftMeters(double meters){
-        leftMotor1.set(ControlMode.Velocity,meters);//actualy ticks should be fixed.
+        leftMotor1.set(ControlMode.Velocity,meters);//erm actualyy ticks should be fixed.
     }
     double ticksToMeters(double ticks){return ticksToFeet(ticks)/Constants.Drivebase.FEET_PER_METER;}
 

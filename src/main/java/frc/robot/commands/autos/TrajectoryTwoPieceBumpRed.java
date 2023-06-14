@@ -19,7 +19,7 @@ public class TrajectoryTwoPieceBumpRed extends SequentialCommandGroup {
     public TrajectoryTwoPieceBumpRed() {
 
         super(
-                new ResetPoseCommand(Constants.Autos.twoPieceBumpRed.startPose),
+                //new ResetPoseCommand(Constants.Autos.twoPieceBumpRed.startPose),
                 new ParallelRaceGroup(
                     new SetArmPositionCommand(Constants.ArmPose.HIGH_CUBE_AUTO),
                     new TimerCommand(1.5)
@@ -45,8 +45,8 @@ public class TrajectoryTwoPieceBumpRed extends SequentialCommandGroup {
                 new ParallelRaceGroup(
                         new FindAndCollectCone(),
                         new PoseEstimatorTerminateCommand(22.1666)
-                        )
-                /*
+                        ),
+
                 new ParallelCommandGroup(
                     new SmartDriveCommand(Constants.Autos.twoPieceBumpRed.driveToGrid),
                     new ParallelRaceGroup(
@@ -62,7 +62,7 @@ public class TrajectoryTwoPieceBumpRed extends SequentialCommandGroup {
                 ),
                 new ResetArm()
 
-                 */
+
 //                new ParallelRaceGroup(
 //                        new DriveDistanceCommandGyro(Drivebase.GetDrivebase(), 5.5, Constants.Drivebase.DRIVEBASE_KF + .32)
 //                        ,
