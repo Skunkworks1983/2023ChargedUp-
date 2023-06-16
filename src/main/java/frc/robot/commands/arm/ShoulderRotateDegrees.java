@@ -55,7 +55,7 @@ public class ShoulderRotateDegrees extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        if (Math.abs(arm.getShoulderClosedLoopError() * Constants.Arm.SHOULDER_TICKS_TO_DEGREES) < Constants.Arm.SHOULDER_TOLERANCE) {
+        if (Math.abs(arm.ShoulderMotor.getClosedLoopError() * Constants.Arm.SHOULDER_TICKS_TO_DEGREES) < Constants.Arm.SHOULDER_TOLERANCE) {
             return false; //todo
         } else {
             return false;
