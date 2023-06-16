@@ -39,6 +39,7 @@ public class ArmIOMike implements ArmIO {
         WristMotor.config_kF(0, Constants.Arm.WRIST_KF);
     }
 
+    @Override
     public void updateInputs(ArmIOInputs inputs) {
         inputs.shoulderSensorPos = ShoulderMotor.getSelectedSensorPosition();
         inputs.wristSensorPos = WristMotor.getSelectedSensorPosition();

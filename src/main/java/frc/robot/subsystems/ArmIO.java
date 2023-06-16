@@ -7,15 +7,15 @@ public interface ArmIO {
     public static class ArmIOInputs {
         public double shoulderSensorPos;
         public double wristSensorPos;
-        public int shoulderRevSwitchClosed;
-        public int shoulderFwdSwitchClosed;
-        public int wristIsSwitchClosed;
+        public long shoulderRevSwitchClosed;
+        public long shoulderFwdSwitchClosed;
+        public long wristIsSwitchClosed;
         public double shoulderClosedLoopError;
         public double wristClosedLoopError;
         public double shoulderClosedLoopTarget;
     }
 
-    public default void updateInputs(ArmIOInputsAutoLogged inputs) {
+    public default void updateInputs(ArmIOInputs inputs) {
     }
 
     public default void setShoulderPos(double degrees) {

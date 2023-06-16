@@ -45,6 +45,7 @@ public class Robot extends LoggedRobot {
      */
     @Override
     public void robotInit() {
+        System.out.println("robot init top");
         arm = new Arm(new ArmIOMike());
         arm.setWristBrakeMode(false);
 
@@ -69,6 +70,8 @@ public class Robot extends LoggedRobot {
         autoChooser.addOption("TrajectoryTwoPieceBumpRed", new TrajectoryTwoPieceBumpRed());
         autoChooser.addOption("TrajectoryTwoPieceBumpBlue", new TrajectoryTwoPieceBumpBlue());
 
+        System.out.println("robot init middle");
+
         SmartDashboard.putData("autoChooser", autoChooser);
 
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
@@ -87,6 +90,8 @@ public class Robot extends LoggedRobot {
         drivebase.waitForHeadingReliable();
         drivebase.resetGyro();
         SmartDashboard.putNumber("floor cube pickup", Constants.ArmPos.FLOOR_CUBE_PICKUP_WRIST);
+
+        System.out.println("robot init bottom");
     }
 
 
