@@ -44,7 +44,7 @@ public class WristRotateDegrees extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        if (Math.abs(arm.getWristClosedLoopError() * Constants.Arm.WRIST_TICKS_TO_DEGREES) < Constants.Arm.WRIST_TOLERANCE) {
+        if (Math.abs(arm.WristMotor.getClosedLoopError() * Constants.Arm.WRIST_TICKS_TO_DEGREES) < Constants.Arm.WRIST_TOLERANCE) {
             return false; //todo
         } else {
             return false;
