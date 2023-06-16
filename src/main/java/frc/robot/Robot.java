@@ -5,48 +5,20 @@
 
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.autos.CompAutos.*;
-import frc.robot.commands.autos.ScoreAndExitCommunityP1CommandGroup;
-import frc.robot.commands.autos.ScoreAndExitCommunityP2CommandGroup;
-import frc.robot.commands.autos.SimpleAutoCommandGroup;
-import frc.robot.commands.autos.*;
-import frc.robot.commands.autos.CompAutos.CubeHighAndBalance5;
-import frc.robot.commands.autos.CompAutos.CubeHighLeaveCommunity2_8;
-import frc.robot.commands.autos. CompAutos.ConeLowAndBalance4_5_6;
-import frc.robot.commands.autos.CompAutos.ConeMidLeaveCommunity1_9;
-import frc.robot.commands.autos.CompAutos.CubeMidLeaveCommunity2_8;
-import frc.robot.commands.autos.CompAutos.CubeMidAndBalance5;
-import frc.robot.commands.autos.CompAutos.ConeMidAndBalance4_6;
-import frc.robot.commands.autos.CompAutos.DoNothing;
-import frc.robot.commands.autos.CompAutos.TwoPiece2Blue;
-import frc.robot.commands.autos.CompAutos.TwoPiece2Red;
-import frc.robot.commands.autos.CompAutos.TwoPiece8Blue;
-import frc.robot.commands.autos.CompAutos.TwoPiece8Red;
-import frc.robot.commands.autos.ScoreAndExitCommunityP1CommandGroup;
-import frc.robot.commands.autos.ScoreAndExitCommunityP2CommandGroup;
-import frc.robot.commands.autos.SimpleAutoCommandGroup;
-import frc.robot.commands.drivebase.DriveToGamePieceCommand;
-import frc.robot.commands.autos.CompAutos.TwoPieceBalance2Blue;
-import frc.robot.commands.autos.CompAutos.TwoPieceBalance2Red;
-import frc.robot.commands.autos.CompAutos.TwoPieceBalance8Blue;
-import frc.robot.commands.autos.CompAutos.TwoPieceBalance8Red;
+import frc.robot.commands.autos.TrajectoryTwoPieceBumpBlue;
+import frc.robot.commands.autos.TrajectoryTwoPieceBumpRed;
 import frc.robot.commands.drivebase.ArcadeDrive;
-import frc.robot.commands.drivebase.TestAutoTerminateCommandGroup;
 import frc.robot.constants.Constants;
 import frc.robot.services.Oi;
-import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.Collector;
-import frc.robot.subsystems.Drivebase;
-import frc.robot.subsystems.LimeLight;
+import frc.robot.subsystems.*;
+import org.littletonrobotics.junction.LoggedRobot;
+import org.littletonrobotics.junction.Logger;
+import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
 
 /**
@@ -55,21 +27,16 @@ import frc.robot.subsystems.LimeLight;
  * the package after creating this project, you must also update the build.gradle file in the
  * project.
  */
-public class Robot extends TimedRobot {
+public class Robot extends LoggedRobot {
     private boolean setBrakeModeOnDisable = true;
-    private Oi oi = Oi.GetInstance();
+    private Oi oi;
     private Command autonomousCommand;
     private SendableChooser autoChooser;
     private Drivebase drivebase = Drivebase.GetDrivebase();
     private Collector collector = Collector.getInstance();
-    Command DriveOnChargeStationAndBalanceP2 = new ConeMidAndBalance4_6();
-    Command SimpleAuto = new SimpleAutoCommandGroup();
-    Command ScoreAndExitCommunityP2 = new ScoreAndExitCommunityP2CommandGroup();
-    Command ScoreAndExitCommunityP1 = new ScoreAndExitCommunityP1CommandGroup();
     private RobotContainer robotContainer;
 
     private Arm arm;
-
 
 
     /**
@@ -78,8 +45,11 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotInit() {
-        arm = Arm.getInstance();
-        arm.WristMotor.setNeutralMode(NeutralMode.Coast);
+        arm = new Arm(new ArmIOMike());
+        arm.setWristBrakeMode(false);
+
+        oi = Oi.GetInstance();
+
         autoChooser = new SendableChooser();
         autoChooser.addOption("ConeMidAndBalance4_6", new ConeMidAndBalance4_6());
         autoChooser.addOption("ConeMidLeaveCommunity1_9", new ConeMidLeaveCommunity1_9());
@@ -105,6 +75,14 @@ public class Robot extends TimedRobot {
         // autonomous chooser on the dashboard.\
 
         robotContainer = new RobotContainer();
+
+        Logger.getInstance().recordMetadata("Mike", "2023");
+
+        if (isReal()) {
+            Logger.getInstance().addDataReceiver(new WPILOGWriter("/media/sda1/"));
+        }
+
+        Logger.getInstance().start();
 
         drivebase.waitForHeadingReliable();
         drivebase.resetGyro();
@@ -135,7 +113,7 @@ public class Robot extends TimedRobot {
     @Override
     public void disabledInit() {
         drivebase.runMotor(0, 0);
-        arm.WristMotor.setNeutralMode(NeutralMode.Coast);
+        arm.setWristBrakeMode(false);
         if (setBrakeModeOnDisable) {
             drivebase.SetBrakeMode(true);
         }
@@ -160,16 +138,14 @@ public class Robot extends TimedRobot {
         Collector.getInstance().SetSpeed(0);
         arm.SetLightMode(Constants.Lights.BLANK);
         setBrakeModeOnDisable = true;
-        arm.WristMotor.setNeutralMode(NeutralMode.Brake);//auto volocit kp /kd
+        arm.setWristBrakeMode(true);//auto volocit kp /kd
         CommandScheduler.getInstance().cancelAll();
         SendableChooser autoChooser = (SendableChooser) SmartDashboard.getData("autoChooser");
         autonomousCommand = (Command) autoChooser.getSelected();
         if (autonomousCommand != null) {
             autonomousCommand.schedule();
             System.out.println("ENABLING AUTO");
-        }
-        else
-        {
+        } else {
             System.out.println("auto is null");
         }
         LimeLight.getInstance().setEnable(true);
@@ -179,13 +155,12 @@ public class Robot extends TimedRobot {
 
 
     @Override
-    public void teleopInit()
-    {
+    public void teleopInit() {
         arm.SetLightMode(Constants.Lights.BLANK);
         drivebase.setGyroStatus(false);
         setBrakeModeOnDisable = true;
         drivebase.SetBrakeMode(true);
-        drivebase.setDefaultCommand(new ArcadeDrive(Drivebase.GetDrivebase(), Oi.GetInstance(),LimeLight.getInstance()));
+        drivebase.setDefaultCommand(new ArcadeDrive(Drivebase.GetDrivebase(), Oi.GetInstance(), LimeLight.getInstance()));
     }
 
 
@@ -193,10 +168,9 @@ public class Robot extends TimedRobot {
      * This method is called periodically during operator control.
      */
     @Override
-    public void teleopPeriodic()
-{
-    SmartDashboard.putData("field" , drivebase.getField());
-}
+    public void teleopPeriodic() {
+        SmartDashboard.putData("field", drivebase.getField());
+    }
 
 
     @Override
@@ -206,8 +180,8 @@ public class Robot extends TimedRobot {
         // Cancels all running commands at the start of test mode.
         CommandScheduler.getInstance().cancelAll();
         arm = Arm.getInstance();
-        arm.SetBrakeMode(false, arm.ShoulderMotor);
-        arm.SetBrakeMode(false, arm.WristMotor);
+        arm.setShoulderBrakeMode(false);
+        arm.setWristBrakeMode(false);
     }
 
 
@@ -215,9 +189,8 @@ public class Robot extends TimedRobot {
      * This method is called periodically during test mode.
      */
     @Override
-    public void testPeriodic()
-    {
-        System.out.println("shoulder back switch: " + arm.ShoulderMotor.getSensorCollection().isRevLimitSwitchClosed() + " wrist switch: " + arm.WristMotor.getSensorCollection().isRevLimitSwitchClosed());
+    public void testPeriodic() {
+        //System.out.println("shoulder back switch: " + arm.ShoulderMotor.getSensorCollection().isRevLimitSwitchClosed() + " wrist switch: " + arm.WristMotor.getSensorCollection().isRevLimitSwitchClosed());
     }
 
 

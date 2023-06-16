@@ -21,6 +21,7 @@ import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.constraint.MaxVelocityConstraint;
 import edu.wpi.first.math.trajectory.constraint.TrajectoryConstraint;
+import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -38,8 +39,7 @@ import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.commands.drivebase.ArcadeDrive;
 import frc.robot.constants.Constants;
 import frc.robot.services.Oi;
-
-import java.util.Arrays;
+import org.littletonrobotics.junction.Logger;
 
 import static edu.wpi.first.math.util.Units.inchesToMeters;
 import static java.lang.Double.NaN;
@@ -358,8 +358,8 @@ public Field2d getField(){
         //updateOdometry();//update odometry is just backup
         poseInitilized = false;
         poseEstimator.update(gyro.getRotation2d(),
-                ticksToMeters((int)leftMotor1.getSelectedSensorPosition()),
-                ticksToMeters((int)rightMotor1.getSelectedSensorPosition()));
+                ticksToMeters((int) leftMotor1.getSelectedSensorPosition()),
+                ticksToMeters((int) rightMotor1.getSelectedSensorPosition()));
 
         field.setRobotPose(poseEstimator.getEstimatedPosition());
         SmartDashboard.putData("field",field);
@@ -411,6 +411,14 @@ public Field2d getField(){
                 poseInitilized = true;
             }
         }
+        Pose2d estimatedPos = poseEstimator.getEstimatedPosition();
+
+        Logger.getInstance().recordOutput("DrivebaseEstimatedPose", estimatedPos);
+        field.setRobotPose(estimatedPos);
+        SmartDashboard.putData("field", field);
+
+//TODO: if we have an april tag in view, call addVisionMeasurement();
+
     }
 
     public void setRightMeters(double meters){
