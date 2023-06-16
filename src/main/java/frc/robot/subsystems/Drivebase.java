@@ -15,13 +15,7 @@ import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.constraint.MaxVelocityConstraint;
 import edu.wpi.first.math.trajectory.constraint.TrajectoryConstraint;
-import edu.wpi.first.util.sendable.Sendable;
-import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.DigitalOutput;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -30,8 +24,7 @@ import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.commands.drivebase.ArcadeDrive;
 import frc.robot.constants.Constants;
 import frc.robot.services.Oi;
-
-import java.util.Arrays;
+import org.littletonrobotics.junction.Logger;
 
 import static java.lang.Double.NaN;
 
@@ -336,11 +329,14 @@ public Field2d getField(){
         // Update the odometry in the periodic block
         //updateOdometry();//update odometry is just backup
         poseEstimator.update(gyro.getRotation2d(),
-                ticksToMeters((int)leftMotor1.getSelectedSensorPosition()),
-                ticksToMeters((int)rightMotor1.getSelectedSensorPosition()));
+                ticksToMeters((int) leftMotor1.getSelectedSensorPosition()),
+                ticksToMeters((int) rightMotor1.getSelectedSensorPosition()));
 
-        field.setRobotPose(poseEstimator.getEstimatedPosition());
-        SmartDashboard.putData("field",field);
+        Pose2d estimatedPos = poseEstimator.getEstimatedPosition();
+
+        Logger.getInstance().recordOutput("DrivebaseEstimatedPose", estimatedPos);
+        field.setRobotPose(estimatedPos);
+        SmartDashboard.putData("field", field);
 
 //TODO: if we have an april tag in view, call addVisionMeasurement();
 
