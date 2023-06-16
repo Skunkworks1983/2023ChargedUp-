@@ -285,6 +285,7 @@ public class Constants extends CommandBase
         public static final double LIMELIGHT_CAMERA_PIXEL_HEIGHT = 240;
         public static final int ROLLING_AVERAGE_LENGTH = 15;
         public static final double VISUAL_ODOMETRY_STD_DEV_SCALE = 5.0;
+        public static final double SMALLEST_APRIL_TAG_SIZE = 0.37;
     }
 
     public class Arm {

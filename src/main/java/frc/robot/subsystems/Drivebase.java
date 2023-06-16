@@ -365,8 +365,9 @@ public Field2d getField(){
         SmartDashboard.putData("field",field);
         double distToAprilTags;
         long aprilTagID = NetworkTableInstance.getDefault().getTable("limelight-front").getEntry("tid").getInteger(-1);
+        double ta = NetworkTableInstance.getDefault().getTable("limelight-front").getEntry("ta").getDouble(0.5);
         System.out.println("Apriltag " + aprilTagID);
-        if(aprilTagID != -1)
+        if(aprilTagID != -1 && ta > Constants.Drivebase.SMALLEST_APRIL_TAG_SIZE)
         {
             Double[] poseInfo = NetworkTableInstance.getDefault().getTable("limelight-front").
                     getEntry("botpose_wpired").getDoubleArray(new Double[]{0.0,0.0,0.0,0.0,0.0,0.0,0.0});
@@ -384,7 +385,9 @@ public Field2d getField(){
             }
             else
             {
-               standardDeviationMatrix.set(2,0,.5);
+                standardDeviationMatrix.set(0,0,.5);
+                standardDeviationMatrix.set(1,0,.5);
+                standardDeviationMatrix.set(2,0,.5);
             }
             double latency = NetworkTableInstance.getDefault().getTable("limelight-front").getEntry("tl").getDouble(0.0)/1000;
             poseEstimator.addVisionMeasurement(aprilTagPose, Timer.getFPGATimestamp() - latency,standardDeviationMatrix);
@@ -398,7 +401,7 @@ public Field2d getField(){
             {
             seeTag++;
             }
-            if(seeTag >= 20)
+            if(seeTag >= 100 && !poseInitilized)
             {
                 rightMotor1.setNeutralMode(NeutralMode.Coast);
                 rightMotor2.setNeutralMode(NeutralMode.Coast);
