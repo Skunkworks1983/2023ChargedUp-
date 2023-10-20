@@ -25,6 +25,7 @@ public class Collector extends SubsystemBase {
         Motor.setNeutralMode(NeutralMode.Brake);
         Motor.setInverted(true);
         Motor.configOpenloopRamp(0.1);
+        Motor.configClosedLoopPeakOutput(1,.15);
     }
 
 
@@ -101,7 +102,8 @@ public class Collector extends SubsystemBase {
         if(shouldHold && speed == 0)
         {
             Motor.selectProfileSlot(1, 0);
-            Motor.set(TalonFXControlMode.Position, Motor.getSelectedSensorPosition());
+            Motor.setSelectedSensorPosition(0);
+            Motor.set(TalonFXControlMode.Position, 0); /* Motor.getSelectedSensorPosition());*/
         }
         else
         {
