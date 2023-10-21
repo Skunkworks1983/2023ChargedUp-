@@ -17,7 +17,7 @@ import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drivebase;
 
-public class CubeMidAndBalance5 extends SequentialCommandGroup {
+public class  CubeMidAndBalance5 extends SequentialCommandGroup {
     public CubeMidAndBalance5() {
         super(new SetArmRaceCommandGroup(Constants.ArmPose.SCORE_MID_CUBE, 1.5),
                 new ParallelRaceGroup(new ExpelCubeCommand(), new TimerCommand(.2)),

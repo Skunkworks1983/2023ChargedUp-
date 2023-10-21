@@ -85,9 +85,10 @@ public class Robot extends TimedRobot {
         autoChooser.addOption("ConeMidLeaveCommunity1_9", new ConeMidLeaveCommunity1_9());
         autoChooser.addOption("CubeMidLeaveCommunity2_8", new CubeMidLeaveCommunity2_8());
         autoChooser.addOption("ConeLowAndBalance4_5_6", new ConeLowAndBalance4_5_6());
-        autoChooser.addOption("CubeHighAndBalance5", new CubeHighAndBalance5());
+//        autoChooser.addOption("CubeHighAndBalance5", new CubeHighAndBalance5());
         autoChooser.addOption("CubeHighLeaveCommunity2_8", new CubeHighLeaveCommunity2_8());
         autoChooser.addOption("DoNothing", new DoNothing());
+        autoChooser.addOption("CubeMidAndBalance5",new CubeMidAndBalance5());
 //        autoChooser.addOption("TwoPieceBalance8Red", new TwoPieceBalance8Red());
 //        autoChooser.addOption("TwoPieceBalance8Blue", new TwoPieceBalance8Blue());
 //        autoChooser.addOption("TwoPieceBalance2Red", new TwoPieceBalance2Red());
