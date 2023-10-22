@@ -46,7 +46,7 @@ public class ArcadeDrive extends CommandBase {
         double oldY = rightY;
 
         leftX = (Math.pow(Math.abs(leftX), 2.2)) * (oldX < 0 ? -1 : 1) * .75;
-        rightY = (Math.pow(Math.abs(rightY), 2)) * (oldY < 0 ? -1 : 1) * .75;
+        rightY = (Math.pow(Math.abs(rightY), 2)) * (oldY < 0 ? -1 : 1) * .80;
 
         double heading = drivebase.getHeading();
 
