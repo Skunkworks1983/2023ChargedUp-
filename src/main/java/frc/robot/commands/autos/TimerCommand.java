@@ -1,10 +1,10 @@
 package frc.robot.commands.autos;
 
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
 
-public class TimerCommand extends CommandBase {
+public class TimerCommand extends Command {
     double seconds;
     Timer timer = new Timer();
 

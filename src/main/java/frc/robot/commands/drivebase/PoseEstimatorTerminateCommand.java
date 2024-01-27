@@ -1,11 +1,11 @@
 package frc.robot.commands.drivebase;
 
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Drivebase;
 
 
-public class PoseEstimatorTerminateCommand extends CommandBase
+public class PoseEstimatorTerminateCommand extends Command
 {
     private final Drivebase drivebase;
     private final double xTerminate;

@@ -2,13 +2,13 @@ package frc.robot.commands.drivebase;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Drivebase;
 import frc.robot.subsystems.LimeLight;
 
 
-public class DriveToGamePieceCommand extends CommandBase {
+public class DriveToGamePieceCommand extends Command {
 
     private final Drivebase drivebase;
     private final LimeLight limeLight;

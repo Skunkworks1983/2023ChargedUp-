@@ -1,10 +1,10 @@
 package frc.robot.commands.drivebase;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Drivebase;
 
 
-public class ChangeGyroStatus extends CommandBase {
+public class ChangeGyroStatus extends Command {
 
     private boolean gyroSet = false;
     private boolean status;

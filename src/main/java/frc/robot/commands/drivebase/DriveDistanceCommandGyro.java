@@ -1,7 +1,7 @@
 package frc.robot.commands.drivebase;
 
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drivebase;
@@ -9,7 +9,7 @@ import frc.robot.subsystems.Drivebase;
 import static java.lang.Double.NaN;
 
 
-public class DriveDistanceCommandGyro extends CommandBase
+public class DriveDistanceCommandGyro extends Command
 {
     private final Drivebase drivebase;
     private final double distanceFT;

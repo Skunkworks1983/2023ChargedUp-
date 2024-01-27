@@ -134,9 +134,10 @@ public Field2d getField(){
     {
         SmartDashboard.putData("field",field);
         //setDefaultCommand(ArcadeDrive);
-        gyro.calibrate();
+        //gyro.calibrate();
         isHeadingReliable = false;
-        isRedAlliance = DriverStation.getAlliance() == DriverStation.Alliance.Red;
+       
+        isRedAlliance = DriverStation.getAlliance().isEmpty() || (DriverStation.getAlliance().get() == DriverStation.Alliance.Red);
         System.out.println("drivebase is constructing");
         rightMotor1.setInverted(true);
         rightMotor2.setInverted(true);

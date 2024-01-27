@@ -6,12 +6,12 @@
 package frc.robot.commands.drivebase;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.services.Oi;
 import frc.robot.subsystems.Drivebase;
 
 
-public class TankDrive extends CommandBase
+public class TankDrive extends Command
 {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final Drivebase drivebase;

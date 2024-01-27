@@ -1,11 +1,11 @@
 package frc.robot.commands.drivebase;
 
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Drivebase;
 
 
-public class ResetPoseCommand extends CommandBase {
+public class ResetPoseCommand extends Command {
     Pose2d pose;
     public ResetPoseCommand(Pose2d pose) {
         this.pose = pose;

@@ -1,12 +1,12 @@
 package frc.robot.commands.drivebase;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Drivebase;
 
 import static frc.robot.constants.Constants.Drivebase.VOLTAGE_TO_DISTANCE_SENSOR;
 
 
-public class DetectRangeSensorCommand extends CommandBase {
+public class DetectRangeSensorCommand extends Command {
 
     double distanceFront;
 

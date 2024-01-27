@@ -1,13 +1,13 @@
 package frc.robot.commands.Collector;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Collector;
 
 
-public class IntakeConeSmartCommand extends CommandBase {
+public class IntakeConeSmartCommand extends Command {
     private final Collector collectorInstance;
     private final Arm armInstance;
     private int countConeHeld;

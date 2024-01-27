@@ -2,14 +2,14 @@ package frc.robot.commands.autos;
 
 //import com.ctre.phoenix.motorcontrol.can.SlotConfiguration;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.drivebase.DetectRangeSensorCommand;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drivebase;
 
 
-public class BalanceOnChargeStationCommand extends CommandBase {
+public class BalanceOnChargeStationCommand extends Command {
 
     Double p;
 

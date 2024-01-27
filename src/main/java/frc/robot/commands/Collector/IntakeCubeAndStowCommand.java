@@ -1,14 +1,14 @@
 package frc.robot.commands.Collector;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.arm.SetArmPositionCommand;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Collector;
 
 
-public class IntakeCubeAndStowCommand extends CommandBase {
+public class IntakeCubeAndStowCommand extends Command {
     private final Arm arm = Arm.getInstance();
     private final Collector collector = Collector.getInstance();
     private final Command IntakeCube = new IntakeCubeSmartCommand();

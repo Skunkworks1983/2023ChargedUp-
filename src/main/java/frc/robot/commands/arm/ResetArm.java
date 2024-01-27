@@ -1,11 +1,11 @@
 package frc.robot.commands.arm;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.constants.Constants;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Collector;
 
-public class ResetArm extends CommandBase {
+public class ResetArm extends Command {
 
     Arm arm = Arm.getInstance();
 

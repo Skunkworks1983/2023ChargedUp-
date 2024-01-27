@@ -1,11 +1,11 @@
 package frc.robot.commands.autos;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Drivebase;
 
 
-public class TestVolocityModeCommand extends CommandBase {
+public class TestVolocityModeCommand extends Command {
 
     int time=0;
 
