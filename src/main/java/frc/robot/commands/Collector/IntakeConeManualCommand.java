@@ -1,0 +1,50 @@
+package frc.robot.commands.Collector;
+
+import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.constants.Constants;
+import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Collector;
+
+
+public class IntakeConeManualCommand extends Command {
+    private Collector collectorInstance;
+    private Arm armInstance;
+
+    public IntakeConeManualCommand() {
+        armInstance = Arm.getInstance();
+        collectorInstance = Collector.getInstance();
+        // each subsystem used by the command must be passed into the
+        // addRequirements() method (which takes a vararg of Subsystem)
+        addRequirements(collectorInstance);
+    }
+
+    @Override
+    public void initialize() {
+        System.out.println("Intake cone manual initialize");
+    }
+
+    @Override
+    public void execute() {
+        collectorInstance.SetSpeed(armInstance.getCurrentPose().ConeIntake()
+                * Constants.Collector.INTAKE_MOTOR_SPEED + Constants.Collector.MANUAL_INTAKE_MULTIPLIER);
+    }
+
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
+
+    @Override
+    public void end(boolean interrupted)
+    {
+        collectorInstance.SetSpeed(0);
+        if(interrupted)
+        {
+            System.out.println("Intake Cone Manual Command Ended, interrupted");
+        }
+        else
+        {
+            System.out.println("Intake Cone Manual Command Ended");
+        }
+    }
+}
